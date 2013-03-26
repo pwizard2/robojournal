@@ -123,6 +123,9 @@ void TagReminder::PrimaryConfig(){
         ui->EntryList->setAlternatingRowColors(false);
     }
 
+    // 3/26/13: Enable sort functionality
+    ui->EntryList->sortByColumn(1,Qt::DescendingOrder);
+
     // Bugfix 3/13/13: Set the showReminder value to true to begin with. If the user unchecks the ShowReminder box
     // this value gets set to false (and the config gets updated ot reflect this) when the dialog is closed.
     Buffer::show_reminder_next_time=true;

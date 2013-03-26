@@ -1006,18 +1006,22 @@ void MainWindow::Decorate_GUI(){
 }
 
 //################################################################################################
-// this function will eventually launch the help file. Right now, just show a warning message.
+// New for 0.4.1 (3/26/13): This displays the help file by launching Qt Assistant as a QProcess. Qt Assistant
+// is stored in different places depending on operating system; thiscode looks for it in the most
+// likely places. Invoking robojournal.qhc causes Qt Assistant to override its default settings by showing ONLY
+// the RoboJournal documentation.
 void MainWindow::ShowHelp(){
     using namespace std;
 
     QString assistant;
 
 #ifdef _WIN32
+    // Qt Assistant should be installed in the same folder as robojournal.exe on Win32.
     assistant=QDir::currentPath() + QDir::separator() + "assistant.exe";
 #endif
 
 #ifdef unix
-    assistant="usr/bin/assistant";
+    assistant="/usr/bin/assistant";
 #endif
 
     QFile assistant_exec(assistant);
@@ -1054,22 +1058,20 @@ void MainWindow::ShowHelp(){
         }
         else{
             QMessageBox b;
-            b.critical(this,"RoboJournal","RoboJournal had trouble finding the Help Collection File"
-                       " (robojournal.qhc) or the Documentation File (robojournal.qch). Please locate these files and copy them to " + collection_file.fileName());
+            b.critical(this,"RoboJournal","RoboJournal could not locate the Help Collection File"
+                       " (robojournal.qhc) and/or the Documentation File (robojournal.qch). Please"
+                       " locate these files and copy them to " + collection_file.fileName());
         }
     }
 
     // Show error if Qt assistant is not installed
     else{
         QMessageBox c;
-        c.critical(this,"RoboJournal","The documentation cannot be displayed because QT Assistant is not installed in the proper location"
-                   " for this operating system. Please copy Qt Assistant (and its dependencies) to " + assistant + " and try again.");
+        c.critical(this,"RoboJournal","The documentation cannot be displayed because QT Assistant"
+                   " is not installed correctly. Please copy Qt Assistant to <b>" + assistant + "</b> and try again.");
 
     }
-
-
 }
-
 
 //################################################################################################
 // Fetch entry based on ID
