@@ -5,6 +5,9 @@ $default_qmake_path="/usr/bin/qmake";
 
 # Do not edit below this line!
 
+sub compile{
+}
+
 system(clear);
 print "################################################################\n";
 print "\tRoboJournal Build Helper Script for Linux/Unix\n";
@@ -47,10 +50,21 @@ print "\n\nDo you want to create a package build? (Y/N)\nTip: You should answer 
 for the Debian repositories.\n\n:";
  $choice2=<STDIN>;
 
+
+ # create package build
  if($choice2 =~ m/[y]|[yes]/i){
    
   }
+  # create regular build
   else{
-
+		print "\n\nCleaning up...\n\n";
+		system("make distclean");
+		$qmake_cmd=$qmake . " robojournal.pro";
+		print " Running qmake: "; 
+		print $qmake_cmd . "\n\n";
+		system($qmake_cmd);
+		system("make -j 3");
+		system ("sudo make install");
+ 
   }
 
