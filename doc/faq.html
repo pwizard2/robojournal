@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <title>Frequently Asked Questions - RoboJournal Documentation</title>
+  <meta name="author" content="Will Kraft">
+  <meta name="date" content="2012-11-16T14:36:58-0600">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta http-equiv="content-style-type" content="text/css">
+  <link rel="stylesheet" type="text/css" href="css/master.css">
+  <link rel="icon" type="image/png" href="img/rj_icon.png">
+</head>
+
+<body>
+
+<div class="content">
+<img src="img/rj_doc_header.png" width="606" height="72"
+alt="RoboJournal Documentation" class="masthead"> 
+
+<div class="menu">
+<ul>
+  <li onclick="javascript:history.go(-1)" class="backbutton">&lt; Back</li>
+  <li class="menuitem"><a href="toc.html">Table of Contents</a></li>
+  <li class="menuitem"><a href="faq.html">FAQ</a></li>
+</ul>
+</div>
+
+<div class="main_text">
+<h1>Frequently Asked Questions</h1>
+
+<p>This page is meant to address certain questions or problems that various
+users have had so far. You should expect this list to grow as more questions
+are asked with each new version of RoboJournal.</p>
+
+<h2>Question: Why doesn't RoboJournal offer higher security?<br>
+</h2>
+
+<p><em>Will Kraft's answer:</em><br>
+<br>
+As the "<a href="index.html#limitations">Current Limitations</a>" section
+explains, RoboJournal was not originally designed to be a high-security
+program. RoboJournal's purpose is to allow users to create and maintain an
+electronic diary or journal on a remote server. By its very design, RoboJournal
+is already more secure than a traditional handwritten diary (which offers no
+security at all since anyone can pick it up and read it). RoboJournal is not
+entirely insecure since the MySQL server requires a username and password for
+each login. Even so, you need to ask yourself how much protection your journal
+really requires. A basic login requirement is probably enough to thwart casual
+unauthorized access attempts unless the attacker has root-level access to your
+MySQL installation (in which case you have far greater problems than having
+your secrets exposed). </p>
+
+<p>That said, there are plans in the works to harden RoboJournal against
+unauthorized access attempts even from the MySQL root account. In future
+versions, RoboJournal is going to support interaction with the GNU Privacy
+Guard public-key encryption program. This new functionality will secure your
+journal content by encrypting it with your public key. Once encrypted, your
+private key (and the password that goes with it) is the only thing that can
+decrypt the content. If someone were to read your encrypted journal without
+having the private key needed to decrypt it, all the intruder would see is
+ASCII-armored encrypted text. </p>
+
+<h2>Question: Why doesn't the spell check in RoboJournal 0.4 and 0.4.1 work on
+Ubuntu "Quantal" and Linux Mint?<br>
+</h2>
+
+<p><em>Will Kraft's answer:</em> <br>
+<br>
+Sadly, this has nothing to do with RoboJournal so there is no real way for me
+to fix it (and I assure you that it's not from a lack of trying). Through
+extensive debugging, it appears the problem lies somewhere in the Qt 4.8.3
+libraries or in the core C++ libraries in the Quantal repositories. As such,
+this bug affects all distros that draw from the Quantal repositories, including
+Ubuntu, its variants (Kubuntu, Xubuntu, et al.), and Linux Mint. The problem
+also affects Debian "Wheezy". </p>
+
+<p>In all instances, the bug manifests as a segmentation fault/buffer overflow
+error that causes RoboJournal to suddenly crash whenever the user tries to
+activate the Editor (as demonstrated in "<a
+href="fundamentals.html#new_entry">Writing a New Entry</a>" or "<a
+href="fundamentals.html#modify_entry">Modifying an Existing Entry</a>") while
+spell check is enabled in RoboJournal Preferences. Even more strangely, it is
+impossible to debug this error properly because the bug only affects release
+builds compiled against these libraries (debug builds work properly and do
+<em>not</em> crash). Since debuggers like <a
+href="http://www.gnu.org/software/gdb/">GDB</a> do not work correctly with
+release builds, there is no way for me to investigate this problem further.
+Running GDB against a debug build is futile because the crash never occurs (so
+there is nothing to debug).</p>
+
+<p>The exact same code runs on Windows without producing this error so the
+problem lies somewhere in those specific Linux Qt libraries. Furthermore, I
+have extensively tested RoboJournal with a custom-compiled Qt 4.8.4 environment
+on Linux and everything works fine under those conditions (apparently whatever
+caused this bug was fixed between version 4.8.3 and 4.8.4). I hope this bug
+will simply resolve itself when the Debian package maintainers replace the
+affected Qt 4.8.3 libraries with a new version. In the meantime, possible
+solutions include:</p>
+<ol class="list">
+  <li>Simply run RoboJournal with spell check disabled (easiest solution).</li>
+  <li>Compile a "debug" build of RoboJournal for use on Linux. The debug build
+    is much larger in file size because of the debug headers it contains but
+    these can probably be stripped out with no ill effects (though I haven't
+    tested this). Either way, everything should work fine since debug builds
+    seem to be immune to this crashing bug.</li>
+  <li>Build your own custom Qt from source and compile RoboJournal against that
+    (hardest solution).</li>
+</ol>
+
+<h2>Question: Why does the whitespace removal feature sometimes add lots of
+empty lines to a new entry?</h2>
+
+<p><em>Will Kraft's answer:</em> <br>
+<br>
+This is on my list of things to fix in RoboJournal 0.5. </p>
+
+<p>The bug is most often triggered whenever you paste content from an external
+source (like a website) into a new entry and then save it. Once saved, the new
+entry shows lots of unnecessary whitespace in the Entry Output Pane. Whenever
+this problem occurs, it can be easily remedied by editing the affected entry
+(consult "<a href="fundamentals.html#modify_entry">Modifying an Existing
+Entry</a>" if necessary) and then saving it again without making any changes.
+The whitespace removal function should work correctly the second time. </p>
+
+<h2>Question: Why isn't there a version of RoboJournal for Mac OS X?</h2>
+
+<p><em>Will Kraft's answer:</em> <br>
+<br>
+I have actually been planning to release RoboJournal 0.4.1 on Mac OS X as soon
+as I can. The reason why I haven't done it for earlier versions is because I
+don't have a Mac of my own; under the circumstances there was no way for me to
+build or actively maintain a Mac version. Fortunately, I have found someone who
+might be able to help; if so, you can expect a Mac version very soon. </p>
+
+<h2>Question: RoboJournal has been useful to me. Is there anything I can do to
+help out?</h2>
+
+<p><em>Will Kraft's answer:</em> <br>
+<br>
+What I need the most right now are more beta testers and people who are willing
+(and able) to translate RoboJournal into other languages.</p>
+
+<p>Beta testers help me test new experimental versions of RoboJournal prior to
+release and notify me of any new bugs they find. They also suggest new features
+and other ways to improve the program. As a beta tester, you would have access
+to the newest code before anyone else. Obviously, you must have enough
+development experience and skill to compile the experimental code yourself
+because I simply don't have the time to roll and distribute custom builds. </p>
+
+<p>Translators would help me make RoboJournal available in other languages. I'm
+only fluent in English so my ability to do this myself is extremely limited. I
+would definitely appreciate someone who is willing to take the time to
+translate all text in the program into Spanish, French, German, Chinese, or any
+other world language.</p>
+
+<p>If you are interested in either of these roles, please contact me at
+pwizard[<em>at</em>]gmail[<em>dot</em>]com. </p>
+
+<p class="copyright">Copyright © 2013 by Will Kraft. All parts of the
+RoboJournal Documentation are covered by the terms of the <a
+href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation License</a>.
+</p>
+</div>
+</div>
+</body>
+</html>

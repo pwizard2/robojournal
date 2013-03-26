@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ConfigurationEditor</class>
+ <widget class="QWidget" name="ConfigurationEditor">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>332</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Post-Processing</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QCheckBox" name="TrimWhiteSpace">
+        <property name="toolTip">
+         <string>&lt;p&gt;&lt;b&gt;(Recommended)&lt;/b&gt; This setting requires the editor to remove extra line breaks and other white space (like redundant spaces between words) from the body text.&lt;br /&gt;&lt;br /&gt;FYI: Whitespace removal is only applied to entries &amp;lt; 1000 words in length due to performance issues. This feature is still semi-experimental so occasional issues are to be expected.&lt;/p&gt;</string>
+        </property>
+        <property name="text">
+         <string>Remove &amp;unnecessary whitespace from entries</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="ForceHyphens">
+        <property name="toolTip">
+         <string>&lt;p&gt;&lt;b&gt;(Recommended)&lt;/b&gt; This setting forces the use of HTML-compliant hyphenation and dashes ( i.e. — instead of --). This looks better on most displays.&lt;/p&gt;</string>
+        </property>
+        <property name="text">
+         <string>Use HTML-compliant dashes and &amp;hyphens</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="ForceSmartQuotes">
+        <property name="toolTip">
+         <string>&lt;p&gt;&lt;b&gt;(Recommended)&lt;/b&gt;This setting requires the editor to apply “curly” quotation marks to all entries in place of &amp;quot;straight&amp;quot; quotes. This function also affects apostrophes and other instances where single quotes are used in words.&lt;/p&gt;</string>
+        </property>
+        <property name="text">
+         <string>Use smart (curly) &amp;quotation marks</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="MiscFormatting">
+        <property name="toolTip">
+         <string>&lt;p&gt;&lt;b&gt;(Recommended)&lt;/b&gt; This option applies additional post-processing features to text, including replacing three or more periods with the standard ellipsis character (…) and displaying number notation in superscript (i.e. 1&lt;span style=&quot; vertical-align:super;&quot;&gt;st&lt;/span&gt;).&lt;/p&gt;</string>
+        </property>
+        <property name="text">
+         <string>Apply &amp;miscellaneous formatting options</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>Appearance</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QCheckBox" name="CustomThemeEditor">
+        <property name="toolTip">
+         <string>&lt;p&gt;If checked, this will cause the Editor to use the same custom font/font size as defined on the &lt;b&gt;Appearance&lt;/b&gt; page. FYI: This option is only available if a custom theme is currently in use.&lt;/p&gt;</string>
+        </property>
+        <property name="text">
+         <string>Use custom &amp;theme font in the editor</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="title">
+      <string>Spell Check</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_4">
+      <item>
+       <widget class="QCheckBox" name="UseSpellCheck">
+        <property name="toolTip">
+         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If checked, this function enables in-line spell checking in the Editor window.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="text">
+         <string>Enable &amp;spell check functionality</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="ShowSpellingErrors">
+        <property name="toolTip">
+         <string>
+&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;(Recommended)&lt;/span&gt; If checked, this option requires RoboJournal to highlight (&lt;span style=&quot; text-decoration: underline; color:#ff0000;&quot;&gt;underline&lt;/span&gt;) spelling errors in the current entry each time the editor is displayed. This behavior may be toggled by means of a toolbar button in the editor interface.&lt;/p&gt;</string>
+        </property>
+        <property name="text">
+         <string>Highlight spelling &amp;errors in text by default</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>6</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Select spell check dictionary:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLineEdit" name="Dictionary">
+          <property name="frame">
+           <bool>true</bool>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="BrowseButton">
+          <property name="toolTip">
+           <string>Browse</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../images.qrc">
+            <normaloff>:/icons/folder.png</normaloff>:/icons/folder.png</iconset>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt;FYI: Changes to Post-Processing will &lt;/span&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:600;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt; affect existing entries.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../images.qrc"/>
+ </resources>
+ <connections/>
+</ui>

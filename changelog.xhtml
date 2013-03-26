@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>RoboJournal ChangeLog</title>
+  <meta name="author" content="Will Kraft" />
+  <meta name="date" content="2012-05-19T15:26:54-0500" />
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="content-style-type" content="text/css" />
+  <meta http-equiv="expires" content="0" />
+  <style type="text/css">
+/*<![CDATA[*/
+
+  body{
+    background-color: #1d1d1d;
+  }
+
+  h1{
+    font-family: calibri,arial,sans-serif;
+    font-size: 34pt;
+    text-align: center;
+  }
+
+  h2{
+    font-family: cambria,times new roman,serif;
+    font-size: 17pt;
+  }
+
+  li{
+    font-family: calibri,arial,sans-serif;
+    font-size: 13pt;
+    padding-top: 10px;
+  }
+
+  .odd{
+    background-color: #efefef;
+    padding: 1em;
+    margin: 1em;
+    border: solid 1px gray;
+    border-radius: 20px;
+  }
+
+  .even{
+    padding: 1em;
+    margin: 1em;
+    border: solid 1px gray;
+    border-radius: 20px;
+  }
+
+  ol.letter{
+    list-style-type: lower-alpha;
+  }
+
+  .main{
+    width: 85%;
+    border: solid 1px black;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #ffffff;
+    border-radius: 20px;
+  }
+
+  .footer{
+    margin: 1em;
+  }
+
+  p{
+    font-family: cambria,times new roman,serif;
+    color: #000000;
+    font-size: 13pt;
+  }
+
+  .bugfix{
+        color: blue;
+        font-weight: bold;
+  }
+
+  .added{
+        color: green;
+        font-weight: bold;      
+  }
+
+  .deprecated{
+        color: red;
+        font-weight: bold;
+  }
+  /*]]>*/
+  </style>
+</head>
+
+<body>
+
+<div class="main">
+<h1>RoboJournal ChangeLog</h1>
+
+<div class="odd">
+<h2>Version 0.4.1</h2>
+
+<p>Release Date: TBD</p>
+
+<p>The following changes were made in this release:</p>
+<ol>
+  <li>The Windows version of RoboJournal is now compiled againt Qt 4.8.4
+    instead of Qt 4.7.4 (which was used in versions 0.1–0.4). As such, most
+    of the dynamic link libraries (DLL files) shipped with the Windows version
+    of RoboJournal are brand-new.The purpose of the Qt version increment is to
+    keep pace with the version of Qt in the Debian repositories.</li>
+  <li>The current version number is no longer listed in the title bar on
+    RoboJournal's main window. </li>
+  <li>The tooltip for the <strong>Entries</strong> tab on the main window now
+    reads, "Display the Chronological Entry List" in accordance with the
+    official name of the object in the new documentation.</li>
+  <li>Changed the icon for the <strong>Clear</strong> button on the Appearance
+    Page in RoboJournal Preferences.</li>
+  <li><span class="bugfix">Bugfix:</span> The <strong>Font Color</strong> field
+    on the Appearance Page in RoboJournal Preferences no longer accepts direct
+    input (necessary to prevent the user from entering an invalid color
+  value).</li>
+  <li>Renamed the <strong>Select default Journal</strong> drop-down menu entry
+    to <strong>Journal Selector</strong>. 
+    <ol>
+      <li>Changed the Select default journal window title to "Journal
+      Selector".</li>
+    </ol>
+  </li>
+  <li><span class="bugfix">Bugfix:</span> Corrected spacing issue affecting
+    Linux Mint (and other distros with larger-than-average text) in the Welcome
+    to RoboJournal window displayed during First-Run. </li>
+  <li><span class="bugfix">Bugfix:</span> The current search term now requires
+    the Enter key to be pressed only once in order to run a search; in 0.4 the
+    user had to press the key twice to trigger the <strong>Search</strong>
+    button.</li>
+  <li><span class="bugfix">Bugfix:</span> The data from the most recent search
+    is now automatically cleared whenever you change the search type (any type
+    of pattern match to tag search and vice versa).</li>
+  <li><span class="bugfix">Bugfix:</span> Clicking the Search for whole words
+    button now causes focus to return to the search term box automatically
+    (thereby saving the user an extra click).</li>
+  <li><span class="added">Added</span> "Speech Balloon" icon option to entry
+    node choices.</li>
+  <li><span class="added">Added</span> ALT key shortcut combos to all boolean
+    (selectable/unselectable) options in RoboJournal Preferences. The
+    underlined letter in the item description indicates which key is required
+    to trigger the option (i.e. "<span
+    style="text-decoration: underline">O</span>ption 1" would be triggered by
+    ALT+O).</li>
+  <li><span class="added">Added</span> Tag Reminder system. This feature
+    displays a window that notifies you of any untagged entries in your journal
+    each time you log in. The Tag Reminder is designed to get the users into
+    the habit of tagging their entries. 
+    <ol>
+      <li><span class="added">Added</span> option to enable/disable the Tag
+        Reminder window to the "General" Page in RoboJournal Preferences. </li>
+    </ol>
+  </li>
+  <li><span class="bugfix">Bugfix:</span> Eliminated the possiblity of the user
+    declaring a "null" tag by using a more sophisticated Regular Experession to
+    detect attempts instead of relying on a simple == operator.</li>
+  <li><span class="added">Added</span> new feature that allows the name of the
+    current journal to be displayed in the main window title bar. 
+    <ol>
+      <li><span class="added">Added</span> an option to enable/disable this
+        behavior to the "General" Page in RoboJournal Preferences. </li>
+    </ol>
+  </li>
+  <li><span class="bugfix">Bugfix:</span> Disconnecting while there are search
+    results present on the <strong>Search</strong> tab no longer crashes the
+    program.</li>
+</ol>
+</div>
+
+<div class="even">
+<h2>Version 0.4</h2>
+
+<p>Release Date: 12/17/12</p>
+
+<p>The following changes were made in this release:</p>
+<ol>
+  <li><span class="bugfix">Bugfix:</span> The background image settings are now
+    properly disabled when the user enables the custom style setting. These
+    settings only become active if the user selects a background image.</li>
+  <li><span class="bugfix">Bugfix:</span> The <b>Use default host and port</b>
+    checkbox on the Journal Selector window now obeys the current default
+    values setting in the configuration (with one exception: it is always
+    enabled during first-run configuration).</li>
+  <li>Improved Entry Exporter to allow the user to specify his or her choice in
+    font/font size for headers and body text in exported HTML documents. This
+    feature is configured through the new <b>Export Settings</b> page in the
+    Preferences window.</li>
+  <li>Modified date settings to allow the user to show the day of week when an
+    entry was made.</li>
+  <li><span class="added">Added</span> batch file to simplifity the
+    removal/cleanup of compiled executables, object code, and
+    compiler-generated headers between builds. FYI: This tool is only available
+    in the source package because its purpose is to revert the source directory
+    to its original state after a compile operation has taken place.</li>
+  <li><span class="added">Added</span> the ability to use the same font
+    settings in both the Editor and Entry Output pane in the main window. This
+    gives the user a better idea of how the finished entry will look once it
+    has been saved.</li>
+  <li><span class="added">Added</span> automated post-processing features to
+    Editor: 
+    <ol>
+      <li><span class="added">Added</span> whitespace removal feature which
+        cleans unnecessary line breaks and redundant spaces between words from
+        the body text.</li>
+      <li><span class="added">Added</span> HTML-compliant dashes and
+        hyphenation; all instances of -- are replaced with — and dashes
+        between numbers are properly enlongated (i.e. 1–2).</li>
+      <li><span class="added">Added</span> smart quotes feature which replaces
+        straight (") quotes with curvy (“) quotes. This feature also affects
+        apostrophes and other single quotes in words.</li>
+      <li><span class="added">Added</span> miscellaneous processing features
+        which convert sequences of ≥ 3 adjacent periods to the proper
+        ellipsis character (…) and formalizes number notation (i.e.
+        1<sup>st</sup>, 112<sup>th</sup>).</li>
+    </ol>
+  </li>
+  <li><span class="added">Added</span> resistance to common forms of SQL
+    injection attacks. FYI: Although this new feature provides some degree of
+    protection, users should <span
+    style="text-decoration: underline">not</span> assume they are 100% safe or
+    immune to these attacks.</li>
+  <li><span class="bugfix">Bugfix:</span> Solved layout issues which sometimes
+    caused parts of the user interface to extend beyond the edges of its window
+    or container object (due to large font size usage at the operating system
+    level). The user interface for each form now properly accommodates all but
+    the largest font sizes without issue.</li>
+  <li><span class="bugfix">Bugfix:</span> RoboJournal now requests confirmation
+    if the user quits the program while the Search tab is active.</li>
+  <li>Added spellcheck functionality (based on Hunspell) to the Editor.
+    RoboJournal comes with a standard US English dictionary but other
+    dialects/languages are also supported. Other dictionaries must be
+    downloaded from third-party sources (compatible dictionaries consist of a
+    DIC/AFF file pair).</li>
+  <li>Added new icons to the program and changed many existing ones.</li>
+  <li>Changed wording on Entry Exporter dialog tabs.</li>
+  <li>Resizable windows now remember their previous size and position between
+    sessions.</li>
+  <li>Converted the Editor into a toolbar-based layout.</li>
+  <li>Main Window, Editor and Preferences windows are now resizable and
+    remember their sizes between sessions.</li>
+  <li><span class="bugfix">Bugfix:</span> (Ubuntu-specific) The menu bar in the
+    Main Window remains attached to the window instead of inheriting the
+    standard Unity menubar behavior.</li>
+  <li><span class="bugfix">Bugfix:</span> Icon-only toolbar button setting (if
+    enabled) is now preserved after the user manually launches the Journal
+    Creator or Journal Selector.</li>
+  <li><span class="bugfix">Bugfix:</span> Any active journal connections now
+    automatically terminate if the user manually launches the Journal Creator
+    or Journal Selector.</li>
+  <li><span class="added"><span class="added">Added</span></span> Newconfig
+    class. This is meant to be a full replacement (and an extension) of the
+    original Preferences window. The Newconfig class features a highly modular
+    design with potential for future expansion. 
+    <ol>
+      <li><span class="added"><span class="added">Added</span></span>
+        ConfigurationGeneral, ConfigurationJournal, ConfigurationEditor,
+        ConfigurationExport, ConfigurationAppearance, and ConfigurationMySQL
+        classes. Each of these is a separate module (represented as a page on
+        the Preferences window) which controls specific settings and interacts
+        with the Newconfig class.</li>
+      <li>Users now have the ability to override the colors of the
+        date/timestamp box and tag box when using a custom theme. It is now
+        possible to use system colors <em>and</em> a custom theme
+        simultaneously if desired. In prior releases, the background of those
+        elements were always the same color as the body text; this new function
+        is ideal for those who wish to use a custom font but retain the native
+        OS background.</li>
+      <li><span class="deprecated">Deprecated:</span> Old Config class
+        (config.cpp, config.h, config.ui). Even though the original Preferences
+        interface worked fine at first, RoboJournal has grown in size and
+        complexity over the last few releases to the point where the old
+        interface had become overcrowded and further expansion was
+      impractical.</li>
+      <li>Removed deprecated Config class files from source package and all
+        references to them in the source code.</li>
+      <li>Changed <i>Sort by Day</i> option text to <i>Group journal entries by
+        day</i>.</li>
+      <li><span class="added">Added</span> <i>Display full name (instead of
+        username)</i> option. This displays the user's full name instead of the
+        abbreviated username in the entry header.</li>
+      <li><span class="added">Added</span> post-processing options to the
+        <b>Editor</b> page.</li>
+      <li><span class="added">Added</span> Export Preview function to the
+        <b>Export</b> page.</li>
+      <li><span class="added">Added</span> Highlighter-related options to the
+        <b>Journal</b> page.</li>
+    </ol>
+  </li>
+  <li>Win32 executables generated through the Build Helper Script are now
+    properly stripped (MinGW <i>strip</i> utility). Stripping removes unneeded
+    data from the executable which improves efficiency and reduces file
+  size.</li>
+  <li><span class="added">Added</span> menu shortcut launcher for Linux systems
+    (robojournal.desktop) to source package (launcher will appear in desktop
+    environment/window manager apps menu after the user runs "make install").
+    This also (hopefully) resolves a bug affecting versions 0.1 - 0.3 where the
+    RoboJournal Debian package sometimes fails to create a menu entry after
+    installation.</li>
+  <li>Changed Journal Creator launcher text in the Main Window to say "Journal
+    Creator" instead of "Create a New Journal".</li>
+  <li><span class="added"><span class="added">Added</span></span>
+    SettingsManager class: 
+    <ol>
+      <li>All settings are now handled through SettingsManager class.</li>
+      <li>Changed "STAGE 1" startup text to reference the new SettingsManager
+        Class.</li>
+      <li><span class="deprecated">Deprecated:</span> Original configuration
+        file (<i>$HomePath/.robojournal/robojournal.cfg</i>). Configuration
+        settings are now stored in
+        <i>$HomePath/.robojournal/robojournal.ini</i> instead.</li>
+      <li><span class="deprecated">Deprecated:</span> ConfigManager class.
+        Removed configmanager.cpp and configmanager.h (and all references to
+        them in the source code) from the source package.</li>
+    </ol>
+  </li>
+  <li><span class="added">Added</span> shortcut key (Q) to the exit
+    confirmation dialog in Main Window.</li>
+  <li><span class="added">Added</span> gender check during first-run
+    configuration which sets a different username avatar icon for female
+  users.</li>
+  <li>Removed extra space around the edge of the layout in the Main Window.</li>
+  <li><span class="added">Added</span> search feature to main window: 
+    <ol class="letter">
+      <li><span class="added">Added</span> tabbed interface to main window
+        splitter.</li>
+      <li>Placed journal entry tree in the <b>Entries</b> tab.</li>
+    </ol>
+  </li>
+</ol>
+</div>
+
+<div class="odd">
+<h2>Version 0.3</h2>
+
+<p>Release Date: 8/28/2012</p>
+
+<p>The following changes were made in this release:</p>
+<ol>
+  <li>Changed RoboJournal logo image in FirstRun and AboutRJ classes.</li>
+  <li>Fixed bugs in JournalCreator class: 
+    <ol class="letter">
+      <li><span class="bugfix">Bugfix:</span> System username is now displayed
+        on Linux/Unix systems.</li>
+      <li><span class="bugfix">Bugfix:</span> <span class="added">Added</span>
+        more padding below the "Passwords [do not] match" text. This keeps the
+        text from being too close to the bottom of the frame.</li>
+      <li><span class="added">Added</span> tooltips to the <b>Journal Name</b>,
+        <b>Journal Host</b>, and <b>Username</b> fields.</li>
+    </ol>
+  </li>
+  <li>Simplified and changed text on FirstRun class UI file. This solves a bug
+    where the intro paragraph text size changed depending on system font
+  size.</li>
+  <li><span class="added">Added</span> Build Helper Script (for Windows
+  only).</li>
+  <li><span class="bugfix">Bugfix:</span> Fixed a bug that prevented the
+    current color in use from being autoselected in the Config class color
+    chooser dialog.</li>
+  <li><span class="bugfix">Bugfix:</span> Fixed incorrect error reporting when
+    journal creation process fails due to a missing Qt MySQL driver.</li>
+  <li><span class="bugfix">Bugfix:</span> <span class="added">Added</span> an
+    error message that is triggered if you try to create a journal where
+    journal@host already exists.</li>
+  <li><span class="bugfix">Bugfix:</span> Changed project file to ensure that
+    builds are compiled in release mode by default on Windows systems.</li>
+  <li><span class="added">Added</span> a shortcut/menu icon (F11) to
+    expand/collapse entry tree.</li>
+  <li><span class="added">Added</span> a check for Caps Lock to DBLogin
+  class.</li>
+  <li>Changed exit warnings in Editor class.</li>
+  <li><span class="bugfix">Bugfix:</span> Removed extra padding on
+    MainWindow::Toolbar when buttons are set to image-only.</li>
+  <li>Modified DBLogin Class: 
+    <ol class="letter">
+      <li>Removed root login warning label and replaced it with QMessageBox
+        warnings/errors. This helps reduce crowding/sizing problems on
+        large-text systems.</li>
+      <li>TextBoxes are set to QLineEdit::ReadOnly instead of
+        QLineEdit::SetDisabled when UseDefaults==true.</li>
+    </ol>
+  </li>
+  <li>Changed text for error (critical) QMessageBoxes in Editor class.</li>
+  <li>Fixed program icon for Linux systems (previous versions used the
+    too-small Windows icon that looked bad when stretched).</li>
+  <li><span class="added">Added</span> journal export system to export database
+    entries (or the whole database) to HTML or plain text: 
+    <ol class="letter">
+      <li><span class="added">Added</span> <b>Save</b> button to toolbar.</li>
+      <li><span class="added">Added</span> <b>Save</b> entry and CRTL+S
+        shortcut to <b>File</b> menu.</li>
+    </ol>
+  </li>
+  <li>Removed expand/collapse widget on root node (journal name) in entry
+  tree.</li>
+  <li>Changed MainWindow::Statusbar text: 
+    <ol class="letter">
+      <li>Reworded the welcome message (<em>Click <b>Connect</b> (or press
+        <b>F2</b>) to begin working with a journal database.</em>) and the New
+        Journal message (<em>Welcome to your new journal! Click <b>Write in
+        Journal</b> (or press F4) to get started.</em>).</li>
+      <li>Separated Username text into its own pane.</li>
+      <li><span class="added">Added</span> images to Username and Entry Count
+        panes.</li>
+    </ol>
+  </li>
+  <li>Config class changes: 
+    <ol class="letter">
+      <li>Enlarged Config window to reduce crowding in some GNOME setups.</li>
+      <li><span class="added">Added</span> Apply button to
+        Config::QDialogButtonBox.</li>
+      <li>Made auto-load feature a config menu option. This lets the user
+        decide if he/she wants the most recent entry to load automatically
+        after login.</li>
+    </ol>
+  </li>
+  <li><span class="added">Added</span> tagging system (<i>Tagger</i> class): 
+    <ol class="letter">
+      <li>Modified MySQLCore::Update() to prevent NULL data from being written
+        to the <i>tags</i> column in database <i>entries</i> table.</li>
+    </ol>
+  </li>
+  <li><span class="added">Added</span> <em>JournalSelector</em> class: 
+    <ol class="letter">
+      <li><em>FirstRun</em> class now calls <em>JournalSelector</em> if user
+        decides to use existing journal during config.</li>
+      <li><span class="added">Added</span> a private function that executes a
+        SHOW DATABASES tranaction to <em>MySQLCore</em> class.</li>
+    </ol>
+  </li>
+  <li>Changed window icon to <em>database_add.png</em> in
+    <em>JournalCreator</em> class.</li>
+  <li>Rewrote changelog.html from scratch to be XHTML 1.0 compliant.</li>
+  <li>Replaced original compile/installation documentation
+    (INSTALL-GUIDE-r3.htm) with an XHTML 1.0 compliant document
+    (compile-instructions.xhtml).</li>
+</ol>
+</div>
+
+<div class="even">
+<h2>Version 0.2.1</h2>
+
+<p>Release Date: 5/11/2012</p>
+
+<p>The following changes were made in this release:</p>
+<ol>
+  <li><span class="added">Added</span> "make install" and "make uninstall"
+    support for Linux/OS X (RoboJournal gets installed to /usr/local/bin).</li>
+  <li><span class="added">Added</span> Linux/OS X installation instructions to
+    <i>INSTALL-GUIDE-r3.htm</i>.</li>
+  <li>Reformatted Changelog.htm to pass HTML 4.01/STRICT.</li>
+  <li>Removed MySQL header dependencies in source to ensure full GPL3
+    compliance.</li>
+  <li>Removed unnecessary source and header references to
+    <i>QtSql/QMYSQLDriver</i> and <i>QtSql/QPSQLDriver</i>. At this moment,
+    <i>QtSql/QSqlDatabase</i> is all that is needed.</li>
+  <li>Removed unnecessary reference to <i>CONFIG += qsqlmysql</i> from
+    robojournal.pro.</li>
+  <li>Removed unused/legacy code (headers, cpp, and ui) from source
+  package.</li>
+</ol>
+</div>
+
+<div class="odd">
+<h2>Version 0.2</h2>
+
+<p>Release Date: 4/16/2012</p>
+
+<p>The following changes were made in this release:</p>
+<ol>
+  <li><span class="added">Added</span> Time support: 
+    <ol class="letter">
+      <li><span class="added">Added</span>  24-hour clock support.</li>
+    </ol>
+  </li>
+  <li><span class="added">Added</span> database upgrade tool
+    (MainWindow::UpgradeJournal() function).</li>
+  <li><span class="added">Added</span> tool to modify journal databases by
+    adding additional column for time.</li>
+  <li><span class="added">Added</span> upgrade check when journals are
+  loaded.</li>
+  <li><span class="added">Added</span> document theming support.</li>
+  <li>Font and font size: 
+    <ol class="letter">
+      <li>Font color.</li>
+      <li>Background image support on viewer and entry tree panes.</li>
+      <li>Tile background image.</li>
+    </ol>
+  </li>
+  <li>Improved date formatting: 
+    <ol class="letter">
+      <li><span class="added">Added</span> the ability to format date according
+        to USA, European, or ISO-8601 format.</li>
+      <li><span class="added">Added</span> date format example.</li>
+    </ol>
+  </li>
+  <li>Modified <em>Config</em> class: 
+    <ol class="letter">
+      <li><span class="added">Added</span> Journal and <i>Appearance</i>
+      tabs.</li>
+      <li>Moved Journal-related features to <i>Journal</i> tab.</li>
+      <li>Placed theme-related options on <i>Appearance</i> tab.</li>
+      <li>Removed icons from original <i>General</i> and <i>Database</i>
+      tabs.</li>
+      <li><span class="added">Added</span> an option to disable alternate row
+        colors.</li>
+      <li><span class="added">Added</span> the ability to toggle text on
+        toolbar icons.</li>
+      <li>Changed wording on toolbar docking default option label.</li>
+      <li>Moved <i>Entry Range</i> group to Journal tab from <i>General</i>
+      tab.</li>
+      <li><span class="added">Added</span> placeholder checkbox for rich text
+        format (Disabled, not yet implemented).</li>
+    </ol>
+  </li>
+  <li>Sort by day is no longer default behavior.</li>
+  <li>Fixed window parent bug (that caused centering issues) on
+    <em>DBLogin</em>, <em>Config</em>, <em>AboutRJ</em>, and <em>Editor</em>
+    classes.</li>
+  <li><span class="added">Added</span> exit confirmation dialogs for
+    <em>Editor</em> and <em>MainWindow</em> classes.</li>
+  <li><span class="added">Added</span> print support for journal entries.</li>
+  <li>Changed previous/next shortcut keys to left arrow/ right arrow.</li>
+</ol>
+</div>
+
+<div class="even">
+<h2>Version 0.1</h2>
+
+<p>Release Date: 2/13/2012</p>
+<ol>
+  <li>Initial release.</li>
+</ol>
+</div>
+
+<div class="footer">
+<p>Copyright © 2012, 2013 by Will Kraft. This documentation is part of
+RoboJournal and is available under the <a
+href="http://www.gnu.org/licenses/fdl-1.3-standalone.html">GNU Free
+Documentation License (GFDL)</a>. RoboJournal's source code and binaries are
+available under the GNU General Public License 3 (GPL3).</p>
+<a href="http://validator.w3.org/check?uri=referer"><img
+src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Strict"
+height="31" width="88" /></a> <a
+href="http://jigsaw.w3.org/css-validator/check/referer"><img
+style="border:0;width:88px;height:31px"
+src="http://jigsaw.w3.org/css-validator/images/vcss" alt="Valid CSS!" /></a>
+</div>
+</div>
+</body>
+</html>

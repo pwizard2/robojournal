@@ -1,0 +1,378 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <title>Installing RoboJournal and Other Related Programs - RoboJournal
+  Documentation</title>
+  <meta name="author" content="Will Kraft">
+  <meta name="date" content="2012-11-16T14:36:58-0600">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta http-equiv="content-style-type" content="text/css">
+  <link rel="stylesheet" type="text/css" href="css/master.css">
+  <link rel="icon" type="image/png" href="img/rj_icon.png">
+</head>
+
+<body>
+
+<div class="content">
+<img src="img/rj_doc_header.png" width="606" height="72"
+alt="RoboJournal Documentation" class="masthead"> 
+
+<div class="menu">
+<ul>
+  <li onclick="javascript:history.go(-1)" class="backbutton">&lt; Back</li>
+  <li class="menuitem"><a href="toc.html">Table of Contents</a></li>
+  <li class="menuitem"><a href="faq.html">FAQ</a></li>
+</ul>
+</div>
+
+<div class="main_text">
+<h1>Installing RoboJournal and Other Related Programs</h1>
+
+<h2>Sections</h2>
+<ol class="toc">
+  <li><a href="#overview">Overview and System Requirements</a></li>
+  <li><a href="#install_mysql">Installing MySQL </a> 
+    <ol class="toc">
+      <li><a href="#mysql_windows">Windows Procedure</a></li>
+      <li><a href="#mysql_linux">Linux Procedure</a></li>
+    </ol>
+  </li>
+  <li><a href="#install_robojournal">Installing RoboJournal</a> 
+    <ol class="toc">
+      <li><a href="#install_windows">Windows Procedure</a></li>
+      <li><a href="#install_linux">Linux Procedure</a></li>
+    </ol>
+  </li>
+</ol>
+
+<h2 id="overview">Overview and System Requirements</h2>
+
+<p>RoboJournal was originally designed to run on x86 or AMD64 CPU
+architectures. Since RoboJournal's source code is publicly available under the
+GPL3, RoboJournal may be ported to less common system architectures (assuming
+that a full Qt environment and all necessary database applications are
+available for that platform). For instance, RoboJournal is compatible with
+Debian Linux systems running on MIPS, ARM, and POWERPC CPU architectures. </p>
+
+<p>RoboJournal's system requirements are quite modest by modern standards since
+the program runs with ease even on very low-end computers. The following list
+addresses the <em>bare minimum</em> system requirements for the program to work
+effectively at all:</p>
+<ol class="list">
+  <li>A client computer with the following hardware and software
+    specifications<sup>*</sup>: 
+    <ul>
+      <li>Windows 2000 (or later) or Linux (kernel 2.6 or later). </li>
+      <li>Pentium II or better (for 32-bit/x86). Any 64-bit CPU is likely
+        adequate for custom AMD64 builds.</li>
+      <li>Video display capable of achieving at least 1024x768 screen
+        resolution. RoboJournal can run on 800x600 screen resolution (or below)
+        but some parts of the interface may not completely fit on the screen
+        even while maximized.</li>
+      <li>64 MB of RAM (on Windows). </li>
+      <li>58 MiB of hard disk space (on Windows). The Windows version of
+        RoboJournal has a much larger installation footprint because it
+        includes its own set of Qt libraries. Linux disk space requirements
+        only include the RoboJournal executable itself (2-3 MiB) since Qt
+        libraries on the system tend to be shared amongst all Qt apps and not
+        just RoboJournal. </li>
+      <li>Wired ethernet or 802.11a/b/g/n wireless network connectivity to
+        interact with host/server<sup>†</sup>. Linux-based client machines
+        require Internet connectivity in order to retrieve the necessary Qt
+        packages.</li>
+    </ul>
+  </li>
+  <li>A server (host) machine with the following specifications<sup>†</sup>: 
+    <ul>
+      <li>MySQL server instance (and root-level access permissions).</li>
+      <li>Adequate bandwidth, memory, and processor speed to accommodate all
+        database transactions. The specific requirements vary depending on your
+        situation and the average system load on the machine in question. </li>
+    </ul>
+  </li>
+</ol>
+
+<p class="footnote">* Requirements do not take operating system/other software
+requirements into consideration. The actual requirements are the cumulative
+requirements of the entire software stack on the machine in question.<br>
+<br>
+† A remote server/host machine and the hardware necessary to connect to it
+are only necessary if your journal database is not stored locally. In this
+case, "locally" is defined as being the same machine on which RoboJournal is
+installed. The server requirements should be added to the base client system
+requirements if you <em>are</em> storing your database locally. </p>
+
+<h2 id="install_mysql">Installing MySQL</h2>
+
+<p>RoboJournal requires a working MySQL server in order to use MySQL-based
+journals. This server process may run on the same computer as RoboJournal (i.e.
+localhost) or be deployed on a machine located on your LAN/WAN or on the
+Internet. The installation process creates a working MySQL server instance on
+the computer you have selected. Once installation is complete, the affected
+computer is able to receive and negotiate MySQL connections from itself and
+from other machines that have the correct access permissions.</p>
+
+<p>You should consider installing <a
+href="http://dev.mysql.com/downloads/workbench/">MySQL Workbench</a> after you
+have installed MySQL Server. MySQL Workbench is a replacement for the older
+MySQL Administrator tool (which provided a similar function). Although it is
+not required for MySQL Server to function, MySQL Workbench provides a visual
+environment to simplify interaction with your journals and other databases. As
+such, MySQL Workbench is ideal for users who are at the
+beginner-to-intermediate level of MySQL proficiency. </p>
+
+<div class="FYI">
+<strong>FYI:</strong> RoboJournal will probably work with <a
+href="https://mariadb.org/">MariaDB</a> (a compatible drop-in replacement for
+MySQL's database engine) without any major problems but this has not been
+thoroughly tested as of March 2013. Running RoboJournal on MariaDB should be
+considered experimental for the time being, even on Linux distros that now ship
+MariaDB as the official replacement for MySQL.</div>
+
+<h3 id="mysql_windows">Windows Procedure</h3>
+
+<p>The Windows installation procedure for MySQL is very straightforward. You
+should begin by downloading the latest MSI installer package for Windows from
+the <a href="http://dev.mysql.com/downloads/">MySQL website</a>. The free MySQL
+Community Edition is adequate for RoboJournal's requirements but you may also
+use the non-free Enterprise Version if you have a license for it. This guide
+uses version 5.6.10.1 but the procedure is probably applicable (unless
+otherwise noted) to newer versions as well. Once you have the installation file
+(in this case, mysql-installer-community-5.6.10.1.msi), double-click its icon
+to begin the installation process:</p>
+
+<div class="FYI">
+<strong>FYI:</strong> The MySQL installer depends on the <a
+href="http://www.microsoft.com/net">.NET Framework</a> ≥ 4.0. You must
+satisfy this dependency by installing .NET (if you have not already done so)
+before you can install MySQL. You also need the <a
+href="http://www.microsoft.com/en-us/download/details.aspx?id=5555">Microsoft
+Visual C++ 2010 32-bit Runtime</a> if you intend to install MySQL
+WorkBench.</div>
+<ol class="list">
+  <li>Windows Vista and later may request confirmation when you double-click
+    the installer executable. It is safe to proceed if the publisher is listed
+    as "Oracle America, Inc." If that is the case, click the
+    <strong>Run</strong> button to continue. You may need to provide
+    confirmation twice. Once Windows has finished configuring the installer,
+    the MySQL Installer Welcome window is displayed:<img alt="Figure 1"
+    src="img/screens/mysql_install1.PNG" width="795" height="593"
+    class="screenshot"><span class="caption">Figure 1: MySQL installer main
+    menu.</span></li>
+  <li>Click the <strong>Install MySQL Products</strong> option. The License
+    Agreement window is displayed:<img alt="Figure 2"
+    src="img/screens/mysql_install2.PNG" width="795" height="593"
+    class="screenshot"><span class="caption">Figure 2: MySQL Community Edition
+    is available under the GPLv2.</span></li>
+  <li>Once you have read the license terms, check the <strong>I accept these
+    license terms </strong>box. Click the <strong>Next</strong> button to
+    continue.</li>
+  <li>The installer will check to see if any upgrades are possible at the
+    current time. Click the <strong>Execute</strong> button. Once the check is
+    finished, click the <strong>Next</strong> button to continue.</li>
+  <li>The Choosing a Setup Type window is displayed:<img alt="Figure 3"
+    src="img/screens/mysql_install3.PNG" width="795" height="593"
+    class="screenshot"><span class="caption">Figure 3: The option you choose
+    determines which features are installed.</span> Select the option that is
+    the best fit for your situation and click <strong>Next</strong> to
+    continue: 
+    <ul>
+      <li>Most users should select the <strong>Server Only</strong> option.
+      </li>
+      <li>Select the <strong>Full</strong> option if you want to install
+        everything. This option requires Microsoft Excel 2007 (or newer) in
+        addition to the Visual C++ Runtime needed to run MySQL Workbench.</li>
+      <li>Select the <strong>Custom</strong> option to manually pick and choose
+        which components should be installed (recommended if you only want
+        MySQL Server and MySQL Workbench). </li>
+    </ul>
+  </li>
+  <li>The Check Requirements window informs you of any additional components
+    that need to be installed. Click <strong>Next</strong> if you already have
+    everything you need. You <em>must</em> install all required missing
+    components before the installer will allow you to continue. When you get to
+    the Installation Progress window, click the <strong>Execute</strong> button
+    to begin the installation:<img alt="Figure 4"
+    src="img/screens/mysql_install4.PNG" width="795" height="593"
+    class="screenshot"><span class="caption">Figure 4: MySQL installation in
+    progress.</span></li>
+  <li>Click the <strong>Next</strong> button <em>twice</em> after the
+    installation is finished to begin configuration. The MySQL Server
+    Configuration (1 of 3) window is displayed:<span class="caption"><img
+    alt="Figure 5" src="img/screens/mysql_install5.PNG" width="795"
+    height="593" class="screenshot">Figure 5: Do not change any values (except
+    the <strong>Config Type</strong> field) unless absolutely
+  necessary.</span></li>
+  <li>Change the <strong>Config Type:</strong> drop-down list item to "Server
+    Machine". Click <strong>Next</strong> to continue (do not change any other
+    values or enable <strong>Show Advanced Options</strong> unless you have
+    good reason to make changes and you know what you are doing).</li>
+  <li>The MySQL Server Configuration (2 of 3) window is displayed: <img
+    alt="Figure 6" src="img/screens/mysql_install7.png" width="795"
+    height="593" class="screenshot"><span class="caption">Figure 6: The
+    <strong>Next</strong> button is unlocked once the two fields that set the
+    root password match.</span></li>
+  <li>Enter a password for the root account in the <strong>MySQL Root
+    Password:</strong> and <strong>Repeat Password:</strong> fields. The root
+    password should be strong (i.e. not easily guessed). A strong password
+    generally consists of a randomized ≥ 9-character series of numbers,
+    upper/lowercase characters, and typographical symbols typically found on a
+    keyboard. This password is <em>extremely</em> important so either memorize
+    it or store it in a very safe place for future reference. RoboJournal asks
+    for the root password whenever you create a new journal. 
+
+    <div class="FYI">
+    <strong>FYI:</strong> Do not create any other user accounts at this time
+    unless you already have a journal you wish to import. In that case, go
+    ahead and create the account that the imported journal is to be associated
+    with.</div>
+  </li>
+  <li>Click the <strong>Next</strong> button to continue. The MySQL Server
+    Configuration (3 of 3) window is displayed. Do <em>not</em> change any of
+    the values on this window unless you know exactly what you are doing and
+    have a legitimate reason to make changes. Click <strong>Next</strong> to
+    continue.<img alt="Figure 7" src="img/screens/mysql_install6.PNG"
+    width="795" height="593" class="screenshot"><span class="caption">Figure 7:
+    MySQL should always run as a regular Windows service.</span></li>
+  <li>MySQL will be automatically configured according to the parameters you
+    provided. When the process is complete, click the <strong>Finish</strong>
+    button to exit the MySQL installer.</li>
+</ol>
+
+<p>MySQL is now installed and properly configured for your Windows system. You
+may now proceed with the RoboJournal installation process.</p>
+
+<h3 id="mysql_linux">Linux Procedure</h3>
+
+<p>Unlike Windows, most software on Linux-based systems comes from centralized
+repositories managed by the various distributions. It is not unusual for
+several distributions to share the same repositories. If you are using a common
+distribution like Ubuntu or Fedora, MySQL can be automatically installed and
+configured by your package management system. Since this process is often
+handled entirely behind the scenes, there is no step-by-step graphical
+installer application. </p>
+
+<p>The following table gives the commands required to install a MySQL server on
+the most common types of Linux. The various distributions are grouped into
+families; Ubuntu (and all its variants) is in the Debian family while Fedora is
+in the Red Hat family. In all instances, open a terminal window (bash shell or
+similar) and type the appropriate command for your operating system as root or
+a superuser:</p>
+
+<table border="0">
+  <col>
+  <col>
+  <tbody>
+    <tr>
+      <td class="left">Debian Family — Debian, Ubuntu (all variants), Linux
+        Mint, etc.</td>
+      <td class="right">Install the "mysql-server" package with apt-get: <span
+        class="console">apt-get install mysql-server</span>. You are prompted
+        to set the MySQL root password during the setup process so you should
+        have the password you intend to use ready in advance. MySQL is ready
+        for use immediately after the installation process is finished.</td>
+    </tr>
+    <tr>
+      <td class="left">Red Hat Family— Fedora, CentOS/Red Hat Enterprise</td>
+      <td class="right">Install the "mysql-server" package with YUM: <span
+        class="console">yum install mysql-server</span>. Once the package is
+        installed, you must manually configure it by running, <span
+        class="console">mysqlsecureinstallation</span>. Finally, you must
+        instruct MySQL to start automatically at every boot by running, <span
+        class="console">systemctl enable mysqld.service &amp;&amp; systemctl
+        start mysqld.service</span>. MySQL is available for use once you have
+        finished the last step.</td>
+    </tr>
+    <tr>
+      <td class="left">OpenSUSE (and all related distros)</td>
+      <td class="right">Please consult <a
+        href="http://en.opensuse.org/SDB:MySQL_installation">http://en.opensuse.org/SDB:MySQL_installation</a>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="install_robojournal">Installing RoboJournal</h2>
+
+<p>As a cross-platform application, RoboJournal is designed to be easy to
+install on a variety of operating systems. As such, RoboJournal may be
+installed on Windows 2000 and later through a traditional installer.
+RoboJournal binaries are also available in package format that may be installed
+on Linux-based systems through native package management tools. </p>
+
+<h3 id="install_windows">Windows Procedure</h3>
+
+<p>An installer package for the latest version of RoboJournal is always
+available for the Windows platform. The RoboJournal installation package takes
+the form of a traditional Windows installer application that may be acquired
+directly from SourceForge or from one of the other software download sites on
+which it is mirrored. Each version of the RoboJournal installer package uses a
+distinctive naming convention (i.e. robojournal-[$version]-setup.exe) in order
+to help you differentiate it from any other installer packages that are likely
+to be found in your user account's Downloads folder. </p>
+
+<div class="FYI">
+<strong>FYI:</strong> You should uninstall any old version of RoboJournal on
+your computer before installing the latest version. </div>
+
+<p>Once you have downloaded the installer executable, double-click its icon to
+start the installation process. Windows Vista and later may require you to
+provide UAC authorization before setup is allowed to continue. The Setup Wizard
+is displayed after you have given the necessary permissions: <img
+alt="Figure 8" src="img/screens/win_setup1.png" width="513" height="398"
+class="screenshot"><span class="caption">Figure 8: The Windows installer walks
+you through the entire setup process. The tool looks and acts the same for all
+versions of RoboJournal.</span></p>
+
+<p>You must complete all the steps in the installer to successfully install
+RoboJournal. The installer is very easy to use and provides its own
+instructions during each step of the procedure.</p>
+
+<p>All official RoboJournal releases on the Windows platform are 32-bit. The
+32-bit version is fully functional on both the x86 and x86-64 CPU architectures
+that nearly every version of Windows run on. However, you must build
+RoboJournal from source in order to get a true 64-bit version. Instructions for
+producing a 32-bit custom build are found in the "RoboJournal Compile and
+Installation Guide" (stored as "compile-instructions.xhtml" in the RoboJournal
+source package). Although the basic compile procedure is the same, you need
+64-bit Qt libraries, 64-bit MySQL libraries, and a 64-bit compiler toolchain to
+produce a 64-bit version of RoboJournal.</p>
+
+<h3 id="install_linux">Linux Procedure</h3>
+
+<p>Currently, an old pre-packaged version of RoboJournal (0.2.1 as of March
+2013) is available in the Debian repositories (which are shared with Ubuntu and
+Linux Mint). These repositories contain multiple variants of the package that
+are suited for different system architectures (x86, x86-64, ARM, etc.). This
+package can be installed by running, <span class="console">apt-get install
+robojournal</span> as root or superuser. The version in the Debian repositories
+is out of date because the Debian package upgrade cycle is much slower than
+RoboJournal's development process has been so far. </p>
+
+<p>The only way to get the absolute latest version of RoboJournal on Linux is
+to build it from source. This is not difficult as it sounds because all you
+need are the Qt libraries that the old version of RoboJournal installs anyway
+in addition to the base Linux compiler toolkit. For more information on the
+compile process (including step-by-step instructions), please refer to the
+"RoboJournal Compile and Installation Guide" (stored as
+"compile-instructions.xhtml" in the RoboJournal source package).</p>
+
+<div id="footer_container">
+
+<div id="footer_left">
+</div>
+
+<div id="footer_center">
+<a href="#top">Installing RoboJournal</a></div>
+
+<div id="footer_right">
+<a href="getting_started.html">Getting Started with RoboJournal</a> »</div>
+</div>
+
+<p class="copyright">Copyright © 2013 by Will Kraft. All parts of the
+RoboJournal documentation are available under the terms of the <a
+href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation License</a>.
+</p>
+</div>
+</div>
+</body>
+</html>

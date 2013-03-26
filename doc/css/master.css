@@ -1,0 +1,443 @@
+body{
+	background-color: #A0A69E;
+	margin-left: 0px;
+	margin-top: 2px;
+	margin-right: 0px;
+}
+	
+.content{
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+}
+	
+.main_text{
+	border: solid 1px #565A56;
+	padding: 20px;
+	background-color: #ffffff;
+	margin-bottom: 20px;
+}
+
+.menu{
+	background-color: #4C4F4B;
+	padding-left: 0px;
+	margin-left: 0px;
+	height: 25px;
+}
+
+.menu ul{
+	list-style-type: none;
+	verical-align: middle;
+	margin-bottom: 0px;
+	padding-left: 0px;
+}
+
+.menuitem{
+	display: inline;
+	color: #ffffff;
+	font-family: tahoma,arial,verdana,sans-serif;
+	font-weight: bold;
+	font-size: 12pt;
+	margin-left: 10px;
+	vertical-align: -5px;
+}
+
+.menuitem a{
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.menuitem a:hover{
+	color: #B2FF72;
+	text-decoration: none;
+}
+
+
+.backbutton{
+	color: #ffffff;
+	text-decoration: none;
+	cursor: pointer;
+	display: inline;
+	font-family: tahoma,arial,verdana,sans-serif;
+	font-weight: bold;
+	font-size: 12pt;
+	margin-left: 20px;
+	vertical-align: -5px;
+}
+
+.backbutton:hover{
+	color: #B2FF72;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+h1, h2, h3, p, .caption, .caption_wide, .list li, .FYI, .right, .left { 
+  text-rendering: optimizeLegibility; 
+}
+
+h1{
+	font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+	font-size: 34px;
+	font-weight: 500;
+	color: #000000;
+}
+
+h2{
+	font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+	font-size: 24px;
+	font-weight: 500;
+	margin-top: 50px;
+	margin-bottom: 30px;
+	background-color: #DEE5D9;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 10px;
+	margin-left: 0px;
+	width: 100%;
+	color: #000000;
+
+}
+
+h3{
+	font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+	font-size: 20px;
+	font-weight: 600;
+	margin-bottom: 40px;
+	border-top: solid 2px #888888;
+	padding-top: 5px;
+	margin-top: 40px;
+	width: 100%;
+}
+
+
+h4{
+	font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+	margin-bottom: 40px;
+	padding-top: 5px;
+	margin-top: 40px;
+	width: 100%;
+}
+
+h4 strong{
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: 900;
+}
+
+p{
+	font-family: Constantia, Georgia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif",  serif;
+	font-size: 17px;
+	font-weight: normal;
+	text-align: left;
+	width: 100%;
+	color: #000000;
+	margin-bottom: 20px;
+}
+
+.list{
+	width: 95%;
+	border-left: solid 10px #e2e2e2;
+	margin-top: 40px;
+	margin-bottom: 40px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	font-family: Constantia, Georgia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif",  serif;
+	font-size: 17px;
+	}
+	
+
+
+ .list li{
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: normal;
+	text-align: left;
+	margin-bottom: 10px;
+	}
+
+.toc{
+	font-family: Constantia, Georgia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif",  serif;
+	font-size: 17px;
+	font-weight: normal;
+	text-align: left;
+	margin-left: 0px;
+}
+
+.toc li{
+	margin-bottom: 5px;
+	margin-top: 5px;
+	margin-left: 20px;
+	font-size: inherit;
+	font-family: inherit;
+	}
+	
+
+.toc li a{
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: inherit;
+	color: #4C593C;
+	text-decoration: none;
+
+	
+}
+
+.toc li a:hover{
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: inherit;
+	text-decoration: underline;
+	color: #FF9706;
+}
+
+.screenshot{
+	margin-left: auto;
+	margin-right: auto;
+	box-shadow: 5px 10px 10px #888888;
+	margin-top: 40px;
+	margin-bottom: 25px;
+	display: block;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#888888')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#888888');
+	-webkit-box-shadow: 5px 10px 10px #888888;
+	-moz-box-shadow: 5px 10px 10px #888888;
+}
+
+
+.screenshot-noshadow{
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 40px;
+	margin-bottom: 25px;
+	display: block;
+}
+
+.FYI{
+        border-top: solid 2px #A0A69E;
+	border-bottom: solid 2px #A0A69E;
+        padding: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 80%;
+        font-size: 17px;
+        font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+        margin-top: 40px;
+        margin-bottom: 40px;
+        
+}
+
+table{
+	width: 80%;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+	font-size: 17px;
+	border-top: solid 2px #A0A69E;
+	border-collapse: collapse;
+	border-spacing: 0px;
+	margin-top: 60px;
+	margin-bottom: 60px;
+}
+
+table .left{
+	border-right: solid 2px #A0A69E;
+	border-bottom: solid 2px #A0A69E;
+	width: 30%;
+	padding-right: 15px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align: right;
+	font-weight: bold;
+	font-size: inherit;
+	font-family: inherit;
+	vertical-align: top;
+}
+
+table .left_slim{
+	border-right: solid 2px #A0A69E;
+	border-bottom: solid 2px #A0A69E;
+	width: 10%;
+	padding-right: 15px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align: right;
+	font-weight: bold;
+	font-size: inherit;
+	font-family: inherit;
+	vertical-align: top;
+}
+
+
+
+
+table .right{
+	border-bottom: solid 2px #A0A69E;
+	width: 70%;
+	padding-left: 15px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align: left;
+	font-size: inherit;
+	font-family: inherit;
+	margin: 0px;
+	vertical-align: top;
+}
+
+
+table .right_fat{
+	border-bottom: solid 2px #A0A69E;
+	width: 90%;
+	padding-left: 15px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align: left;
+	font-size: inherit;
+	font-family: inherit;
+	margin: 0px;
+	vertical-align: top;
+}
+
+table .right p{
+	font-size: inherit;
+	font-family: inherit;
+	margin-left: 0px;
+	text-align: justify;
+	margin-bottom: 5px;
+	margin-top: 20px;
+}
+
+
+table .right_fat p{
+	font-size: inherit;
+	font-family: inherit;
+	margin-left: 0px;
+	text-align: justify;
+	margin-bottom: 5px;
+	margin-top: 20px;
+}
+
+dl{
+	width: 90%;
+	margin-left: 20px;
+	margin-right: auto;
+}
+
+dt{
+
+	background-color: #e2e2e2;
+	padding-left:10px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+ 
+dd{
+	font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+	font-size: 17px;
+	text-align: left;
+	margin-left: 100px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-right: 10px;
+	margin-bottom: 10px;
+}
+
+.caption{
+	font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+	font-size: 13px;
+	font-weight: normal;
+	margin-top: 0px;
+	margin-bottom: 25px;
+	display: block;
+	text-align: center;
+}
+
+.caption_wide{
+	font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;;
+	font-size: 13px;
+	font-weight: normal;
+	margin-top: 0px;
+	margin-bottom: 40px;
+	display: block;
+	text-align: center;
+}
+
+.console{
+	font-size: 17px;
+	font-weight: 600;
+	font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
+	background: #e3e3e3;
+	padding-left: 5px;
+	padding-right: 5px;
+
+}
+
+.list ul li{
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: normal;
+	text-align: left;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	list-style-type: square;
+}
+
+p.footnote{
+	font-family: inherit;
+	font-size: 90%;
+	font-weight: normal;
+	width: 85%;
+	display: block;
+}
+
+#footer_container {
+	width:100%;
+	text-align:center;
+	border: solid 1px #A0A69E;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+	font-size: 17px;
+	margin-top: 60px;
+}
+
+#footer_left {
+	float:left;
+	height: 20px;
+	font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+	font-size: 17px;
+	padding-left: 6px;
+	font-weight: bold;    
+}
+
+#footer_center {
+	display: inline-block;
+	margin:0 auto;
+	height: 20px;
+	font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+	font-size: 17px;  
+}
+
+#footer_right {
+	float:right;
+	height: 20px;
+	font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+	font-size: 17px;
+	font-weight: bold;
+	padding-right: 6px;
+  
+}
+
+p.copyright{
+	font-family: inherit;
+	font-size: 15px;
+	text-align: center;
+	margin-top: 30px;
+}
+
+.masthead{
+	margin-left: 20px;
+}

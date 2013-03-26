@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Editor</class>
+ <widget class="QDialog" name="Editor">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>602</width>
+    <height>441</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Write a Journal Entry</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../images.qrc">
+    <normaloff>:/icons/robojournal-icon.png</normaloff>:/icons/robojournal-icon.png</iconset>
+  </property>
+  <property name="sizeGripEnabled">
+   <bool>false</bool>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
+  <widget class="QLabel" name="WordCount">
+   <property name="geometry">
+    <rect>
+     <x>4</x>
+     <y>94</y>
+     <width>108</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Character Count: 0</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="DocumentMode">
+   <property name="geometry">
+    <rect>
+     <x>4</x>
+     <y>40</y>
+     <width>52</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="CharacterCount">
+   <property name="geometry">
+    <rect>
+     <x>4</x>
+     <y>22</y>
+     <width>59</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>wordcount</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="RemainingCharacters">
+   <property name="geometry">
+    <rect>
+     <x>4</x>
+     <y>4</y>
+     <width>57</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>remaining</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>4</x>
+     <y>58</y>
+     <width>57</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Entry Title</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>4</x>
+     <y>76</y>
+     <width>59</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Entry Date</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="EntryPost">
+   <property name="geometry">
+    <rect>
+     <x>4</x>
+     <y>112</y>
+     <width>594</width>
+     <height>54</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Verdana</family>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
+   <property name="cursor" stdset="0">
+    <cursorShape>IBeamCursor</cursorShape>
+   </property>
+   <property name="documentTitle">
+    <string/>
+   </property>
+   <property name="acceptRichText">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="EntryTitle">
+   <property name="geometry">
+    <rect>
+     <x>4</x>
+     <y>170</y>
+     <width>199</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Verdana</family>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="maxLength">
+    <number>100</number>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="PostEntry">
+   <property name="geometry">
+    <rect>
+     <x>4</x>
+     <y>203</y>
+     <width>26</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Save This Entry</string>
+   </property>
+   <property name="text">
+    <string>&amp;Save This Entry</string>
+   </property>
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/disk.png</normaloff>:/icons/disk.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="RedoButton">
+   <property name="geometry">
+    <rect>
+     <x>4</x>
+     <y>232</y>
+     <width>26</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Redo</string>
+   </property>
+   <property name="text">
+    <string>Redo</string>
+   </property>
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/arrow-curve.png</normaloff>:/icons/arrow-curve.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="Cancel">
+   <property name="geometry">
+    <rect>
+     <x>4</x>
+     <y>261</y>
+     <width>26</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Discard</string>
+   </property>
+   <property name="text">
+    <string>&amp;Discard</string>
+   </property>
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/prohibition-button.png</normaloff>:/icons/prohibition-button.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="UndoButton">
+   <property name="geometry">
+    <rect>
+     <x>4</x>
+     <y>290</y>
+     <width>26</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Undo</string>
+   </property>
+   <property name="text">
+    <string>Undo</string>
+   </property>
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/arrow-curve-180-left.png</normaloff>:/icons/arrow-curve-180-left.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="PasteButton">
+   <property name="geometry">
+    <rect>
+     <x>4</x>
+     <y>319</y>
+     <width>26</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+     <underline>false</underline>
+    </font>
+   </property>
+   <property name="toolTip">
+    <string>Paste</string>
+   </property>
+   <property name="text">
+    <string>Paste</string>
+   </property>
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/paste_plain.png</normaloff>:/icons/paste_plain.png</iconset>
+   </property>
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QDateEdit" name="EntryDate">
+   <property name="geometry">
+    <rect>
+     <x>4</x>
+     <y>348</y>
+     <width>155</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="wrapping">
+    <bool>false</bool>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
+   <property name="currentSection">
+    <enum>QDateTimeEdit::MonthSection</enum>
+   </property>
+   <property name="displayFormat">
+    <string>MMMM dd, yyyy</string>
+   </property>
+   <property name="timeSpec">
+    <enum>Qt::LocalTime</enum>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="CopyButton">
+   <property name="geometry">
+    <rect>
+     <x>4</x>
+     <y>376</y>
+     <width>26</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+     <italic>false</italic>
+    </font>
+   </property>
+   <property name="toolTip">
+    <string>Copy</string>
+   </property>
+   <property name="text">
+    <string>Copy</string>
+   </property>
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/page_white_copy.png</normaloff>:/icons/page_white_copy.png</iconset>
+   </property>
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="CutButton">
+   <property name="geometry">
+    <rect>
+     <x>4</x>
+     <y>405</y>
+     <width>26</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+     <weight>50</weight>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="toolTip">
+    <string>Cut</string>
+   </property>
+   <property name="text">
+    <string>Cut</string>
+   </property>
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/cut.png</normaloff>:/icons/cut.png</iconset>
+   </property>
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="Line" name="line">
+   <property name="geometry">
+    <rect>
+     <x>4</x>
+     <y>434</y>
+     <width>594</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="ShowErrors">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>260</y>
+     <width>31</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Show Spelling Errors</string>
+   </property>
+   <property name="text">
+    <string>Show Spelling Errors</string>
+   </property>
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/spell-check-error.png</normaloff>:/icons/spell-check-error.png</iconset>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonIconOnly</enum>
+   </property>
+  </widget>
+ </widget>
+ <resources>
+  <include location="../images.qrc"/>
+ </resources>
+ <connections/>
+</ui>

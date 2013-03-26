@@ -1,0 +1,329 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <title>Working With Tags - RoboJournal Documentation</title>
+  <meta name="author" content="Will Kraft">
+  <meta name="date" content="2012-11-15T16:56:08-0600">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta http-equiv="content-style-type" content="text/css">
+  <link rel="stylesheet" type="text/css" href="css/master.css">
+  <link rel="icon" type="image/png" href="img/rj_icon.png">
+</head>
+
+<body>
+
+<div class="content">
+<img src="img/rj_doc_header.png" width="606" height="72"
+alt="RoboJournal Documentation" class="masthead"> 
+
+<div class="menu">
+<ul>
+  <li onclick="javascript:history.go(-1)" class="backbutton">&lt; Back</li>
+  <li class="menuitem"><a href="toc.html">Table of Contents</a></li>
+  <li class="menuitem"><a href="faq.html">FAQ</a></li>
+</ul>
+</div>
+
+<div class="main_text">
+<h1>Working With Tags</h1>
+
+<h2 id="Sections">Sections</h2>
+<ol class="toc">
+  <li><a href="#Tagging">Tagging Overview</a> 
+    <ol>
+      <li><a href="#Best">Best Practices</a></li>
+      <li><a href="#Accessing">Accessing the Tagging Interface</a></li>
+    </ol>
+  </li>
+  <li><a href="#Declaring">Declaring a New Tag</a></li>
+  <li><a href="#Assigning">Assigning a Tag to an Entry</a></li>
+  <li><a href="#Removing">Removing a Tag from an Entry</a></li>
+  <li><a href="#tag_reminder">Tag Reminder Window</a></li>
+</ol>
+
+<h2 id="Tagging">Tagging Overview</h2>
+
+<p>As a journal gradually increases in size over the term of months and years,
+you may write about similar topic multiple times. If you are not using a range
+limit on such a journal, related entries may be harder to find and/or track
+once the sheer volume of entries is taken into account. While RoboJournal
+allows you to search for an entry using a keyword system, it is far easier to
+use the built-in tagging system to keep related entries together.</p>
+
+<h3 id="Best">Best Practices</h3>
+
+<p>RoboJournal's tagging system allows you to assign one or more descriptive
+labels to an entry. Once declared, a new tag is available for all entries; you
+may apply any existing tags to entries as you see fit (however, each tag may
+only be used once in any given entry). RoboJournal does not currently make
+tagging suggestions based on entry content but that may change in future
+releases. In all cases, you should assign tags based on entry content and/or
+subject matter because RoboJournal's tagging system is designed to categorize
+by topic. For instance, all car-related entries may be tagged with "car" or
+"vehicle" but not "pet" unless the entry is also about your dog, cat, or any
+other type of pet. Ultimately, tag assignment is a matter of common sense. </p>
+
+<p>RoboJournal supports the use of multi-word tags and there is no real set
+limit to how many tags may be assigned to each entry or how many tags the
+journal may hold. However, the tagging system is most effective when tags are
+short in length, broad (but not overly broad) in scope, and appropriate in
+number to the size and diversity of the journal. In other words, you should
+only declare new tags if your journal's subject matter requires it since tags
+are meant to be shared between entries. When you search for all instances of a
+specific tag, RoboJournal displays all entries that have had that tag assigned
+to them in the past. </p>
+
+<p>New tags should only be created if all of the existing tags are inapplicable
+to an entry's content or subject. When you define a new tag, you should expect
+to eventually use it more than once. Tags that are only used once in an entire
+journal are useless because they provide only one result during searches (and
+the affected entry probably would have had other tags assigned to it anyway).
+</p>
+
+<h3 id="Accessing">Accessing the Tagging Interface</h3>
+
+<p>The Manage Tags window is designed to work with the currently-selected entry
+in the Chronological Entry List. As such, using it requires an active
+connection; the tag function is locked while RoboJournal is in Default State
+due to there being no point of reference. Once the Manage Tags window is
+visible, you may perform any type of tag-related maintenance on the selected
+entry. You may only manage tags for one entry at a time. </p>
+
+<p>The following procedure allows you to access the Manage Tags window:</p>
+<ol class="list">
+  <li>Click to select the entry you wish to tag (indicated by the large oval in
+    Figure 1) in the Chronological Entry List on the RoboJournal main window.
+    <img alt="Figure 1" src="img/screens/mw_tag1.png" width="750" height="584"
+    class="screenshot"><span class="caption_wide">Figure 1: Select the entry
+    you wish to tag and click the <strong>Manage Tags</strong> toolbar
+    button.</span></li>
+  <li>Click the <strong>Manage Tags</strong> toolbar button (as shown in the
+    small circle in Figure 1). The Manage Tags window is displayed:<img
+    alt="Figure 2" src="img/screens/mw_tag2.png" width="751" height="583"
+    class="screenshot"><span class="caption">Figure 2: The Manage Tags window
+    is always superimposed over the main window.</span></li>
+</ol>
+
+<div class="FYI">
+<strong>FYI:</strong> The Manage Tags window is always superimposed over the
+main window under normal circumstances. However, screenshots of the Manage Tags
+window in the following sections of this documentation omit the main window for
+the sake of simplicity. </div>
+
+<h2 id="Declaring">Declaring a New Tag</h2>
+
+<p>Journals are deliberately created with no pre-existing tag data. RoboJournal
+leaves tag designation up to you because each journal is unique (therefore
+making it impossible to successfully anticipate your needs with a set of
+pre-defined tags) and you would know best about what is required. Each new tag,
+once defined, becomes available to the entire journal.</p>
+
+<p>As stated in the previous section, any word may be used as a tag but it is
+always best to use short one-word tags that are applicable to several entries.
+The only reserved word you may <em>not</em> use for a tag is any variant of
+"null" (i.e null, Null, NULL, etc.) because that word has special properties in
+the RoboJournal tagging system. "Null" is a type of invisible tag that is used
+for entries that were previously tagged but currently have no tag data assigned
+to them (brand-new entries that have never been tagged are treated
+differently). Entries tagged with "Null" produce a response of, "No tags for
+this post" in the main window's Entry Output Pane. </p>
+
+<p>The following procedure demonstrates how to declare a new tag in RoboJournal
+(the process assumes you have already displayed the Manage Tags window):</p>
+<ol class="list">
+  <li>Click the <strong>New Tag</strong> button on the Manage Tags window.<img
+    alt="Figure 3" src="img/screens/define_tag1.png" width="405" height="273"
+    class="screenshot"><span class="caption_wide">Figure 3: The <strong>New
+    Tag</strong> button launches a text prompt that allows you to define a new
+    tag.</span></li>
+  <li>The <strong>Enter the new tag:</strong> dialog is displayed. Enter the
+    new tag into the text box:<img alt="Figure 4"
+    src="img/screens/define_tag2.png" width="405" height="273"
+    class="screenshot"><span class="caption_wide">Figure 4: Enter the new tag
+    into the provided text box.</span></li>
+  <li>Click the <strong>OK</strong> button in the <strong>Enter the new
+    tag:</strong> dialog to continue (or click the <strong>Cancel</strong>
+    button to abort).</li>
+  <li>The new tag is added to the <strong>Available Tags</strong> list. You may
+    now apply this tag to the current entry.<img alt="Figure 5"
+    src="img/screens/define_tag3.png" width="405" height="273"
+    class="screenshot"><span class="caption">Figure 5: Newly-defined tags are
+    inserted at the top of the list and are marked with a green plus-sign
+    indicator.</span></li>
+</ol>
+
+<div class="FYI">
+<strong>FYI:</strong> Newly-defined tags are not permanent until they have been
+assigned to at least one entry. Therefore, you should not define a new tag
+until you actually need it (otherwise it will be discarded once you close the
+Manage Tags window).</div>
+
+<h2 id="Assigning">Assigning a Tag to an Entry</h2>
+
+<p>Currently, a brand-new entry has no tag data associated with it immediately
+after it has been written and posted to the database (the ability to tag
+entries from the Editor may be added in a future release). As such, new entries
+display a "This entry has not been tagged yet" message in the Entry Output Pane
+on the main window as a reminder for you to tag the entry. Until an entry has
+been tagged, it is essentially invisible to the tag search function (although
+the entry may still be found through a pattern search). </p>
+
+<p>The following procedure assumes that you have already selected the entry you
+wish to tag and that the Manage Tags window is displayed:</p>
+<ol class="list">
+  <li>Click the drop-down <strong>Available Tags</strong> list. The current
+    list of tags is displayed:<img alt="Figure 6"
+    src="img/screens/assign_tag1.png" width="405" height="273"
+    class="screenshot"><span class="caption_wide">Figure 6: The
+    <strong>Available Tags</strong> list contains all tags currently used in
+    the journal.</span></li>
+  <li>Click the <strong>Apply Tag</strong> button to add the tag to the
+    entry.<img alt="Figure 7" src="img/screens/assign_tag2.png" width="405"
+    height="273" class="screenshot"><span class="caption_wide">Figure 7: The
+    <strong>Apply Tag</strong> button assigns the currently-selected tag to the
+    entry.</span></li>
+  <li>The selected tag is displayed in the current tags box (unlabeled but
+    shown within the red circle in Figure 8):<img alt="Figure 8"
+    src="img/screens/assign_tag3.png" width="405" height="273"
+    class="screenshot"><span class="caption_wide">Figure 8: The large area to
+    the left of the <strong>New Tag</strong> and <strong>Remove Tag</strong>
+    button displays all tags currently assigned to the entry. </span> 
+    <p></p>
+  </li>
+  <li>Repeat Steps 1 and 2 to add another tag to the entry (if necessary). </li>
+  <li>Click the <strong>Apply</strong> button to save the current tags (the
+    <strong>Apply</strong> button is locked after this step and stays locked
+    unless you add or remove a tag). <img alt="Figure 9"
+    src="img/screens/assign_tag4.png" width="405" height="273"
+    class="screenshot"><span class="caption_wide">Figure 9: The
+    <strong>Apply</strong> button saves the current tag choices.</span></li>
+  <li>The <strong>OK</strong> button is unlocked once the save process is
+    finished. Click the <strong>OK</strong> button to close the Manage Tags
+    window and return to the RoboJournal main window.</li>
+</ol>
+
+<p>The selected entry in the RoboJournal main window now has tags applied to
+it:<img alt="Figure 10" src="img/screens/mw_tag3.png" width="750" height="584"
+class="screenshot"><span class="caption">Figure 10: The new tags are shown
+immediately in the RoboJournal main window.</span></p>
+
+<h2 id="Removing">Removing a Tag from an Entry</h2>
+
+<p>RoboJournal allows you to remove tags from entries if necessary. Once an
+entry has been stripped of all tags, it is automatically tagged with "Null" (as
+described in the <a href="#Declaring">Declaring a New Tag</a> section).
+Removing all tags from an entry renders it invisible to tag searches but not
+pattern searches.</p>
+
+<p>RoboJournal does automatic maintenance/housekeeping by removing old tags
+that are no longer used. RoboJournal cross-references all tags in use
+throughout the journal and appends every tag it finds to the <strong>Available
+Tags</strong> list (literally rebuilding the list from scratch) each time the
+Manage Tags window is displayed. Therefore, a tag is preserved for further use
+as long as it is already being used in at least one other entry.</p>
+
+<p>The following procedure assumes that you have already selected the entry you
+wish to tag and that the Manage Tags window is displayed:</p>
+<ol class="list">
+  <li>Click to select the tag you wish to remove (indicated by the red oval in
+    Figure 11) from the current tags area. <img alt="Figure 11"
+    src="img/screens/remove_tag1.png" width="405" height="273"
+    class="screenshot"><span class="caption_wide">Figure 11: All active tags
+    for the current entry are represented by an orange tag icon next to the tag
+    name.</span></li>
+  <li>Click the <strong>Remove Tag</strong> button to continue.<img
+    alt="Figure 12" src="img/screens/remove_tag2.png" width="405" height="273"
+    class="screenshot"><span class="caption_wide">Figure 12: The <strong>Remove
+    Tag</strong> button is unlocked once you have made a selection.</span></li>
+  <li>The tag you selected is removed from the list. Select and delete another
+    tag (if necessary) or click the <strong>Apply</strong> button to save your
+    actions.<img alt="Figure 13" src="img/screens/remove_tag3.png" width="405"
+    height="273" class="screenshot"><span class="caption_wide">Figure 13: The
+    <strong>Apply</strong> button is unlocked after the tag data has been
+    changed.</span></li>
+  <li>The <strong>OK</strong> button is unlocked after you have applied the
+    changes you have made. Click the <strong>OK</strong> button to close the
+    Manage Tags window and return to the RoboJournal main window.</li>
+</ol>
+
+<p>The entry you modified is automatically refreshed to display the changes you
+just made to its tag data: <img alt="Figure 14" src="img/screens/mw_tag4.png"
+width="750" height="584" class="screenshot"><span class="caption">Figure 14:
+RoboJournal automatically displays all changes made to an entry (compare with
+Figure 10).</span></p>
+
+<h2 id="tag_reminder">Tag Reminder Window</h2>
+
+<p>RoboJournal takes additional measures (starting in version 0.4.1) to ensure
+that all entries in your journal are properly tagged since untagged entries are
+effectively invisible to tag searches and may only be found through pattern
+matching. The Tag Reminder window is essentially a "nag screen" that asks you
+to tag existing entries at the start of each session. The purpose of this
+feature is to encourage you to use the tagging system; the notification is
+deliberately designed to be annoying in the hopes that you will soon get in the
+habit of tagging new entries immediately after you write them in order to keep
+the Tag Reminder window from being displayed at all. </p>
+
+<p>If RoboJournal finds any untagged entries, it adds them to a list and
+displays them on the Tag Reminder window immediately after login (the Tag
+Reminder window is <em>not</em> displayed if RoboJournal fails to find any
+untagged entries):<img alt="Figure 15" src="img/screens/tag_reminder.png"
+width="476" height="396" class="screenshot"><span class="caption">Figure 15:
+The Tag Reminder window is shown only if RoboJournal detects untagged
+entries.</span></p>
+
+<p>The Tag Reminder window list shows all entries that currently have no tag
+data. This is limited to entries that have never been tagged before. Entries
+that were tagged at some point and have subsequently had their tag data cleared
+(i.e. entries tagged as "null") are <em>not</em> included in the search because
+RoboJournal assumes you had a good reason for clearing the previous tag data.
+This search covers all entries in the journal from newest to oldest and ignores
+the current entry range limitation. As such, you may be asked to tag old
+entries that are no longer visible because they are out of the entry range you
+specified in RoboJournal Preferences. </p>
+
+<p>You may click the <strong>Close</strong> button to postpone the tagging
+procedure. This hides the Tag Reminder window for the remainder of the session
+but it will still be displayed during the next login. You may
+<em>permanently</em> override the Tag Reminder window by unchecking the
+<strong>Display this notification during the next login (if necessary)</strong>
+checkbox and then clicking the <strong>Close</strong> button. This prevents the
+Tag Reminder window from being displayed again even if the journal still
+contains untagged entries at the next login (you may re-enable the Tag Reminder
+window through <a href="preferences.html#global_preferences">RoboJournal
+Preferences</a> at any time).</p>
+
+<p>Alternatively, you may select any entry from the list and click the
+<strong>Manage Tags</strong> button to apply tags to it (consult the "<a
+href="#Assigning">Assigning a Tag to an Entry</a>" section). The <strong>Entry
+Title</strong> column in the list gives the title of an untagged entry while
+the value in the <strong>Date</strong> column provides a point of reference for
+the entry in question. After you tag each entry, the list automatically
+refreshes and the current count (<strong><em>x</em> entries need to be
+tagged</strong>.) indicator is reduced by one. The Tag Reminder window
+automatically closes once the count indicator reaches zero. Once cleared, the
+Tag Reminder window will not be displayed during the next session (unless you
+add any new untagged entries during the current session). </p>
+
+
+<div id="footer_container">
+
+<div id="footer_left">
+« <a href="fundamentals.html">RoboJournal Fundamentals</a></div>
+
+<div id="footer_center">
+<a href="#top">Working with Tags</a> </div>
+
+<div id="footer_right">
+<a href="export.html">Exporting Journal Entries</a> »</div>
+</div>
+<p class="copyright">Copyright © 2013 by Will Kraft. All parts of the RoboJournal Documentation
+are covered by the terms of the <a
+href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation License</a>.
+</p>
+
+</div>
+</div>
+</body>
+</html>

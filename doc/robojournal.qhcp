@@ -1,0 +1,27 @@
+
+ <QHelpCollectionProject version="1.0">
+     <assistant>
+         <title>RoboJournal Documentation</title>
+         <startPage>qthelp://robojournal.0.4.1/doc/index.html</startPage>
+		 <homePage>qthelp://robojournal.0.4.1/doc/toc.html</homePage>
+         <applicationIcon>rj_help.png</applicationIcon>
+         <enableFilterFunctionality>false</enableFilterFunctionality>
+         <enableDocumentationManager>false</enableDocumentationManager>
+         <enableAddressBar visible="true">true</enableAddressBar>
+         <cacheDirectory>mycompany/myapplication</cacheDirectory>
+         <aboutMenuText>
+             <text>About Qt Assistant</text>
+         </aboutMenuText>
+     </assistant>
+     <docFiles>
+         <generate>
+             <file>
+                 <input>robojournal.qhp</input>
+                 <output>robojournal.qch</output>
+             </file>
+         </generate>
+         <register>
+             <file>robojournal.qch</file>
+         </register>
+     </docFiles>
+ </QHelpCollectionProject>

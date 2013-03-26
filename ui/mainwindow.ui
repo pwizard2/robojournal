@@ -1,0 +1,1082 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>734</width>
+    <height>551</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>RoboJournal 0.1</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../images.qrc">
+    <normaloff>:/icons/robojournal.ico</normaloff>:/icons/robojournal.ico</iconset>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <property name="margin">
+     <number>3</number>
+    </property>
+    <item row="2" column="0">
+     <widget class="QToolButton" name="LastEntry">
+      <property name="toolTip">
+       <string>Previous Entry</string>
+      </property>
+      <property name="text">
+       <string>Previous</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../images.qrc">
+        <normaloff>:/icons/resultset_first.png</normaloff>:/icons/resultset_first.png</iconset>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextBesideIcon</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QToolButton" name="NextEntry">
+      <property name="toolTip">
+       <string>Next Entry</string>
+      </property>
+      <property name="text">
+       <string>Next</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../images.qrc">
+        <normaloff>:/icons/resultset_last.png</normaloff>:/icons/resultset_last.png</iconset>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextBesideIcon</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QToolButton" name="ConfigButton">
+      <property name="toolTip">
+       <string>RoboJournal Preferences</string>
+      </property>
+      <property name="text">
+       <string>Preferences</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../images.qrc">
+        <normaloff>:/icons/wrench.png</normaloff>:/icons/wrench.png</iconset>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextBesideIcon</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QToolButton" name="EditEntryButton">
+      <property name="toolTip">
+       <string>Modify Entry</string>
+      </property>
+      <property name="text">
+       <string>Modify Entry</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../images.qrc">
+        <normaloff>:/icons/modify2.png</normaloff>:/icons/modify2.png</iconset>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextBesideIcon</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="2">
+     <widget class="QToolButton" name="DisconnectButton">
+      <property name="toolTip">
+       <string>Disconnect</string>
+      </property>
+      <property name="text">
+       <string>Disconnect</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../images.qrc">
+        <normaloff>:/icons/disconnect.png</normaloff>:/icons/disconnect.png</iconset>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextBesideIcon</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="3">
+     <widget class="QToolButton" name="Tag">
+      <property name="toolTip">
+       <string>Manage Tags</string>
+      </property>
+      <property name="text">
+       <string>Manage Tags</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../images.qrc">
+        <normaloff>:/icons/tag_orange.png</normaloff>:/icons/tag_orange.png</iconset>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextBesideIcon</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="4" colspan="2">
+     <widget class="QToolButton" name="ConnectButton">
+      <property name="toolTip">
+       <string>Connect</string>
+      </property>
+      <property name="text">
+       <string>Connect</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../images.qrc">
+        <normaloff>:/icons/connect.png</normaloff>:/icons/connect.png</iconset>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextBesideIcon</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0">
+     <widget class="QToolButton" name="WriteButton">
+      <property name="toolTip">
+       <string>Write in Journal</string>
+      </property>
+      <property name="text">
+       <string>Write in Journal</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../images.qrc">
+        <normaloff>:/icons/write2.png</normaloff>:/icons/write2.png</iconset>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextBesideIcon</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QToolButton" name="TodayButton">
+      <property name="toolTip">
+       <string>Latest</string>
+      </property>
+      <property name="text">
+       <string>Latest</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../images.qrc">
+        <normaloff>:/icons/latest.png</normaloff>:/icons/latest.png</iconset>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextBesideIcon</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="3">
+     <widget class="QToolButton" name="DeleteEntry">
+      <property name="toolTip">
+       <string>Delete Entry</string>
+      </property>
+      <property name="text">
+       <string>Delete Entry</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../images.qrc">
+        <normaloff>:/icons/bin.png</normaloff>:/icons/bin.png</iconset>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextBesideIcon</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="4" colspan="2">
+     <widget class="QToolButton" name="ExportEntry">
+      <property name="toolTip">
+       <string>Export Content</string>
+      </property>
+      <property name="text">
+       <string>Export Content</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../images.qrc">
+        <normaloff>:/icons/external.png</normaloff>:/icons/external.png</iconset>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextBesideIcon</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="5">
+     <widget class="QSplitter" name="splitter">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <widget class="QTabWidget" name="tabWidget">
+       <property name="tabPosition">
+        <enum>QTabWidget::South</enum>
+       </property>
+       <property name="tabShape">
+        <enum>QTabWidget::Rounded</enum>
+       </property>
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <property name="usesScrollButtons">
+        <bool>true</bool>
+       </property>
+       <widget class="QWidget" name="EntriesTab">
+        <attribute name="icon">
+         <iconset resource="../images.qrc">
+          <normaloff>:/icons/document-tree.png</normaloff>:/icons/document-tree.png</iconset>
+        </attribute>
+        <attribute name="title">
+         <string>&amp;Entries</string>
+        </attribute>
+        <layout class="QGridLayout" name="gridLayout_2">
+         <property name="margin">
+          <number>3</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="QTreeWidget" name="EntryList">
+           <property name="verticalScrollBarPolicy">
+            <enum>Qt::ScrollBarAsNeeded</enum>
+           </property>
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
+           <property name="showDropIndicator" stdset="0">
+            <bool>false</bool>
+           </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
+           <property name="allColumnsShowFocus">
+            <bool>true</bool>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+           <property name="headerHidden">
+            <bool>true</bool>
+           </property>
+           <property name="columnCount">
+            <number>2</number>
+           </property>
+           <attribute name="headerVisible">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="headerCascadingSectionResizes">
+            <bool>true</bool>
+           </attribute>
+           <attribute name="headerDefaultSectionSize">
+            <number>300</number>
+           </attribute>
+           <attribute name="headerHighlightSections">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="headerMinimumSectionSize">
+            <number>3</number>
+           </attribute>
+           <attribute name="headerShowSortIndicator" stdset="0">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="headerStretchLastSection">
+            <bool>true</bool>
+           </attribute>
+           <column>
+            <property name="text">
+             <string notr="true">Journal entries</string>
+            </property>
+            <property name="toolTip">
+             <string>Entry name sorted by year, month, and day.</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Entry ID</string>
+            </property>
+            <property name="toolTip">
+             <string>This is the row number in the database that the entry corresponds to.</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="SearchTab">
+        <attribute name="icon">
+         <iconset resource="../images.qrc">
+          <normaloff>:/icons/binocular.png</normaloff>:/icons/binocular.png</iconset>
+        </attribute>
+        <attribute name="title">
+         <string>&amp;Search</string>
+        </attribute>
+        <layout class="QGridLayout" name="gridLayout_3">
+         <item row="0" column="0">
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>Term</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="SearchTerm"/>
+           </item>
+          </layout>
+         </item>
+         <item row="0" column="1">
+          <widget class="QPushButton" name="SearchButton">
+           <property name="toolTip">
+            <string>Click to run a search with the current parameters.</string>
+           </property>
+           <property name="text">
+            <string>Search</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../images.qrc">
+             <normaloff>:/icons/binocular.png</normaloff>:/icons/binocular.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QComboBox" name="SearchFilter">
+           <property name="currentIndex">
+            <number>0</number>
+           </property>
+           <item>
+            <property name="text">
+             <string>Search by Tag</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Pattern Match: Title Only</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Pattern Match: Body Only</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Pattern Match: Title + Body</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QPushButton" name="ClearButton">
+           <property name="toolTip">
+            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Click to clear everything (search term, results list, and the entry currently being viewed).&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="text">
+            <string>Clear All</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QCheckBox" name="WholeWords">
+           <property name="text">
+            <string>Search for &amp;whole words</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1">
+           <item>
+            <widget class="QLabel" name="label_3">
+             <property name="text">
+              <string>Selected Tag:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="TagList">
+             <property name="toolTip">
+              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click &lt;span style=&quot; font-weight:600;&quot;&gt;Search&lt;/span&gt; to display all entries marked with the currently-selected tag.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="4" column="0">
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>6</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="5" column="0" colspan="2">
+          <widget class="Line" name="line">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0" colspan="2">
+          <widget class="QTreeWidget" name="SearchList">
+           <property name="showDropIndicator" stdset="0">
+            <bool>false</bool>
+           </property>
+           <property name="rootIsDecorated">
+            <bool>false</bool>
+           </property>
+           <property name="sortingEnabled">
+            <bool>true</bool>
+           </property>
+           <property name="animated">
+            <bool>false</bool>
+           </property>
+           <property name="allColumnsShowFocus">
+            <bool>true</bool>
+           </property>
+           <property name="headerHidden">
+            <bool>true</bool>
+           </property>
+           <property name="expandsOnDoubleClick">
+            <bool>false</bool>
+           </property>
+           <attribute name="headerVisible">
+            <bool>false</bool>
+           </attribute>
+           <column>
+            <property name="text">
+             <string>Entry</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Date</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Hits</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>id</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+         <item row="7" column="0">
+          <widget class="QLabel" name="SearchCount">
+           <property name="text">
+            <string>0 results</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QTextEdit" name="Output">
+       <property name="font">
+        <font>
+         <family>Verdana</family>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="documentTitle">
+        <string>Test</string>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </widget>
+    </item>
+    <item row="2" column="2">
+     <widget class="QLabel" name="Status_User">
+      <property name="text">
+       <string>User: None</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="4">
+     <widget class="QLabel" name="StatusMessage">
+      <property name="text">
+       <string>Status message</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <spacer name="verticalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Fixed</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>4</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="2" column="3">
+     <widget class="QLabel" name="TotalCount">
+      <property name="text">
+       <string>Entries: 0</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>734</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionPrint"/>
+    <addaction name="actionExport_Entry"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionCopy"/>
+    <addaction name="actionSelect_all"/>
+    <addaction name="separator"/>
+    <addaction name="actionPreferences_2"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionHelp_file"/>
+    <addaction name="separator"/>
+    <addaction name="actionAbout_RoboJournal"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>Window</string>
+    </property>
+    <widget class="QMenu" name="menuView_2">
+     <property name="title">
+      <string>Show</string>
+     </property>
+     <addaction name="actionMain_toolbar"/>
+     <addaction name="actionEntry_List"/>
+    </widget>
+    <widget class="QMenu" name="menuToolbar_Position">
+     <property name="title">
+      <string>Toolbar position</string>
+     </property>
+     <addaction name="actionLeft_default"/>
+     <addaction name="actionTop"/>
+     <addaction name="actionRight"/>
+    </widget>
+    <addaction name="menuView_2"/>
+    <addaction name="separator"/>
+    <addaction name="menuToolbar_Position"/>
+    <addaction name="separator"/>
+   </widget>
+   <widget class="QMenu" name="menuDatabase">
+    <property name="title">
+     <string>Database</string>
+    </property>
+    <addaction name="actionConnect"/>
+    <addaction name="actionDisconnect"/>
+    <addaction name="separator"/>
+    <addaction name="actionJournal_Creator"/>
+    <addaction name="actionJournal_Selector"/>
+   </widget>
+   <widget class="QMenu" name="menuJournal">
+    <property name="title">
+     <string>Journal</string>
+    </property>
+    <addaction name="actionLatest_Entry"/>
+    <addaction name="actionPrevious_Entry"/>
+    <addaction name="actionNext_Entry"/>
+    <addaction name="actionManage_Tags_2"/>
+    <addaction name="separator"/>
+    <addaction name="actionWrite"/>
+    <addaction name="actionEdit_Selected_Entry"/>
+    <addaction name="actionDelete_Current_Entry"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuJournal"/>
+   <addaction name="menuDatabase"/>
+   <addaction name="menuView"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <property name="contextMenuPolicy">
+    <enum>Qt::PreventContextMenu</enum>
+   </property>
+   <property name="windowTitle">
+    <string>Main Toolbar</string>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftToolBarArea|Qt::RightToolBarArea|Qt::TopToolBarArea</set>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextBesideIcon</enum>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>LeftToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionWrite">
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/write2.png</normaloff>:/icons/write2.png</iconset>
+   </property>
+   <property name="text">
+    <string>Write in Journal</string>
+   </property>
+   <property name="shortcut">
+    <string>F4</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionPreferences">
+   <property name="text">
+    <string>Preferences</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::ApplicationSpecificRole</enum>
+   </property>
+  </action>
+  <action name="actionMain_Toolbar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Main Toolbar</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+   <property name="softKeyRole">
+    <enum>QAction::NoSoftKey</enum>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionCut">
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/cut.png</normaloff>:/icons/cut.png</iconset>
+   </property>
+   <property name="text">
+    <string>Cut</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionCopy">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/icons/copy.gif</normaloff>:/icons/copy.gif</iconset>
+   </property>
+   <property name="text">
+    <string>Copy</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionPaste">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/icons/action_paste.gif</normaloff>:/icons/action_paste.gif</iconset>
+   </property>
+   <property name="text">
+    <string>Paste</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionSelect_all">
+   <property name="text">
+    <string>Select All</string>
+   </property>
+  </action>
+  <action name="actionPreferences_2">
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/wrench.png</normaloff>:/icons/wrench.png</iconset>
+   </property>
+   <property name="text">
+    <string>Preferences</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionConnect">
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/connect.png</normaloff>:/icons/connect.png</iconset>
+   </property>
+   <property name="text">
+    <string>Connect</string>
+   </property>
+   <property name="shortcut">
+    <string>F2</string>
+   </property>
+  </action>
+  <action name="actionDisconnect">
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/disconnect.png</normaloff>:/icons/disconnect.png</iconset>
+   </property>
+   <property name="text">
+    <string>Disconnect</string>
+   </property>
+   <property name="shortcut">
+    <string>F3</string>
+   </property>
+  </action>
+  <action name="actionManage_Tags">
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/tag_orange.png</normaloff>:/icons/tag_orange.png</iconset>
+   </property>
+   <property name="text">
+    <string>Manage Tags</string>
+   </property>
+  </action>
+  <action name="actionDelete_Current_Entry">
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/bin.png</normaloff>:/icons/bin.png</iconset>
+   </property>
+   <property name="text">
+    <string>Delete Entry</string>
+   </property>
+   <property name="shortcut">
+    <string>Del</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionEdit_Selected_Entry">
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/modify2.png</normaloff>:/icons/modify2.png</iconset>
+   </property>
+   <property name="text">
+    <string>Modify Entry</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionKeyword_Search">
+   <property name="text">
+    <string>Keyword Search</string>
+   </property>
+   <property name="shortcut">
+    <string>F8</string>
+   </property>
+  </action>
+  <action name="actionHelp_file">
+   <property name="text">
+    <string>Documentation</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
+   </property>
+  </action>
+  <action name="actionAbout_RoboJournal">
+   <property name="text">
+    <string>About RoboJournal</string>
+   </property>
+  </action>
+  <action name="actionToolbar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Main toolbar</string>
+   </property>
+  </action>
+  <action name="actionLeft_default">
+   <property name="text">
+    <string>Left</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionTop">
+   <property name="text">
+    <string>Top (default)</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionRight">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Right</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionMain_toolbar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Toolbar</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Esc</string>
+   </property>
+  </action>
+  <action name="actionLatest_Entry">
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/latest.png</normaloff>:/icons/latest.png</iconset>
+   </property>
+   <property name="text">
+    <string>Latest Entry</string>
+   </property>
+   <property name="shortcut">
+    <string>F7</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionPrevious_Entry">
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/resultset_first.png</normaloff>:/icons/resultset_first.png</iconset>
+   </property>
+   <property name="text">
+    <string>Previous Entry</string>
+   </property>
+   <property name="shortcut">
+    <string>Left</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionNext_Entry">
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/resultset_last.png</normaloff>:/icons/resultset_last.png</iconset>
+   </property>
+   <property name="text">
+    <string>Next Entry</string>
+   </property>
+   <property name="shortcut">
+    <string>Right</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionSetup_Wizard_2">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/icons/wand.png</normaloff>:/icons/wand.png</iconset>
+   </property>
+   <property name="text">
+    <string>Setup Wizard</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionPrint">
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/printer.png</normaloff>:/icons/printer.png</iconset>
+   </property>
+   <property name="text">
+    <string>Print</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionSave_Current_Entry">
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/disk.png</normaloff>:/icons/disk.png</iconset>
+   </property>
+   <property name="text">
+    <string>Export Entry</string>
+   </property>
+   <property name="toolTip">
+    <string>Save current entry</string>
+   </property>
+  </action>
+  <action name="actionManage_Tags_2">
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/tag_orange.png</normaloff>:/icons/tag_orange.png</iconset>
+   </property>
+   <property name="text">
+    <string>Manage Tags</string>
+   </property>
+   <property name="shortcut">
+    <string>F6</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionJournal_Creator">
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/database_add.png</normaloff>:/icons/database_add.png</iconset>
+   </property>
+   <property name="text">
+    <string>Journal Creator</string>
+   </property>
+   <property name="toolTip">
+    <string>Create a new (blank) journal</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionJournal_Selector">
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/book.png</normaloff>:/icons/book.png</iconset>
+   </property>
+   <property name="text">
+    <string>Journal Selector</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionExport_Entry">
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/external.png</normaloff>:/icons/external.png</iconset>
+   </property>
+   <property name="text">
+    <string>Export Content</string>
+   </property>
+   <property name="toolTip">
+    <string>Export content from your journal to a HTML or text file</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionEntry_List">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/application_side_expand.png</normaloff>
+     <normalon>:/icons/application_side_contract.png</normalon>:/icons/application_side_expand.png</iconset>
+   </property>
+   <property name="text">
+    <string>Entry List</string>
+   </property>
+   <property name="shortcut">
+    <string>F11</string>
+   </property>
+  </action>
+  <action name="actionNew_Preferences">
+   <property name="text">
+    <string>New Preferences</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="../images.qrc"/>
+ </resources>
+ <connections/>
+</ui>

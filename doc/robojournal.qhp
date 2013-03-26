@@ -1,0 +1,145 @@
+ 
+ <QtHelpProject version="1.0">
+     <namespace>robojournal.0.4.1</namespace>
+     <virtualFolder>doc</virtualFolder>
+     <customFilter name="RoboJournal 0.4.1">
+         <filterAttribute>RoboJournal</filterAttribute>
+         <filterAttribute>0.4.1</filterAttribute>
+     </customFilter>
+     
+     <filterSection>
+     
+         <filterAttribute>RoboJournal</filterAttribute>
+         <filterAttribute>0.4.1</filterAttribute>
+         
+         <toc>
+			 <section title="RoboJournal 0.4.1 Documentation" ref="index.html">
+				<section title="What is RoboJournal?" ref="index.html#what_is_robojournal"/>
+				<section title="Current Limitations" ref="index.html#limitations"/>
+				<section title="Table of Contents" ref="toc.html"/>
+				 <section title="Installing RoboJournal and Other Related Programs" ref="setup.html">
+				 <section title="Overview and System Requirements" ref="setup.html#overview"/>
+					<section title="Installing MySQL" ref="setup.html#install_mysql">
+						<section title="Windows Procedure" ref="setup.html#mysql_windows"/>
+						<section title="Linux Procedure" ref="setup.html#mysql_linux"/>
+					</section>
+					<section title="Installing RoboJournal" ref="setup.html#install_robojournal">
+						<section title="Windows Procedure" ref="setup.html#install_windows"/>
+						<section title="Linux Procedure" ref="setup.html#install_linux"/>
+					</section>
+				 </section>
+				 
+				 <section title="Getting Started With RoboJournal" ref="getting_started.html">
+					<section title="First-Run Overview" ref="getting_started.html#firstrun"/>
+					<section title="Creating a New Journal Database" ref="getting_started.html#create"/>
+					<section title="Assigning Permissions to a Database" ref="getting_started.html#permissions">
+						<section title="MySQL Procedure" ref="getting_started.html#mysql_procedure"/>
+					</section>
+					<section title="Connecting to an Existing Journal Database" ref="getting_started.html#connect"/>
+				 </section>
+				 
+				 <section title="RoboJournal Fundamentals" ref="fundamentals.html">
+					<section title="Default State" ref="fundamentals.html#default"/>
+					<section title="Main Window Anatomy" ref="fundamentals.html#anatomy"/>
+					<section title="Making a Connection" ref="fundamentals.html#connect"/>
+					<section title="Disconnecting" ref="fundamentals.html#disconnect"/>
+					<section title="Writing a New Entry" ref="fundamentals.html#new_entry"/>
+					<section title="Modifying an Existing Entry" ref="fundamentals.html#modify_entry"/>
+					<section title="Deleting an Entry" ref="fundamentals.html#delete_entry"/>
+					<section title="Navigating the Chronological Entry List" ref="fundamentals.html#navigate"/>
+					<section title="Tagging an Entry" ref="fundamentals.html#tag_entry"/>
+					<section title="Searching for an Entry" ref="fundamentals.html#search_entry"/>
+				 </section>
+				 
+				 <section title="Working With Tags" ref="tags.html">
+					<section title="Tagging Overview" ref="tags.html#Tagging">
+						<section title="Best Practices" ref="tags.html#Best"/>
+						<section title="Accessing the Tagging Interface" ref="tags.html#Accessing"/>
+					</section>
+					<section title="Declaring a New Tag" ref="tags.html#Declaring"/>
+					<section title="Assigning a Tag to an Entry" ref="tags.html#Assigning"/>
+					<section title="Removing a Tag From an Entry" ref="tags.html#Removing"/>
+					<section title="Tag Reminder Window" ref="tags.html#tag_reminder"/>
+				 </section>
+				 
+				 <section title="Exporting Journal Entries" ref="export.html">
+					<section title="Overview" ref="export.html#Overview">
+						<section title="Export Formats" ref="export.html#Formats" />
+						<section title="Export Options and Settings" ref="export.html#Anatomy" />
+					</section>
+					<section title="Exporting a Single Entry" ref="export.html#Single" />
+					<section title="Exporting the Entire Journal" ref="export.html#Multi" />
+				 </section>
+				 
+				 <section title="Using the Search Function" ref="search.html">
+					<section title="Search Overview" ref="search.html#search_overview" >
+						<section title="Pattern Match" ref="search.html#pattern_match" >
+							<section title="Pattern Match Filters" ref="search.html#pattern_match_filters" />
+							<section title="Highlighting" ref="search.html#highlighting" />
+						</section>
+						<section title="Tag Search" ref="search.html#tag_search" />
+						<section title="Search Interface Overview" ref="search.html#search_interface" />
+					</section>
+					<section title="Conducting Searches" ref="search.html#conducting_searches" >
+						<section title="Accessing the Search Interface" ref="search.html#accessing_interface" />
+						<section title="Search by Tag" ref="search.html#tag_search_procedure" />
+						<section title="Search by Pattern" ref="search.html#pattern_search_procedure" />
+					</section>
+				 </section>
+				 
+				 <section title="RoboJournal Preferences" ref="preferences.html" >
+					<section title="Preferences Overview" ref="preferences.html#preferences_overview" />
+					<section title="General Page" ref="preferences.html#general_page">
+						<section title="Global Preferences" ref="preferences.html#global_preferences" />
+						<section title="Backend (Database)" ref="preferences.html#backend" />
+						<section title="Date and Time" ref="preferences.html#date_and_time" />
+					</section>
+					<section title="Journal Page" ref="preferences.html#journal_page">
+						<section title="Entry Settings and Range" ref="preferences.html#entry_settings" />
+						<section title="User Information" ref="preferences.html#user_info" />
+						<section title="Highlighting" ref="preferences.html#highlighting" />
+						<section title="Behavior" ref="preferences.html#behavior" />
+					</section>
+					<section title="Editor Page" ref="preferences.html#editor_page">
+						<section title="Post-Processing" ref="preferences.html#post_processing" />
+						<section title="Appearance" ref="preferences.html#appearance" />
+						<section title="Spell Check" ref="preferences.html#spellcheck">
+							<section title="Selecting a Dictionary for the First Time" ref="preferences.html#select_dict" />
+						</section>
+					</section>
+					<section title="Appearance Page" ref="preferences.html#appearance_page" >
+						<section title="Enabling Custom Styles" ref="preferences.html#enable_styles">
+							<section title="Selecting a Font Color" ref="preferences.html#select_color" />
+							<section title="Setting a Background Image" ref="preferences.html#set_bgimage" />
+							<section title="Clearing a Background Image" ref="preferences.html#clear_bgimage" />
+						</section>
+						<section title="Style Options" ref="preferences.html#style_options" />
+					</section>
+					<section title="Export Settings Page" ref="preferences.html#export_settings" >
+						<section title="HTML Behavior" ref="preferences.html#html_behavior" />
+						<section title="Fonts and Units" ref="preferences.html#fonts_and_units" />
+						<section title="Export Preview" ref="preferences.html#export_preview" />
+					</section>
+					<section title="MySQL Settings Page" ref="preferences.html#mysql_settings_page" />
+				 </section>
+				 <section title="Frequently Asked Questions" ref="faq.html" />
+				 <section title="Appendix: Table of Shortcut Key Combinations" ref="shortcut_keys.html" />
+			 </section>
+             
+         </toc>
+         
+         <keywords>
+             <keyword name="foo" id="MyApplication::foo" ref="doc.html#foo"/>
+             <keyword name="bar" ref="doc.html#bar"/>
+             <keyword id="MyApplication::foobar" ref="doc.html#foobar"/>
+         </keywords>
+         
+         <files>
+             <file>*.html</file>
+			 <file>css/*.css</file>
+			 <file>img/*.png</file>
+			 <file>img/screens/*.png</file>
+         </files>
+         
+     </filterSection>
+ </QtHelpProject>

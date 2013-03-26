@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=RoboJournal
+GenericName=Free Journal Software for Everyone
+Icon=/usr/share/icons/robojournal64.png
+Exec=robojournal
+Categories=Office;
+Comment=Keep a journal/diary of day-to-day events in your life.

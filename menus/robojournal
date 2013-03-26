@@ -1,0 +1,4 @@
+?package(robojournal):needs="X11" section="Applications/Office" \
+  hints="Office,KDE,Qt" \
+  title="RoboJournal" command="robojournal" \
+  icon="/usr/share/pixmaps/robojournal.xpm"
