@@ -40,7 +40,4 @@
 @path %qt%
 @qcollectiongenerator.exe robojournal.qhcp -o robojournal.qhc
 
-
-@ECHO.
-
-@pause
+@assistant.exe  -collectionFile robojournal.qhc
