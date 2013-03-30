@@ -86,7 +86,21 @@ else{
 
  # create package build
  if($choice2 =~ m/[y]|[yes]/i){
-   
+   print "\n\nCleaning up...\n\n";
+    system("make distclean");
+    $qmake_cmd=$qmake . " CONFIG+=package robojournal.pro";
+    print " Running qmake: ";
+    print $qmake_cmd . "\n\n";
+    system($qmake_cmd);
+    system("make -j 3");
+    
+    print "\n\nBuild process complete. Creating Documentation...\n\n";
+    system("qcollectiongenerator doc/robojournal.qhcp -o doc/robojournal.qhc");
+    
+    
+    if($choice3 =~ m/[y]|[yes]/i){
+      system ("sudo make install");
+    }  
   }
   # create regular build
   else{

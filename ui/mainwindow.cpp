@@ -1013,22 +1013,27 @@ void MainWindow::Decorate_GUI(){
 void MainWindow::ShowHelp(){
     using namespace std;
 
-    QString assistant;
+    QString assistant, compiled_help_path, collection_path;
+
 
 #ifdef _WIN32
     // Qt Assistant should be installed in the same folder as robojournal.exe on Win32.
     assistant=QDir::currentPath() + QDir::separator() + "assistant.exe";
+    compiled_help_path=QDir::currentPath() + QDir::separator() + "robojournal.qch";
+    collection_path=QDir::currentPath() + QDir::separator() + "robojournal.qhc";
 #endif
 
 #ifdef unix
     assistant="/usr/bin/assistant";
+    compiled_help_path="/usr/share/doc/robojournal-" + Buffer::version + "/robojournal.qch";
+    collection_path="/usr/share/doc/robojournal-" + Buffer::version + "/robojournal.qhc";
 #endif
 
     QFile assistant_exec(assistant);
 
     if(assistant_exec.exists()){
-        QFile collection_file(QDir::currentPath() + QDir::separator() + "robojournal.qhc");
-        QFile documentation_file(QDir::currentPath() + QDir::separator() + "robojournal.qch");
+        QFile collection_file(collection_path);
+        QFile documentation_file(compiled_help_path);
 
         cout << "OUTPUT: Attempting to find help collection file located at " << collection_file.fileName().toStdString() << endl;
         cout << "OUTPUT: Attempting to find compiled documentation file located at " << documentation_file.fileName().toStdString() << endl;
@@ -1038,8 +1043,15 @@ void MainWindow::ShowHelp(){
 
             QProcess *p=new QProcess();
             QStringList args;
+   #ifdef _WIN32
             args << "-collectionFile" << "robojournal.qhc"
                  << "-enableRemoteControl";
+#endif
+
+#ifdef unix
+            args << "-collectionFile" << collection_path
+                 << "-enableRemoteControl";
+#endif
 
             p->start(assistant, args);
 

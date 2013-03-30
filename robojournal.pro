@@ -128,6 +128,11 @@ unix {
             message(Creating a regular build...)
             target.path = /usr/local/bin
         }
+        
+        QMAKE_POST_LINK += bash doc/compile_doc.sh
+        
+	doc.path= /usr/share/doc/robojournal-0.4.1
+	doc.files= doc/robojournal.qhc doc/robojournal.qch
 
 	shortcut.path = /usr/share/applications
 	shortcut.files = menus/robojournal.desktop
@@ -141,7 +146,7 @@ unix {
 	icon-deb.path = /usr/share/pixmaps
 	icon-deb.files = menus/robojournal.xpm
 
-	INSTALLS += target shortcut icon shortcut-deb icon-deb
+	INSTALLS += target shortcut icon shortcut-deb icon-deb doc
 
 }
 
@@ -150,19 +155,3 @@ win32{
         CONFIG += qt release
         message(Creating 32-bit Windows release build...)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
