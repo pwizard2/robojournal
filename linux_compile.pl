@@ -93,9 +93,7 @@ else{
     print $qmake_cmd . "\n\n";
     system($qmake_cmd);
     system("make -j 3");
-    
-    print "\n\nBuild process complete. Creating Documentation...\n\n";
-    system("qcollectiongenerator doc/robojournal.qhcp -o doc/robojournal.qhc");
+
     
     
     if($choice3 =~ m/[y]|[yes]/i){
@@ -111,11 +109,7 @@ else{
     print $qmake_cmd . "\n\n";
     system($qmake_cmd);
     system("make -j 3");
-    
-    print "\n\nBuild process complete. Creating Documentation...\n\n";
-    system("qcollectiongenerator doc/robojournal.qhcp -o doc/robojournal.qhc");
-    
-    
+   
     if($choice3 =~ m/[y]|[yes]/i){
       system ("sudo make install");
     }  
