@@ -120,6 +120,15 @@ RC_FILE = icon.rc
 unix {
         CONFIG += qt release
 
+        package {
+            message(Creating a makefile with the correct install path for packaging purposes...)
+            target.path = /usr/bin
+        }
+        else{
+            message(Creating a regular build...)
+            target.path = /usr/local/bin
+        }
+
 	shortcut.path = /usr/share/applications
 	shortcut.files = menus/robojournal.desktop
 
@@ -132,14 +141,14 @@ unix {
 	icon-deb.path = /usr/share/pixmaps
 	icon-deb.files = menus/robojournal.xpm
 
-	target.path = /usr/local/bin
-
 	INSTALLS += target shortcut icon shortcut-deb icon-deb
+
 }
 
 
 win32{
         CONFIG += qt release
+        message(Creating 32-bit Windows release build...)
 }
 
 
