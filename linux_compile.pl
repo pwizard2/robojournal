@@ -29,7 +29,7 @@ die "\n\nABORT: You do not need to build RoboJournal from source because it is\n
 
 $install_location2="/usr/bin/robojournal";
 if(-e $install_location2){
-die "\n\nABORT: You do not need to build RoboJournal from source because it is\nalready installed at $install_location2.\n\nTo prevent conflicts, you must uninstall that executable before you can\nbuild this one!\n\n\n";
+die "\n\nABORT: You do not need to build RoboJournal from source because\nit is already installed at $install_location2.\n\nTo prevent conflicts, you must uninstall the current \"robojournal\"\npackage before you can build this version!\n\n\n";
 }
 
 print "\n\n";
@@ -51,7 +51,7 @@ if($qmake eq ""){
   $qmake=$default_qmake_path;
   print "\nThis script will use the default Qmake location
 [$default_qmake_path].\n\n";
-  print "Is this correct? (Y/N)\n\n:";
+  print "Is this correct? (Y/N)\n\n: ";
   $choice1=<STDIN>;
   chomp($choice1);
 
@@ -68,10 +68,10 @@ else{
 
 choose_build:
 print "\n\nDo you want to create a package build? (Y/N)\nTip: You should answer N unless you need to package RoboJournal
-for the Debian repositories.\n\n:";
+for the Debian repositories.\n\n: ";
  $choice2=<STDIN>;
 
-print "\n\nDo you want to install the program after compiling it? (Y/N)\nFYI: Installation requires sudo access! Furthermore, documentation doesn't work without a proper installation.\n\n:";
+print "\n\nDo you want to install the program after compiling it? (Y/N)\nFYI: Installation requires sudo access! Furthermore, documentation\ndoesn't work correctly without a proper installation.\n\n: ";
 $choice3=<STDIN>;
 
 
