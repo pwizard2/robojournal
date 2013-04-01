@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>460</width>
-    <height>358</height>
+    <height>388</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -47,6 +47,12 @@
    </item>
    <item>
     <widget class="QTreeWidget" name="EntryList">
+     <property name="showDropIndicator" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="sortingEnabled">
+      <bool>true</bool>
+     </property>
      <property name="allColumnsShowFocus">
       <bool>true</bool>
      </property>

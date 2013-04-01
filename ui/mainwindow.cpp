@@ -1016,6 +1016,13 @@ void MainWindow::ShowHelp(){
     QString assistant, compiled_help_path, collection_path;
 
 
+    /* Use separate #ifdef blocks to set the paths for Windows and Unix-like operating systems like
+     * Linux b/c the file structure is completely different on the two OSes. RoboJournal on Windows
+     * requires Qt Assistantto be installed locally (in the same directory) while Linux is able to
+     * make use of global system resources.
+     *
+     * -- Will Kraft, 3/31/13.
+     */
 #ifdef _WIN32
     // Qt Assistant should be installed in the same folder as robojournal.exe on Win32.
     assistant=QDir::currentPath() + QDir::separator() + "assistant.exe";
@@ -1035,8 +1042,10 @@ void MainWindow::ShowHelp(){
         QFile collection_file(collection_path);
         QFile documentation_file(compiled_help_path);
 
-        cout << "OUTPUT: Attempting to find help collection file located at " << collection_file.fileName().toStdString() << endl;
-        cout << "OUTPUT: Attempting to find compiled documentation file located at " << documentation_file.fileName().toStdString() << endl;
+        cout << "OUTPUT: Attempting to find help collection file located at "
+             << collection_file.fileName().toStdString() << endl;
+        cout << "OUTPUT: Attempting to find compiled documentation file located at "
+             << documentation_file.fileName().toStdString() << endl;
 
         if((collection_file.exists()) && (documentation_file.exists())){
 
@@ -1053,9 +1062,13 @@ void MainWindow::ShowHelp(){
                  << "-enableRemoteControl";
 #endif
 
+            // Spawn the Assistant process with the OS-specific path-to-binary and args.
             p->start(assistant, args);
 
-            // Instruct Qt Assistant to completely expand the TOC
+            // Instruct Qt Assistant to completely expand the TOC immediately after launch. This saves
+            // the user lots of pointless clicking but the expand instruction doesn't always work properly.
+            // Addendum 3/31/13: Hide the Index tab b/c that part isn't finished yet (and probably
+            // won't be for some time).
             QByteArray input;
             input.append("expandToc -1;");
             input.append("hide index\n");
@@ -1065,22 +1078,50 @@ void MainWindow::ShowHelp(){
             if (!p->waitForStarted()){
                 return;
             }
-
-
         }
         else{
+
+            // Share this messagebox object between several conditionals... it's just more efficient.
+            // In all cases, show appropriate errors if one or more files is missing.
             QMessageBox b;
-            b.critical(this,"RoboJournal","RoboJournal could not locate the Help Collection File"
-                       " (robojournal.qhc) and/or the Documentation File (robojournal.qch). Please"
-                       " locate these files and copy them to " + collection_file.fileName());
+
+            if(!collection_file.exists()){
+                b.critical(this,"RoboJournal","RoboJournal cannot display the documentation because the Collection File "
+                           "needed by Qt Assistant is missing. Please copy the Collection File to <b>" +
+                           collection_path + "</b> and try again.");
+            }
+
+            if(!documentation_file.exists()){
+                b.critical(this,"RoboJournal","RoboJournal cannot display the documentation because the Compiled Help File "
+                           "needed by Qt Assistant is missing. Please copy the Compiled Help File to <b>" +
+                           compiled_help_path + "</b> and try again.");
+            }
+
+            if((!collection_file.exists()) && (!documentation_file.exists())){
+
+                QString location;
+#ifdef _WIN32
+                location=QDir::current().path();
+#endif
+
+#ifdef unix
+                location="/usr/share/doc/robojournal-" + Buffer::version;
+#endif
+
+                b.critical(this,"RoboJournal","RoboJournal could not locate the Collection File"
+                           " (robojournal.qhc) or the Compiled Help File (robojournal.qch). Please"
+                           " locate these files and copy them to <b>" + location + "</b>.");
+
+            }
         }
     }
 
     // Show error if Qt assistant is not installed
     else{
         QMessageBox c;
-        c.critical(this,"RoboJournal","The documentation cannot be displayed because QT Assistant"
-                   " is not installed correctly. Please copy Qt Assistant to <b>" + assistant + "</b> and try again.");
+        c.critical(this,"RoboJournal","RoboJournal cannot display the documentation because Qt Assistant"
+                   " is not installed correctly. Please install (or move) the Qt Assistant executable to <b>" +
+                   assistant + "</b> and try again.");
 
     }
 }
