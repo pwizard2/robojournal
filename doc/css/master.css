@@ -77,14 +77,14 @@ h1, h2, h3, p, .caption, .caption_wide, .list li, .FYI, .right, .left {
 }
 
 h1{
-	font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+	font-family: "Segoe UI", Candara, Freesans, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
 	font-size: 34px;
 	font-weight: 500;
 	color: #000000;
 }
 
 h2{
-	font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+	font-family: "Segoe UI", Candara, Freesans, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
 	font-size: 24px;
 	font-weight: 500;
 	margin-top: 50px;
@@ -100,7 +100,7 @@ h2{
 }
 
 h3{
-	font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+	font-family: "Segoe UI", Candara, Freesans, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
 	font-size: 20px;
 	font-weight: 600;
 	margin-bottom: 40px;
@@ -112,7 +112,7 @@ h3{
 
 
 h4{
-	font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+	font-family: "Segoe UI", Candara, Freesans, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
 	font-size: 16px;
 	font-weight: bold;
 	margin-bottom: 40px;
@@ -128,7 +128,7 @@ h4 strong{
 }
 
 p{
-	font-family: Constantia, Georgia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif",  serif;
+	font-family: Constantia, Georgia, Freeserif, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif",  serif;
 	font-size: 17px;
 	font-weight: normal;
 	text-align: left;
@@ -144,7 +144,7 @@ p{
 	margin-bottom: 40px;
 	padding-top: 15px;
 	padding-bottom: 15px;
-	font-family: Constantia, Georgia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif",  serif;
+	font-family: Constantia, Georgia, Freeserif, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif",  serif;
 	font-size: 17px;
 	}
 	
@@ -159,7 +159,7 @@ p{
 	}
 
 .toc{
-	font-family: Constantia, Georgia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif",  serif;
+	font-family: Constantia, Georgia, Freeserif, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif",  serif;
 	font-size: 17px;
 	font-weight: normal;
 	text-align: left;
@@ -223,7 +223,7 @@ p{
         margin-right: auto;
         width: 80%;
         font-size: 17px;
-        font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+        font-family: "Segoe UI", Candara, Freesans, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
         margin-top: 40px;
         margin-bottom: 40px;
         
@@ -234,7 +234,7 @@ table{
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
-	font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+	font-family: "Segoe UI", Candara, Freesans, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
 	font-size: 17px;
 	border-top: solid 2px #A0A69E;
 	border-collapse: collapse;
@@ -335,7 +335,7 @@ dt{
 }
  
 dd{
-	font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+	font-family: "Segoe UI", Candara, Freesans, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
 	font-size: 17px;
 	text-align: left;
 	margin-left: 100px;
@@ -346,7 +346,7 @@ dd{
 }
 
 .caption{
-	font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+	font-family: "Segoe UI", Candara, Freesans, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
 	font-size: 13px;
 	font-weight: normal;
 	margin-top: 0px;
@@ -356,7 +356,7 @@ dd{
 }
 
 .caption_wide{
-	font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;;
+	font-family: "Segoe UI", Candara, Freesans, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
 	font-size: 13px;
 	font-weight: normal;
 	margin-top: 0px;
@@ -399,7 +399,7 @@ p.footnote{
 	border: solid 1px #A0A69E;
 	padding-top: 3px;
 	padding-bottom: 3px;
-	font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+	font-family: "Segoe UI", Candara, Freesans, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
 	font-size: 17px;
 	margin-top: 60px;
 }
@@ -407,7 +407,7 @@ p.footnote{
 #footer_left {
 	float:left;
 	height: 20px;
-	font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+	font-family: "Segoe UI", Candara, Freesans, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
 	font-size: 17px;
 	padding-left: 6px;
 	font-weight: bold;    
@@ -417,14 +417,14 @@ p.footnote{
 	display: inline-block;
 	margin:0 auto;
 	height: 20px;
-	font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+	font-family: "Segoe UI", Candara, Freesans, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
 	font-size: 17px;  
 }
 
 #footer_right {
 	float:right;
 	height: 20px;
-	font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+	font-family: "Segoe UI", Candara, Freesans, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
 	font-size: 17px;
 	font-weight: bold;
 	padding-right: 6px;
