@@ -1013,6 +1013,8 @@ void MainWindow::Decorate_GUI(){
 void MainWindow::ShowHelp(){
     using namespace std;
 
+    this->setCursor(Qt::WaitCursor);
+
     QString assistant, compiled_help_path, collection_path;
 
 
@@ -1052,7 +1054,7 @@ void MainWindow::ShowHelp(){
 
             QProcess *p=new QProcess();
             QStringList args;
-   #ifdef _WIN32
+#ifdef _WIN32
             args << "-collectionFile" << "robojournal.qhc"
                  << "-enableRemoteControl";
 #endif
@@ -1078,6 +1080,8 @@ void MainWindow::ShowHelp(){
             if (!p->waitForStarted()){
                 return;
             }
+
+            this->setCursor(Qt::ArrowCursor);
         }
         else{
 
@@ -1089,12 +1093,14 @@ void MainWindow::ShowHelp(){
                 b.critical(this,"RoboJournal","RoboJournal cannot display the documentation because the Collection File "
                            "needed by Qt Assistant is missing. Please copy the Collection File to <b>" +
                            collection_path + "</b> and try again.");
+                this->setCursor(Qt::ArrowCursor);
             }
 
             if(!documentation_file.exists()){
                 b.critical(this,"RoboJournal","RoboJournal cannot display the documentation because the Compiled Help File "
                            "needed by Qt Assistant is missing. Please copy the Compiled Help File to <b>" +
                            compiled_help_path + "</b> and try again.");
+                this->setCursor(Qt::ArrowCursor);
             }
 
             if((!collection_file.exists()) && (!documentation_file.exists())){
@@ -1111,6 +1117,7 @@ void MainWindow::ShowHelp(){
                 b.critical(this,"RoboJournal","RoboJournal could not locate the Collection File"
                            " (robojournal.qhc) or the Compiled Help File (robojournal.qch). Please"
                            " locate these files and copy them to <b>" + location + "</b>.");
+                this->setCursor(Qt::ArrowCursor);
 
             }
         }
@@ -1122,6 +1129,7 @@ void MainWindow::ShowHelp(){
         c.critical(this,"RoboJournal","RoboJournal cannot display the documentation because Qt Assistant"
                    " is not installed correctly. Please install (or move) the Qt Assistant executable to <b>" +
                    assistant + "</b> and try again.");
+        this->setCursor(Qt::ArrowCursor);
 
     }
 }
