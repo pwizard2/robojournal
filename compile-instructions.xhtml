@@ -182,9 +182,9 @@ not full commands themselves.</p>
   </li>
   <li><a href="#build">Building RoboJournal From Source</a> 
     <ol>
-      <li><a href="#windows">Windows Procedure</a> </li>
+      <li><a href="#windows">Manual Windows Procedure</a> </li>
       <li><a href="#depends">Resolving Windows Dependencies</a> </li>
-      <li><a href="#linux">Linux Procedure</a> </li>
+      <li><a href="#linux">Manual Linux Procedure</a> </li>
     </ol>
   </li>
 </ol>
@@ -195,7 +195,15 @@ not full commands themselves.</p>
 following:</p>
 <ol>
   <li>RoboJournal source tarball (and any extra software required to unpack the
-    tar.gz archive). The newest version at the time of this writing is 0.4.1.</li>
+    tar.gz archive). The newest stable version at the time of this writing is
+    0.4.1. Alternatively, you can acquire RoboJournal source code by cloning
+    the contents of the <a
+    href="https://github.com/pwizard2/robojournal">RoboJournal GitHub
+    repository</a> directly into a folder. Be advised that the contents of the
+    RoboJournal "master" branch on GitHub should be considered highly
+    experimental because that branch frequently contains components that may be
+    incomplete and/or buggy. A "stable" branch (kept synchronized with the
+    current stable release) should be available soon. </li>
   <li>A Qt ≥ 4.7 environment to compile against. Consult the "Preparing Qt"
     section in this documentation for details on what is required.</li>
   <li>GNU Compiler Toolkit. On Linux, the package containing the full kit is
@@ -395,9 +403,9 @@ changes. While the "raw" Windows MySQL development library file (libmysql.lib)
 may be used as-is by the Linux compiler, it is unusable on Windows unless you
 alter it with the dlltool and reimp utilities prior to the compile process:</p>
 <ol>
-  <li>Open a cmd.exe terminal and set its PATH to the directory which contains
+  <li>Open a cmd.exe terminal and set its PATH to the directory that contains
     reimp and dlltool.</li>
-  <li>Navigate to the directory which contains libmysql.lib. For this example,
+  <li>Navigate to the directory that contains libmysql.lib. For this example,
     assume that file is located in the path given in the <span
     class="arg">-L</span> argument of the configure statement (i.e.
     C:\MySQL\lib).</li>
@@ -428,11 +436,11 @@ should have at this point.<br />
 
 <div class="FYI">
 <p><strong>FYI:</strong> RoboJournal 0.3 and newer includes a build helper
-script which automates the compile procedure on Windows (2000, XP, Vista, and
-7) machines. Open win32_compile.bat in a text editor and make all necessary
-path changes (specify the locations of Qt and MinGW on your system but do not
-change anything else). After that, run win32_compile.bat to compile RoboJournal
-in one easy step.</p>
+script that automates the compile procedure on Windows (2000, XP, Vista, and 7)
+machines. Open win32_compile.bat in a text editor and make all necessary path
+changes (specify the locations of Qt and MinGW on your system but do not change
+anything else). After that, run win32_compile.bat to compile RoboJournal in one
+easy step.</p>
 
 <p>The build helper script builds robojournal.exe inside a separate "release"
 folder in the robojournal-0.4.1 directory. After the helper script is finished,
@@ -499,8 +507,8 @@ your actual configuration.</p>
   <li>Type <span class="console">robojournal.exe</span> and press Enter to
     start the program for the first time. You may also start the program by
     opening Windows Explorer, navigating to the C:\robojournal-0.4.1 (or
-    C:\robojournal-0.4.1\release) folder, and double-clicking the robojournal.exe
-    program icon.</li>
+    C:\robojournal-0.4.1\release) folder, and double-clicking the
+    robojournal.exe program icon.</li>
 </ol>
 <hr />
 
@@ -529,9 +537,9 @@ files and where they are most likely to be located:</p>
 <h3 id="linux">Manual Linux Procedure</h3>
 
 <p>The build process for Linux is much more straightforward. Unlike most source
-packages, there is no configure script which must be run before the compile
+packages, there is no configure script that must be run before the compile
 process (QMake handles this role instead). For the sake of simplicity, assume
-that Qt 4.7.4 (the version used in this example, the version you use may vary)
+that Qt 4.8.4 (the version used in this example, the version you use may vary)
 is installed at /usr/local/Trolltech/Qt-4.8.4 and assume that RoboJournal’s
 source code is found at ~/robojournal-0.4.1 (the tilde symbol "~" is an
 abbreviation for the current user’s home directory). In a real-world
@@ -554,7 +562,7 @@ your actual configuration.</p>
     <div class="FYI">
     <p><strong>FYI:</strong> If you need to create a package build for Debian,
     you should substitute the regular Qmake command with <span
-    class="console">qmake CONFIG+=package robojournal.pro</span> (adjust the
+    class="console">qmake CONFIG+=package robojournal.pro</span> (change the
     path to Qmake if necessary). You should not create a package build
     <em>unless</em> you are a Debian maintainer and you need to package
     RoboJournal for inclusion in the repositories.</p>
@@ -615,7 +623,7 @@ precede the command with ./).</p>
 
 <p>To uninstall, navigate to the ~/robojournal-0.4.1 directory, switch to root
 (or use sudo), type <span class="console">make uninstall</span>, and press
-Enter. This completely removes the global copy and any shortcuts which point to
+Enter. This completely removes the global copy and any shortcuts that point to
 it. You should always uninstall prior to upgrading to a newer version of
 RoboJournal; do not install a new global copy over an existing one. If you wish
 to clean up the object code (*.o files) left behind by the compiler, type <span
