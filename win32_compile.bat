@@ -13,7 +13,7 @@
 
 @TITLE ROBOJOURNAL BUILD HELPER SCRIPT FOR WINDOWS 2000/XP/VISTA/7
 @ECHO.
-@ECHO Version 1.3 -- 3/23/2013
+@ECHO Version 1.4 -- 4/2/2013
 @ECHO.
 @ECHO #############################################################
 @ECHO.
@@ -63,21 +63,14 @@ strip -s release/robojournal.exe
 @ECHO Build process complete!
 @ECHO.
 @ECHO robojournal.exe will work by itself if the Qt you compiled against 
-@ECHO was static-built. 
+@ECHO is static-built ^(i.e. integrates all dependencies into the compiled 
+@ECHO binary^).
 @ECHO.
-@ECHO If your Qt is ^*NOT^* static, locate the following files on your hard drive (they
-@ECHO MUST be from the same Qt and MinGW libraries you compiled against) and copy 
-@ECHO them to  %cd%.  
+@ECHO If your Qt is ^*NOT^* static-built, please consult the 
+@ECHO ^"Resolving Windows Dependencies^" section in the RoboJournal 
+@ECHO Compile^/Installation Guide (compile-instructions.xhtml) for 
+@ECHO instructions on how to resolve all necessary dependencies.
 @ECHO.
-@ECHO  ^* libgcc_s_dw2-1.dll
-@ECHO  ^* libmysql.dll
-@ECHO  ^* libstdc^+^+-6.dll
-@ECHO  ^* QtCore4.dll
-@ECHO  ^* QtGui4.dll
-@ECHO  ^* QtSql4.dll
-@ECHO  ^* QtWebKit4.dll
-@ECHO  ^* QtNetwork4.dll
-@ECHO.
-@ECHO Thank you for choosing RoboJournal. 
+@ECHO Thank you for using RoboJournal. 
 @ECHO.
 @pause
