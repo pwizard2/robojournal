@@ -1,0 +1,13 @@
+April 4, 2013
+
+Attention package maintainers:
+
+Be sure to include the *MANDATORY* "package" configuration argument when packaging 
+RoboJournal for Debian or any other Linux distro:
+
+i.e.  run "qmake CONFIG+=package robojournal.pro"
+
+This ensures that the installation path in the Makefile is properly set to /usr/bin
+instead of /usr/local/bin (as it would be during a normal build).
+
+--Will Kraft <pwizard@gmail.com>

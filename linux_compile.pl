@@ -1,19 +1,38 @@
 #! /usr/bin/perl
 
-#List the path to Qmake. This is the default value.
+# List the path to Qmake(default value == /usr/bin/qmake). If you use a custom
+# or non-standard Qmake, it helps to include the absolute (full) path to it here 
+# so you don't have to type it in by hand every time you use this script.
+
 $default_qmake_path="/usr/bin/qmake";
 
-# Do not edit below this line!
+# Do *not* edit below this line!
 ##########################################################################
 ##########################################################################
 ##########################################################################
+
+# This file is part of RoboJournal.
+# Copyright (c) 2012, 2013 by Will Kraft <pwizard@gmail.com>.
+# MADE IN USA
+#
+#
+# RoboJournal is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# at your option) any later version.
+#
+# RoboJournal is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+#
+# You should have received a copy of the GNU General Public License
+# along with RoboJournal.  If not, see <http://www.gnu.org/licenses/>.
 
 # Will Kraft, 3/28/13: Yeah, I just hacked this together. Goto is not elegant
 # or pretty but it works; this isn't complex enough for 
 # spaghetti code to be a problem. In any event, this is just a simple 
 # build script most people are going to use just once anyway so it can be 
-# kludged together and still serve its purpose. I plan to rebuild this 
-# anyway without using goto whenever I can manage to get enough time.
+# kludged together and still serve its purpose.
 
 system(clear);
 print "################################################################\n";
@@ -34,7 +53,7 @@ die "\n\nABORT: You do not need to build RoboJournal from source because\nit is 
 
 print "\n\n";
 print "This script helps you to compile and install RoboJournal on Linux-\n";
-print "based systems.\n\n";
+print "based systems by automating most of the process.\n\n";
 
 
 

@@ -80,7 +80,7 @@ p, li { white-space: pre-wrap; }
          <string>&lt;p&gt;This housekeeping function causes RoboJournal to display a list of all untagged entries it finds during every login (essentially a &amp;quot;nag window&amp;quot;). This feature can be helpful but some users may wish to disable it. &lt;/p&gt;</string>
         </property>
         <property name="text">
-         <string>Display Tag &amp;Reminder window at login</string>
+         <string>Display Tag &amp;Reminder window during login</string>
         </property>
        </widget>
       </item>

@@ -1969,7 +1969,7 @@ void MainWindow::DeleteSelectedEntry(){
         if(Buffer::showwarnings){
             QMessageBox b;
             int choice=b.question(this,"RoboJournal","Do you really want to delete the selected journal entry?"
-                                  " This action can't be undone.",QMessageBox::Cancel,QMessageBox::Ok);
+                                  " This action cannot be undone.",QMessageBox::Cancel,QMessageBox::Ok);
 
             switch(choice){
             case QMessageBox::Ok:
