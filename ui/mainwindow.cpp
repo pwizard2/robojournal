@@ -490,7 +490,7 @@ void MainWindow::SearchDatabase(){
 
                         QMessageBox j;
                         if(ui->TagList->count()==0){
-                            j.critical(this,"RoboJournal","RoboJournal could not locate any tag data! You must define at least two tags before you may use this feature.");
+                            j.critical(this,"RoboJournal","RoboJournal could not locate any tag data! You must declare at least two tags before you can use the Tag Search feature.");
 
                         }
                         else{
@@ -499,7 +499,6 @@ void MainWindow::SearchDatabase(){
                                           " This only happens if the tag list is out of date and needs to be refreshed (or you've just found a bug).");
 
                         }
-
 
                         // force tag refresh to fix the situation
                         ui->TagList->clear();

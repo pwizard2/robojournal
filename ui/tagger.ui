@@ -91,7 +91,7 @@
      <item row="1" column="2">
       <widget class="QPushButton" name="NewTag">
        <property name="toolTip">
-        <string>&lt;p&gt;Defines a new tag and adds it to the Available Tags list.&lt;/p&gt;</string>
+        <string>&lt;p&gt;Declare a new tag and add it to the &lt;b&gt;Available Tags&lt;/b&gt; list.&lt;/p&gt;</string>
        </property>
        <property name="text">
         <string>&amp;New Tag</string>
@@ -127,7 +127,7 @@
      <item row="5" column="1">
       <widget class="QComboBox" name="TagChooser">
        <property name="toolTip">
-        <string>Shows all available tags</string>
+        <string>&lt;p&gt;Show all available tags&lt;/p&gt;</string>
        </property>
        <property name="editable">
         <bool>false</bool>
@@ -143,11 +143,7 @@
      <item row="5" column="2">
       <widget class="QPushButton" name="AddTag">
        <property name="toolTip">
-        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Tags this entry with the current item in the Available Tags list.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;p&gt;Tag this entry with the current item in the Available Tags list.&lt;/p&gt;</string>
        </property>
        <property name="text">
         <string>&amp;Apply Tag</string>
@@ -157,11 +153,7 @@ p, li { white-space: pre-wrap; }
      <item row="2" column="2">
       <widget class="QPushButton" name="RemoveTag">
        <property name="toolTip">
-        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Removes the selected tag from this entry.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;p&gt;Remove the selected tag from this entry.&lt;/p&gt;</string>
        </property>
        <property name="text">
         <string>&amp;Remove Tag</string>

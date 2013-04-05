@@ -28,7 +28,6 @@ body{
 
 .menu ul{
 	list-style-type: none;
-	verical-align: middle;
 	margin-bottom: 0px;
 	padding-left: 0px;
 }
@@ -72,9 +71,10 @@ body{
 	cursor: pointer;
 }
 
-h1, h2, h3, p, .caption, .caption_wide, .list li, .FYI, .right, .left { 
+/*h1, h2, h3, p, .caption, .caption_wide, .list li, .FYI, .right, .left { 
   text-rendering: optimizeLegibility; 
 }
+*/
 
 h1{
 	font-family: "Segoe UI", Candara, Freesans, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
