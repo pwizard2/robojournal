@@ -97,11 +97,11 @@
 <div class="odd">
 <h2>Version 0.4.1</h2>
 
-<p>Release Date: TBD</p>
+<p>Release Date: 4/5/13</p>
 
 <p>The following changes were made in this release:</p>
 <ol>
-  <li>The Windows version of RoboJournal is now compiled againt Qt 4.8.4
+  <li>The Windows version of RoboJournal is now compiled against Qt 4.8.4
     instead of Qt 4.7.4 (which was used in versions 0.1–0.4). As such, most
     of the dynamic link libraries (DLL files) shipped with the Windows version
     of RoboJournal are brand-new.The purpose of the Qt version increment is to
@@ -113,6 +113,7 @@
     official name of the object in the new documentation.</li>
   <li>Changed the icon for the <strong>Clear</strong> button on the Appearance
     Page in RoboJournal Preferences.</li>
+  <li>Changed the layout of the About RoboJournal dialog.</li>
   <li><span class="bugfix">Bugfix:</span> The <strong>Font Color</strong> field
     on the Appearance Page in RoboJournal Preferences no longer accepts direct
     input (necessary to prevent the user from entering an invalid color
@@ -154,9 +155,10 @@
         Reminder window to the "General" Page in RoboJournal Preferences. </li>
     </ol>
   </li>
-  <li><span class="bugfix">Bugfix:</span> Eliminated the possiblity of the user
-    declaring a "null" tag by using a more sophisticated Regular Experession to
-    detect attempts instead of relying on a simple == operator.</li>
+  <li><span class="bugfix">Bugfix:</span> Eliminated the possibility of the
+    user declaring a "null" tag by using a more sophisticated Regular
+    Expression to detect attempts instead of relying on a simple ==
+  operator.</li>
   <li><span class="added">Added</span> new feature that allows the name of the
     current journal to be displayed in the main window title bar. 
     <ol>
@@ -167,6 +169,8 @@
   <li><span class="bugfix">Bugfix:</span> Disconnecting while there are search
     results present on the <strong>Search</strong> tab no longer crashes the
     program.</li>
+  <li><span class="added">Added</span> comprehensive documentation for
+    RoboJournal 0.4.1 (displayed with the included Qt Assistant program).</li>
 </ol>
 </div>
 
@@ -190,7 +194,7 @@
     Preferences window.</li>
   <li>Modified date settings to allow the user to show the day of week when an
     entry was made.</li>
-  <li><span class="added">Added</span> batch file to simplifity the
+  <li><span class="added">Added</span> batch file to simplify the
     removal/cleanup of compiled executables, object code, and
     compiler-generated headers between builds. FYI: This tool is only available
     in the source package because its purpose is to revert the source directory
@@ -207,7 +211,7 @@
         the body text.</li>
       <li><span class="added">Added</span> HTML-compliant dashes and
         hyphenation; all instances of -- are replaced with — and dashes
-        between numbers are properly enlongated (i.e. 1–2).</li>
+        between numbers are properly elongated (i.e. 1–2).</li>
       <li><span class="added">Added</span> smart quotes feature which replaces
         straight (") quotes with curvy (“) quotes. This feature also affects
         apostrophes and other single quotes in words.</li>
@@ -243,7 +247,7 @@
     remember their sizes between sessions.</li>
   <li><span class="bugfix">Bugfix:</span> (Ubuntu-specific) The menu bar in the
     Main Window remains attached to the window instead of inheriting the
-    standard Unity menubar behavior.</li>
+    standard Unity menu bar behavior.</li>
   <li><span class="bugfix">Bugfix:</span> Icon-only toolbar button setting (if
     enabled) is now preserved after the user manually launches the Journal
     Creator or Journal Selector.</li>
@@ -357,7 +361,7 @@
   <li><span class="added">Added</span> Build Helper Script (for Windows
   only).</li>
   <li><span class="bugfix">Bugfix:</span> Fixed a bug that prevented the
-    current color in use from being autoselected in the Config class color
+    current color in use from being auto-selected in the Config class color
     chooser dialog.</li>
   <li><span class="bugfix">Bugfix:</span> Fixed incorrect error reporting when
     journal creation process fails due to a missing Qt MySQL driver.</li>

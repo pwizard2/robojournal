@@ -1,18 +1,22 @@
-KNOWN BUGS/ISSUES IN ROBOJOURNAL 0.4
+KNOWN BUGS/ISSUES IN ROBOJOURNAL 0.4.1
 ---------------------------------------------------------------------------
 
-Please do not report these since they are already on the list of things to be fixed:
+Please do not report these since they are already on the list of things to be fixed (if possible):
 
-1. The background image function for the entry pane does NOT work on Windows XP. A fix is planned for version 0.5 (very likely the whole entry pane will be re-done).
+1. The RoboJournal Documentation has rarely been known to render incorrectly on Debian Wheezy (background colors are wrong, layout may be affected, etc.). This is most likey due to a faulty Qt Assistant or faulty QCollectionGenerator in the repositories since this problem has NOT occured on any other operating system as of 4/5/13. If you encounter this problem, try replacing the affected robojournal.qhc and robojournal.qch files with copies from "known good" sources (like the Windows version of RoboJournal). 
 
-2. The back and forward toolbar buttons can go out of range if the user has a specific date range set. A fix is planned for version 0.5.
+2. The spell check feature causes RoboJournal to crash when the Editor is displayed on Linux builds compiled against the Qt libraries from the Ubuntu 12.04 repositories. This bug is caused by a problem in the Qt or C++ standard libraries. Refer to the "Frequently Asked Questions" page in the RoboJournal Documentation for details and possible workarounds. 
 
-3. The whitespace removal post-processing function occasionally adds lots of unnecessary linebreaks to new entries. This bug frequently occurs with copy-and-pasted text. A reliable fix is to edit/modify the affected entry and save it again. 
+3. The background image function for the entry pane does NOT work on Windows XP. A fix is planned for version 0.5 (very likely the whole entry pane will be re-done).
 
-4. The whitespace removal post-processing feature sometimes causes the program to hang while processing very large entries. (> 1000 words) Because of this, whitespace removal is not applied to long entries. However, the current 1000 word limit is arbitrary and was determined through trial and error. The actual limit is likely somewhere between 800-1000 words, so you should temporarily disable whitespace removal before you write a large entry > 800 words.
+4. The back and forward toolbar buttons can go out of range if the user has a specific date range set. A fix is planned for version 0.5.
 
-Bugs 5-6 are unpredicatable and hard to replicate (or they would have been fixed by now). Please send a bug report to Will Kraft <pwizard@gmail.com> if you find a reliable way to trigger these bugs:
+5. The whitespace removal post-processing function occasionally adds lots of unnecessary linebreaks to new entries. This bug frequently occurs with copy-and-pasted text. A reliable fix is to edit/modify the affected entry and save it again. 
 
-5. The Editor sometimes "forgets" its previous window size after the user has made changes to the configuration.
+6. The whitespace removal post-processing feature sometimes causes the program to hang while processing very large entries. (> 1000 words) Because of this, whitespace removal is not applied to long entries. However, the current 1000 word limit is arbitrary and was determined through trial and error. The actual limit is likely somewhere between 800-1000 words, so you should temporarily disable whitespace removal before you write a large entry > 800 words.
 
-6. Occasionally the program will crash if the user disconnects after making changes to the configuration.
+Bugs 7-8 are unpredicatable and hard to replicate (or they would have been fixed by now). Please send a bug report to Will Kraft <pwizard@gmail.com> if you find a reliable way to trigger these bugs:
+
+7. The Editor sometimes "forgets" its previous window size after the user has made changes to the configuration.
+
+8. Occasionally the program will crash if the user disconnects after making changes to the configuration.
