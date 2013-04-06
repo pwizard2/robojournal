@@ -40,7 +40,6 @@ print "\tRoboJournal Build Helper Script for Linux/Unix\n";
 print "\tVersion 1.0 -- March 28, 2013 by Will Kraft\n";
 print "################################################################\n";
 
-
 $install_location="/usr/local/bin/robojournal";
 if(-e $install_location){
 die "\n\nABORT: You do not need to build RoboJournal from source because it is\nalready installed at $install_location.\n\nTo prevent conflicts, you must uninstall that executable before you can\nbuild this one! Since you must have built the currently-installed version\nfrom source at some point, run \"sudo make uninstall\" in the installed\nversion's build directory to remove it.\n\n\n";
@@ -49,6 +48,11 @@ die "\n\nABORT: You do not need to build RoboJournal from source because it is\n
 $install_location2="/usr/bin/robojournal";
 if(-e $install_location2){
 die "\n\nABORT: You do not need to build RoboJournal from source because\nit is already installed at $install_location2.\n\nTo prevent conflicts, you must uninstall the current \"robojournal\"\npackage before you can build this version!\n\n\n";
+}
+
+$collectiongenerator="/usr/bin/qcollectiongenerator";
+unless(-e $collectiongenerator){
+die "\n\nABORT: Setup cannot continue because QCollectionGenerator is not installed\nin the correct location (/usr/bin/qcollectiongenerator). This program is\nneeded to prepare the documentation files. Debian (and Ubuntu/Mint) users\nshould install the \"qt4-dev-tools\" package to fix this problem.\n\n\n";
 }
 
 print "\n\n";
