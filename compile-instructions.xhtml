@@ -205,10 +205,10 @@ following:</p>
     contents of the <a
     href="https://github.com/pwizard2/robojournal">RoboJournal GitHub
     repository</a> directly into a folder. Be advised that the RoboJournal
-    "master" branch on GitHub frequently contains components that are
+    "experimental" branch on GitHub frequently contains components that are
     incomplete and/or buggy because they are in an active state of development.
     Because of this, those who wish to get RoboJournal from GitHub should clone
-    from the "stable" branch that is kept synchronized with the current stable
+    from the "master" branch that is kept synchronized with the current stable
     version. </li>
   <li>A Qt ≥ 4.7 environment to compile against. Consult the "Preparing Qt"
     section in this documentation for details on what is required.</li>
@@ -581,13 +581,12 @@ configuration.</p>
     robojournal.pro</span> to get the same result. 
 
     <div class="FYI">
-   <strong>FYI:</strong> If you need to create a package build for Debian,
-    you should substitute the regular Qmake command with <span
+    <strong>FYI:</strong> If you need to create a package build for Debian, you
+    should substitute the regular Qmake command with <span
     class="console">qmake CONFIG+=package robojournal.pro</span> (change the
     path to Qmake if necessary). You should not create a package build
     <em>unless</em> you are a Debian maintainer and you need to package
-    RoboJournal for inclusion in the repositories.
-    </div>
+    RoboJournal for inclusion in the repositories. </div>
   </li>
   <li>Wait for the QMake process to finish. It should only take a few seconds.
   </li>
