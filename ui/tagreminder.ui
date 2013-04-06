@@ -138,6 +138,9 @@
    </item>
    <item>
     <widget class="QCheckBox" name="ShowReminder">
+     <property name="toolTip">
+      <string>&lt;p&gt;Uncheck this box to &lt;em&gt;permanently&lt;/em&gt; suppress the Tag Reminder window. Once disabled, the feature may be re-enabled through RoboJournal Preferences if necessary. &lt;/p&gt;</string>
+     </property>
      <property name="text">
       <string>&amp;Display this notification during the next login (if necessary)</string>
      </property>
