@@ -109,29 +109,29 @@ else{
 
  # create package build
  if($choice2 =~ m/[y]|[yes]/i){
-   print "\n\nCleaning up...\n\n";
-    system("make distclean");
-    $qmake_cmd=$qmake . " CONFIG+=package robojournal.pro";
-    print " Running qmake: ";
-    print $qmake_cmd . "\n\n";
-    system($qmake_cmd);
-    system("make -j 3");
+	   print "\n\nCleaning up...\n\n";
+		system("make distclean");
+		$qmake_cmd=$qmake . " CONFIG+=package robojournal.pro";
+		print " Running qmake: ";
+		print $qmake_cmd . "\n\n";
+		system($qmake_cmd);
+		system("make -j 3");
 
-	# 4/9/13: post-release bugfix for documentation that doesn't install the first time for some reason.
-	$docpath1="/usr/share/doc/robojournal-0.4.1/robojournal.qhc";
-	$docpath2="/usr/share/doc/robojournal-0.4.1/robojournal.qch";
-    
-    if($choice3 =~ m/[y]|[yes]/i){
-      system ("sudo make install");
-  
-      unless((-e $docpath1) && (-e $docpath2)){
-		  # install documentation by hand
-		  print "Force-installing documentation...\n";
-		  system("sudo mkdir /usr/share/doc/robojournal-0.4.1");
-          system("sudo cp doc/robojournal.qhc doc/robojournal.qch /usr/share/doc/robojournal-0.4.1");
-	  }
-    }  
-  }
+		# 4/9/13: post-release bugfix for documentation that doesn't install the first time for some reason.
+		$docpath1="/usr/share/doc/robojournal-0.4.1/robojournal.qhc";
+		$docpath2="/usr/share/doc/robojournal-0.4.1/robojournal.qch";
+		
+		if($choice3 =~ m/[y]|[yes]/i){
+			system ("sudo make install");
+		  
+			unless((-e $docpath1) && (-e $docpath2)){
+				# install documentation by hand
+				print "Force-installing documentation...\n\n";
+				system("sudo mkdir /usr/share/doc/robojournal-0.4.1");
+				system("sudo cp doc/robojournal.qhc doc/robojournal.qch /usr/share/doc/robojournal-0.4.1");
+			}
+		}  
+    }
   # create regular build
   else{
     print "\n\nCleaning up...\n\n";
@@ -143,14 +143,15 @@ else{
     system("make -j 3");
    
     if($choice3 =~ m/[y]|[yes]/i){
-      system ("sudo make install");
-	  	  
-      unless((-e $docpath1) && (-e $docpath2)){
-		  # install documentation by hand
-		  print "Force-installing documentation...\n";
-		  system("sudo mkdir /usr/share/doc/robojournal-0.4.1");
-          system("sudo cp doc/robojournal.qhc doc/robojournal.qch /usr/share/doc/robojournal-0.4.1");
-	  }
+		system ("sudo make install");
+				
+		unless((-e $docpath1) && (-e $docpath2)){
+			# install documentation by hand
+			print "Force-installing documentation...\n\n";
+			system("sudo mkdir /usr/share/doc/robojournal-0.4.1");
+			system("sudo cp doc/robojournal.qhc doc/robojournal.qch /usr/share/doc/robojournal-0.4.1");
+		}
+ 
     }  
 }
 

@@ -260,32 +260,37 @@ libraries available for use with RoboJournal.  Suitable Qt libraries are
 defined as being compiled for your correct operating system/system architecture
 and contain complete driver support for both MySQL and SQLite. Linux and
 Windows Qt environments are not interchangeable; you may <em>not</em> use a set
-of Windows libraries on Linux and vice versa.  The official Qt SDK offered by
-Digia does not offer database support so it may <strong>not</strong> be used to build RoboJournal.</p>
+of Windows libraries on Linux and vice versa. A complete Qt environment is
+much harder to find ready-made for Microsoft Windows, so Windows users will
+probably have to compile their own from scratch. <strong>The official Qt
+Software Development Kit (SDK) offered by Digia is unsuitable for building
+RoboJournal because the SDK lacks adequate database support.</strong> </p>
 
 <p>Linux users should check their distro repositories first to see if there is
 a complete set (containing the core SQL module and separate packages for MySQL
 and SQLite drivers) of Qt libraries available.  If so, they may be used to
 compile RoboJournal and building from source is unnecessary. In order to get
- all required components, Debian-family distros (including Debian
- itself, Ubuntu, Linux Mint, et al.) should install the the following packages:
-<ul>
-	<li>libqt4-core</li>
-	<li>libqt4-gui</li>
-	<li>libqt4-network</li>
-	<li>libqt4-webkit</li>
-	<li>libqt4-sql</li>
-	<li>libqt4-sql-mysql</li>
-	<li>libqt4-sql-sqlite</li>
-	<li>libqt4-help</li>
-	<li>qt4-dev-tools</li>
-	<li>qt4-qmake</li>
-</ul>
-You may install these packages all at once by running <span class="console">sudo apt-get install libqt4-core libqt4-gui libqt4-network libqt4-webkit libqt4-sql libqt4-sql-mysql libqt4-sql-sqlite libqt4-help qt4-dev-tools qt4-qmake</span>
+all required components, users of Debian-family distros (including Debian
+itself, Ubuntu, Linux Mint, et al.) must install the the following packages:
 </p>
+<ul>
+  <li>libqt4-core</li>
+  <li>libqt4-gui</li>
+  <li>libqt4-network</li>
+  <li>libqt4-webkit</li>
+  <li>libqt4-sql</li>
+  <li>libqt4-sql-mysql</li>
+  <li>libqt4-sql-sqlite</li>
+  <li>libqt4-help</li>
+  <li>qt4-dev-tools</li>
+  <li>qt4-qmake</li>
+</ul>
 
-<p>A complete Qt environment is much harder to find ready-made for Microsoft
-Windows, so Windows users will probably have to compile their own from scratch.</p>
+<div class="FYI">
+<strong>FYI:</strong> You can install all of these packages simultaneously by
+running <span class="console">sudo apt-get install libqt4-core libqt4-gui
+libqt4-network libqt4-webkit libqt4-sql libqt4-sql-mysql libqt4-sql-sqlite
+libqt4-help qt4-dev-tools qt4-qmake</span>.</div>
 <hr />
 
 <h3 id="config">How to Build Qt with MySQL Support</h3>
