@@ -4,15 +4,6 @@
 #
 #-------------------------------------------------
 
-# User-changable values (3/31/13)
-
-
-# This should be the current version of this codebase. This value is used in the help file
-# install path; it should be changed for each version in order to keep the help files for
-# different versions separate.
-CURRENT_VERSION=0.4.1
-
-
 # Do *NOT* edit below this line!
 ######################################################
 
@@ -150,7 +141,7 @@ unix {
     QMAKE_POST_LINK += bash doc/compile_doc.sh
 
     # set the final destinations of all install files
-    doc.path= /usr/share/doc/robojournal-$${CURRENT_VERSION}
+    doc.path= /usr/share/doc/robojournal
     doc.files= doc/robojournal.qhc doc/robojournal.qch
 
     shortcut.path = /usr/share/applications

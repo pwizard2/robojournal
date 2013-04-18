@@ -118,8 +118,8 @@ else{
 		system("make -j 3");
 
 		# 4/9/13: post-release bugfix for documentation that doesn't install the first time for some reason.
-		$docpath1="/usr/share/doc/robojournal-0.4.1/robojournal.qhc";
-		$docpath2="/usr/share/doc/robojournal-0.4.1/robojournal.qch";
+		$docpath1="/usr/share/doc/robojournal/robojournal.qhc";
+		$docpath2="/usr/share/doc/robojournal/robojournal.qch";
 		
 		if($choice3 =~ m/[y]|[yes]/i){
 			system ("sudo make install");
@@ -127,8 +127,8 @@ else{
 			unless((-e $docpath1) && (-e $docpath2)){
 				# install documentation by hand
 				print "Force-installing documentation...\n\n";
-				system("sudo mkdir /usr/share/doc/robojournal-0.4.1");
-				system("sudo cp doc/robojournal.qhc doc/robojournal.qch /usr/share/doc/robojournal-0.4.1");
+				system("sudo mkdir /usr/share/doc/robojournal");
+				system("sudo cp doc/robojournal.qhc doc/robojournal.qch /usr/share/doc/robojournal");
 			}
 		}  
     }
@@ -148,8 +148,8 @@ else{
 		unless((-e $docpath1) && (-e $docpath2)){
 			# install documentation by hand
 			print "Force-installing documentation...\n\n";
-			system("sudo mkdir /usr/share/doc/robojournal-0.4.1");
-			system("sudo cp doc/robojournal.qhc doc/robojournal.qch /usr/share/doc/robojournal-0.4.1");
+			system("sudo mkdir /usr/share/doc/robojournal");
+			system("sudo cp doc/robojournal.qhc doc/robojournal.qch /usr/share/doc/robojournal");
 		}
  
     }  

@@ -1033,8 +1033,8 @@ void MainWindow::ShowHelp(){
 
 #ifdef unix
     assistant="/usr/bin/assistant";
-    compiled_help_path="/usr/share/doc/robojournal-" + Buffer::version + "/robojournal.qch";
-    collection_path="/usr/share/doc/robojournal-" + Buffer::version + "/robojournal.qhc";
+    compiled_help_path="/usr/share/doc/robojournal/robojournal.qch";
+    collection_path="/usr/share/doc/robojournal/robojournal.qhc";
 #endif
 
     QFile assistant_exec(assistant);
