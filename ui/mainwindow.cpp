@@ -1110,7 +1110,7 @@ void MainWindow::ShowHelp(){
 #endif
 
 #ifdef unix
-                location="/usr/share/doc/robojournal-" + Buffer::version;
+                location="/usr/share/doc/robojournal";
 #endif
 
                 b.critical(this,"RoboJournal","RoboJournal could not locate the Collection File"
