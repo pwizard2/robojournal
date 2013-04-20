@@ -37,33 +37,46 @@ $default_qmake_path="/usr/bin/qmake";
 system(clear);
 print "################################################################\n";
 print "\tRoboJournal Build Helper Script for Linux/Unix\n";
-print "\tVersion 1.2 -- April 26, 2013 by Will Kraft\n";
+print "\tVersion 1.3 -- May 7, 2013 by Will Kraft\n";
 print "################################################################\n";
 
 $install_location="/usr/local/bin/robojournal";
 if(-e $install_location){
-die "\n\nABORT: You do not need to build RoboJournal from source because it is\nalready installed at $install_location.\n\nTo prevent conflicts, you must uninstall that executable before you can\nbuild this one! Since you must have built the currently-installed version\nfrom source at some point, run \"sudo make uninstall\" in the installed\nversion's build directory to remove it.\n\n\n";
+die "\n\nABORT: You do not need to build RoboJournal from source because it is",
+"\nalready installed at $install_location.\"\n\nTo prevent conflicts, you must",
+"uninstall that executable before you can\nbuild this one! Since you must have",
+"built the currently-installed version\nfrom source at some point, run \"sudo ",
+"make uninstall\" in the installed\nversion's build directory to remove it.\n\n\n";
 }
 
 $install_location2="/usr/bin/robojournal";
 if(-e $install_location2){
-die "\n\nABORT: You do not need to build RoboJournal from source because\nit is already installed at $install_location2.\n\nTo prevent conflicts, you must uninstall the current \"robojournal\"\npackage before you can build this version!\n\n\n";
+die "\n\nABORT: You do not need to build RoboJournal from source because\nit ",
+"is already installed at $install_location2.\n\nTo prevent conflicts, you must ",
+"uninstall the current \"robojournal\"\npackage before you can build this version!\n\n\n";
 }
 
 $collectiongenerator="/usr/bin/qcollectiongenerator";
 unless(-e $collectiongenerator){
-die "\n\nABORT: Setup cannot continue because QCollectionGenerator is not installed\nin the correct location (/usr/bin/qcollectiongenerator). This program is\nneeded to prepare the documentation files. Debian (and Ubuntu/Mint) users\nshould install the \"qt4-dev-tools\" package to fix this problem.\n\n\n";
+die "\n\nABORT: Setup cannot continue because QCollectionGenerator is not\ninstalled ",
+"in the correct location (/usr/bin/qcollectiongenerator).\nThis program is needed to ",
+"prepare the documentation files.\n\n * Debian (and Ubuntu/Mint) users should install ",
+"the\n   \"qt4-dev-tools\" package to fix this problem.\n\n * Fedora users need to ",
+"install the \"qt-devel\" package.\n\n\n";
 }
 
 print "\n\n";
-print "This script helps you to compile and install RoboJournal on Linux-\n";
-print "based systems by automating most of the process.\n\n";
+print "This script helps you compile and install RoboJournal on Linux-\n";
+print "based systems by automating most of the process. Answer all the\nquestions and the ",
+"script will handle the rest.\n\n";
 
 
 
 choose_path:
-print "\nEnter the path to Qmake (leave it blank to use the default
-value).\n\n";
+print "\nEnter the path to Qmake (leave your answer blank to use the\ndefault ",
+"value).\n\nIf you don't know where Qmake is installed, running \"whereis qmake\"",
+"\nin a different terminal window will reveal its location (Qmake\nis called \"qmake-qt4\" ",
+"on Fedora).\n\n";
 print ": ";
 
 
@@ -90,14 +103,17 @@ else{
 }
 
 choose_build:
-print "\n\nDo you want to create a package build? (Y/N)\n\nTip: You should answer N unless you need to package RoboJournal
-for the Debian repositories.\n\n: ";
+print "\n\nDo you want to create a package build? (Y/N)\n\nTip: You should answer N unless ",
+"you need to package RoboJournal for the Debian repositories.\n\n: ";
  $choice2=<STDIN>;
  
-print "\n\nDo you need to patch the Makefile prior to building? (Y/N)\n\nTip: Users of Fedora or any other distro that requires direct\nlinking should type Y. Debian, Ubuntu, and Mint users should\nanswer N.\n\n: ";
+print "\n\nDo you need to patch the Makefile prior to building? (Y/N)\n\nTip: Users of Fedora ",
+" or any other distro that requires direct\nlinking should type Y. Debian, Ubuntu, and Mint ",
+"users should\nanswer N.\n\n: ";
 $choice4=<STDIN>;
 
-print "\n\nDo you want to install the program after compiling it? (Y/N)\n\nFYI: Installation requires sudo access! Furthermore, documentation\ndoesn't work correctly without a proper installation.\n\n: ";
+print "\n\nDo you want to install the program after compiling it? (Y/N)\n\nFYI: Installation ",
+"requires sudo access! Furthermore, documentation\ndoesn't work correctly without a proper installation.\n\n: ";
 $choice3=<STDIN>;
 
 
