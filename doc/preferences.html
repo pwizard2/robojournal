@@ -86,29 +86,35 @@ alt="RoboJournal Documentation" class="masthead">
 <h2 id="preferences_overview">Preferences Overview</h2>
 
 <p>RoboJournal's preferences system has been completely redesigned into a
-modular interface (starting in version 0.4). This new design offers improved
-efficiency and an increased potential for expansion. All related items have
-been grouped into different categories. In this documentation, each category is
-known as a "page". To switch to a different page, click on its name in the list
-on the left side of the Preferences window. The title of the Preferences window
-indicates which page you are currently viewing (e.g. Preferences -- General;
-Preferences -- Appearance).</p>
+modular interface (starting in version 0.4). This new design offers vastly
+improved efficiency and increased potential for expansion in the future. The
+new design groups all available options into several categories depending on
+their specific purposes. Each category is officially known as a "page". To
+switch to a different page, click on its name in the list on the left side of
+the Preferences window. The title of the Preferences window indicates which
+page you are currently viewing (i.e. Preferences -- General; Preferences --
+Appearance, etc.).</p>
 
-<p>Since each page is of a different size (due to each one having a different
-number of options), RoboJournal's preference window automatically pads out the
-extra space on a page if necessary. If a page is larger than the current size
-of the window, the Preferences window utilizes scrollbars to allow you to
-access controls that would otherwise be hidden. Scrollbars are only used if a
-page will not fit the current window size; to eliminate the scrollbars, you
+<p>Since each page is inherently a different size (due to each page having a
+different number of options on it), RoboJournal's Preferences window
+automatically pads out the extra space on a page if necessary to ensure that
+everything fits properly without distortion. If a page is larger than the
+available display area, the Preferences window utilizes vertical scrollbars to
+allow you to access controls that would otherwise be inaccessable due to being
+placed outside the bounds of the window. These scrollbars are only used if a
+page does not fit the current window size; to eliminate the scrollbars, you
 must resize the Preferences window to the point where it is large enough to
-accommodate the entire page. </p>
+accommodate the entire page. RoboJournal automatically stretches each page on
+the horizontal axis to fit the available space (thereby eliminating the need
+for cumbersome horizontal scrollbars). </p>
 
-<p>The Preferences window is fully resizable; click and drag the lower right
-corner to resize the window. If you resize the window, RoboJournal
-automatically records size changes in your configuration file size and
-automatically loads the new size each time the window is subsequently
-displayed. If the new size data becomes unavailable for some reason, the
-Preferences window reverts to its original size of 575x525 pixels.</p>
+<p>The Preferences window is fully resizable; you can resize the window by
+dragging any side or corner of the window border into a more appropriate
+position. Whenever you resize the window, RoboJournal automatically records the
+size changes in your configuration file and automatically loads the new size
+each time the window is subsequently displayed. If the new size data becomes
+unavailable for some reason, the Preferences window automatically reverts to
+its original size (575<em>x</em>525 pixels).</p>
 
 <h2 id="general_page"><em>General</em> Page</h2>
 
@@ -144,15 +150,15 @@ underlying program behavior and appearance.</p>
     </tr>
     <tr>
       <td class="left">Always show confirmation dialogs</td>
-      <td class="right">This security measure forces RoboJournal to show all
-        confirmation dialogs in situations where they may be triggered. This
-        practice helps to prevent accidental deletions and other data loss in
-        situations where carelessness can cause problems. You are
-        <em>strongly</em> encouraged to leave this option enabled at all times. 
+      <td class="right">This security measure forces RoboJournal to display all
+        confirmation dialogs in situations where they are supposed to be
+        triggered. This practice helps prevent accidental deletions and other
+        data loss in situations where carelessness can cause problems. You are
+        <em>strongly</em> encouraged to leave this option enabled at all times!
 
-        <p>However, you should be aware that some confirmation dialogs are
-        mandatory and are always shown (if triggered) whether this setting is
-        enabled or not.</p>
+        <p>However, be advised that some confirmation dialogs are mandatory and
+        are always shown (if triggered) whether this setting is enabled or
+        not.</p>
       </td>
     </tr>
     <tr>
@@ -160,8 +166,9 @@ underlying program behavior and appearance.</p>
       <td class="right">If checked, this setting causes every toolbar to
         display their buttons with both icons and text labels (default
         setting). Unchecking this option causes all toolbar buttons to display
-        their icon only. Users may prefer icon-only mode because it saves space
-        and usually eliminates the need for the toolbar overflow menu. </td>
+        their icon only. Some users may prefer icon-only mode because it saves
+        space and usually eliminates the need for the toolbar overflow menu.
+      </td>
     </tr>
     <tr>
       <td class="left">Display current journal name in title bar</td>
@@ -193,7 +200,7 @@ underlying program behavior and appearance.</p>
         the main window's toolbar. This setting is persistent between sessions. 
 
         <p>It is possible to change the location of the toolbar during runtime
-        by dragging it to a new position or using the setting in the Window ≻
+        by dragging it to a new position or using the setting in the Window »
         Toolbar position list, but these changes revert to the default setting
         the next time RoboJournal is used.</p>
       </td>
