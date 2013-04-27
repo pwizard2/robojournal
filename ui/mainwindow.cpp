@@ -1032,7 +1032,18 @@ void MainWindow::ShowHelp(){
 #endif
 
 #ifdef unix
-    assistant="/usr/bin/assistant";
+    
+    // post-release bugfix for Fedora users (4/26/13)
+    // have RoboJournal use the Fedora path to Assistant if applicable.
+    QFile fedoracheck("/usr/bin/assistant-qt4");
+    
+    if(fedoracheck.exists()){
+       assistant="/usr/bin/assistant-qt4";
+    }
+    else{
+       assistant="/usr/bin/assistant";
+    }    
+   
     compiled_help_path="/usr/share/doc/robojournal/robojournal.qch";
     collection_path="/usr/share/doc/robojournal/robojournal.qhc";
 #endif

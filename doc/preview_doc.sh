@@ -15,3 +15,6 @@ echo
 # PATCH 4/18/13: all doc should be installed to the same place regardless of version
 assistant -collectionFile /usr/share/doc/robojournal/robojournal.qhc
 
+# try the fedora path if the first one doesn't work.
+assistant-qt4 -collectionFile /usr/share/doc/robojournal/robojournal.qhc
+

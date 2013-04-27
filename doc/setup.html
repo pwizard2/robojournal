@@ -275,7 +275,7 @@ a superuser:</p>
       <td class="left">Debian Family — Debian, Ubuntu (all variants), Linux
         Mint, etc.</td>
       <td class="right">Install the "mysql-server" package with apt-get: <span
-        class="console">apt-get install mysql-server</span>. You are prompted
+        class="console">sudo apt-get install mysql-server</span>. You are prompted
         to set the MySQL root password during the setup process so you should
         have the password you intend to use ready in advance. MySQL is ready
         for use immediately after the installation process is finished.</td>
@@ -283,11 +283,12 @@ a superuser:</p>
     <tr>
       <td class="left">Red Hat Family— Fedora, CentOS/Red Hat Enterprise</td>
       <td class="right">Install the "mysql-server" package with YUM: <span
-        class="console">yum install mysql-server</span>. Once the package is
-        installed, you must manually configure it by running, <span
-        class="console">mysqlsecureinstallation</span>. Finally, you must
-        instruct MySQL to start automatically at every boot by running, <span
-        class="console">systemctl enable mysqld.service &amp;&amp; systemctl
+        class="console">sudo yum install mysql-server</span>. Once the package is
+        installed, you must manually configure it by running <span
+        class="console">sudo mysql_secure_installation</span> because MySQL 
+        has little to no security immediately after installation. Finally, you must
+        instruct MySQL to start automatically at every boot by running <span
+        class="console">sudo systemctl enable mysqld.service &amp;&amp; systemctl
         start mysqld.service</span>. MySQL is available for use once you have
         finished the last step.</td>
     </tr>
