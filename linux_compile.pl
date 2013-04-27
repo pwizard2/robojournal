@@ -37,7 +37,7 @@ $default_qmake_path="/usr/bin/qmake";
 system(clear);
 print "################################################################\n";
 print "\tRoboJournal Build Helper Script for Linux/Unix\n";
-print "\tVersion 1.1 -- April 18, 2013 by Will Kraft\n";
+print "\tVersion 1.2 -- April 26, 2013 by Will Kraft\n";
 print "################################################################\n";
 
 $install_location="/usr/local/bin/robojournal";
@@ -90,11 +90,14 @@ else{
 }
 
 choose_build:
-print "\n\nDo you want to create a package build? (Y/N)\nTip: You should answer N unless you need to package RoboJournal
+print "\n\nDo you want to create a package build? (Y/N)\n\nTip: You should answer N unless you need to package RoboJournal
 for the Debian repositories.\n\n: ";
  $choice2=<STDIN>;
+ 
+print "\n\nDo you need to patch the Makefile prior to building? (Y/N)\n\nTip: Users of Fedora or any other distro that requires direct\nlinking should type Y. Debian, Ubuntu, and Mint users should\ntype N.\n\n";
+$choice4=<STDIN>;
 
-print "\n\nDo you want to install the program after compiling it? (Y/N)\nFYI: Installation requires sudo access! Furthermore, documentation\ndoesn't work correctly without a proper installation.\n\n: ";
+print "\n\nDo you want to install the program after compiling it? (Y/N)\n\nFYI: Installation requires sudo access! Furthermore, documentation\ndoesn't work correctly without a proper installation.\n\n: ";
 $choice3=<STDIN>;
 
 
@@ -115,6 +118,11 @@ else{
 		print " Running qmake: ";
 		print $qmake_cmd . "\n\n";
 		system($qmake_cmd);
+		
+		if($choice4 =~ m/[y]|[yes]/i){
+		system("patch Makefile < fedora_build.patch");
+		}
+		
 		system("make -j 3");
 
 		# 4/9/13: post-release bugfix for documentation that doesn't install the first time for some reason.
@@ -140,6 +148,11 @@ else{
     print " Running qmake: ";
     print $qmake_cmd . "\n\n";
     system($qmake_cmd);
+    
+    if($choice4 =~ m/[y]|[yes]/i){
+		system("patch Makefile < fedora_build.patch");
+		}
+    
     system("make -j 3");
    
     if($choice3 =~ m/[y]|[yes]/i){

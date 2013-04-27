@@ -1,0 +1,11 @@
+--- Makefile.orig	2013-04-26 20:19:19.170858888 -0500
++++ Makefile.patch	2013-04-26 20:22:48.622045688 -0500
+@@ -16,7 +16,7 @@
+ INCPATH       = -I/usr/lib64/qt4/mkspecs/linux-g++ -I. -I/usr/include/QtCore -I/usr/include/QtGui -I/usr/include/QtSql -I/usr/include/QtWebKit -I/usr/include -I. -I.
+ LINK          = g++
+ LFLAGS        = -Wl,-O1 -Wl,-z,relro
+-LIBS          = $(SUBLIBS)  -L/usr/lib64 -lQtWebKit -lQtSql -lQtGui -lQtCore -lpthread 
++LIBS          = $(SUBLIBS)  -L/usr/lib64 -lQtWebKit -lQtSql -lQtGui -lQtCore -lpthread -lX11
+ AR            = ar cqs
+ RANLIB        = 
+ QMAKE         = /usr/bin/qmake-qt4

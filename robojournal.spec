@@ -6,7 +6,8 @@ License:            GPLv3
 Group:              Applications/Productivity
 Source:             http://sourceforge.net/projects/robojournal/files/Source/%{name}-%{version}.tar.gz
 URL:                http://sourceforge.net/projects/robojournal
-BuildRequires:      qt, qt-assistant, qt-mysql, qt-devel, qt-webkit, qt-webkit-devel
+BuildRequires:      qt, qt-assistant, qt-mysql, qt-devel, qt-webkit, qt-webkit-devel, patch
+Requires:           qt, qt-assistant, qt-mysql, qt-devel, qt-webkit, qt-webkit-devel
 
 %description
 
@@ -22,6 +23,7 @@ runs on Windows and Linux.
 %build
 
 qmake-qt4 CONFIG+=package robojournal.pro
+patch Makefile < fedora_build.patch
 make 
 qcollectiongenerator doc/robojournal.qhcp -o doc/robojournal.qhc
 
