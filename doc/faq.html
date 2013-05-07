@@ -59,52 +59,27 @@ decrypt the content. If someone were to read your encrypted journal without
 having the private key needed to decrypt it, all the intruder would see is
 ASCII-armored encrypted text. </p>
 
-<h2>Question: Why doesn't the spell check in RoboJournal 0.4 and 0.4.1 work on
-Ubuntu "Quantal" and Linux Mint?<br>
+<h2>Question: Why is spellcheck disabled on my Linux version of RoboJournal?<br>
 </h2>
 
-<p><em>Will Kraft's answer:</em> <br>
-<br>
-Sadly, this has nothing to do with RoboJournal so there is no real way for me
-to fix it (and I assure you that it's not from a lack of trying). Through
-extensive debugging, it appears the problem lies somewhere in the Qt 4.8.3
-libraries or in the core C++ libraries in the Quantal repositories. As such,
-this bug affects all distros that draw from the Quantal repositories, including
-Ubuntu, its variants (Kubuntu, Xubuntu, et al.), and Linux Mint. The problem
-also affects Debian "Wheezy". </p>
+<p><em>Will Kraft's answer</em> (updated on 5/6/13):<br>
+<br>I had no choice but to issue a service patch that disables spellcheck (for the time being) on all instances of 
+RoboJournal that have been compiled for any Linux-based operating system. The only other [unacceptable] 
+option was to leave this serious problem completely unaddressed.
+</p>
 
-<p>In all instances, the bug manifests as a segmentation fault/buffer overflow
-error that causes RoboJournal to suddenly crash whenever the user tries to
-activate the Editor (as demonstrated in "<a
-href="fundamentals.html#new_entry">Writing a New Entry</a>" or "<a
-href="fundamentals.html#modify_entry">Modifying an Existing Entry</a>") while
-spell check is enabled in RoboJournal Preferences. Even more strangely, it is
-impossible to debug this error properly because the bug only affects release
-builds compiled against these libraries (debug builds work properly and do
-<em>not</em> crash). Since debuggers like <a
-href="http://www.gnu.org/software/gdb/">GDB</a> do not work correctly with
-release builds, there is no way for me to investigate this problem further.
-Running GDB against a debug build is futile because the crash never occurs (so
-there is nothing to debug).</p>
+<p>This decision is due to the well-known crashing bug that has plagued RoboJournal ever since the spellcheck 
+feature was introduced in version 0.4. I have recently made progress on figuring out what is 
+causing the bug but there is no way for me to fix it in a timely manner. I intend to replace
+the spellcheck system entirely before RoboJournal 0.5 is released (since that is what the fix requires) in order to resolve
+this bug once and for all. In the meantime, this patch prevents a Linux-user's copy of RoboJournal from 
+crashing merely because he or she enabled spellcheck at some point. This patch is <strong>temporary</strong>; 
+I intend to restore full functionality as soon as possible.<p>
 
-<p>The exact same code runs on Windows without producing this error so the
-problem lies somewhere in those specific Linux Qt libraries. Furthermore, I
-have extensively tested RoboJournal with a custom-compiled Qt 4.8.4 environment
-on Linux and everything works fine under those conditions (apparently whatever
-caused this bug was fixed between version 4.8.3 and 4.8.4). I hope this bug
-will simply resolve itself when the Debian package maintainers replace the
-affected Qt 4.8.3 libraries with a new version. In the meantime, possible
-solutions include:</p>
-<ol class="list">
-  <li>Simply run RoboJournal with spell check disabled (easiest solution).</li>
-  <li>Compile a "debug" build of RoboJournal for use on Linux. The debug build
-    is much larger in file size because of the debug headers it contains but
-    these can probably be stripped out with no ill effects (though I haven't
-    tested this). Either way, everything should work fine since debug builds
-    seem to be immune to this crashing bug.</li>
-  <li>Build your own custom Qt from source and compile RoboJournal against that
-    (hardest solution).</li>
-</ol>
+<p>The patch does <em>not</em> affect the Windows version of RoboJournal because that version has 
+always been immune to this crashing bug. Therefore, all custom Windows binaries will continue to
+ have fully-functional spellcheck.</p>
+
 
 <h2>Question: Why does the whitespace removal feature sometimes add lots of
 empty lines to a new entry?</h2>
