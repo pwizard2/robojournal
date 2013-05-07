@@ -94,7 +94,7 @@ print "\n\nDo you want to create a package build? (Y/N)\n\nTip: You should answe
 for the Debian repositories.\n\n: ";
  $choice2=<STDIN>;
  
-print "\n\nDo you need to patch the Makefile prior to building? (Y/N)\n\nTip: Users of Fedora or any other distro that requires direct\nlinking should type Y. Debian, Ubuntu, and Mint users should\ntype N.\n\n";
+print "\n\nDo you need to patch the Makefile prior to building? (Y/N)\n\nTip: Users of Fedora or any other distro that requires direct\nlinking should type Y. Debian, Ubuntu, and Mint users should\nanswer N.\n\n: ";
 $choice4=<STDIN>;
 
 print "\n\nDo you want to install the program after compiling it? (Y/N)\n\nFYI: Installation requires sudo access! Furthermore, documentation\ndoesn't work correctly without a proper installation.\n\n: ";
