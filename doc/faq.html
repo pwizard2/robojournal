@@ -59,27 +59,32 @@ decrypt the content. If someone were to read your encrypted journal without
 having the private key needed to decrypt it, all the intruder would see is
 ASCII-armored encrypted text. </p>
 
-<h2>Question: Why is spellcheck disabled on my Linux version of RoboJournal?<br>
+<h2>Question: Why is spellcheck disabled on the Linux version of
+RoboJournal?<br>
 </h2>
 
 <p><em>Will Kraft's answer</em> (updated on 5/6/13):<br>
-<br>I had no choice but to issue a service patch that disables spellcheck (for the time being) on all instances of 
-RoboJournal that have been compiled for any Linux-based operating system. The only other [unacceptable] 
-option was to leave this serious problem completely unaddressed.
-</p>
+<br>
+I had no choice but to issue a service patch that disables spellcheck (for the
+time being) on all instances of RoboJournal that have been compiled for any
+Linux-based operating system. The only other [unacceptable] option was to leave
+this serious problem completely unaddressed. </p>
 
-<p>This decision is due to the well-known crashing bug that has plagued RoboJournal ever since the spellcheck 
-feature was introduced in version 0.4. I have recently made progress on figuring out what is 
-causing the bug but there is no way for me to fix it in a timely manner. I intend to replace
-the spellcheck system entirely before RoboJournal 0.5 is released (since that is what the fix requires) in order to resolve
-this bug once and for all. In the meantime, this patch prevents a Linux-user's copy of RoboJournal from 
-crashing merely because he or she enabled spellcheck at some point. This patch is <strong>temporary</strong>; 
-I intend to restore full functionality as soon as possible.<p>
+<p>This decision is due to the well-known crashing bug that has plagued
+RoboJournal ever since the spellcheck feature was introduced in version 0.4. I
+have recently made progress on figuring out what is causing the bug but there
+is no way for me to fix it in a timely manner. I intend to replace the
+spellcheck system entirely before RoboJournal 0.5 is released (since that is
+what the fix requires) in order to resolve this bug once and for all. In the
+meantime, this patch prevents a Linux-user's copy of RoboJournal from crashing
+merely because he or she enabled spellcheck at some point. This patch is
+<strong>temporary</strong>; I intend to restore full functionality as soon as
+possible.</p>
 
-<p>The patch does <em>not</em> affect the Windows version of RoboJournal because that version has 
-always been immune to this crashing bug. Therefore, all custom Windows binaries will continue to
- have fully-functional spellcheck.</p>
-
+<p>The patch does <em>not</em> affect the Windows version of RoboJournal
+because that version has always been immune to this crashing bug. Therefore,
+all custom Windows binaries will continue to have fully-functional
+spellcheck.</p>
 
 <h2>Question: Why does the whitespace removal feature sometimes add lots of
 empty lines to a new entry?</h2>
