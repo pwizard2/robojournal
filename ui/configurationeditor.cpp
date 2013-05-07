@@ -37,6 +37,28 @@ ConfigurationEditor::ConfigurationEditor(QWidget *parent) :
     //ui->groupBox_3->setVisible(false);
 
     PopulateForm();
+
+    // Will Kraft -- Bugfix 5/6/13: Temporarily disable spellcheck on Linux-based systems due to
+    // the overwhelming problems I've had with it. I hope to have this fixed for good by 0.5 once
+    // I've stripped out the entire spellchecker and replaced it with something better.
+
+#ifdef __gnu_linux__
+    ui->UseSpellCheck->setChecked(false);
+    ui->ShowSpellingErrors->setChecked(false);
+    ui->Dictionary->clear();
+
+    ui->UseSpellCheck->setEnabled(false);
+    ui->BrowseButton->setEnabled(false);
+    ui->ShowSpellingErrors->setEnabled(false);
+    ui->Dictionary->setEnabled(false);
+
+    ui->UseSpellCheck->setToolTip("<p>This feature is temporarily unavailable on Linux-based operating systems.</p>");
+    ui->ShowSpellingErrors->setToolTip("<p>This feature is temporarily unavailable on Linux-based operating systems.</p>");
+    ui->Dictionary->setToolTip("<p>This feature is temporarily unavailable on Linux-based operating systems.</p>");
+    ui->BrowseButton->setToolTip("<p>This feature is temporarily unavailable on Linux-based operating systems.</p>");
+
+#endif
+
 }
 
 ConfigurationEditor::~ConfigurationEditor()
