@@ -178,6 +178,9 @@ themselves.</p>
   <li><a href="#prereq">Prerequisites</a> </li>
   <li><a href="#prepare">Preparing Qt</a> 
     <ol>
+      <li><a href="#debian_requirements">Debian, Ubuntu, and Linux Mint
+        Requirements</a> IsMarkup="Yes_"</li>
+      <li><a href="#fedora_requirements">Fedora Requirements</a></li>
       <li><a href="#config">How to Build Qt with MySQL Support</a> </li>
       <li><a href="#reprocess">Preparing the MySQL Libraries for Windows</a>
       </li>
@@ -269,10 +272,12 @@ RoboJournal because the SDK lacks adequate database support.</strong> </p>
 <p>Linux users should check their distro repositories first to see if there is
 a complete set (containing the core SQL module and separate packages for MySQL
 and SQLite drivers) of Qt libraries available.  If so, they may be used to
-compile RoboJournal and building from source is unnecessary. In order to get
-all required components, users of Debian-family distros (including Debian
-itself, Ubuntu, Linux Mint, et al.) must install the the following packages:
-</p>
+compile RoboJournal and building from source is unnecessary. </p>
+
+<h3 id="debian_requirements">Debian, Ubuntu, and Linux Mint Requirements</h3>
+
+<p>Users of Debian-family distros (including Debian itself, Ubuntu, Linux Mint,
+et al.) must install the the following packages through apt-get: </p>
 <ul>
   <li>libqt4-core</li>
   <li>libqt4-gui</li>
@@ -284,11 +289,45 @@ itself, Ubuntu, Linux Mint, et al.) must install the the following packages:
   <li>libqt4-help</li>
   <li>qt4-dev-tools</li>
   <li>qt4-qmake</li>
+  <li>libx11-dev</li>
 </ul>
 
 <div class="FYI">
 <strong>FYI:</strong> You can install all of these packages simultaneously by
-running <span class="console">sudo apt-get install libqt4-core libqt4-gui libqt4-network libqt4-webkit libqt4-sql libqt4-sql-mysql libqt4-sql-sqlite libqt4-help qt4-dev-tools qt4-qmake</span>.</div>
+running <span class="console">sudo apt-get install libqt4-core libqt4-gui
+libqt4-network libqt4-webkit libqt4-sql libqt4-sql-mysql libqt4-sql-sqlite
+libqt4-help qt4-dev-tools qt4-qmake libx11-dev</span>. Ensure that the entire
+command is one unbroken line before you copy and paste it into the
+terminal.</div>
+
+<h3 id="fedora_requirements">Fedora Requirements</h3>
+
+<p>The Qt environment on Fedora is unusual because certain utilities have
+slightly different names: Qmake is called "qmake-qt4" while Qt Assistant is
+called "assistant-qt4". Be sure to take these name changes into consideration
+or else certain commands may not work properly during the build process. </p>
+
+<p>Building RoboJournal from source on Fedora requires the following packages
+to be installed through the Yum package management system:</p>
+<ul>
+  <li>qt</li>
+  <li>qt-assistant</li>
+  <li>qt-mysql</li>
+  <li>qt-devel</li>
+  <li>qt-webkit</li>
+  <li>qt-webkit-devel</li>
+  <li>patch</li>
+</ul>
+
+<p>In addition to the package requirements, Fedora requires you to patch the
+Makefile (once you have created one with qmake-qt4) because Fedora requires
+direct linking to the X11 library. Prior to running make, you must apply the
+fedora_build.patch file to the Makefile with the following command: <span
+class="console">patch Makefile &lt; fedora_build.patch</span>. Alternatively,
+the Linux build helper script can automatically apply the patch for you if you
+tell it to do so during the question/answer configuration steps. Forgetting to
+patch the Makefile causes the compile process to fail even if all the other
+build requirements have been satisfied.</p>
 <hr />
 
 <h3 id="config">How to Build Qt with MySQL Support</h3>
@@ -384,14 +423,14 @@ and QCollectionGenerator applications produced through that process instead of
 the ones from the "qt4-dev-tools" package. In all instances, the RoboJournal
 build procedure expects to find QCollectionGenerator at
 /usr/bin/qcollectiongenerator and Qt Assistant at /usr/bin/assistant yet a
-custom Qt stores these utilities elsewhere. As a consequence, the RoboJournal build attempt will
-fail. </p>
+custom Qt stores these utilities elsewhere. As a consequence, the RoboJournal
+build attempt will fail. </p>
 
 <p>The easiest way to solve this problem is through the use of hardlinks
-because the RoboJournal build script cannot tell the difference between a hardlink and an
-actual program. If your custom Qt is installed elsewhere, you can use the Unix
-"ln" (link) utility to create hardlinks to these programs in the /usr/bin
-folder. When the build script sends instructions to the
+because the RoboJournal build script cannot tell the difference between a
+hardlink and an actual program. If your custom Qt is installed elsewhere, you
+can use the Unix "ln" (link) utility to create hardlinks to these programs in
+the /usr/bin folder. When the build script sends instructions to the
 /usr/bin/qcollectiongenerator hardlink, the instructions are then forwarded to
 that program's true location instead (causing everything to work properly).
 Invoking the "ln" utility requires root or superuser (sudo) permissions because
@@ -405,8 +444,8 @@ the command affects the contents of the system-level /usr/bin folder.</p>
     /usr/bin/assistant</span></li>
   <li>QCollectionGenerator: <span class="arg">sudo ln [absolute path to your
     qcollectiongenerator executable] [target destination]</span>; for instance,
-    <span class="console">sudo
-    ln /usr/local/Trolltech/Qt-4.8.4/bin/qcollectiongenerator
+    <span class="console">sudo ln
+    /usr/local/Trolltech/Qt-4.8.4/bin/qcollectiongenerator
     /usr/bin/collectiongenerator</span></li>
 </ul>
 
@@ -562,10 +601,10 @@ files and where they are most likely to be located:</p>
       <li>qsqllite4.dll (Qt 4.x plugins/sqldrivers folder)*</li>
     </ul>
   </li>
-  <li>robojournal.qch (should already exist in the C:\robojournal-0.4.1\release folder after the
-    build process)</li>
-  <li>robojournal.qhc (should already exist in the C:\robojournal-0.4.1\release folder after the
-    build process)</li>
+  <li>robojournal.qch (should already exist in the C:\robojournal-0.4.1\release
+    folder after the build process)</li>
+  <li>robojournal.qhc (should already exist in the C:\robojournal-0.4.1\release
+    folder after the build process)</li>
 </ul>
 
 <p>* Place this file in C:\robojournal-0.4.1\release\sqldrivers (create the
@@ -583,7 +622,8 @@ source code is found at ~/robojournal-0.4.1 (the tilde symbol "~" is an
 abbreviation for the current user’s home directory). In a real-world
 situation, these locations vary depending on where you installed everything.
 You will receive errors if you fail to revise the paths to match your actual
-configuration.</p>
+configuration. Finally, be advised that Qmake is called "qmake-qt4" on
+Fedora.</p>
 <ol>
   <li>Open a terminal application (xterm or similar). There is no specific
     shell requirement; most systems use Bash by default. From this point on,
@@ -673,7 +713,7 @@ removing all compiled objects, including the executable. You <em>must</em> run
 a distclean between every build.</p>
 <hr />
 
-<p>Last updated: April 18, 2013</p>
+<p>Last updated: May 8, 2013</p>
 
 <p>Copyright © 2012, 2013 by Will Kraft. This documentation is part of
 RoboJournal and is available under the <a
