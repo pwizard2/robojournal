@@ -581,8 +581,8 @@ et al.) must install the the following packages through apt-get: </p>
 class="console">sudo apt-get install libqt4-core libqt4-gui libqt4-network
 libqt4-webkit libqt4-sql libqt4-sql-mysql libqt4-sql-sqlite libqt4-help
 qt4-dev-tools qt4-qmake libx11-dev build-essential</span>. Ensure that the
-entire command is one unbroken line before you copy and paste it into the
-terminal.</p>
+entire command consists of one unbroken line before you copy and paste it into
+the terminal.</p>
 <hr />
 
 <h3 id="fedora_requirements">Fedora Requirements</h3>
@@ -606,8 +606,8 @@ following packages through the yum package management system:</p>
 
 <p>You can install all these packages at once by running <span
 class="console">sudo yum install qt qt-assistant qt-mysql qt-devel qt-webkit
-qt-webkit-devel patch</span>. Ensure that the entire command is one unbroken
-line before you copy and paste it into the terminal.</p>
+qt-webkit-devel patch</span>. Ensure that the entire command consists of one
+unbroken line before you copy and paste it into the terminal.</p>
 
 <p>In addition to resolving the basic package requirements, you must also patch
 the Makefile (once you have created one with qmake-qt4) because Fedora requires
@@ -703,7 +703,7 @@ class="console">make clean</span> (and press Enter) in the build folder. This
 action cleans the ~/robojournal-0.4.1 folder but spares the Makefile and the
 executable made during the most recent build.</p>
 
-<p> Type <span class="console">make distclean</span> (and press Enter) if you
+<p>Type <span class="console">make distclean</span> (and press Enter) if you
 wish to <em>completely</em> purge the build folder of all compiled objects,
 including the Makefile and executable. You <em>must</em> run a distclean
 between every build.</p>
