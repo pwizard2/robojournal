@@ -6,6 +6,7 @@ License:            GPLv3
 Group:              Applications/Productivity
 Source:             http://sourceforge.net/projects/robojournal/files/Source/%{name}-%{version}.tar.gz
 URL:                http://sourceforge.net/projects/robojournal
+
 BuildRequires:      qt, qt-assistant, qt-mysql, qt-devel, qt-webkit, qt-webkit-devel, patch
 Requires:           qt, qt-assistant, qt-mysql, qt-devel, qt-webkit, qt-webkit-devel
 
@@ -25,12 +26,26 @@ runs on Windows and Linux.
 qmake-qt4 CONFIG+=package robojournal.pro
 patch Makefile < fedora_build.patch
 make 
-qcollectiongenerator doc/robojournal.qhcp -o doc/robojournal.qhc
+strip robojournal
 
 %install
 
-rm -rf %{buildroot}
-make DESTDIR=%{buildroot} install
+#install files manually because "make install" doesn't work with rpmbuild in this case.
+
+# create directory tree in buildroot:
+mkdir -p %{buildroot}%{_bindir}/
+mkdir -p %{buildroot}%{_datadir}/
+mkdir -p %{buildroot}%{_datadir}/applications
+mkdir -p %{buildroot}%{_datadir}/icons
+mkdir -p %{buildroot}%{_datadir}/menu
+mkdir -p %{buildroot}%{_datadir}/pixmaps
+
+# install the files where they need to go
+cp -p robojournal %{buildroot}%{_bindir}/
+cp -p robojournal64.png %{buildroot}%{_datadir}/icons
+cp -p %{_builddir}/%{buildsubdir}/menus/robojournal.desktop %{buildroot}%{_datadir}/applications
+cp -p %{_builddir}/%{buildsubdir}/menus/robojournal %{buildroot}%{_datadir}/menu
+cp -p %{_builddir}/%{buildsubdir}/menus/robojournal.xpm %{buildroot}%{_datadir}/pixmaps
 
 %clean
 
@@ -43,8 +58,7 @@ make clean
 %{_datadir}/icons/robojournal64.png
 %{_datadir}/pixmaps/robojournal.xpm
 %{_datadir}/menu/robojournal
-%{_defaultdocdir}/%{name}/robojournal.qch
-%{_defaultdocdir}/%{name}/robojournal.qhc
+
 
 %changelog
 * Thu Apr 25 2013 Will Kraft <pwizard@gmail.com>.
