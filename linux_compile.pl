@@ -42,9 +42,9 @@ print "################################################################\n";
 
 $install_location="/usr/local/bin/robojournal";
 if(-e $install_location){
-die "\n\nABORT: You do not need to build RoboJournal from source because it is",
-"\nalready installed at $install_location.\"\n\nTo prevent conflicts, you must",
-"uninstall that executable before you can\nbuild this one! Since you must have",
+die "\n\nABORT: You do not need to build RoboJournal from source because\nit is ",
+"already installed at $install_location.\"\n\nTo prevent conflicts, you must ",
+"uninstall that executable before you can\nbuild this one! Since you must have ",
 "built the currently-installed version\nfrom source at some point, run \"sudo ",
 "make uninstall\" in the installed\nversion's build directory to remove it.\n\n\n";
 }
