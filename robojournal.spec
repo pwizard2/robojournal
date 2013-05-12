@@ -35,26 +35,26 @@ strip robojournal
 # create directory tree in buildroot:
 mkdir -p %{buildroot}%{_bindir}/
 mkdir -p %{buildroot}%{_datadir}/
-mkdir -p %{buildroot}%{_datadir}/applications
-mkdir -p %{buildroot}%{_datadir}/icons
-mkdir -p %{buildroot}%{_datadir}/menu
-mkdir -p %{buildroot}%{_datadir}/pixmaps
+mkdir -p %{buildroot}%{_datadir}/applications/
+mkdir -p %{buildroot}%{_datadir}/icons/
+mkdir -p %{buildroot}%{_datadir}/menu/
+mkdir -p %{buildroot}%{_datadir}/pixmaps/
 
 # install the files where they need to go
 cp -p robojournal %{buildroot}%{_bindir}/
-cp -p robojournal64.png %{buildroot}%{_datadir}/icons
-cp -p %{_builddir}/%{buildsubdir}/menus/robojournal.desktop %{buildroot}%{_datadir}/applications
-cp -p %{_builddir}/%{buildsubdir}/menus/robojournal %{buildroot}%{_datadir}/menu
-cp -p %{_builddir}/%{buildsubdir}/menus/robojournal.xpm %{buildroot}%{_datadir}/pixmaps
+cp -p robojournal64.png %{buildroot}%{_datadir}/icons/
+cp -p %{_builddir}/%{buildsubdir}/menus/robojournal.desktop %{buildroot}%{_datadir}/applications/
+cp -p %{_builddir}/%{buildsubdir}/menus/robojournal %{buildroot}%{_datadir}/menu/
+cp -p %{_builddir}/%{buildsubdir}/menus/robojournal.xpm %{buildroot}%{_datadir}/pixmaps/
 
 %clean
 
-make clean
+make distclean
 
 %files
 
 %{_bindir}/robojournal
-%{_datadir}/applications/robojournal.destop
+%{_datadir}/applications/robojournal.desktop
 %{_datadir}/icons/robojournal64.png
 %{_datadir}/pixmaps/robojournal.xpm
 %{_datadir}/menu/robojournal
