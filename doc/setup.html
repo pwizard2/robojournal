@@ -49,7 +49,7 @@ alt="RoboJournal Documentation" class="masthead">
 
 <p>RoboJournal was originally designed to run on x86 or AMD64 CPU
 architectures. Since RoboJournal's source code is publicly available under the
-GPL3, RoboJournal may be ported to less common system architectures (assuming
+GPL3, RoboJournal can be ported to less common system architectures (assuming
 that a full Qt environment and all necessary database applications are
 available for that platform). For instance, RoboJournal is compatible with
 Debian Linux systems running on MIPS, ARM, and POWERPC CPU architectures. </p>
@@ -113,7 +113,7 @@ requirements if you <em>are</em> storing your database locally. </p>
 <h2 id="install_mysql">Installing MySQL</h2>
 
 <p>RoboJournal requires a working MySQL server in order to use MySQL-based
-journals. This server process may run on the same computer as RoboJournal (i.e.
+journals. This server process can run on the same computer as RoboJournal (i.e.
 localhost) or be deployed on a machine located on your LAN/WAN or on the
 Internet. The installation process creates a working MySQL server instance on
 the computer you have selected. Once installation is complete, the affected
@@ -142,7 +142,7 @@ MariaDB as the official replacement for MySQL.</div>
 <p>The Windows installation procedure for MySQL is very straightforward. You
 should begin by downloading the latest MSI installer package for Windows from
 the <a href="http://dev.mysql.com/downloads/">MySQL website</a>. The free MySQL
-Community Edition is adequate for RoboJournal's requirements but you may also
+Community Edition is adequate for RoboJournal's requirements but you can also
 use the non-free Enterprise Version if you have a license for it. This guide
 uses version 5.6.10.1 but the procedure is probably applicable (unless
 otherwise noted) to newer versions as well. Once you have the installation file
@@ -248,7 +248,7 @@ WorkBench.</div>
 </ol>
 
 <p>MySQL is now installed and properly configured for your Windows system. You
-may now proceed with the RoboJournal installation process.</p>
+can now proceed with the RoboJournal installation process.</p>
 
 <h3 id="mysql_linux">Linux Procedure</h3>
 
@@ -275,22 +275,23 @@ a superuser:</p>
       <td class="left">Debian Family — Debian, Ubuntu (all variants), Linux
         Mint, etc.</td>
       <td class="right">Install the "mysql-server" package with apt-get: <span
-        class="console">sudo apt-get install mysql-server</span>. You are prompted
-        to set the MySQL root password during the setup process so you should
-        have the password you intend to use ready in advance. MySQL is ready
-        for use immediately after the installation process is finished.</td>
+        class="console">sudo apt-get install mysql-server</span>. You are
+        prompted to set the MySQL root password during the setup process so you
+        should have the password you intend to use ready in advance. MySQL is
+        ready for use immediately after the installation process is
+      finished.</td>
     </tr>
     <tr>
       <td class="left">Red Hat Family— Fedora, CentOS/Red Hat Enterprise</td>
       <td class="right">Install the "mysql-server" package with YUM: <span
-        class="console">sudo yum install mysql-server</span>. Once the package is
-        installed, you must manually configure it by running <span
-        class="console">sudo mysql_secure_installation</span> because MySQL 
-        has little to no security immediately after installation. Finally, you must
+        class="console">sudo yum install mysql-server</span>. Once the package
+        is installed, you must manually configure it by running <span
+        class="console">sudo mysql_secure_installation</span> because MySQL has
+        little to no security immediately after installation. Finally, you must
         instruct MySQL to start automatically at every boot by running <span
-        class="console">sudo systemctl enable mysqld.service &amp;&amp; systemctl
-        start mysqld.service</span>. MySQL is available for use once you have
-        finished the last step.</td>
+        class="console">sudo systemctl enable mysqld.service &amp;&amp;
+        systemctl start mysqld.service</span>. MySQL is available for use once
+        you have finished the last step.</td>
     </tr>
     <tr>
       <td class="left">OpenSUSE (and all related distros)</td>
@@ -303,16 +304,16 @@ a superuser:</p>
 <h2 id="install_robojournal">Installing RoboJournal</h2>
 
 <p>As a cross-platform application, RoboJournal is designed to be easy to
-install on a variety of operating systems. As such, RoboJournal may be
+install on a variety of operating systems. As such, RoboJournal can be
 installed on Windows 2000 and later through a traditional installer.
-RoboJournal binaries are also available in package format that may be installed
+RoboJournal binaries are also available in package format that can be installed
 on Linux-based systems through native package management tools. </p>
 
 <h3 id="install_windows">Windows Procedure</h3>
 
 <p>An installer package for the latest version of RoboJournal is always
 available for the Windows platform. The RoboJournal installation package takes
-the form of a traditional Windows installer application that may be acquired
+the form of a traditional Windows installer application that can be acquired
 directly from SourceForge or from one of the other software download sites on
 which it is mirrored. Each version of the RoboJournal installer package uses a
 distinctive naming convention (i.e. robojournal-[$version]-setup.exe) in order
