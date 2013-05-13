@@ -554,8 +554,8 @@ files and where they are most likely to be located:</p>
     folder after the build process)</li>
 </ul>
 
-<p>* Place this file in C:\robojournal-0.4.1\release\sqldrivers (create the
-"sqldrivers" folder if it does not exist).</p>
+<p><small>* Place this file in C:\robojournal-0.4.1\release\sqldrivers (create
+the "sqldrivers" folder if it does not exist).</small></p>
 <hr />
 
 <h3 id="debian_requirements">Debian, Ubuntu, and Linux Mint Requirements</h3>
@@ -603,12 +603,17 @@ following packages through the yum package management system:</p>
   <li>qt-webkit</li>
   <li>qt-webkit-devel</li>
   <li>patch</li>
+  <li>gcc-c++ *</li>
 </ul>
+
+<p><small>* Due to a dependency conflict, you may need to manually update the
+audit package (audit-2.2.1-2 on Fedora 18) before you can install
+gcc-c++.</small></p>
 
 <p>You can install all these packages at once by running <span
 class="console">sudo yum install qt qt-assistant qt-mysql qt-devel qt-webkit
-qt-webkit-devel patch</span>. Ensure that the entire command consists of one
-unbroken line before you copy and paste it into the terminal.</p>
+qt-webkit-devel patch gcc-c++</span>. Ensure that the entire command consists
+of one unbroken line before you copy and paste it into the terminal.</p>
 
 <p>In addition to resolving the basic package requirements, you must also patch
 the Makefile (once you have created one with qmake-qt4) because Fedora requires
