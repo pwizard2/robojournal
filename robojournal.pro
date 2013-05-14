@@ -129,10 +129,12 @@ unix {
     package {
 	message(Creating a package-friendly build for Debian and other Linux distros...)
 	target.path = /usr/bin
+	
     }
     else{
 	message(Creating a regular build...)
 	target.path = /usr/local/bin
+
     }
 
     # Tweak for development/debugging: (3/31/13)
@@ -141,9 +143,13 @@ unix {
     QMAKE_POST_LINK += bash doc/compile_doc.sh
 
     # set the final destinations of all install files
-    doc.path= /usr/share/doc/robojournal
-    doc.files= doc/robojournal.qhc doc/robojournal.qch
-
+    
+    man.files = robojournal.7.gz
+    man.path = /usr/share/man/man7
+    
+    doc.path = /usr/share/doc/robojournal
+    doc.files = doc/robojournal.qhc doc/robojournal.qch
+    
     shortcut.path = /usr/share/applications
     shortcut.files = menus/robojournal.desktop
 
@@ -156,7 +162,7 @@ unix {
     icon-deb.path = /usr/share/pixmaps
     icon-deb.files = menus/robojournal.xpm
 
-    INSTALLS += target shortcut icon shortcut-deb icon-deb doc
+    INSTALLS += target shortcut icon shortcut-deb icon-deb doc man
 
 }
 

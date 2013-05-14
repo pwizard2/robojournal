@@ -39,6 +39,7 @@ mkdir -p %{buildroot}%{_datadir}/applications/
 mkdir -p %{buildroot}%{_datadir}/icons/
 mkdir -p %{buildroot}%{_datadir}/menu/
 mkdir -p %{buildroot}%{_datadir}/pixmaps/
+mkdir -p %{buildroot}%{_mandir}/man7
 
 # install the files where they need to go
 cp -p robojournal %{buildroot}%{_bindir}/
@@ -46,6 +47,10 @@ cp -p robojournal64.png %{buildroot}%{_datadir}/icons/
 cp -p %{_builddir}/%{buildsubdir}/menus/robojournal.desktop %{buildroot}%{_datadir}/applications/
 cp -p %{_builddir}/%{buildsubdir}/menus/robojournal %{buildroot}%{_datadir}/menu/
 cp -p %{_builddir}/%{buildsubdir}/menus/robojournal.xpm %{buildroot}%{_datadir}/pixmaps/
+cp -p %{_builddir}/%{buildsubdir}/robojournal.7.gz %{buildroot}%{_mandir}/man7/
+
+%post
+mandb -p
 
 %clean
 
@@ -58,6 +63,7 @@ make distclean
 %{_datadir}/icons/robojournal64.png
 %{_datadir}/pixmaps/robojournal.xpm
 %{_datadir}/menu/robojournal
+%{_mandir}/man7/robojournal.7.gz
 
 
 %changelog
