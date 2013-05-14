@@ -8,7 +8,7 @@ Source:             http://sourceforge.net/projects/robojournal/files/Source/%{n
 URL:                http://sourceforge.net/projects/robojournal
 
 BuildRequires:      qt, qt-assistant, qt-mysql, qt-devel, qt-webkit, qt-webkit-devel, patch
-Requires:           qt, qt-assistant, qt-mysql, qt-webkit, qt-webkit-devel
+Requires:           qt, qt-assistant, qt-mysql, qt-webkit
 
 %description
 
