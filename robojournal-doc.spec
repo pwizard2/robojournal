@@ -17,19 +17,19 @@ Requires:	qt-assistant, robojournal
 Documentation (compiled help file and collection file) for RoboJournal %{version}. 
 
 %prep
-%setup -q
+tar -xvf %{_sourcedir}/robojournal-%{version}.tar.gz 
 
 %build
 
-qcollectiongenerator %{builddir}/doc/robojournal.qhcp -o %{builddir}/doc/robojournal.qhc
+qcollectiongenerator %{_builddir}/robojournal-%{version}/doc/robojournal.qhcp -o %{_builddir}/robojournal-%{version}/doc/robojournal.qhc
 
 
 %install
 
 mkdir -p %{buildroot}%{_defaultdocdir}/
 mkdir -p %{buildroot}%{_defaultdocdir}/robojournal
-cp -p %{_builddir}/%{buildsubdir}/doc/robojournal.qhc %{buildroot}%{_defaultdocdir}/robojournal
-cp -p %{_builddir}/%{buildsubdir}/doc/robojournal.qch %{buildroot}%{_defaultdocdir}/robojournal
+cp -p %{_builddir}/robojournal-%{version}/doc/robojournal.qhc %{buildroot}%{_defaultdocdir}/robojournal
+cp -p %{_builddir}/robojournal-%{version}/doc/robojournal.qch %{buildroot}%{_defaultdocdir}/robojournal
 
 %files
 
