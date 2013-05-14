@@ -63,3 +63,4 @@ make distclean
 %changelog
 * Thu Apr 25 2013 Will Kraft <pwizard@gmail.com>.
 - Version 0.4.1
+- Initial release of the package

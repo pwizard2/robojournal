@@ -40,3 +40,4 @@ cp -p %{_builddir}/robojournal-%{version}/doc/robojournal.qch %{buildroot}%{_def
 %changelog
 * Tue May 14 2013 Will Kraft <pwizard@gmail.com>.
 - Version 0.4.1
+- Initial release of the package
