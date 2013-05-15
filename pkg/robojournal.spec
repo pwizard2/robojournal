@@ -23,8 +23,14 @@ runs on Windows and Linux.
 
 %build
 
+# 5/21/13: Patch project file to prevent documentation from being built (it should be built
+# only while making the robojournal-doc package).
+patch robojournal.pro < pkg/package-config.patch
 qmake-qt4 CONFIG+=package robojournal.pro
+
+# Apply standard Fedora patch so the app compiles properly
 patch Makefile < fedora_build.patch
+
 make 
 strip robojournal
 

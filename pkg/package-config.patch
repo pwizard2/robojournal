@@ -1,0 +1,34 @@
+--- orig.pro	2013-05-15 21:17:42.980832916 +0000
++++ fixed.pro	2013-05-15 21:24:02.772666915 +0000
+@@ -137,19 +137,14 @@
+ 
+     }
+ 
+-    # Tweak for development/debugging: (3/31/13)
+-    # It is sometimes necessary to temporarily comment out the QMAKE_POST_LINK (ln 146) while compiling
+-    # in Qt Creator b/c it may complain about doc/compile_doc.sh being missing during each build.
+-    QMAKE_POST_LINK += bash doc/compile_doc.sh
++    # documentation compile removed for package build because documentation
++    # should be in a separate package than the main robojournal executable.
+ 
+     # set the final destinations of all install files
+     
+     man.files = robojournal.7.gz
+     man.path = /usr/share/man/man7
+-    
+-    doc.path = /usr/share/doc/robojournal
+-    doc.files = doc/robojournal.qhc doc/robojournal.qch
+-    
++            
+     shortcut.path = /usr/share/applications
+     shortcut.files = menus/robojournal.desktop
+ 
+@@ -162,7 +157,7 @@
+     icon-deb.path = /usr/share/pixmaps
+     icon-deb.files = menus/robojournal.xpm
+ 
+-    INSTALLS += target shortcut icon shortcut-deb icon-deb doc man
++    INSTALLS += target shortcut icon shortcut-deb icon-deb man
+ 
+ }
+ 
