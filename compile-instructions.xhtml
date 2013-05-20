@@ -162,7 +162,7 @@ Since building RoboJournal requires a Qt environment with full MySQL support,
 this documentation also explains how to properly prepare and compile Qt from
 its source code. If you need to compile Qt, instructions and guidelines for
 doing so are given in the "How to Build Qt with MySQL Support" section.
-Internet access may be required to fetch one or more required components.</p>
+Internet access can be required to fetch one or more required components.</p>
 
 <p>This documentation uses various styles to differentiate portions of the
 text. Sections with a <span class="console">black background</span> are literal
@@ -247,7 +247,7 @@ correctly.</p>
 
 <p>If you wish to use standard RoboJournal, you should use pre-compiled
 binaries for best results. There is an installer available for Microsoft
-Windows and you may obtain packages compatible with Debian-based Linux from the
+Windows and you can obtain packages compatible with Debian-based Linux from the
 Debian repositories. These packages work with Ubuntu, Linux Mint, or any other
 Debian-based Linux. You should try these options first to see if they work. If
 not, or if you are using an operating system for which no RoboJournal installer
@@ -259,10 +259,10 @@ the unstable or experimental repositories.</p>
 <h2 id="prepare">  Preparing Qt</h2>
 
 <p>You should compile Qt <em>only</em> if you don't have a set of suitable Qt
-libraries available for use with RoboJournal.  Suitable Qt libraries are
+libraries available for use with RoboJournal.  Suitable Qt libraries are
 defined as being compiled for your correct operating system/system architecture
 and contain complete driver support for both MySQL and SQLite. Linux and
-Windows Qt environments are not interchangeable; you may <em>not</em> use a set
+Windows Qt environments are not interchangeable; you can <em>not</em> use a set
 of Windows libraries on Linux and vice versa. A complete Qt environment is
 much harder to find ready-made for Microsoft Windows, so Windows users will
 probably have to compile their own from scratch. <strong>The official Qt
@@ -271,7 +271,7 @@ RoboJournal because the SDK lacks adequate database support.</strong> </p>
 
 <p>Linux users should check their distro repositories first to see if there is
 a complete set (containing the core SQL module and separate packages for MySQL
-and SQLite drivers) of Qt libraries available.  If so, they may be used to
+and SQLite drivers) of Qt libraries available.  If so, they can be used to
 compile RoboJournal and building from source is unnecessary. </p>
 <hr />
 
@@ -319,7 +319,7 @@ following:</p>
 </ol>
 
 <p>After unpacking and installing the prerequisites, you must configure Qt
-before you may compile it. Open a command prompt (xterm or similar on Linux,
+before you can compile it. Open a command prompt (xterm or similar on Linux,
 cmd.exe on Windows), navigate to the directory where you extracted the source
 code, and run one of the following commands:</p>
 <ul>
@@ -382,7 +382,7 @@ that program's true location instead (causing everything to work properly).
 Invoking the "ln" utility requires root or superuser (sudo) permissions because
 the command affects the contents of the system-level /usr/bin folder.</p>
 
-<p>This procedure may be done through the following commands:</p>
+<p>This procedure can be done through the following commands:</p>
 <ul>
   <li>Qt Assistant: <span class="arg">sudo ln [absolute path to your assistant
     executable] [target destination]</span>; for instance, <span
@@ -405,7 +405,7 @@ Tutorial</a>.</p>
 
 <p>MySQL header files are compatible with any operating system and require no
 changes. While the "raw" Windows MySQL development library file (libmysql.lib)
-may be used as-is by the Linux compiler, it is unusable on Windows unless you
+can be used as-is by the Linux compiler, it is unusable on Windows unless you
 alter it with the dlltool and reimp utilities prior to the compile process:</p>
 <ol>
   <li>Open a cmd.exe terminal and set its PATH to the directory that contains
@@ -452,7 +452,7 @@ folder in the robojournal-0.4.1 directory. After the helper script is finished,
 you must locate the required <a href="#depends">dependency</a> files if
 necessary.</p>
 
-<p>You may run the win32_cleanup.bat file to completely clean the
+<p>You can run the win32_cleanup.bat file to completely clean the
 robojournal-0.4.1 folder between builds.</p>
 </div>
 
@@ -499,7 +499,7 @@ configuration.</p>
     "Makefile"), type <span class="console">path C:\MinGW\bin</span> and press
     Enter.</li>
   <li>Type <span class="console">mingw32-make</span> at the command prompt and
-    press Enter. You may accelerate the compile process by running <span
+    press Enter. You can accelerate the compile process by running <span
     class="console">mingw32-make -j 2</span> instead. This instructs the
     compiler to process two jobs at once, thereby cutting the build time in
     half. However, running more than three jobs simultaneously rarely yields
@@ -511,7 +511,7 @@ configuration.</p>
   <li>Resolve dependencies if necessary (refer to the <a
     href="#depends">section</a> below). </li>
   <li>Type <span class="console">robojournal.exe</span> and press Enter to
-    start the program for the first time. You may also start the program by
+    start the program for the first time. You can also start the program by
     opening Windows Explorer, navigating to the C:\robojournal-0.4.1 (or
     C:\robojournal-0.4.1\release) folder, and double-clicking the
     robojournal.exe program icon.</li>
@@ -606,10 +606,11 @@ following packages through the yum package management system:</p>
   <li>gcc-c++ *</li>
 </ul>
 
-<p><small>* Due to a common dependency conflict, you may need to manually update the
-<em>audit</em> package (audit-2.2.1-2 on Fedora 18) before you can install the
-<em>gcc-c++</em> package. This is achieved by running <span class="console">
-sudo yum upgrade audit</span> prior to installing the RoboJournal dependencies.</small></p>
+<p><small>* Due to a common dependency conflict, you may need to manually
+update the <em>audit</em> package (audit-2.2.1-2 on Fedora 18) before you can
+install the <em>gcc-c++</em> package. This is achieved by running <span
+class="console">sudo yum upgrade audit</span> prior to installing the
+RoboJournal dependencies.</small></p>
 
 <p>You can install all these packages at once by running <span
 class="console">sudo yum install qt qt-assistant qt-mysql qt-devel qt-webkit
@@ -618,13 +619,13 @@ of one unbroken line before you copy and paste it into the terminal.</p>
 
 <p>In addition to resolving the basic package requirements, you must also patch
 the Makefile (once you have created one with qmake-qt4) because Fedora requires
-direct linking to the X11 libraries. You must apply the <em>fedora_build.patch</em> file
-to the Makefile by running <span class="console">patch Makefile &lt;
-fedora_build.patch</span> prior to running make. Alternatively, the Linux build
-helper script can automatically apply the patch for you if you instruct it to
-do so during the question-and-answer configuration steps. Forgetting to patch
-the Makefile causes the build process to fail even if the other requirements
-have been satisfied.</p>
+direct linking to the X11 libraries. You must apply the
+<em>fedora_build.patch</em> file to the Makefile by running <span
+class="console">patch Makefile &lt; fedora_build.patch</span> prior to running
+make. Alternatively, the Linux build helper script can automatically apply the
+patch for you if you instruct it to do so during the question-and-answer
+configuration steps. Forgetting to patch the Makefile causes the build process
+to fail even if the other requirements have been satisfied.</p>
 <hr />
 
 <h3 id="linux">Manual Linux Procedure</h3>
@@ -655,7 +656,7 @@ in /usr/bin and can therefore be invoked without specifying an absolute path.
   <li>Wait for the QMake process to finish. If you are using Fedora, apply the
     patch to the Makefile once Qmake has finished: <span class="console">patch
     Makefile &lt; fedora_build.patch</span>.</li>
-  <li>Type <span class="console">make</span> and press Enter. You may
+  <li>Type <span class="console">make</span> and press Enter. You can
     accelerate the compile process by running <span class="console">make -j
     2</span> instead. This instructs the compiler to process two jobs at once,
     thereby cutting the build time in half. However, running more than three
@@ -664,7 +665,7 @@ in /usr/bin and can therefore be invoked without specifying an absolute path.
   <li>Wait for the compiler to finish (the build is done when text stops
     auto-scrolling and the terminal accepts input again).</li>
   <li>Type <span class="console">./robojournal</span> and press Enter to start
-    the program for the first time. You may also start the program by opening a
+    the program for the first time. You can also start the program by opening a
     graphical file manager like Nautilus or Dolphin, navigating to the
     ~/robojournal-0.4.1 folder, and clicking the "robojournal" file. 
     <p>The build process is complete after Step 7. The next three steps are
@@ -716,7 +717,7 @@ including the Makefile and executable. You <em>must</em> run a distclean
 between every build.</p>
 <hr />
 
-<p>Last updated: May 12, 2013</p>
+<p>Last updated: May 20, 2013</p>
 
 <p>Copyright © 2012, 2013 by Will Kraft. This documentation is part of
 RoboJournal and is available under the <a
