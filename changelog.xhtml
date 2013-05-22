@@ -172,6 +172,24 @@
   <li><span class="added">Added</span> comprehensive documentation for
     RoboJournal 0.4.1 (displayed with the included Qt Assistant program).</li>
 </ol>
+
+<h3>Post-Release Updates</h3>
+<ol>
+  <li>Split documentation into a separate <em>robojournal-doc</em> package on
+    Debian-based Linux (including Ubuntu, Linux Mint, <em>et al</em>) because
+    including documentation in each architecture-specific package is redundant
+    when the documentation itself is platform-agnostic.</li>
+  <li><span class="added">Added</span> packaging support for Fedora Linux 
+    <ol>
+      <li><span class="added">Added</span> patch to make the build process
+        compatible with Fedora direct-linking requirements.</li>
+      <li><span class="added">Added</span> an option for the Fedora patch to
+        the Linux build script (linux_compile.pl).</li>
+      <li><span class="added">Added</span> a <em>pkg</em> folder in the source
+        tree for the Fedora SPEC files.</li>
+    </ol>
+  </li>
+</ol>
 </div>
 
 <div class="even">
