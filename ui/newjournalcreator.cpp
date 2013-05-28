@@ -38,13 +38,15 @@ void NewJournalCreator::PrimaryConfig(){
     stack->addWidget(c=new JournalCreatorCoverPage(this));
     stack->addWidget(s=new SQLiteJournalPage(this));
     stack->addWidget(m=new MySQLJournalPage(this));
-    stack->setCurrentIndex(2);
-
 
     ui->PageArea->setWidget(stack);
     ui->PageArea->setWidgetResizable(true);
     ui->PageArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->PageArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+
+
+    stack->setCurrentIndex(0);
+    ui->DatabaseType->setCurrentRow(0);
 
 
     if(Buffer::firstrun){

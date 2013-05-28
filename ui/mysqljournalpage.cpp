@@ -17,7 +17,7 @@ MySQLJournalPage::~MySQLJournalPage()
 
 void MySQLJournalPage::PrimaryConfig(){
 
-    ui->MatchNotify->setStyleSheet("color: red");
+    ui->MatchNotify->setStyleSheet("font-weight: bold; color: red");
     ui->JournalHost->setPlaceholderText("localhost");
     ui->StrengthMeter->setValue(0);
 }
@@ -27,12 +27,12 @@ bool MySQLJournalPage::PasswordsMatch(){
 
     if((ui->Password1->text() == ui->Password2->text()) && (ui->Password1->text().length() > 0)){
         ui->MatchNotify->setText("Passwords match");
-        ui->MatchNotify->setStyleSheet("color: green");
+        ui->MatchNotify->setStyleSheet("font-weight: bold; color: green");
         return true;
     }
     else{
 
-        ui->MatchNotify->setStyleSheet("color: red");
+        ui->MatchNotify->setStyleSheet("font-weight: bold; color: red");
 
         if(ui->Password1->text().length()==0 && ui->Password2->text().length()==0){
             ui->MatchNotify->setText("Passwords are too short");
@@ -54,5 +54,7 @@ void MySQLJournalPage::on_Password1_textChanged()
 void MySQLJournalPage::on_Password2_textEdited()
 {
     bool unlock=PasswordsMatch();
+
+
 
 }

@@ -231,7 +231,7 @@ void Newconfig::PrimaryConfig(){
 
     // restore window size from previous session
     bool usetemp=!Buffer::config_temporarysize.isEmpty();
-    cout << " Temporary size is valid : " << usetemp << endl;
+    //cout << " Temporary size is valid : " << usetemp << endl;
 
     if(usetemp && startup){
 

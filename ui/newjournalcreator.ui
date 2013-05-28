@@ -51,7 +51,7 @@
        </property>
        <item>
         <property name="text">
-         <string>Cover Page</string>
+         <string>Overview</string>
         </property>
         <property name="icon">
          <iconset resource="../images.qrc">
