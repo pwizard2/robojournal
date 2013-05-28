@@ -23,7 +23,11 @@ public:
     explicit NewJournalCreator(QWidget *parent = 0);
     ~NewJournalCreator();
 
-    void ManageOKButton(bool unlock);
+
+
+public slots:
+    void lockOKButton();
+    void unlockOKButton();
     
 private slots:
     void on_DatabaseType_currentRowChanged(int currentRow);

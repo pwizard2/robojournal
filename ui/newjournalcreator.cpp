@@ -26,6 +26,8 @@ NewJournalCreator::~NewJournalCreator()
 
 void NewJournalCreator::PrimaryConfig(){
 
+
+
     QPushButton *okButton=ui->buttonBox->button(QDialogButtonBox::Ok);
     okButton->setEnabled(false);
 
@@ -54,6 +56,9 @@ void NewJournalCreator::PrimaryConfig(){
         ui->SetAsDefault->setEnabled(false);
     }
 
+    connect(m, SIGNAL(unlockOK()), this, SLOT(unlockOKButton()));
+    connect(m, SIGNAL(unlockNotOK()), this, SLOT(lockOKButton()));
+
 }
 
 void NewJournalCreator::on_DatabaseType_currentRowChanged(int currentRow)
@@ -61,14 +66,20 @@ void NewJournalCreator::on_DatabaseType_currentRowChanged(int currentRow)
     stack->setCurrentIndex(currentRow);
 }
 
-void NewJournalCreator::ManageOKButton(bool unlock){
-    if(unlock){
+// Unlock the OK button to allow the user to submit the form. This also locks the
+// DatabaseType object to prevent the user from switching journal types before clicking OK.
+void NewJournalCreator::unlockOKButton(){
 
         QPushButton *okButton=ui->buttonBox->button(QDialogButtonBox::Ok);
         okButton->setEnabled(true);
-    }
-    else{
+
+        ui->DatabaseType->setEnabled(false);
+}
+
+// Lock the OK button to allow the user to prevent the form from being submitted  This also unlocks the
+// DatabaseType object so the user can switch the journal type if necessary.
+void NewJournalCreator::lockOKButton(){
         QPushButton *okButton=ui->buttonBox->button(QDialogButtonBox::Ok);
-        okButton->setEnabled(false);
-    }
+        okButton->setEnabled(false); 
+         ui->DatabaseType->setEnabled(true);
 }

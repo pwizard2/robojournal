@@ -190,7 +190,7 @@
            </size>
           </property>
           <property name="text">
-           <string>3306</string>
+           <string/>
           </property>
           <property name="maxLength">
            <number>4</number>

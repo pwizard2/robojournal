@@ -16,7 +16,12 @@ public:
     explicit MySQLJournalPage(QWidget *parent = 0);
     ~MySQLJournalPage();
 
+signals:
+    void unlockOK();
+    void unlockNotOK();
 
+public slots:
+    void ClearForm();
 
     
 private slots:
@@ -27,7 +32,7 @@ private slots:
 private:
     Ui::MySQLJournalPage *ui;
     void PrimaryConfig();
-    bool PasswordsMatch();
+    void PasswordsMatch();
 
 };
 
