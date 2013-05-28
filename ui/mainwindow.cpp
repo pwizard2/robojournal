@@ -67,6 +67,8 @@
 #include "ui_tagreminder.h"
 #include <QProcess>
 #include <QDir>
+#include "ui/newjournalcreator.h"
+#include "ui_newjournalcreator.h"
 
 // 0.4.1: Consolidate the clear search results code into its own function since it needs to be called
 // more than once.
@@ -3409,7 +3411,8 @@ void MainWindow::on_actionJournal_Creator_triggered()
         }
     }
 
-    JournalCreator jc(this);
+    //JournalCreator jc(this);
+    NewJournalCreator jc(this);
     jc.exec();
 }
 

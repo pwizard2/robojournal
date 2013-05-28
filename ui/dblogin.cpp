@@ -25,6 +25,7 @@
 #include <iostream>
 #include <QMessageBox>
 
+
 #ifdef Q_OS_WIN32
 # include <windows.h>
 #else
@@ -86,7 +87,6 @@ DBLogin::DBLogin(QWidget *parent) :
     int height=this->height();
     this->setMaximumSize(width,height);
     this->setMinimumSize(width,height);
-
 
 }
 

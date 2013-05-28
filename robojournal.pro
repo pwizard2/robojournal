@@ -51,7 +51,11 @@ SOURCES += main.cpp\
 	ui/SpellTextEdit.cpp \
 	ui/highlighter.cpp \
 	sql/sqlshield.cpp \
-	ui/tagreminder.cpp
+	ui/tagreminder.cpp \
+        ui/newjournalcreator.cpp \
+        ui/mysqljournalpage.cpp \
+        ui/sqlitejournalpage.cpp \
+        ui/journalcreatorcoverpage.cpp
 
 HEADERS  += ui/mainwindow.h \
 	core/buffer.h \
@@ -93,7 +97,11 @@ HEADERS  += ui/mainwindow.h \
 	ui/SpellTextEdit.h \
 	ui/highlighter.h \
 	sql/sqlshield.h \
-	ui/tagreminder.h
+	ui/tagreminder.h \
+        ui/newjournalcreator.h \
+        ui/mysqljournalpage.h \
+        ui/sqlitejournalpage.h \
+        ui/journalcreatorcoverpage.h
 
 
 FORMS    += ui/mainwindow.ui \
@@ -113,7 +121,11 @@ FORMS    += ui/mainwindow.ui \
 	ui/configurationeditor.ui \
 	ui/configurationexport.ui \
 	ui/exportpreview.ui \
-	ui/tagreminder.ui
+	ui/tagreminder.ui \
+        ui/newjournalcreator.ui \
+        ui/mysqljournalpage.ui \
+        ui/sqlitejournalpage.ui \
+        ui/journalcreatorcoverpage.ui
 
 # Declaration of images and other to-be-embedded resources.
 RESOURCES  = images.qrc
@@ -140,7 +152,8 @@ unix {
     # Tweak for development/debugging: (3/31/13)
     # It is sometimes necessary to temporarily comment out the QMAKE_POST_LINK (ln 146) while compiling
     # in Qt Creator b/c it may complain about doc/compile_doc.sh being missing during each build.
-    QMAKE_POST_LINK += bash doc/compile_doc.sh
+
+    #QMAKE_POST_LINK += bash doc/compile_doc.sh
 
     # set the final destinations of all install files
     
