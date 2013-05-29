@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>344</width>
-    <height>384</height>
+    <height>374</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,7 +33,11 @@
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QLineEdit" name="JournalName"/>
+         <widget class="QLineEdit" name="JournalName">
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter the name you wish to use for the journal database. RoboJournal automatically enters a combination of your system username and &amp;quot;_journal&amp;quot; but you may use anything else instead.  RoboJournal automatically ensures that all names are completely lowercase and replaces all spaces  with underscore characters ( _ ).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label_2">
@@ -240,7 +244,7 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>11</height>
+       <height>5</height>
       </size>
      </property>
     </spacer>

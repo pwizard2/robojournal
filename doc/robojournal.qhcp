@@ -2,8 +2,8 @@
  <QHelpCollectionProject version="1.0">
      <assistant>
          <title>RoboJournal Documentation</title>
-         <startPage>qthelp://robojournal.0.4.1/doc/index.html</startPage>
-		 <homePage>qthelp://robojournal.0.4.1/doc/toc.html</homePage>
+         <startPage>qthelp://robojournal.0.5/doc/index.html</startPage>
+		 <homePage>qthelp://robojournal.0.5/doc/toc.html</homePage>
          <applicationIcon>rj_help.png</applicationIcon>
          <enableFilterFunctionality>false</enableFilterFunctionality>
          <enableDocumentationManager>false</enableDocumentationManager>

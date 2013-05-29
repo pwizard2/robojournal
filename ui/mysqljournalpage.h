@@ -29,10 +29,15 @@ private slots:
 
     void on_Password2_textEdited();
 
+    void on_JournalName_editingFinished();
+
+    void on_Username_editingFinished();
+
 private:
     Ui::MySQLJournalPage *ui;
     void PrimaryConfig();
     void PasswordsMatch();
+    int PasswordStrength(QString passwd);
 
 };
 

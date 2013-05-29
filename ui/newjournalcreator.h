@@ -23,14 +23,19 @@ public:
     explicit NewJournalCreator(QWidget *parent = 0);
     ~NewJournalCreator();
 
-
+signals:
+    void Clear_MySQL();
+    void Clear_SQLite();
 
 public slots:
     void lockOKButton();
     void unlockOKButton();
+    void RestoreDefaults();
     
 private slots:
     void on_DatabaseType_currentRowChanged(int currentRow);
+
+    void on_buttonBox_clicked(QAbstractButton *button);
 
 private:
     Ui::NewJournalCreator *ui;
