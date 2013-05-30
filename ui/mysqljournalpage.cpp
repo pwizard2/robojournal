@@ -111,10 +111,14 @@ int MySQLJournalPage::PasswordStrength(QString passwd){
 // back to the appropriate slots in the NewJournalCreator instance.
 void MySQLJournalPage::PasswordsMatch(){
 
+    QPixmap good(":/icons/tick-circle.png");
+    QPixmap bad(":/icons/cross-circle.png");
+
     if((ui->Password1->text() == ui->Password2->text()) && (ui->Password1->text().length() > 0)
             && (ui->Password1->text().length() >= 7)){
         ui->MatchNotify->setText("Passwords match");
         ui->MatchNotify->setStyleSheet("font-weight: bold; color: green");
+        ui->MatchIcon->setPixmap(good);
 
         // Calculate password strength
         int strength=PasswordStrength(ui->Password1->text());
@@ -126,6 +130,7 @@ void MySQLJournalPage::PasswordsMatch(){
     else
     {
         ui->MatchNotify->setStyleSheet("font-weight: bold; color: red");
+        ui->MatchIcon->setPixmap(bad);
 
         if(ui->Password1->text().length()< 7 && ui->Password2->text().length() < 7){
             ui->MatchNotify->setText("Passwords are too short");
@@ -140,6 +145,7 @@ void MySQLJournalPage::PasswordsMatch(){
 
         // clear strength meter
         ui->StrengthMeter->setValue(0);
+
     }
 }
 
