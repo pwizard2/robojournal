@@ -133,3 +133,10 @@ void NewJournalCreator::on_buttonBox_clicked(QAbstractButton *button)
         RestoreDefaults();
     }
 }
+
+
+
+void NewJournalCreator::on_BrowseButton_clicked()
+{
+
+}

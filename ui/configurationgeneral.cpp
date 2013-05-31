@@ -35,10 +35,10 @@ ConfigurationGeneral::ConfigurationGeneral(QWidget *parent) :
 
     // Set up Database List
     QIcon mysql(":/icons/mysql_icon2.png");
-    //QIcon sqlite(":/icons/sqlite_icon.png");
+    QIcon sqlite(":/icons/sqlite_icon.png");
 
     ui->Backend->addItem(mysql,"MySQL");
-    //ui->Backend->addItem(sqlite,"SQLite");
+    ui->Backend->addItem(sqlite,"SQLite");
 
 
     PopulateForm();

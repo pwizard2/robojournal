@@ -37,6 +37,10 @@ private slots:
 
     void on_buttonBox_clicked(QAbstractButton *button);
 
+
+
+    void on_BrowseButton_clicked();
+
 private:
     Ui::NewJournalCreator *ui;
 

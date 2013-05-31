@@ -14,9 +14,12 @@ class SQLiteJournalPage : public QWidget
 public:
     explicit SQLiteJournalPage(QWidget *parent = 0);
     ~SQLiteJournalPage();
+
     
 private:
     Ui::SQLiteJournalPage *ui;
+    void PrimaryConfig();
+    void Browse(QString startpath);
 };
 
 #endif // SQLITEJOURNALPAGE_H

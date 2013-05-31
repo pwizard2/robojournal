@@ -65,11 +65,11 @@ void MySQLJournalPage::ClearForm(){
     PrimaryConfig();
 }
 
-// Gauge password strength (0-100) based on certain rules and return the value as an integer.
-// --Will Kraft 5/29/13
+// Gauge password strength (0-100) based on certain rules and return the score as an integer.
+// This doesn't take everything into account (yet). --Will Kraft 5/29/13
 int MySQLJournalPage::PasswordStrength(QString passwd){
-
     using namespace std;
+
     int score=0;
 
     int len=passwd.length();
@@ -83,17 +83,26 @@ int MySQLJournalPage::PasswordStrength(QString passwd){
      // start the logic
      if(!passwd.isEmpty()){
 
-         score=len*5; // multiply password length by five
-         score=score+(numbers*4); // add numbers (multiplied by four)
-         score=score+(symbols*6); // add number of symbols multiplied by 6
+         score=len*5; // multiply password length by five and start the score with that value
+         score=score+(numbers*4); // add number diversity bonus (multiplied by four)
+         score=score+(symbols*6); // add symbol diversity bonus (multiplied by 6)
          score=score+(len-alphaUC)*2.5; // calculate uppercase letters.
          score=score+(len-alphaLC)*2.5; // calculate lowercase letters.
 
-         QRegExp repeat_num("\\d\\d{1,}");
+         // Dock points for adjacent lowercase letters
+         QRegExp lowercase_consecutive("[a-z]{2,}",Qt::CaseSensitive);
+         int repeat_lc=passwd.count(lowercase_consecutive);
+         score=score-(repeat_lc*len);
 
-         int repeat_num_count=passwd.count(repeat_num);
-         cout << "repeating numbers: " << repeat_num_count << endl;
-         score=score-(repeat_num_count*4);
+         // Dock points for adjacent uppercase letters
+         QRegExp uppercase_consecutive("[A-Z]{2,}",Qt::CaseSensitive);
+         int repeat_uc=passwd.count(uppercase_consecutive);
+         score=score-(repeat_uc*len);
+
+         // Dock points for adjacent numbers
+         QRegExp int_consecutive("[0-9]{2,}");
+         int repeat_int=passwd.count(int_consecutive);
+         score=score-(repeat_int*len);
 
          // prevent score from going out of range
          if(score>100){
