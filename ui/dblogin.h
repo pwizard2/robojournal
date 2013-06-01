@@ -58,10 +58,6 @@ protected:
 
 private slots:
 
-    bool CheckCapsLock(); // check to see if Caps lock is on
-
-
-
     void on_UseUserDefault_clicked();
 
     void on_UseDBDefault_clicked();

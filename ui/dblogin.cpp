@@ -25,39 +25,10 @@
 #include <iostream>
 #include <QMessageBox>
 
-
-#ifdef Q_OS_WIN32
-# include <windows.h>
-#else
-#  include <X11/XKBlib.h>
-# undef KeyPress
-# undef KeyRelease
-# undef FocusIn
-# undef FocusOut
-// #undef those Xlib #defines that conflict with QEvent::Type enum
-#endif
-
-
-// Check to see if Caps lock is on.
-// Special thanks to http://www.qtforum.org/article/32572/how-to-determine-if-capslock-is-on-crossplatform.html
-// for helping me detect caps lock
-bool DBLogin::CheckCapsLock(){
-
-#ifdef Q_OS_WIN32 // MS Windows version
-    return GetKeyState(VK_CAPITAL) == 1;
-#else // X11 version (Linux/Unix/Mac OS X/etc...)
-    Display * d = XOpenDisplay((char*)0);
-    bool caps_on = false;
-    if (d)
-    {
-        unsigned n;
-        XkbGetIndicatorState(d, XkbUseCoreKbd, &n);
-        caps_on = (n & 0x01) == 1;
-    }
-    return caps_on;
-#endif
-
-}
+// Will Kraft: 6/1/13
+// Stripped out caps lock checker because it caused more problems during build time than it solved.
+// The code required direct-linking on some linux distros, which caused huge problems if the makefile wasn't patched beforehand.
+// Taking this code out greatly simplifies the build process.
 
 DBLogin::DBLogin(QWidget *parent) :
     QDialog(parent),
@@ -65,13 +36,6 @@ DBLogin::DBLogin(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // Notify the user if caps lock is on b/c user may not realize it.
-    bool caps_on=CheckCapsLock();
-
-    if(caps_on){
-        QMessageBox b;
-        b.information(parent,"RoboJournal","Caps Lock is on. Please disable it before entering your password.");
-    }
 
     // use large icon on Linux
 #ifdef unix
@@ -87,6 +51,7 @@ DBLogin::DBLogin(QWidget *parent) :
     int height=this->height();
     this->setMaximumSize(width,height);
     this->setMinimumSize(width,height);
+
 
 }
 
