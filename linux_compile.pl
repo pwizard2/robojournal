@@ -76,7 +76,7 @@ choose_path:
 print "\nEnter the path to Qmake (leave your answer blank to use the\ndefault ",
 "value).\n\nIf you don't know where Qmake is installed, running \"whereis qmake\"",
 "\nin a different terminal window will reveal its location (Qmake\nis called \"qmake-qt4\" ",
-"on Fedora).\n\n";
+"on Fedora and on any other distro where Qt 5.x\nis installed alongside Qt 4.x).\n\n";
 print ": ";
 
 
@@ -107,10 +107,6 @@ print "\n\nDo you want to create a package build? (Y/N)\n\nTip: You should answe
 "you need to package RoboJournal for the Debian repositories.\n\n: ";
  $choice2=<STDIN>;
  
-print "\n\nDo you need to patch the Makefile prior to building? (Y/N)\n\nTip: Users of Fedora ",
-" or any other distro that requires direct\nlinking should type Y. Debian, Ubuntu, and Mint ",
-"users should\nanswer N.\n\n: ";
-$choice4=<STDIN>;
 
 print "\n\nDo you want to install the program after compiling it? (Y/N)\n\nFYI: Installation ",
 "requires sudo access! Furthermore, documentation\ndoesn't work correctly without a proper installation.\n\n: ";
@@ -135,9 +131,7 @@ else{
 		print $qmake_cmd . "\n\n";
 		system($qmake_cmd);
 		
-		if($choice4 =~ m/[y]|[yes]/i){
-		system("patch Makefile < fedora_build.patch");
-		}
+
 		
 		system("make -j 3");
 
@@ -164,10 +158,7 @@ else{
     print " Running qmake: ";
     print $qmake_cmd . "\n\n";
     system($qmake_cmd);
-    
-    if($choice4 =~ m/[y]|[yes]/i){
-		system("patch Makefile < fedora_build.patch");
-		}
+
     
     system("make -j 3");
    

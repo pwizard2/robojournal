@@ -187,14 +187,16 @@
     when the documentation itself is platform-agnostic.</li>
   <li><span class="added">Added</span> packaging support for Fedora Linux 
     <ol>
-      <li><span class="added">Added</span> patch to make the build process
-        compatible with Fedora direct-linking requirements.</li>
-      <li><span class="added">Added</span> an option for the Fedora patch to
-        the Linux build script (linux_compile.pl).</li>
+      <li>(6/1/13) Removed Fedora build patch since it is no longer needed.</li>
+	 
       <li><span class="added">Added</span> a <em>pkg</em> folder in the source
         tree for the Fedora SPEC files.</li>
+	
     </ol>
   </li>
+  <li>Temporarily disabled spellcheck on Linux-based systems to prevent a common crashing bug from occurring.</li>
+  <li>(6/1/13) Removed Fedora patch question/logic from Linux compile script.</li>
+  <li>(6/1/13) Removed caps-lock detection code from the DBLogin class.</li>
 </ol>
 </div>
 

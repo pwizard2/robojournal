@@ -561,7 +561,7 @@ the "sqldrivers" folder if it does not exist).</small></p>
 <h3 id="debian_requirements">Debian, Ubuntu, and Linux Mint Requirements</h3>
 
 <p>Users of Debian-family distros (including Debian itself, Ubuntu, Linux Mint,
-et al.) must install the the following packages through apt-get: </p>
+<i>et al.</i>) must install the the following packages through apt-get: </p>
 <ul>
   <li>libqt4-core</li>
   <li>libqt4-gui</li>
@@ -583,12 +583,19 @@ libqt4-webkit libqt4-sql libqt4-sql-mysql libqt4-sql-sqlite libqt4-help
 qt4-dev-tools qt4-qmake libx11-dev build-essential</span>. Ensure that the
 entire command consists of one unbroken line before you copy and paste it into
 the terminal.</p>
+
+<p>Newer versions of Ubuntu, Debian, and Linux Mint allow you to install
+Qt 4.x.x and Qt 5.x in parallel. Since RoboJournal has not been ported to Qt 5.x yet, you 
+<em>must</em> use the Qt 4.x.x version of QMake for all RoboJournal builds. On systems that 
+have multiple versions of Qt installed, the correct version of QMake is called "qmake-qt4". 
+It is usually installed at /usr/bin/qmake-qt4.</p>
+
 <hr />
 
 <h3 id="fedora_requirements">Fedora Requirements</h3>
 
 <p>The Qt environment on Fedora is unusual because certain utilities have
-slightly different names: Qmake is called "qmake-qt4" while Qt Assistant is
+slightly different names: QMake is called "qmake-qt4" while Qt Assistant is
 called "assistant-qt4". Be sure to take these name changes into consideration
 in order to prevent problems during the build process. </p>
 
@@ -602,7 +609,6 @@ following packages through the yum package management system:</p>
   <li>qt-devel</li>
   <li>qt-webkit</li>
   <li>qt-webkit-devel</li>
-  <li>patch</li>
   <li>gcc-c++ *</li>
 </ul>
 
@@ -614,18 +620,10 @@ RoboJournal dependencies.</small></p>
 
 <p>You can install all these packages at once by running <span
 class="console">sudo yum install qt qt-assistant qt-mysql qt-devel qt-webkit
-qt-webkit-devel patch gcc-c++</span>. Ensure that the entire command consists
+qt-webkit-devel gcc-c++</span>. Ensure that the entire command consists
 of one unbroken line before you copy and paste it into the terminal.</p>
 
-<p>In addition to resolving the basic package requirements, you must also patch
-the Makefile (once you have created one with qmake-qt4) because Fedora requires
-direct linking to the X11 libraries. You must apply the
-<em>fedora_build.patch</em> file to the Makefile by running <span
-class="console">patch Makefile &lt; fedora_build.patch</span> prior to running
-make. Alternatively, the Linux build helper script can automatically apply the
-patch for you if you instruct it to do so during the question-and-answer
-configuration steps. Forgetting to patch the Makefile causes the build process
-to fail even if the other requirements have been satisfied.</p>
+
 <hr />
 
 <h3 id="linux">Manual Linux Procedure</h3>
@@ -643,7 +641,8 @@ assume that the RoboJournal source code is located in your home directory
   <li>Type <span class="console">cd ~/robojoural-0.4.1</span> and press
   Enter.</li>
   <li>Type <span class="console">qmake robojournal.pro</span> and press Enter
-    (substitute "qmake" with "qmake-qt4" on Fedora). 
+    (substitute "qmake" with "qmake-qt4" on Fedora and on systems where Qt 5 is
+     also installed). 
 
     <div class="FYI">
     <strong>FYI:</strong> If you need to create a package build for Debian, you
@@ -653,9 +652,7 @@ assume that the RoboJournal source code is located in your home directory
     <em>unless</em> you are a Debian maintainer and you need to package
     RoboJournal for inclusion in the repositories. </div>
   </li>
-  <li>Wait for the QMake process to finish. If you are using Fedora, apply the
-    patch to the Makefile once Qmake has finished: <span class="console">patch
-    Makefile &lt; fedora_build.patch</span>.</li>
+  <li>Wait for the QMake process to finish.</li>
   <li>Type <span class="console">make</span> and press Enter. You can
     accelerate the compile process by running <span class="console">make -j
     2</span> instead. This instructs the compiler to process two jobs at once,

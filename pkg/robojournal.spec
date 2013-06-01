@@ -28,8 +28,7 @@ runs on Windows and Linux.
 patch robojournal.pro < pkg/package-config.patch
 qmake-qt4 CONFIG+=package robojournal.pro
 
-# Apply standard Fedora patch so the app compiles properly
-patch Makefile < fedora_build.patch
+# 6/1/13: Removed Fedora build patch since it is no longer needed
 
 make 
 strip robojournal
