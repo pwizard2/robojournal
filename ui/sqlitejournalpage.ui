@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>336</width>
-    <height>174</height>
+    <height>169</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>Database Settings</string>
+      <string>Journal Settings</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>

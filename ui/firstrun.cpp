@@ -21,8 +21,8 @@
 #include "ui/firstrun.h"
 #include "ui_firstrun.h"
 #include "core/buffer.h"
-#include "ui/journalcreator.h"
-#include "ui_journalcreator.h"
+#include "ui/newjournalcreator.h"
+#include "ui_newjournalcreator.h"
 #include "ui/journalselector.h"
 #include "ui_journalselector.h"
 #include <iostream>
@@ -69,7 +69,7 @@ void FirstRun::Launcher(){
 
     if(ui->NewJournal->isChecked()){
         this->close();
-        JournalCreator j;
+        NewJournalCreator j;
         j.exec();
     }
     else{

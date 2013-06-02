@@ -1101,19 +1101,7 @@ void MainWindow::ShowHelp(){
             // In all cases, show appropriate errors if one or more files is missing.
             QMessageBox b;
 
-            if(!collection_file.exists()){
-                b.critical(this,"RoboJournal","RoboJournal cannot display the documentation because the Collection File "
-                           "needed by Qt Assistant is missing. Please copy the Collection File to <b>" +
-                           collection_path + "</b> and try again.");
-                this->setCursor(Qt::ArrowCursor);
-            }
 
-            if(!documentation_file.exists()){
-                b.critical(this,"RoboJournal","RoboJournal cannot display the documentation because the Compiled Help File "
-                           "needed by Qt Assistant is missing. Please copy the Compiled Help File to <b>" +
-                           compiled_help_path + "</b> and try again.");
-                this->setCursor(Qt::ArrowCursor);
-            }
 
             if((!collection_file.exists()) && (!documentation_file.exists())){
 
@@ -1126,11 +1114,27 @@ void MainWindow::ShowHelp(){
                 location="/usr/share/doc/robojournal";
 #endif
 
-                b.critical(this,"RoboJournal","RoboJournal could not locate the Collection File"
-                           " (robojournal.qhc) or the Compiled Help File (robojournal.qch). Please"
-                           " locate these files and copy them to <b>" + location + "</b>.");
+                b.critical(this,"RoboJournal","RoboJournal could not locate the collection file"
+                           " (robojournal.qhc) or the compiled help file (robojournal.qch). Please"
+                           " locate these files and copy them into <b>" + location + "</b>.");
                 this->setCursor(Qt::ArrowCursor);
 
+            }
+            else{
+
+                if(!collection_file.exists()){
+                    b.critical(this,"RoboJournal","RoboJournal cannot display the documentation because the Collection File "
+                               "needed by Qt Assistant is missing. Please copy the Collection File to <b>" +
+                               collection_path + "</b> and try again.");
+                    this->setCursor(Qt::ArrowCursor);
+                }
+
+                if(!documentation_file.exists()){
+                    b.critical(this,"RoboJournal","RoboJournal cannot display the documentation because the Compiled Help File "
+                               "needed by Qt Assistant is missing. Please copy the Compiled Help File to <b>" +
+                               compiled_help_path + "</b> and try again.");
+                    this->setCursor(Qt::ArrowCursor);
+                }
             }
         }
     }

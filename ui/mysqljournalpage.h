@@ -16,6 +16,10 @@ public:
     explicit MySQLJournalPage(QWidget *parent = 0);
     ~MySQLJournalPage();
 
+    bool Validate();
+    void HarvestData();
+
+
 signals:
     void unlockOK();
     void unlockNotOK();
@@ -38,6 +42,8 @@ private:
     void PrimaryConfig();
     void PasswordsMatch();
     int PasswordStrength(QString passwd);
+
+
 
 };
 

@@ -2,6 +2,8 @@
 #include "ui_mysqljournalpage.h"
 #include "ui/newjournalcreator.h"
 #include <iostream>
+#include <QMessageBox>
+
 
 MySQLJournalPage::MySQLJournalPage(QWidget *parent) :
     QWidget(parent),
@@ -10,6 +12,8 @@ MySQLJournalPage::MySQLJournalPage(QWidget *parent) :
     ui->setupUi(this);
     PrimaryConfig();
 }
+
+
 
 MySQLJournalPage::~MySQLJournalPage()
 {
@@ -188,4 +192,69 @@ void MySQLJournalPage::on_Username_editingFinished()
     username=username.toLower();
     username=username.replace(" ","_");
     ui->Username->setText(username);
+}
+
+// Validate form data. This should be done before the form get submitted.
+bool MySQLJournalPage::Validate(){
+
+    QMessageBox a;
+
+    if(ui->JournalName->text().isEmpty()){
+        a.critical(this,"RoboJournal","You must provide a name for this journal!");
+        ui->JournalName->setFocus();
+        return false;
+    }
+
+    if(ui->Username->text().isEmpty()){
+        a.critical(this,"RoboJournal","You must enter a username!");
+        ui->Username->setFocus();
+        return false;
+    }
+
+    QRegExp root("root",Qt::CaseInsensitive);
+
+    if(root.exactMatch(ui->Username->text())){
+        a.critical(this,"RoboJournal","You cannot use <b>root</b> as a username!");
+        ui->Username->setFocus();
+        ui->Username->clear();
+        return false;
+    }
+
+    if(ui->RootPassword->text().isEmpty()){
+
+        QString hostname=ui->JournalHost->text();
+
+        if(hostname.isEmpty()){
+            hostname=ui->JournalHost->placeholderText();
+        }
+
+        a.critical(this,"RoboJournal","You must enter the MySQL root password for <b>" + hostname +"</b>.");
+        ui->RootPassword->setFocus();
+        return false;
+    }
+
+    return true;
+}
+
+// Get form data from widgets and shunt it back to the NewJournalCreator class.
+void MySQLJournalPage::HarvestData(){
+
+    if(ui->JournalHost->text().isEmpty()){
+        NewJournalCreator::hostname=ui->JournalHost->placeholderText();
+    }
+    else{
+        NewJournalCreator::hostname=ui->JournalHost->text();
+    }
+
+    NewJournalCreator::password=ui->Password1->text();
+    NewJournalCreator::username=ui->Username->text();
+    NewJournalCreator::journal_name=ui->JournalName->text();
+    NewJournalCreator::root_password=ui->RootPassword->text();
+
+    if(ui->Port->text().isEmpty()){
+        NewJournalCreator::port=ui->Port->placeholderText();
+    }
+    else{
+        NewJournalCreator::port=ui->Port->text();
+    }
 }

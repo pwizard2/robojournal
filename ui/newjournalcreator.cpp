@@ -11,6 +11,19 @@
 #include "core/buffer.h"
 #include "sql/mysqlcore.h"
 #include "sql/sqlitecore.h"
+#include <QCloseEvent>
+#include <QMessageBox>
+#include "core/settingsmanager.h"
+#include "ui/firstrun.h"
+
+// MySQL data
+QString NewJournalCreator::journal_name;
+QString NewJournalCreator::username;
+QString NewJournalCreator::password;
+QString NewJournalCreator::hostname;
+QString NewJournalCreator::port;
+QString NewJournalCreator::root_password;
+
 
 NewJournalCreator::NewJournalCreator(QWidget *parent) :
     QDialog(parent),
@@ -65,15 +78,52 @@ void NewJournalCreator::PrimaryConfig(){
     connect(m, SIGNAL(unlockNotOK()), this, SLOT(lockOKButton()));
     connect(this, SIGNAL(Clear_MySQL()), m, SLOT(ClearForm()));
 
-
-
     stack->setCurrentIndex(0);
     ui->DatabaseType->setCurrentRow(0);
 
 }
 
 
-// This method gets calkled whenever the user clicks the "Restore Defaults"
+// Create a new mysql journal (6/1/13)
+bool NewJournalCreator::Create_MySQL_Database(){
+
+    MySQLCore mysql;
+    bool success=mysql.CreateDatabase(hostname,root_password,journal_name,port,username,password);
+
+    QMessageBox msg;
+    if(success){
+
+        msg.information(this,"RoboJournal", "The journal <b>" + journal_name +
+                        "</b> has been successfully created on <b>" + hostname +
+                        "</b>. You may now access this journal with the password you set up for user <b>" +
+                        username + "</b>.<br><br>Click <b>Connect</b> on the main window to start working with "
+                        "your new journal.");
+
+        // Post-setup: Create configuration file with new values if option is checked
+        if(ui->SetAsDefault->isChecked()){
+
+            SettingsManager sm;
+            sm.NewConfig(hostname,journal_name,port,username);
+        }
+
+        // clear firstrun flag if this is the first run and it is active
+        if(Buffer::firstrun){
+            Buffer::firstrun=false;
+        }
+
+        return true;
+    }
+
+    // journal creation failed...
+    else{
+        msg.critical(this,"RoboJournal", "Journal creation attempt failed on <b>" + hostname + "</b>. Please make sure the root password is"
+                     " correct and the host is configured properly and then try again.");
+        return false;
+    }
+}
+
+
+// This method gets called whenever the user clicks the "Restore Defaults"
 // button. This sends a signal to a slot on a specific page depending on
 // which item is selected in the DatabaseType list.
 void NewJournalCreator::RestoreDefaults(){
@@ -113,18 +163,18 @@ void NewJournalCreator::on_DatabaseType_currentRowChanged(int currentRow)
 // DatabaseType object to prevent the user from switching journal types before clicking OK.
 void NewJournalCreator::unlockOKButton(){
 
-        QPushButton *okButton=ui->buttonBox->button(QDialogButtonBox::Ok);
-        okButton->setEnabled(true);
+    QPushButton *okButton=ui->buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setEnabled(true);
 
-        ui->DatabaseType->setEnabled(false);
+    ui->DatabaseType->setEnabled(false);
 }
 
 // Lock the OK button to allow the user to prevent the form from being submitted  This also unlocks the
 // DatabaseType object so the user can switch the journal type if necessary.
 void NewJournalCreator::lockOKButton(){
-        QPushButton *okButton=ui->buttonBox->button(QDialogButtonBox::Ok);
-        okButton->setEnabled(false); 
-         ui->DatabaseType->setEnabled(true);
+    QPushButton *okButton=ui->buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setEnabled(false);
+    ui->DatabaseType->setEnabled(true);
 }
 
 void NewJournalCreator::on_buttonBox_clicked(QAbstractButton *button)
@@ -134,9 +184,39 @@ void NewJournalCreator::on_buttonBox_clicked(QAbstractButton *button)
     }
 }
 
+// Only accept the form if everything passes validation
+void NewJournalCreator::accept(){
 
+    // MySQL
+    if(ui->DatabaseType->currentRow()==2){
+        bool valid=m->Validate();
 
-void NewJournalCreator::on_BrowseButton_clicked()
+        if(valid){
+
+            //Harvest Data from MySQL Page
+            m->HarvestData();
+
+            // Create journal
+            bool successful=Create_MySQL_Database();
+
+            // Close the form
+            if(successful){
+                 close();
+            }
+        }
+    }
+}
+
+void NewJournalCreator::on_buttonBox_rejected()
 {
-
+    // If this is the firstrun, return to the FirstRun class. It doesn't exist anymore at this
+    //point, so create a new one. No one will ever know.
+    if(Buffer::firstrun){
+        this->reject();
+        FirstRun f;
+        f.exec();
+    }
+    else{
+        this->reject();
+    }
 }

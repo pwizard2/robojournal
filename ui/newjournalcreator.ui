@@ -92,7 +92,7 @@
           <x>0</x>
           <y>0</y>
           <width>398</width>
-          <height>400</height>
+          <height>402</height>
          </rect>
         </property>
        </widget>
@@ -102,6 +102,9 @@
    </item>
    <item>
     <widget class="QCheckBox" name="SetAsDefault">
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If this box is checked, RoboJournal replaces your current default journal with the one you are about to create, switching database modes if necessary (this action does &lt;span style=&quot; text-decoration: underline;&quot;&gt;not&lt;/span&gt; delete any databases). Leaving this box unchecked preserves your current settings. RoboJournal always sets the new journal as default while in first-run mode.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
      <property name="text">
       <string>Set the new journal as the default</string>
      </property>
