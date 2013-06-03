@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>409</width>
-    <height>342</height>
+    <height>266</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,13 @@
    <item>
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The Journal Creator tool allows you to create a new (blank) journal. Select your desired journal type from the list on the left:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:10px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the &lt;span style=&quot; font-weight:600;&quot;&gt;SQLite Journal&lt;/span&gt; option to create a new SQLite-based journal &lt;span style=&quot; color:#008000;&quot;&gt;(recommended)&lt;/span&gt;. SQLite stores your journal as a &lt;span style=&quot; font-weight:600;&quot;&gt;*.db&lt;/span&gt; file on your hard drive. This option is ideal for users with little database experience or those who desire a highly-portable solution. SQLite-based journals require no additional software.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the &lt;span style=&quot; font-weight:600;&quot;&gt;MySQL Journal&lt;/span&gt; option to create a new MySQL-based journal in accordance with the traditional client-and-server database model. MySQL stores your journal on a computer designated as &amp;quot;host&amp;quot; and you access it through a &amp;quot;client&amp;quot; computer (it is possible for client and host to be the same machine). MySQL offers higher security and more flexibility than SQLite but also requires you to have more database experience. The host computer &lt;span style=&quot; text-decoration: underline;&quot;&gt;must&lt;/span&gt; have a working instance of MySQL Server.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;The Journal Creator tool allows you to create a new (blank) journal. Select your desired journal type from the list on the left:&lt;/span&gt;&lt;/p&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; font-size:8pt;&quot; style=&quot; margin-top:12px; margin-bottom:10px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the &lt;span style=&quot; font-weight:600;&quot;&gt;SQLite Journal&lt;/span&gt; option to create a new SQLite-based journal. SQLite stores your journal as a &lt;span style=&quot; font-weight:600;&quot;&gt;*.db&lt;/span&gt; file on your hard drive. This option is ideal for users with little database experience or those who desire a highly-portable solution. SQLite-based journals require no additional software.&lt;/li&gt;
+&lt;li style=&quot; font-size:8pt;&quot; style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the &lt;span style=&quot; font-weight:600;&quot;&gt;MySQL Journal&lt;/span&gt; option to create a new MySQL-based journal in accordance with the traditional client-and-server database model. MySQL stores your journal on a computer designated as &amp;quot;host&amp;quot;; you then access and modify your data through a &amp;quot;client&amp;quot; computer (it is possible for client and host to be the same machine). MySQL offers much higher security and greater flexibility than SQLite but also requires you to have more database experience. The host computer &lt;span style=&quot; text-decoration: underline;&quot;&gt;must&lt;/span&gt; have a working instance of MySQL Server.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>

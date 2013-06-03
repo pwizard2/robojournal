@@ -69,18 +69,36 @@ void NewJournalCreator::PrimaryConfig(){
     ui->PageArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 
 
+    stack->setCurrentIndex(0);
+    ui->DatabaseType->setCurrentRow(0);
+
+    // Force the new journal to be set as default if RoboJournal is in First Run mode. This guarantees that
+    // there will always be a default journal no matter what.
     if(Buffer::firstrun){
         ui->SetAsDefault->setChecked(true);
         ui->SetAsDefault->setEnabled(false);
     }
 
+    // Certain events on the MySQL and SQLite pages muct be controlled by signals/slots because that is
+    // the best way to communicate across classes.
+
+    //The MySQL page tells this class to unlock the OK button
     connect(m, SIGNAL(unlockOK()), this, SLOT(unlockOKButton()));
+
+    //The MySQL page tells this class to [re]lock the OK button
     connect(m, SIGNAL(unlockNotOK()), this, SLOT(lockOKButton()));
+
+    // Clicking the Restore Defaults button in this class tells the MySQL page to reset the form
     connect(this, SIGNAL(Clear_MySQL()), m, SLOT(ClearForm()));
 
-    stack->setCurrentIndex(0);
-    ui->DatabaseType->setCurrentRow(0);
+    //The SQLite page tells this class to unlock the OK button
+    connect(s, SIGNAL(unlockOK()), this, SLOT(unlockOKButton()));
 
+    //The SQLite page tells this class to [re]lock the OK button
+    connect(s, SIGNAL(unlockNotOK()), this, SLOT(lockOKButton()));
+
+    // Clicking the Restore Defaults button in this class tells the SQLite page to reset the form
+    connect(this, SIGNAL(Clear_SQLite()), s, SLOT(ClearForm()));
 }
 
 
@@ -116,8 +134,9 @@ bool NewJournalCreator::Create_MySQL_Database(){
 
     // journal creation failed...
     else{
-        msg.critical(this,"RoboJournal", "Journal creation attempt failed on <b>" + hostname + "</b>. Please make sure the root password is"
-                     " correct and the host is configured properly and then try again.");
+        msg.critical(this,"RoboJournal", "Journal creation attempt on <b>" + hostname + "</b> failed. Make sure "
+                     "the host is able to accept incoming connections with the settings you provided (the port and/or "
+                     "root password may be incorrect).");
         return false;
     }
 }
@@ -129,18 +148,19 @@ bool NewJournalCreator::Create_MySQL_Database(){
 void NewJournalCreator::RestoreDefaults(){
 
     switch(ui->DatabaseType->currentRow()){
-    case 0:
-        // Do nothing; This never gets called because the Restore Defaults
-        // button is disabled while row 0 is selected in DatabaseType.
+        case 0:
+            // Do nothing; This never gets called because the Restore Defaults
+            // button is disabled while row 0 is selected in DatabaseType.
         break;
 
-    case 1:
-        // sqlite reset
+        case 1:
+            // sqlite reset
+            emit Clear_SQLite();
         break;
 
 
-    case 2: // MySQL reset
-        emit Clear_MySQL();
+        case 2: // MySQL reset
+            emit Clear_MySQL();
         break;
     }
 }
@@ -201,7 +221,7 @@ void NewJournalCreator::accept(){
 
             // Close the form
             if(successful){
-                 close();
+                close();
             }
         }
     }
@@ -220,3 +240,7 @@ void NewJournalCreator::on_buttonBox_rejected()
         this->reject();
     }
 }
+
+
+
+

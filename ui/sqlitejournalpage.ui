@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>336</width>
-    <height>169</height>
+    <height>179</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -78,6 +78,13 @@
          </widget>
         </item>
        </layout>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="AddToFavorites">
+        <property name="text">
+         <string>&amp;Add this new journal to my list of favorites</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

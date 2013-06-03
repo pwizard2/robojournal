@@ -46,6 +46,8 @@ private slots:
 
     void on_buttonBox_rejected();
 
+
+
 private:
     Ui::NewJournalCreator *ui;
 
