@@ -36,6 +36,8 @@
 #include "ui_configurationeditor.h"
 #include "ui/configurationexport.h"
 #include "ui_configurationexport.h"
+#include "ui/configurationsqlite.h"
+#include "ui_configurationsqlite.h"
 #include <QStackedWidget>
 #include <QSize>
 
@@ -151,6 +153,7 @@ private:
     ConfigurationAppearance *a;
     ConfigurationEditor *e;
     ConfigurationExport *x;
+    ConfigurationSQLite *s; // New SQLite page for 0.5
 
     QStackedWidget *stack;
 

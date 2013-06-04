@@ -48,6 +48,8 @@ private slots:
 
 
 
+
+
 private:
     Ui::NewJournalCreator *ui;
 

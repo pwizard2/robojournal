@@ -55,7 +55,8 @@ SOURCES += main.cpp\
         ui/newjournalcreator.cpp \
         ui/mysqljournalpage.cpp \
         ui/sqlitejournalpage.cpp \
-        ui/journalcreatorcoverpage.cpp
+        ui/journalcreatorcoverpage.cpp \
+    ui/configurationsqlite.cpp
 
 HEADERS  += ui/mainwindow.h \
 	core/buffer.h \
@@ -101,7 +102,8 @@ HEADERS  += ui/mainwindow.h \
         ui/newjournalcreator.h \
         ui/mysqljournalpage.h \
         ui/sqlitejournalpage.h \
-        ui/journalcreatorcoverpage.h
+        ui/journalcreatorcoverpage.h \
+    ui/configurationsqlite.h
 
 
 FORMS    += ui/mainwindow.ui \
@@ -125,7 +127,8 @@ FORMS    += ui/mainwindow.ui \
         ui/newjournalcreator.ui \
         ui/mysqljournalpage.ui \
         ui/sqlitejournalpage.ui \
-        ui/journalcreatorcoverpage.ui
+        ui/journalcreatorcoverpage.ui \
+    ui/configurationsqlite.ui
 
 # Declaration of images and other to-be-embedded resources.
 RESOURCES  = images.qrc
@@ -184,3 +187,6 @@ win32{
     CONFIG += qt release
     message(Creating 32-bit Windows release build...)
 }
+
+
+

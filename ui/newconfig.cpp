@@ -35,6 +35,8 @@
 #include "ui_configurationeditor.h"
 #include "ui/configurationexport.h"
 #include "ui_configurationexport.h"
+#include "ui/configurationsqlite.h"
+#include "ui_configurationsqlite.h"
 #include <QStackedWidget>
 #include "core/buffer.h"
 #include <QGraphicsView>
@@ -152,6 +154,7 @@ void Newconfig::PrimaryConfig(){
     QIcon appearance(":/icons/picture.png");
     QIcon disk(":/icons/external.png");
     QIcon mysql(":/icons/mysql_icon2.png");
+    QIcon sqlite(":/icons/sqlite_icon.png");
 
     ui->Categories->clear();
 
@@ -190,6 +193,12 @@ void Newconfig::PrimaryConfig(){
     settings_mysql->setText(0,"MySQL Settings");
     settings_mysql->setSizeHint(0,space);
 
+    // New SQLite page for version 0.5
+    QTreeWidgetItem *settings_sqlite = new QTreeWidgetItem(ui->Categories);
+    settings_sqlite->setIcon(0, sqlite);
+    settings_sqlite->setText(0,"SQLite Settings");
+    settings_sqlite->setSizeHint(0,space);
+
     // Create a StackedWidget. The stack holds all the "pages" and (most importantly) remembers the current state of each.
     // The stack shows only one page at a time. When an item in the category list (General, Journal, etc.) is clicked
     // on, the stack loads the page associated with that category.
@@ -204,6 +213,7 @@ void Newconfig::PrimaryConfig(){
     stack->addWidget(a=new ConfigurationAppearance(this));
     stack->addWidget(x=new ConfigurationExport(this));
     stack->addWidget(m=new ConfigurationMySQL(this));
+    stack->addWidget(s=new ConfigurationSQLite(this));
 
     // put the stack in the ScrollArea.
     ui->PageArea->setWidget(stack);

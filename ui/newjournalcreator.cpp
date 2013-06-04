@@ -244,3 +244,5 @@ void NewJournalCreator::on_buttonBox_rejected()
 
 
 
+
+

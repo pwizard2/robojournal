@@ -28,11 +28,12 @@ private:
     void PrimaryConfig();
     void Browse(QString startpath);
     bool FilenameValid(QString filename);
-    QString ProcessFilename(QString raw);
+    void ProcessFilename(QString filename, bool valid);
 
 
 private slots:
       void on_DatabaseName_textChanged(const QString &arg1);
+      void on_BrowseButton_clicked();
 };
 
 #endif // SQLITEJOURNALPAGE_H
