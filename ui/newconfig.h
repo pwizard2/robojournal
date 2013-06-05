@@ -125,6 +125,11 @@ public:
     static bool new_name_in_titlebar;
     static bool new_show_untagged_reminder;
 
+    // new for 0.5 (6/5/13)
+    static bool new_use_my_journals;
+    static QString new_sqlite_default;
+    static QStringList new_sqlite_favorites;
+
 private slots:
 
 

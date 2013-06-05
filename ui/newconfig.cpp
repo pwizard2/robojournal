@@ -134,6 +134,11 @@ bool Newconfig::new_use_misc_processing;
 bool Newconfig::new_name_in_titlebar;
 bool Newconfig::new_show_untagged_reminder;
 
+// new for 0.5 (6/5/13)
+bool Newconfig::new_use_my_journals;
+QStringList Newconfig::new_sqlite_favorites;
+QString Newconfig::new_sqlite_default;
+
 //##################################################################################
 // This function sets up the form (creates categories for list, etc.)
 void Newconfig::PrimaryConfig(){
@@ -265,16 +270,13 @@ void Newconfig::resizeEvent(QResizeEvent *){
 }
 
 
-
-
-
 void Newconfig::on_Categories_currentItemChanged(QTreeWidgetItem *current)
 {
     int idx=ui->Categories->currentIndex().row();
 
     QString category=current->text(0);
 
-    this->setWindowTitle("Preferences -- " + category);
+    this->setWindowTitle("Preferences - " + category);
 
     if (stack->currentWidget() != 0) {
         stack->currentWidget()->setSizePolicy(QSizePolicy::Ignored,
@@ -303,6 +305,7 @@ void Newconfig::UpdateData(){
     a->GetChanges();
     x->GetChanges();
     m->GetChanges();
+    s->GetChanges();
 
     MadeChanges=true;
 

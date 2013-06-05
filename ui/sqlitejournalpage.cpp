@@ -3,6 +3,9 @@
 #include <QDir>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QDir>
+#include <iostream>
+#include "core/buffer.h"
 
 SQLiteJournalPage::SQLiteJournalPage(QWidget *parent) :
     QWidget(parent),
@@ -19,15 +22,35 @@ SQLiteJournalPage::~SQLiteJournalPage()
 
 void SQLiteJournalPage::PrimaryConfig(){
 
-    QDir homefolder=QDir::homePath();
-    ui->DatabaseLocation->setText(homefolder.path());
+
+
+    if(Buffer::use_my_journals){
+        QDir my_journals(QDir::homePath() + QDir::separator() + "Documents" + QDir::separator() +"My Journals");
+        ui->DatabaseLocation->setText(my_journals.path());
+    }
+    else{
+        QDir homefolder=QDir::homePath();
+        ui->DatabaseLocation->setText(homefolder.path());
+    }
+
     ui->AddToFavorites->setChecked(true);
+
+    if(Buffer::use_my_journals){
+        Create_My_Journals_Folder();
+    }
 }
 
 void SQLiteJournalPage::Browse(QString startpath){
 
     QString folder=QFileDialog::getExistingDirectory(this,"Select Directory",startpath,QFileDialog::ShowDirsOnly);
-    ui->DatabaseLocation->setText(folder);
+
+    if(!folder.isEmpty()){
+        ui->DatabaseLocation->setText(folder);
+    }
+    else{
+        ui->DatabaseLocation->setText(startpath);
+    }
+
 
 }
 
@@ -46,7 +69,20 @@ bool SQLiteJournalPage::FilenameValid(QString filename){
     return true;
 }
 
+// (6/5/13) Create the "My Journals" folder in users home dir if it does not already exist
+void SQLiteJournalPage::Create_My_Journals_Folder(){
 
+    using namespace std;
+    QDir my_journals(QDir::homePath() + QDir::separator() + "Documents" + QDir::separator() +"My Journals");
+
+    if(!my_journals.exists()){
+        cout << "OUTPUT: Creating \"My Journals\" folder in home directory..." << endl;
+        my_journals.mkdir(my_journals.path());
+    }
+    else{
+        cout << "Detected \"My Journals\" folder in " + my_journals.path().toStdString() << endl;
+    }
+}
 
 // (6/3/13) Process raw filename
 void SQLiteJournalPage::ProcessFilename(QString filename, bool valid){
@@ -55,6 +91,7 @@ void SQLiteJournalPage::ProcessFilename(QString filename, bool valid){
 
     QRegExp extension(".db");
 
+    // save possible regexp for filename: [a-zA-Z0-9_]*.db
 
     if((!filename.contains(extension)) && (!filename.isEmpty())  && (valid)){
 
@@ -67,14 +104,13 @@ void SQLiteJournalPage::ProcessFilename(QString filename, bool valid){
 
             if(filename.length()-3==0){
                 ui->DatabaseName->clear();
-                emit unlockNotOK();
             }
 
             if(filename.count(extension) > 1){
                 filename.truncate(filename.length()-3);
                 ui->DatabaseName->setText(filename);
                 ui->DatabaseName->setCursorPosition(ui->DatabaseName->text().size()-3);
-              }
+            }
         }
         else{
             ui->DatabaseName->clear();
@@ -82,8 +118,9 @@ void SQLiteJournalPage::ProcessFilename(QString filename, bool valid){
         }
     }
 
+
     if(valid){
-         emit unlockOK();
+        emit unlockOK();
     }
     else{
         emit unlockNotOK();

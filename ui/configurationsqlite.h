@@ -14,9 +14,11 @@ class ConfigurationSQLite : public QWidget
 public:
     explicit ConfigurationSQLite(QWidget *parent = 0);
     ~ConfigurationSQLite();
+    void GetChanges();
 
 private:
     Ui::ConfigurationSQLite *ui;
+    void PopulateForm();
 };
 
 #endif // CONFIGURATIONSQLITE_H

@@ -29,6 +29,7 @@ private:
     void Browse(QString startpath);
     bool FilenameValid(QString filename);
     void ProcessFilename(QString filename, bool valid);
+    void Create_My_Journals_Folder();
 
 
 private slots:

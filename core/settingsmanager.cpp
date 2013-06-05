@@ -250,6 +250,13 @@ void SettingsManager::NewConfig(QString host, QString db_name, QString port, QSt
     settings.setValue("entry_range", 4);
     settings.endGroup();
 
+    // New SQLite options for RoboJournal 0.5
+    settings.beginGroup("SQLite");
+    settings.setValue("use_my_journals", true);
+    settings.setValue("sqlite_favorites","");
+    settings.setValue("sqlite_default","");
+    settings.endGroup();
+
     settings.beginGroup("Behavior");
     settings.setValue("toolbar_location", 1);
     settings.setValue("allow_root_login", false);
@@ -524,6 +531,11 @@ void SettingsManager::LoadConfig(){
         Buffer::name_in_titlebar=settings.value("Behavior/name_in_titlebar").toBool();
         Buffer::show_untagged_reminder=settings.value("Behavior/show_untagged_reminder").toBool();
 
+        // 0.5 options (6/5/13)
+        Buffer::use_my_journals=settings.value("SQLite/use_my_journals").toBool();
+        Buffer::sqlite_default=settings.value("SQLite/sqlite_default").toString();
+        Buffer::sqlite_favorites=settings.value("SQLite/sqlite_favorites").toStringList();
+
         if(reload){
             LoadConfig();
         }
@@ -563,6 +575,14 @@ void SettingsManager::UpdateConfig(){
     settings.setValue("port", Newconfig::new_default_port.trimmed());
     settings.setValue("entry_range", Newconfig::new_entry_range);
     settings.endGroup();
+
+    // New SQLite options for RoboJournal 0.5
+    settings.beginGroup("SQLite");
+    settings.setValue("use_my_journals", Newconfig::new_use_my_journals);
+    settings.setValue("sqlite_favorites", Newconfig::new_sqlite_favorites);
+    settings.setValue("sqlite_default", Newconfig::new_sqlite_default);
+    settings.endGroup();
+
 
     settings.beginGroup("Behavior");
     settings.setValue("toolbar_location", Newconfig::new_toolbar_pos);

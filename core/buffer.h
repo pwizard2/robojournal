@@ -165,6 +165,11 @@ public:
 
     static bool show_reminder_next_time; // save value of the checkbox on the Tag Reminder Window.
 
+    // new for 0.5 (6/5/13)
+    static bool use_my_journals;
+    static QString sqlite_default;
+    static QStringList sqlite_favorites;
+
 };
 
 #endif // BUFFER_H
