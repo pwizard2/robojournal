@@ -100,6 +100,35 @@
 <div class="main">
 <h1>RoboJournal ChangeLog</h1>
 
+<div class="even">
+<h2>Version 0.5</h2>
+
+<p>Release Date: TBA</p>
+
+<p>The following changes were made in this release:</p>
+<ol>
+  <li><span class="added">Added</span> SQLite database support.</li>
+  <li><span class="added">Added</span> new Journal Creator. The new class is
+    very similar to the Newconfig class added in version 0.4; the new class is
+    designed to be highly modular with support for several different databases.
+    Each database is represented by a "page".
+    <ol>
+      <li><span class="deprecated">Deprecated</span> old Journal Creator class
+        and removed its files (journalcreator.cpp, journalcreator.h, and
+        journalcreator.ui) from the codebase since they are no longer
+      needed.</li>
+      <li><span class="added">Added</span> SQLite page to the Journal
+      Creator.</li>
+      <li>Converted existing MySQL settings into a new page for the new Journal
+        Creator.</li>
+      <li><span class="added">Added</span> password strength meter to MySQL
+        page.</li>
+    </ol>
+  </li>
+  <li>Fixed "ugly 16x16 icon" bug on Windows 7.</li>
+</ol>
+</div>
+
 <div class="odd">
 <h2>Version 0.4.1</h2>
 

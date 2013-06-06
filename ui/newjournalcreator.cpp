@@ -24,6 +24,10 @@ QString NewJournalCreator::hostname;
 QString NewJournalCreator::port;
 QString NewJournalCreator::root_password;
 
+// SQLite data
+QString NewJournalCreator::sqlite_journal_name;
+QString NewJournalCreator::sqlite_journal_path;
+
 
 NewJournalCreator::NewJournalCreator(QWidget *parent) :
     QDialog(parent),
@@ -88,7 +92,7 @@ void NewJournalCreator::PrimaryConfig(){
     //The MySQL page tells this class to [re]lock the OK button
     connect(m, SIGNAL(unlockNotOK()), this, SLOT(lockOKButton()));
 
-    // Clicking the Restore Defaults button in this class tells the MySQL page to reset the form
+    // Clicking the Restore Defaults button in this class tells the MySQL page to reset the form if MySQL page is active
     connect(this, SIGNAL(Clear_MySQL()), m, SLOT(ClearForm()));
 
     //The SQLite page tells this class to unlock the OK button
@@ -97,7 +101,7 @@ void NewJournalCreator::PrimaryConfig(){
     //The SQLite page tells this class to [re]lock the OK button
     connect(s, SIGNAL(unlockNotOK()), this, SLOT(lockOKButton()));
 
-    // Clicking the Restore Defaults button in this class tells the SQLite page to reset the form
+    // Clicking the Restore Defaults button in this class tells the SQLite page to reset the form if SQLite page is active
     connect(this, SIGNAL(Clear_SQLite()), s, SLOT(ClearForm()));
 }
 
@@ -224,6 +228,12 @@ void NewJournalCreator::accept(){
                 close();
             }
         }
+    }
+
+    // SQLite
+    if(ui->DatabaseType->currentRow()==1){
+        bool valid=s->HarvestData();
+
     }
 }
 

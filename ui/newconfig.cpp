@@ -305,6 +305,8 @@ void Newconfig::UpdateData(){
     a->GetChanges();
     x->GetChanges();
     m->GetChanges();
+
+    // new for 0.5:
     s->GetChanges();
 
     MadeChanges=true;

@@ -30,6 +30,10 @@ public:
     static QString port;
     static QString root_password;
 
+    static QString sqlite_journal_name;
+    static QString sqlite_journal_path;
+
+
 signals:
     void Clear_MySQL();
     void Clear_SQLite();

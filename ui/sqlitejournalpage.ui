@@ -47,7 +47,7 @@
    <item>
     <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>Journal will be saved in</string>
+      <string>This new journal will be saved in</string>
      </property>
     </widget>
    </item>

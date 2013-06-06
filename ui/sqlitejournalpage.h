@@ -14,6 +14,7 @@ class SQLiteJournalPage : public QWidget
 public:
     explicit SQLiteJournalPage(QWidget *parent = 0);
     ~SQLiteJournalPage();
+    bool HarvestData();
 
 
 public slots:

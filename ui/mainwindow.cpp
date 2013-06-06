@@ -1387,11 +1387,15 @@ void MainWindow::PrimaryConfig(){
 
     // Use a nice big png icon for linux/unix.. that little Windows ico file just doesn't cut it.
     // This is really only noticable on KDE4/Unity environments. (and probably Mac if someone builds for that)
-#ifdef unix
+
+    // 6/5/13: Will Kraft. (new for version 0.5): Use the big icon on Windows too. That little 16x16 icon looks like hell when
+    // stretched to fit the Win 7 taskbar. The shortcut icon usually compensates for that but not always; this way works for
+    // sure no matter what.
+
     QIcon unixicon(":/icons/robojournal-icon-big.png");
     this->setWindowIcon(unixicon);
 
-#endif
+
 
     // declare magic sizing algorithm for MainWindow splitter. For some unknown reason the TabWidget throws this off
     // so it is necessary to compensate.

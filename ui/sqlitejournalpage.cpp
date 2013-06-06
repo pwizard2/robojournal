@@ -6,6 +6,7 @@
 #include <QDir>
 #include <iostream>
 #include "core/buffer.h"
+#include "ui/newjournalcreator.h"
 
 SQLiteJournalPage::SQLiteJournalPage(QWidget *parent) :
     QWidget(parent),
@@ -37,6 +38,40 @@ void SQLiteJournalPage::PrimaryConfig(){
 
     if(Buffer::use_my_journals){
         Create_My_Journals_Folder();
+    }
+}
+
+
+// (6/6/13) Get data, validate/repair it, and return it to NewJournalCreator class.
+bool SQLiteJournalPage::HarvestData(){
+
+    NewJournalCreator::sqlite_journal_path=ui->DatabaseLocation->text();
+
+    QRegExp test("[a-z|A-Z|0-9|_]*.db");
+
+    if(test.exactMatch(ui->DatabaseName->text())){
+        NewJournalCreator::sqlite_journal_name=ui->DatabaseName->text();
+        return true;
+    }
+    else{
+        QMessageBox m;
+        m.critical(this,"RoboJournal","Journal name is invalid. RoboJournal will attempt to fix it for you.");
+
+        // Attempt to fix the filename automatically
+        QString filename=ui->DatabaseName->text();
+
+        filename=filename.simplified();
+        filename=filename.replace(" ","_");
+        QRegExp bad_extension(".db.+");
+
+        if(filename.contains(bad_extension)){
+            filename=filename.remove(bad_extension);
+            filename=filename.append(".db");
+        }
+
+
+        ui->DatabaseName->setText(filename);
+        return false;
     }
 }
 
@@ -152,3 +187,4 @@ void SQLiteJournalPage::on_BrowseButton_clicked()
     QString startpath=ui->DatabaseLocation->text();
     Browse(startpath);
 }
+
