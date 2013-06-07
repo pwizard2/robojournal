@@ -44,6 +44,7 @@ void SQLiteJournalPage::PrimaryConfig(){
 
 // (6/6/13) Get data, validate/repair it, and return it to NewJournalCreator class.
 bool SQLiteJournalPage::HarvestData(){
+    using namespace std;
 
     NewJournalCreator::sqlite_journal_path=ui->DatabaseLocation->text();
 
@@ -60,18 +61,31 @@ bool SQLiteJournalPage::HarvestData(){
         // Attempt to fix the filename automatically
         QString filename=ui->DatabaseName->text();
 
-        filename=filename.simplified();
-        filename=filename.replace(" ","_");
-        QRegExp bad_extension(".db.+");
+        // Give 3 tries to fix the filename before returning false
+        for(int i=0; i<3; i++){
+            filename=filename.simplified();
+            filename=filename.replace(" ","_");
+            QRegExp bad_extension(".db.+");
 
-        if(filename.contains(bad_extension)){
-            filename=filename.remove(bad_extension);
-            filename=filename.append(".db");
+            if(filename.contains(bad_extension)){
+                filename=filename.remove(bad_extension);
+                filename=filename.append(".db");
+            }
+
+            ui->DatabaseName->setText(filename);
+
+            if(test.exactMatch(filename)){
+                cout << "OUTPUT: Fixed errors in file name: " << filename.toStdString() << endl;
+                break;
+                return true;
+            }
         }
 
-
-        ui->DatabaseName->setText(filename);
-        return false;
+        if(!test.exactMatch(filename)){
+            m.critical(this,"RoboJournal","Journal name is still invalid. Please fix the filename manually (filename "
+                       "must end with <b>.db</b> and contain no spaces).");
+            return false;
+        }
     }
 }
 
@@ -115,7 +129,7 @@ void SQLiteJournalPage::Create_My_Journals_Folder(){
         my_journals.mkdir(my_journals.path());
     }
     else{
-        cout << "Detected \"My Journals\" folder in " + my_journals.path().toStdString() << endl;
+        cout << "OUTPUT: Detected \"My Journals\" folder in " + my_journals.path().toStdString() << endl;
     }
 }
 
@@ -149,7 +163,6 @@ void SQLiteJournalPage::ProcessFilename(QString filename, bool valid){
         }
         else{
             ui->DatabaseName->clear();
-
         }
     }
 
@@ -174,7 +187,6 @@ void SQLiteJournalPage::on_DatabaseName_textChanged(const QString &arg1)
 
     bool valid=FilenameValid(filename);
     ProcessFilename(filename,valid);
-
 }
 
 void SQLiteJournalPage::ClearForm(){

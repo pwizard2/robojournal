@@ -3,7 +3,7 @@
 #include "ui/newjournalcreator.h"
 #include <iostream>
 #include <QMessageBox>
-
+#include "core/buffer.h"
 
 MySQLJournalPage::MySQLJournalPage(QWidget *parent) :
     QWidget(parent),
@@ -84,38 +84,38 @@ int MySQLJournalPage::PasswordStrength(QString passwd){
     int numbers=passwd.count("[0-9");
     int symbols=passwd.count("!@#$%^&*()[]{}?~`\"\"");
 
-     // start the logic
-     if(!passwd.isEmpty()){
+    // start the logic
+    if(!passwd.isEmpty()){
 
-         score=len*5; // multiply password length by five and start the score with that value
-         score=score+(numbers*4); // add number diversity bonus (multiplied by four)
-         score=score+(symbols*6); // add symbol diversity bonus (multiplied by 6)
-         score=score+(len-alphaUC)*2.5; // calculate uppercase letters.
-         score=score+(len-alphaLC)*2.5; // calculate lowercase letters.
+        score=len*5; // multiply password length by five and start the score with that value
+        score=score+(numbers*4); // add number diversity bonus (multiplied by four)
+        score=score+(symbols*6); // add symbol diversity bonus (multiplied by 6)
+        score=score+(len-alphaUC)*2.5; // calculate uppercase letters.
+        score=score+(len-alphaLC)*2.5; // calculate lowercase letters.
 
-         // Dock points for adjacent lowercase letters
-         QRegExp lowercase_consecutive("[a-z]{2,}",Qt::CaseSensitive);
-         int repeat_lc=passwd.count(lowercase_consecutive);
-         score=score-(repeat_lc*len);
+        // Dock points for adjacent lowercase letters
+        QRegExp lowercase_consecutive("[a-z]{2,}",Qt::CaseSensitive);
+        int repeat_lc=passwd.count(lowercase_consecutive);
+        score=score-(repeat_lc*len);
 
-         // Dock points for adjacent uppercase letters
-         QRegExp uppercase_consecutive("[A-Z]{2,}",Qt::CaseSensitive);
-         int repeat_uc=passwd.count(uppercase_consecutive);
-         score=score-(repeat_uc*len);
+        // Dock points for adjacent uppercase letters
+        QRegExp uppercase_consecutive("[A-Z]{2,}",Qt::CaseSensitive);
+        int repeat_uc=passwd.count(uppercase_consecutive);
+        score=score-(repeat_uc*len);
 
-         // Dock points for adjacent numbers
-         QRegExp int_consecutive("[0-9]{2,}");
-         int repeat_int=passwd.count(int_consecutive);
-         score=score-(repeat_int*len);
+        // Dock points for adjacent numbers
+        QRegExp int_consecutive("[0-9]{2,}");
+        int repeat_int=passwd.count(int_consecutive);
+        score=score-(repeat_int*len);
 
-         // prevent score from going out of range
-         if(score>100){
-             score=100;
-         }
+        // prevent score from going out of range
+        if(score>100){
+            score=100;
+        }
 
-         // make sure the number is whole w/o decimals
-         score=qRound(score);
-     }
+        // make sure the number is whole w/o decimals
+        score=qRound(score);
+    }
 
     return score;
 }
@@ -158,7 +158,6 @@ void MySQLJournalPage::PasswordsMatch(){
 
         // clear strength meter
         ui->StrengthMeter->setValue(0);
-
     }
 }
 
@@ -231,6 +230,22 @@ bool MySQLJournalPage::Validate(){
         a.critical(this,"RoboJournal","You must enter the MySQL root password for <b>" + hostname +"</b>.");
         ui->RootPassword->setFocus();
         return false;
+    }
+
+    if((ui->StrengthMeter->value() <= 50) && (Buffer::showwarnings)){
+        QMessageBox m;
+        int choice=m.question(this,"RoboJournal","The password you entered is weak and could be easily broken. "
+                              "Are you sure you want to use it?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+
+        switch(choice){
+        case QMessageBox::Yes:
+            return true;
+            break;
+
+        case QMessageBox::No:
+            return false;
+            break;
+        }
     }
 
     return true;
