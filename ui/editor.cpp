@@ -72,6 +72,7 @@ void Editor::PrimaryConfig(){
     bar->setLayoutDirection(Qt::LeftToRight);
     bar->setContextMenuPolicy(Qt::NoContextMenu);
 
+
     // Bind the Toolbar Buttons to QWidgetActions before adding them to the toolbar. This allows the toolbar overflow
     // menu to work where it would not if we had added the buttons to the toolbar directly (using QToolBar::addWidget).
     QWidgetAction* postAction = new QWidgetAction(this);
@@ -98,10 +99,43 @@ void Editor::PrimaryConfig(){
     QWidgetAction* spellAction = new QWidgetAction(this);
     spellAction->setDefaultWidget(ui->ShowErrors);
 
+    // New actions for 0.5 (3/9/13)
+    QWidgetAction* boldAction = new QWidgetAction(this);
+    boldAction->setDefaultWidget(ui->bold);
 
-    // populate bar.
-    bar->addAction(postAction);
-    bar->addAction(cancelAction);
+    QWidgetAction* emAction = new QWidgetAction(this);
+    emAction->setDefaultWidget(ui->Italic);
+
+    QWidgetAction* uAction = new QWidgetAction(this);
+    uAction->setDefaultWidget(ui->Underline);
+
+    QWidgetAction* lpAction = new QWidgetAction(this);
+    lpAction->setDefaultWidget(ui->ParaLeft);
+
+    QWidgetAction* cpAction = new QWidgetAction(this);
+    cpAction->setDefaultWidget(ui->ParaCenter);
+
+    QWidgetAction* rpAction = new QWidgetAction(this);
+    rpAction->setDefaultWidget(ui->ParaRight);
+
+    QWidgetAction* tagAction = new QWidgetAction(this);
+    tagAction->setDefaultWidget(ui->TagButton);
+
+    QWidgetAction* bqAction = new QWidgetAction(this);
+    bqAction->setDefaultWidget(ui->Blockquote);
+
+
+    // populate primary toolbar.
+    bar->addAction(boldAction);
+    bar->addAction(emAction);
+    bar->addAction(uAction);
+
+    bar->addSeparator();
+
+    bar->addAction(lpAction);
+    bar->addAction(cpAction);
+    bar->addAction(rpAction);
+    bar->addAction(bqAction);
 
     bar->addSeparator();
 
@@ -117,7 +151,7 @@ void Editor::PrimaryConfig(){
     bar->addSeparator();
 
     bar->addAction(spellAction);
-
+    bar->addAction(tagAction);
 
 
     // Set up spacers for the Title/Date bar (masterbar). These are used to keep the title/date fields from being squished together.
@@ -159,6 +193,11 @@ void Editor::PrimaryConfig(){
     masterbar->setLayoutDirection(Qt::LeftToRight);
     masterbar->setContextMenuPolicy(Qt::PreventContextMenu);
 
+    // 6/9/13: Move post and cancel buttons to master toolbar because we need the space on the second toolbar for
+    // the formatting buttons in version 0.5 and later.
+    masterbar->addAction(postAction);
+    masterbar->addAction(cancelAction);
+    masterbar->addSeparator();
 
     masterbar->addWidget(spacer1);
     masterbar->addWidget(ui->label);
@@ -200,7 +239,6 @@ void Editor::PrimaryConfig(){
 
 
     layout->addWidget(bar,1);
-
 
     // Decide which TextEdit to use depending on whether user enabled spellcheck in preferences:
 
@@ -810,10 +848,10 @@ void Editor::SetDate(){
 
 // Automatically update window title with post title
 void Editor::setTitle(QString title){
-    this->setWindowTitle(title + " -- RoboJournal");
+    this->setWindowTitle(title + " - RoboJournal");
 
     if(title==NULL){
-        this->setWindowTitle("Untitled Entry -- RoboJournal");
+        this->setWindowTitle("Untitled Entry - RoboJournal");
     }
 }
 

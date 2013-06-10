@@ -36,16 +36,6 @@ bool SQLiteCore::Connect(){
     db=QSqlDatabase::addDatabase("QSQLITE");
 
     QString host=Buffer::host;
-    QString database=Buffer::database_name;
-    QString user=Buffer::username;
-    QString password=Buffer::password;
-    //int port=Buffer::databaseport.toInt();
-
-    db.setHostName(host);
-    //db.setPort(port);
-    //db.setUserName(user);
-     db.setDatabaseName(database);
-    //db.setPassword(password);
 
     bool success=db.open();
 
@@ -81,11 +71,16 @@ bool SQLiteCore::RemoveEntry(){
 
 }
 
+// Create a new database file. Unlike MySQL, simply attempting to open a null file causes it to be created.
+bool SQLiteCore::CreateDB(QString dbname){
+    using namespace std;
+    cout << "OUTPUT: Attempting to create database " << dbname.toStdString() << endl;
 
-bool SQLiteCore::CreateDB(){
-    bool success=false;
+    db.addDatabase("QSQLITE");
+    db.setDatabaseName(dbname);
+    bool success=db.open();
+
     return success;
-
 }
 
 

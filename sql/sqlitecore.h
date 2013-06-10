@@ -32,7 +32,7 @@ public:
     bool Disconnect();
     bool AddEntry();
     bool RemoveEntry();
-    bool CreateDB();
+    bool CreateDB(QString dbname);
 
     static QSqlDatabase db;
 

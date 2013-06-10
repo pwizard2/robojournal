@@ -23,15 +23,20 @@ SQLiteJournalPage::~SQLiteJournalPage()
 
 void SQLiteJournalPage::PrimaryConfig(){
 
-
+    QString filename;
 
     if(Buffer::use_my_journals){
         QDir my_journals(QDir::homePath() + QDir::separator() + "Documents" + QDir::separator() +"My Journals");
-        ui->DatabaseLocation->setText(my_journals.path());
+        filename=my_journals.path();
+        filename=QDir::toNativeSeparators(filename);
+
+        ui->DatabaseLocation->setText(filename);
     }
     else{
         QDir homefolder=QDir::homePath();
-        ui->DatabaseLocation->setText(homefolder.path());
+        filename=homefolder.path();
+        filename=QDir::toNativeSeparators(filename);
+        ui->DatabaseLocation->setText(filename);
     }
 
     ui->AddToFavorites->setChecked(true);
@@ -60,6 +65,7 @@ bool SQLiteJournalPage::HarvestData(){
 
         // Attempt to fix the filename automatically
         QString filename=ui->DatabaseName->text();
+        NewJournalCreator::sqlite_journal_name=filename;
 
         // Give 3 tries to fix the filename before returning false
         for(int i=0; i<3; i++){
@@ -73,6 +79,7 @@ bool SQLiteJournalPage::HarvestData(){
             }
 
             ui->DatabaseName->setText(filename);
+            NewJournalCreator::sqlite_journal_name=filename;
 
             if(test.exactMatch(filename)){
                 cout << "OUTPUT: Fixed errors in file name: " << filename.toStdString() << endl;

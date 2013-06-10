@@ -15,6 +15,7 @@
 #include <QMessageBox>
 #include "core/settingsmanager.h"
 #include "ui/firstrun.h"
+#include <QDir>
 
 // MySQL data
 QString NewJournalCreator::journal_name;
@@ -105,6 +106,40 @@ void NewJournalCreator::PrimaryConfig(){
     connect(this, SIGNAL(Clear_SQLite()), s, SLOT(ClearForm()));
 }
 
+//Create new SQLite journal (6/9/13)
+bool NewJournalCreator::Create_SQLite_Database(){
+
+    QFile database(sqlite_journal_path + QDir::separator() + sqlite_journal_name);
+    QString path=database.fileName();
+    path=QDir::toNativeSeparators(path);
+    bool proceed=true;
+
+    if(database.exists()){
+        QMessageBox j;
+        int choice=j.question(this,"RoboJournal","SQLite database <b>" + path + "</b> already exists. "
+                              "Do you want to replace it? <br><br>Note: This action cannot be undone!",
+                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+
+        switch(choice){
+            case QMessageBox::Yes:
+                proceed=true;
+            break;
+
+            case QMessageBox::No:
+                proceed=false;
+            break;
+        }
+    }
+
+    bool success=false;
+
+    if(proceed){
+        SQLiteCore sqlite;
+        success=sqlite.CreateDB(path);
+    }
+
+    return success;
+}
 
 // Create a new mysql journal (6/1/13)
 bool NewJournalCreator::Create_MySQL_Database(){
@@ -234,6 +269,23 @@ void NewJournalCreator::accept(){
     if(ui->DatabaseType->currentRow()==1){
         bool valid=s->HarvestData();
 
+        bool successful2;
+        if(valid){
+           successful2=Create_SQLite_Database();
+        }
+
+        // Close the form
+        if(successful2){
+            close();
+        }
+        else{
+
+            QString path=sqlite_journal_path + QDir::separator() + sqlite_journal_name;
+            path=QDir::toNativeSeparators(path);
+
+            QMessageBox b;
+            b.critical(this,"RoboJournal","<b>" +  path + "</b> could not be created due to an unknown error.");
+        }
     }
 }
 

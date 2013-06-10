@@ -65,6 +65,7 @@ private:
     JournalCreatorCoverPage *c;
 
     bool Create_MySQL_Database();
+    bool Create_SQLite_Database();
 
     void accept();
 };
