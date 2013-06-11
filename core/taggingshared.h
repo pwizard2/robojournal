@@ -16,39 +16,29 @@
     You should have received a copy of the GNU General Public License
     along with RoboJournal.  If not, see <http://www.gnu.org/licenses/>.
 
-    6/10/13: This class is the built-in tag interface for the Editor window.
-*/
+    --Will Kraft, 6/11/13. New for Version 0.5.
+    This class contains tag-related methods that are "shared" between many classes.
+    When one of these functions is needed, the app calls the method in this class
+    instead of handling everything internally. It makes more sense to design the app
+    this way instead of having redundant code.
+  */
 
-#ifndef EDITORTAGMANAGER_H
-#define EDITORTAGMANAGER_H
 
-#include <QWidget>
+#ifndef TAGGINGSHARED_H
+#define TAGGINGSHARED_H
 
-namespace Ui {
-class EditorTagManager;
-}
+#include <QStringList>
+#include <QString>
 
-class EditorTagManager : public QWidget
+class TaggingShared
 {
-    Q_OBJECT
-    
 public:
-    explicit EditorTagManager(QWidget *parent = 0);
-    ~EditorTagManager();
-    QString GetTags();
+    TaggingShared();
 
-    static int tag_count;
-    
-private slots:
-    void on_AddTag_clicked();
+    QStringList TagAggregator();
+    QStringList FetchTags(QString id);
+    void SaveTags(QString tags);
 
-private:
-    Ui::EditorTagManager *ui;
-    void PrimaryConfig();
-    void CreateTagList();
-
-    void AddTag(QString newtag);
-    void RemoveTag();
 };
 
-#endif // EDITORTAGMANAGER_H
+#endif // TAGGINGSHARED_H

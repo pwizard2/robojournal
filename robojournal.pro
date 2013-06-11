@@ -57,7 +57,8 @@ SOURCES += main.cpp\
         ui/sqlitejournalpage.cpp \
         ui/journalcreatorcoverpage.cpp \
     ui/configurationsqlite.cpp \
-    ui/editortagmanager.cpp
+    ui/editortagmanager.cpp \
+    core/taggingshared.cpp
 
 HEADERS  += ui/mainwindow.h \
 	core/buffer.h \
@@ -105,7 +106,8 @@ HEADERS  += ui/mainwindow.h \
         ui/sqlitejournalpage.h \
         ui/journalcreatorcoverpage.h \
     ui/configurationsqlite.h \
-    ui/editortagmanager.h
+    ui/editortagmanager.h \
+    core/taggingshared.h
 
 
 FORMS    += ui/mainwindow.ui \

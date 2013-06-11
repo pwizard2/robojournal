@@ -29,6 +29,7 @@
 #include <iostream>
 #include <QAbstractButton>
 #include <QInputDialog>
+#include "core/taggingshared.h"
 
 QString Tagger::id_num;
 QString Tagger::title;
@@ -216,29 +217,9 @@ void Tagger::AddTagToList(){
 
 void Tagger::TagAggregator(){
     using namespace std;
-    MySQLCore b;
 
-    QStringList tag_list; // list that holds all existing tags. Each tag should only be listed ONCE.
-
-    QList<QString> tags=b.TagSearch();
-    QListIterator<QString> i(tags);
-
-    while(i.hasNext()){
-        QString line=i.next();
-        QStringList tag_array=line.split(";");
-
-        for(int x=0; x<tag_array.size(); x++){
-
-            // only append to tag_list if it doesn't already contain tag_array[x]
-            if(!tag_list.contains(tag_array.at(x))){
-                tag_list.append(tag_array.at(x));
-
-            }
-        }
-
-    }
-
-    tag_list.sort();
+    TaggingShared ts; //New shared tagging class for 0.5 (6/11/13)
+    QStringList tag_list=ts.TagAggregator();
 
     QIcon tagicon(":/icons/tag_red.png");
     int count=0;
@@ -303,10 +284,8 @@ QString Tagger::ExportTagList(){
 
 void Tagger::LoadTags(){
     using namespace std;
-    MySQLCore a;
-    QString tags=a.GetTags(Tagger::id_num);
-
-    QStringList t_array=tags.split(";",QString::SkipEmptyParts);
+    TaggingShared ts;
+    QStringList t_array=ts.FetchTags(Tagger::id_num);
 
     for(int i=0; i < t_array.size(); i++){
 
@@ -316,9 +295,7 @@ void Tagger::LoadTags(){
             QListWidgetItem *entry=new QListWidgetItem(tagicon,t_array.at(i));
             ui->TagList->addItem(entry);
         }
-
     }
-
 }
 
 //#########################################################################################################

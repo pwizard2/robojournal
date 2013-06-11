@@ -69,6 +69,7 @@
 #include <QDir>
 #include "ui/newjournalcreator.h"
 #include "ui_newjournalcreator.h"
+#include "core/taggingshared.h"
 
 // 0.4.1: Consolidate the clear search results code into its own function since it needs to be called
 // more than once.
@@ -528,45 +529,19 @@ void MainWindow::SearchDatabase(){
     }
 }
 
-// function that gets current tag list for search pane. New for 0.4
+// function that gets current tag list for search pane.
+// * 6/11/13: Use the new TaggingShared class for version 0.5.
 //################################################################################################
 void MainWindow::GetTagList(){
 
-    if(Buffer::backend=="MySQL"){
-        MySQLCore b;
+    TaggingShared ts;
+    QStringList tag_list=ts.TagAggregator();
 
-        QStringList tag_list; // list that holds all existing tags. Each tag should only be listed ONCE.
-
-        QList<QString> tags=b.TagSearch();
-        QListIterator<QString> i(tags);
-
-        while(i.hasNext()){
-            QString line=i.next();
-            QStringList tag_array=line.split(";");
-
-            for(int x=0; x<tag_array.size(); x++){
-
-                // only append to tag_list if it doesn't already contain tag_array[x]
-                if(!tag_list.contains(tag_array.at(x))){
-                    tag_list.append(tag_array.at(x));
-
-                }
-            }
-        }
-
-        tag_list.sort();
-
-        QIcon tagicon(":/icons/tag_red.png");
-
-
-        for(int z=1; z < tag_list.size(); z++){
-            QString text=tag_list[z];
-            ui->TagList->addItem(tagicon,text);
-
-        }
-
+    QIcon tagicon(":/icons/tag_red.png");
+    for(int z=1; z < tag_list.size(); z++){
+        QString text=tag_list[z];
+        ui->TagList->addItem(tagicon,text);
     }
-
 }
 
 // Launch Entry Exporter
@@ -1040,12 +1015,12 @@ void MainWindow::ShowHelp(){
     QFile fedoracheck("/usr/bin/assistant-qt4");
     
     if(fedoracheck.exists()){
-       assistant="/usr/bin/assistant-qt4";
+        assistant="/usr/bin/assistant-qt4";
     }
     else{
-       assistant="/usr/bin/assistant";
-    }    
-   
+        assistant="/usr/bin/assistant";
+    }
+
     compiled_help_path="/usr/share/doc/robojournal/robojournal.qch";
     collection_path="/usr/share/doc/robojournal/robojournal.qhc";
 #endif
@@ -2517,7 +2492,10 @@ void MainWindow::CreateTree(){
                             QString tooltip=longmonth + " " + itemday + ", " +
                                     nextyear + " : " + item[0];
 
-                            EntryItem->setText(0, item[0]);
+                            QString entry_name=item[0];
+                            entry_name=entry_name.trimmed();
+
+                            EntryItem->setText(0, entry_name);
                             EntryItem->setToolTip(0, tooltip);
                             EntryItem->setText(1, item[1]);
                             EntryItem->setIcon(0,entryicon);

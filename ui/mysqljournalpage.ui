@@ -166,7 +166,7 @@
         <item>
          <widget class="QProgressBar" name="StrengthMeter">
           <property name="toolTip">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Once the contents of the two password fields match, the &lt;span style=&quot; font-weight:600;&quot;&gt;Password strength&lt;/span&gt; meter assigns a score to your password based on certain parameters. A score of at least 75% means your password is secure. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Once the contents of the two password fields match, the &lt;span style=&quot; font-weight:600;&quot;&gt;Password strength&lt;/span&gt; meter assigns a score to your password based on certain parameters. A score of at least 75% means your password is highly secure. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="value">
            <number>24</number>

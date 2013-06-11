@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>384</width>
+    <width>286</width>
     <height>91</height>
    </rect>
   </property>
@@ -24,9 +24,18 @@
     <rect>
      <x>10</x>
      <y>40</y>
-     <width>366</width>
+     <width>271</width>
      <height>44</height>
     </rect>
+   </property>
+   <property name="flow">
+    <enum>QListView::LeftToRight</enum>
+   </property>
+   <property name="isWrapping" stdset="0">
+    <bool>true</bool>
+   </property>
+   <property name="spacing">
+    <number>19</number>
    </property>
   </widget>
   <widget class="QToolButton" name="NewTag">
@@ -59,7 +68,7 @@
     </rect>
    </property>
    <property name="toolTip">
-    <string>Add current tag from list</string>
+    <string>Apply current tag from list</string>
    </property>
    <property name="text">
     <string/>
@@ -72,14 +81,14 @@
   <widget class="QToolButton" name="RemoveTag">
    <property name="geometry">
     <rect>
-     <x>160</x>
+     <x>150</x>
      <y>10</y>
      <width>22</width>
      <height>24</height>
     </rect>
    </property>
    <property name="toolTip">
-    <string>Remove current tag</string>
+    <string>Remove current (selected) tag</string>
    </property>
    <property name="text">
     <string/>
@@ -97,6 +106,19 @@
      <width>78</width>
      <height>25</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="TagCount">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>10</y>
+     <width>101</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>X tags</string>
    </property>
   </widget>
  </widget>

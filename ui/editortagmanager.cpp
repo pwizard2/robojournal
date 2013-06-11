@@ -24,6 +24,13 @@
 #include "ui_editortagmanager.h"
 #include <QToolBar>
 #include <QVBoxLayout>
+#include "core/taggingshared.h"
+#include <QIcon>
+#include <QPalette>
+#include <QBrush>
+#include <QColor>
+#include <QListWidgetItem>
+#include <QMessageBox>
 
 EditorTagManager::EditorTagManager(QWidget *parent) :
     QWidget(parent),
@@ -33,13 +40,29 @@ EditorTagManager::EditorTagManager(QWidget *parent) :
     PrimaryConfig();
 }
 
+int EditorTagManager::tag_count;
+
 EditorTagManager::~EditorTagManager()
 {
     delete ui;
 }
 
+QString EditorTagManager::GetTags(){
+
+    QString tags;
+    return tags;
+}
+
 // 6/10/13: Create toolbar and layout for this class.
 void EditorTagManager::PrimaryConfig(){
+
+    // set background and stylesheet for TagList element
+    QPalette pal;
+    QBrush bg=pal.light();
+    QColor bgcolor=bg.color();
+    ui->TagList->setStyleSheet("padding: 8px; background-color: "+ bgcolor.name() + ";");
+
+    ui->TagCount->setText("0 tags");
 
     QToolBar *bar = new QToolBar(this);
     bar->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
@@ -53,6 +76,8 @@ void EditorTagManager::PrimaryConfig(){
 
     bar->addWidget(ui->AddTag);
     bar->addWidget(ui->AvailableTags);
+    bar->addSeparator();
+    bar->addWidget(ui->TagCount);
 
     QVBoxLayout *layout=new QVBoxLayout(this);
     layout->setSpacing(0);
@@ -60,5 +85,97 @@ void EditorTagManager::PrimaryConfig(){
     layout->addWidget(bar,0);
     layout->addWidget(ui->TagList,0);
 
+
     this->setLayout(layout);
+
+    CreateTagList();
+}
+
+//6/11/13: Create drop-down tag list. Use the new TaggingShared class.
+void EditorTagManager::CreateTagList(){
+
+    TaggingShared ts;
+    QStringList tags=ts.TagAggregator();
+    QIcon tagicon(":/icons/tag_red.png");
+    int count=0;
+
+    for(int z=1; z < tags.size(); z++){
+        QString text=tags[z];
+        ui->AvailableTags->addItem(tagicon,text);
+        count++;
+    }
+}
+
+// (6/11/13) Add currently-selected tag in ui > AvailableTags to tag list.
+void EditorTagManager::AddTag(QString newtag){
+    using namespace std;
+
+    // get rid of semicolons since that is how tags are delimited in the database
+    newtag=newtag.replace(";","");
+
+    bool add_entry=true;
+
+    int count=ui->TagList->count();
+
+    for(int i=0; i < count; i++){
+
+        QListWidgetItem *c=ui->TagList->item(i);
+        //cout << "Loop: " << i << endl;
+        if(c->text()== newtag){
+            add_entry=false;
+            break;
+        }
+    }
+
+    if(!add_entry){
+        QMessageBox m;
+        m.critical(this,"RoboJournal", "This entry has already been tagged with <b>"
+                   + newtag + "</b>.");
+        ui->AvailableTags->clearEditText();
+        ui->AvailableTags->setFocus();
+
+    }
+    else{
+        // Create new ListwidgetItem
+        QIcon tagicon(":/icons/tag_orange.png");
+        QListWidgetItem *entry=new QListWidgetItem(tagicon,newtag);
+        ui->TagList->addItem(entry);
+        ui->TagList->setCurrentItem(entry);
+        ui->RemoveTag->setEnabled(true);
+        ui->AvailableTags->setFocus();
+        ui->AvailableTags->clearEditText();
+        bool add_to_list=true;
+
+        for(int a=0; a < ui->AvailableTags->count(); a++){
+            if(ui->AvailableTags->itemText(a)==newtag){
+                add_to_list=false;
+                break;
+            }
+        }
+
+        if(add_to_list){
+            ui->AvailableTags->addItem(newtag);
+        }
+
+        tag_count=ui->TagList->count();
+        QString taglabel;
+        if(tag_count==1){
+            taglabel=" tag";
+        }
+        else{
+            taglabel=" tags";
+        }
+        ui->TagCount->setText(QString::number(tag_count) + taglabel);
+    }
+}
+
+// (6/11/13) Remove currently-selected tag from Tag list
+void EditorTagManager::RemoveTag(){
+
+}
+
+void EditorTagManager::on_AddTag_clicked()
+{
+    QString newtag=ui->AvailableTags->currentText();
+    AddTag(newtag);
 }
