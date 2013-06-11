@@ -1170,11 +1170,11 @@ void Editor::splitterMoved(int pos, int index){
 
     using namespace std;
 
-    if(index==1 && pos==0){
-      cout << "Slider changed " << endl;
+    if((index==1) && (pos==0)){
+      ui->TagButton->setChecked(false);
     }
     else{
-        cout << "null" << endl;
+      ui->TagButton->setChecked(true);
     }
 }
 
