@@ -39,6 +39,9 @@
 #include "ui/SpellTextEdit.h"
 #include "ui/highlighter.h"
 #include <QWidgetAction>
+#include <QSplitter>
+#include "ui/editortagmanager.h"
+#include "ui_editortagmanager.h"
 
 QString Editor::body;
 QString Editor::title;
@@ -124,6 +127,10 @@ void Editor::PrimaryConfig(){
     QWidgetAction* bqAction = new QWidgetAction(this);
     bqAction->setDefaultWidget(ui->Blockquote);
 
+    QWidgetAction* tcAction = new QWidgetAction(this);
+    tcAction->setDefaultWidget(ui->ShowCode);
+
+
 
     // populate primary toolbar.
     bar->addAction(boldAction);
@@ -150,7 +157,8 @@ void Editor::PrimaryConfig(){
 
     bar->addSeparator();
 
-    bar->addAction(spellAction);
+    bar->addAction(tcAction);
+    bar->addAction(spellAction); 
     bar->addAction(tagAction);
 
 
@@ -237,6 +245,13 @@ void Editor::PrimaryConfig(){
     delete ui->line;
 #endif
 
+    // (added for 0.5 -- 6/10/13) Set up vertical splitter for text area and tag area.
+    divide=new QSplitter(this);
+    divide->setOrientation(Qt::Vertical);
+
+    // Add tagging interface as QWidget Object (6/10/13)
+    et=new EditorTagManager(this);
+
 
     layout->addWidget(bar,1);
 
@@ -253,8 +268,9 @@ void Editor::PrimaryConfig(){
 
         // allow the app to detect when the SpellTextEdit adds a word or has its text changed in any way.
         // The second function is essential for the word count feature to work.
-        connect(spell,SIGNAL(addWord(QString)),high,SLOT(slot_addWord(QString)));
+        connect(spell,SIGNAL(addWord(QString)), high,SLOT(slot_addWord(QString)));
         connect(spell, SIGNAL(textChanged()), this, SLOT(on_spell_textChanged()));
+        connect(divide, SIGNAL(splitterMoved(int,int)), this, SLOT(splitterMoved(int pos, int index)));
 
         layout->addWidget(spell,true);
 
@@ -262,13 +278,25 @@ void Editor::PrimaryConfig(){
 
     // Option 2: If we're not using spellcheck, just use a regular QTextEdit. This is unchanged from =< 0.3.
     else{
-        layout->addWidget(ui->EntryPost,true);
 
+        divide->insertWidget(0,ui->EntryPost);
+        divide->insertWidget(1,et);
+         //layout->addWidget(ui->EntryPost,true);
     }
 
+    layout->addWidget(divide,1);
 
     layout->addWidget(sbar);
     this->setLayout(layout);
+
+    //Set up splitter sizes
+    toggle_off.append(100);
+    toggle_off.append(0);
+
+    toggle_on.append(100);
+    toggle_on.append(this->height()/4);
+
+    divide->setSizes(toggle_off);
 
 
     // restore window size from previous session
@@ -1072,7 +1100,6 @@ void Editor::on_PostEntry_clicked()
                 }
             }
         }
-
     }
 
     // Non-Spellcheck Mode
@@ -1127,4 +1154,31 @@ void Editor::on_ShowErrors_toggled(bool checked)
         high->enableSpellChecking(false);
 
     }
+}
+
+void Editor::on_TagButton_toggled(bool checked)
+{
+    if(checked){
+        divide->setSizes(toggle_on);
+    }
+    else{
+        divide->setSizes(toggle_off);
+    }
+}
+
+void Editor::splitterMoved(int pos, int index){
+
+    using namespace std;
+
+    if(index==1 && pos==0){
+      cout << "Slider changed " << endl;
+    }
+    else{
+        cout << "null" << endl;
+    }
+}
+
+void Editor::on_ShowCode_toggled(bool checked)
+{
+
 }

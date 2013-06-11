@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>389</width>
-    <height>235</height>
+    <width>396</width>
+    <height>263</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -96,6 +96,9 @@
        <property name="text">
         <string>&amp;New Tag</string>
        </property>
+       <property name="flat">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
      <item row="4" column="0" colspan="3">
@@ -154,6 +157,9 @@
       <widget class="QPushButton" name="RemoveTag">
        <property name="toolTip">
         <string>&lt;p&gt;Remove the selected tag from this entry.&lt;/p&gt;</string>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
        </property>
        <property name="text">
         <string>&amp;Remove Tag</string>

@@ -24,9 +24,12 @@
 #include <QTextEdit>
 #include "ui/SpellTextEdit.h"
 #include "ui/highlighter.h"
+#include <QSplitter>
+#include "ui/editortagmanager.h"
+#include "ui_editortagmanager.h"
 
 namespace Ui {
-    class Editor;
+class Editor;
 }
 
 class Editor : public QDialog
@@ -56,14 +59,20 @@ public:
     Highlighter *high;
     QTextEdit *regular;
 
+    QSplitter *divide;
 
+    QList<int> toggle_on;
+    QList<int> toggle_off;
 
+    EditorTagManager *et;
 
+public slots:
 
+    void splitterMoved(int pos, int index);
 
 private slots:
-    void DocumentStats();
 
+    void DocumentStats();
 
     void on_EntryTitle_textChanged(const QString &arg1);
 
@@ -91,6 +100,12 @@ private slots:
 
     void on_ShowErrors_toggled(bool checked);
 
+    void on_TagButton_toggled(bool checked);
+
+
+
+    void on_ShowCode_toggled(bool checked);
+
 private:
     Ui::Editor *ui;
 
@@ -104,6 +119,8 @@ private:
     void ConfirmExit();
     QString Do_Post_Processing(QString rawtext, int wordcount);
     void reject();
+
+
 
 };
 

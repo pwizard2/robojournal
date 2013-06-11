@@ -56,7 +56,8 @@ SOURCES += main.cpp\
         ui/mysqljournalpage.cpp \
         ui/sqlitejournalpage.cpp \
         ui/journalcreatorcoverpage.cpp \
-    ui/configurationsqlite.cpp
+    ui/configurationsqlite.cpp \
+    ui/editortagmanager.cpp
 
 HEADERS  += ui/mainwindow.h \
 	core/buffer.h \
@@ -103,7 +104,8 @@ HEADERS  += ui/mainwindow.h \
         ui/mysqljournalpage.h \
         ui/sqlitejournalpage.h \
         ui/journalcreatorcoverpage.h \
-    ui/configurationsqlite.h
+    ui/configurationsqlite.h \
+    ui/editortagmanager.h
 
 
 FORMS    += ui/mainwindow.ui \
@@ -128,7 +130,8 @@ FORMS    += ui/mainwindow.ui \
         ui/mysqljournalpage.ui \
         ui/sqlitejournalpage.ui \
         ui/journalcreatorcoverpage.ui \
-    ui/configurationsqlite.ui
+    ui/configurationsqlite.ui \
+    ui/editortagmanager.ui
 
 # Declaration of images and other to-be-embedded resources.
 RESOURCES  = images.qrc

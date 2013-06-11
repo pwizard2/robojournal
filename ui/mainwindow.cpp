@@ -2207,7 +2207,7 @@ void MainWindow::Write(){
     Editor e(this);
 
 
-    e.setWindowTitle("Untitled Entry -- RoboJournal");
+    e.setWindowTitle("Untitled Entry - RoboJournal");
     e.exec();
     launched_editor=true;
 

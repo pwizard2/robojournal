@@ -80,5 +80,9 @@
         <file>icons/edit-underline.png</file>
         <file>icons/edit-italic.png</file>
         <file>icons/edit-bold.png</file>
+        <file>icons/tag--minus.png</file>
+        <file>icons/tag--pencil.png</file>
+        <file>icons/tag--arrow.png</file>
+        <file>icons/edit-code.png</file>
     </qresource>
 </RCC>
