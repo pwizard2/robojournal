@@ -68,7 +68,7 @@ public:
 
 public slots:
 
-    void splitterMoved(int pos, int index);
+    void splitterMoved();
 
 private slots:
 
@@ -105,6 +105,12 @@ private slots:
 
 
     void on_ShowCode_toggled(bool checked);
+
+    void on_Italic_toggled(bool checked);
+
+    void on_Underline_toggled(bool checked);
+
+    void on_bold_toggled(bool checked);
 
 private:
     Ui::Editor *ui;

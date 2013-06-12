@@ -56,6 +56,21 @@ QString EditorTagManager::GetTags(){
 // 6/10/13: Create toolbar and layout for this class.
 void EditorTagManager::PrimaryConfig(){
 
+    QWidget* spacer1 = new QWidget();
+    spacer1->setMinimumWidth(7);
+    spacer1->setMaximumWidth(7);
+    spacer1->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Preferred);
+
+    QWidget* spacer2 = new QWidget();
+    spacer2->setMinimumWidth(15);
+    spacer2->setMaximumWidth(15);
+    spacer2->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Preferred);
+
+    QWidget* spacer3 = new QWidget();
+    spacer3->setMinimumWidth(7);
+    spacer3->setMaximumWidth(7);
+    spacer3->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Preferred);
+
     // set background and stylesheet for TagList element
     QPalette pal;
     QBrush bg=pal.light();
@@ -64,21 +79,25 @@ void EditorTagManager::PrimaryConfig(){
 
     ui->TagCount->setText("0 tags");
 
+    // Create toolbar.
     QToolBar *bar = new QToolBar(this);
     bar->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
     bar->setLayoutDirection(Qt::LeftToRight);
-    bar->setContextMenuPolicy(Qt::NoContextMenu);
+    bar->setContextMenuPolicy(Qt::DefaultContextMenu);
 
+    // Populate toolbar with loose UI elements.
     bar->addWidget(ui->NewTag);
     bar->addWidget(ui->RemoveTag);
-
     bar->addSeparator();
-
     bar->addWidget(ui->AddTag);
+    bar->addWidget(spacer1);
+    bar->addWidget(ui->SelectTag);
+    bar->addWidget(spacer3);
     bar->addWidget(ui->AvailableTags);
-    bar->addSeparator();
+    bar->addWidget(spacer2);
     bar->addWidget(ui->TagCount);
 
+    // Force everything into a vboxlayout so the tag interface stretches to fill all available space.
     QVBoxLayout *layout=new QVBoxLayout(this);
     layout->setSpacing(0);
     layout->setContentsMargins(0,0,0,0);

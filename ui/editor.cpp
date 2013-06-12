@@ -73,7 +73,7 @@ void Editor::PrimaryConfig(){
     QToolBar *bar=new QToolBar(this);
     bar->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
     bar->setLayoutDirection(Qt::LeftToRight);
-    bar->setContextMenuPolicy(Qt::NoContextMenu);
+    bar->setContextMenuPolicy(Qt::DefaultContextMenu);
 
 
     // Bind the Toolbar Buttons to QWidgetActions before adding them to the toolbar. This allows the toolbar overflow
@@ -158,7 +158,7 @@ void Editor::PrimaryConfig(){
     bar->addSeparator();
 
     bar->addAction(tcAction);
-    bar->addAction(spellAction); 
+    bar->addAction(spellAction);
     bar->addAction(tagAction);
 
 
@@ -270,7 +270,8 @@ void Editor::PrimaryConfig(){
         // The second function is essential for the word count feature to work.
         connect(spell,SIGNAL(addWord(QString)), high,SLOT(slot_addWord(QString)));
         connect(spell, SIGNAL(textChanged()), this, SLOT(on_spell_textChanged()));
-        connect(divide, SIGNAL(splitterMoved(int,int)), this, SLOT(splitterMoved(int pos, int index)));
+
+
 
         layout->addWidget(spell,true);
 
@@ -281,7 +282,7 @@ void Editor::PrimaryConfig(){
 
         divide->insertWidget(0,ui->EntryPost);
         divide->insertWidget(1,et);
-         //layout->addWidget(ui->EntryPost,true);
+        //layout->addWidget(ui->EntryPost,true);
     }
 
     layout->addWidget(divide,1);
@@ -339,6 +340,11 @@ void Editor::PrimaryConfig(){
 
     // clear startup mode.
     startup=false;
+
+    // -- Will Kraft, 6/12/13: New for version 0.5.
+    // This signal/slot pair connects the divider to the Manage Tags toolbar button. If the user drags the
+    // slider up or down, emit a signal to toggle the toolbar button on or off.
+    connect(divide, SIGNAL(splitterMoved(int,int)), this, SLOT(splitterMoved()));
 }
 
 //#############################################################################################################
@@ -624,12 +630,12 @@ void Editor::ConfirmExit(){
         int choice=m.exec();
 
         switch(choice){
-        case QMessageBox::Yes:
-            this->done(0);
+            case QMessageBox::Yes:
+                this->done(0);
             break;
 
-        case QMessageBox::No:
-            // do nothing
+            case QMessageBox::No:
+                // do nothing
             break;
         }
     }
@@ -1166,19 +1172,51 @@ void Editor::on_TagButton_toggled(bool checked)
     }
 }
 
-void Editor::splitterMoved(int pos, int index){
-
-    using namespace std;
-
-    if((index==1) && (pos==0)){
-      ui->TagButton->setChecked(false);
+void Editor::splitterMoved(){
+    if(divide->sizes().at(1)==0) {
+        ui->TagButton->setChecked(false);
     }
     else{
-      ui->TagButton->setChecked(true);
+        ui->TagButton->setChecked(true);
     }
 }
 
 void Editor::on_ShowCode_toggled(bool checked)
 {
 
+}
+
+void Editor::on_Italic_toggled(bool checked)
+{
+    if(Buffer::use_spellcheck){
+
+    }
+    else{
+        ui->EntryPost->setFontItalic(checked);
+    }
+}
+
+void Editor::on_Underline_toggled(bool checked)
+{
+    if(Buffer::use_spellcheck){
+
+    }
+    else{
+        ui->EntryPost->setFontUnderline(checked);
+    }
+}
+
+void Editor::on_bold_toggled(bool checked)
+{
+    if(Buffer::use_spellcheck){
+
+    }
+    else{
+        if(checked){
+            ui->EntryPost->setFontWeight(87); // bold text
+        }
+        else{
+            ui->EntryPost->setFontWeight(50); // normal text
+        }
+    }
 }

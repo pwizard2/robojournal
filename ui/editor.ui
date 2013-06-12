@@ -426,6 +426,9 @@ p, li { white-space: pre-wrap; }
     <iconset resource="../images.qrc">
      <normaloff>:/icons/edit-bold.png</normaloff>:/icons/edit-bold.png</iconset>
    </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QToolButton" name="Italic">
    <property name="geometry">
@@ -450,6 +453,9 @@ p, li { white-space: pre-wrap; }
     <iconset resource="../images.qrc">
      <normaloff>:/icons/edit-italic.png</normaloff>:/icons/edit-italic.png</iconset>
    </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QToolButton" name="Underline">
    <property name="geometry">
@@ -473,6 +479,9 @@ p, li { white-space: pre-wrap; }
    <property name="icon">
     <iconset resource="../images.qrc">
      <normaloff>:/icons/edit-underline.png</normaloff>:/icons/edit-underline.png</iconset>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QToolButton" name="Blockquote">

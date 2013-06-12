@@ -58,7 +58,8 @@ SOURCES += main.cpp\
         ui/journalcreatorcoverpage.cpp \
     ui/configurationsqlite.cpp \
     ui/editortagmanager.cpp \
-    core/taggingshared.cpp
+    core/taggingshared.cpp \
+    core/htmlcore.cpp
 
 HEADERS  += ui/mainwindow.h \
 	core/buffer.h \
@@ -107,7 +108,8 @@ HEADERS  += ui/mainwindow.h \
         ui/journalcreatorcoverpage.h \
     ui/configurationsqlite.h \
     ui/editortagmanager.h \
-    core/taggingshared.h
+    core/taggingshared.h \
+    core/htmlcore.h
 
 
 FORMS    += ui/mainwindow.ui \
@@ -192,6 +194,8 @@ win32{
     CONFIG += qt release
     message(Creating 32-bit Windows release build...)
 }
+
+
 
 
 
