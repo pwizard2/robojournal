@@ -1101,12 +1101,8 @@ QList<QString> MySQLCore::getEntries(QString itemday, QString itemmonth){
         QVariant result=getentry.value(0);
         QString entry=result.toString();
 
-        // Bugfix (6/11/13) Remove line breaks and whitespace from entry names.
-        entry=entry.trimmed();
-
         QVariant rownum=getentry.value(1);
         QString id=rownum.toString();
-
 
         QString previous=NULL;
 

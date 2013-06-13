@@ -123,7 +123,6 @@ private:
     void Set_Editor_Fonts();
     QString WordCount(QString data);
     void ConfirmExit();
-    QString Do_Post_Processing(QString rawtext, int wordcount);
     void reject();
 
 

@@ -2461,21 +2461,26 @@ void MainWindow::CreateTree(){
                         QString itemday=IteratorDay.next();
                         QTreeWidgetItem *day = new QTreeWidgetItem(month);
 
+                        itemday=itemday.trimmed();
+
+                        // BUGFIX for version 0.5 (6/11/13):
+                        // Ensure all strings are trimmed to get rid of any unwanted spaces or linebreaks.
+                        // This debris sometimes gets introduced when the database is restored from a dump file
+                        // and it throws the entire tree off.
+
                         // Organize Date depending on Buffer data
-
-
-                        switch(Buffer::date_format){
+                       switch(Buffer::date_format){
 
                         case 0: // international
-                            day->setText(0, itemday + " " + longmonth  );
+                            day->setText(0, itemday.trimmed() + " " + longmonth.trimmed()  );
                             break;
 
                         case 1:  // usa
-                            day->setText(0,longmonth + " " + itemday);
+                            day->setText(0,longmonth.trimmed() + " " + itemday.trimmed());
                             break;
 
                         case 2: // japan
-                            day->setText(0,longmonth + " " + itemday);
+                            day->setText(0,longmonth.trimmed() + " " + itemday.trimmed());
                             break;
                         }
 
@@ -2492,10 +2497,8 @@ void MainWindow::CreateTree(){
                             QString tooltip=longmonth + " " + itemday + ", " +
                                     nextyear + " : " + item[0];
 
-                            QString entry_name=item[0];
-                            entry_name=entry_name.trimmed();
 
-                            EntryItem->setText(0, entry_name);
+                            EntryItem->setText(0, item[0]);
                             EntryItem->setToolTip(0, tooltip);
                             EntryItem->setText(1, item[1]);
                             EntryItem->setIcon(0,entryicon);
@@ -2633,24 +2636,26 @@ void MainWindow::CreateTree(){
 
 
                         QString entry;
+
                         switch(Buffer::date_format){
 
+                        // BUGFIX for version 0.5 (6/11/13):
+                        // Ensure all strings are trimmed to get rid of any unwanted spaces or linebreaks.
+                        // This debris sometimes gets introduced when the database is restored from a dump file
+                        // and it throws the entire tree off.
+
                         case 0: // international
-                            entry=item[2] + " " + longmonth + ": " + item [1];
+                            entry=item[2].trimmed() + " " + longmonth.trimmed() + ": " + item[1].trimmed();
                             break;
 
                         case 1:  // usa
-                            entry=longmonth + " " + item[2] + ": " + item [1];
+                            entry=longmonth.trimmed() + " " + item[2].trimmed() + ": " + item[1].trimmed();
                             break;
 
                         case 2: // japan
-                            entry=longmonth + " " + item[2] + ": " + item [1];
+                            entry=longmonth.trimmed() + " " + item[2].trimmed() + ": " + item[1].trimmed();
                             break;
                         }
-
-
-
-
 
                         EntryItem->setText(0,entry);
                         EntryItem->setToolTip(0,entry);
