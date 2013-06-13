@@ -23,6 +23,7 @@
 #define EDITORTAGMANAGER_H
 
 #include <QWidget>
+#include <QMenu>
 
 namespace Ui {
 class EditorTagManager;
@@ -42,6 +43,14 @@ public:
 private slots:
     void on_AddTag_clicked();
 
+    void s_addTag();
+
+    void s_removeTag();
+
+    void s_newTag();
+
+    void showPopup();
+
 private:
     Ui::EditorTagManager *ui;
     void PrimaryConfig();
@@ -49,6 +58,8 @@ private:
 
     void AddTag(QString newtag);
     void RemoveTag();
+
+    QMenu *contextmenu;
 };
 
 #endif // EDITORTAGMANAGER_H

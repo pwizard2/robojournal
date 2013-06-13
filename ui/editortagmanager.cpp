@@ -31,6 +31,8 @@
 #include <QColor>
 #include <QListWidgetItem>
 #include <QMessageBox>
+#include <QMenu>
+#include <QAction>
 
 EditorTagManager::EditorTagManager(QWidget *parent) :
     QWidget(parent),
@@ -108,6 +110,32 @@ void EditorTagManager::PrimaryConfig(){
     this->setLayout(layout);
 
     CreateTagList();
+
+    QIcon inserticon(":/icons/tag--arrow.png");
+    QIcon removeicon(":/icons/tag--minus.png");
+    QIcon declareicon(":/icons/tag--pencil.png");
+
+    // Setup Context Menu for tagarea
+    QAction *insert = new QAction(tr("Add current tag"),this);
+    insert->setIcon(inserticon);
+    connect(insert, SIGNAL(triggered()), this, SLOT(s_addTag()));
+
+
+    QAction *remove = new QAction(tr("Remove selected tag"),this);
+    remove->setIcon(removeicon);
+    connect(remove, SIGNAL(triggered()), this, SLOT(s_removeTag()));
+
+    QAction *define = new QAction(tr("Define new tag"),this);
+    define->setIcon(declareicon);
+    connect(define, SIGNAL(triggered()), this, SLOT(s_newTag()));
+
+    contextmenu=new QMenu(ui->TagList);
+    contextmenu->addAction(define);
+    contextmenu->addSeparator();
+    contextmenu->addAction(insert);
+    contextmenu->addAction(remove);
+
+    connect(ui->TagList, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showPopup()));
 }
 
 //6/11/13: Create drop-down tag list. Use the new TaggingShared class.
@@ -193,8 +221,32 @@ void EditorTagManager::RemoveTag(){
 
 }
 
+// Slot that gets triggered when the user clicks the AddTag toolbar button.
 void EditorTagManager::on_AddTag_clicked()
 {
     QString newtag=ui->AvailableTags->currentText();
     AddTag(newtag);
+}
+
+// 6/13/13: slot that gets triggered from context menu -- add tag
+void EditorTagManager::s_addTag(){
+
+    QString newtag=ui->AvailableTags->currentText();
+    AddTag(newtag);
+}
+
+// 6/13/13: slot that gets triggered from context menu -- remove selected tag
+void EditorTagManager::s_removeTag(){
+
+}
+
+// 6/13/13: slot that gets triggered from context menu -- define tag
+void EditorTagManager::s_newTag(){
+
+}
+
+// 6/13/13: Slot that controls the pop-up context menu in the tag list
+void EditorTagManager::showPopup(){
+    QPoint p=QCursor::pos();
+    contextmenu->popup(p);
 }

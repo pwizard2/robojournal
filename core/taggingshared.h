@@ -29,6 +29,7 @@
 
 #include <QStringList>
 #include <QString>
+#include <QListWidgetItem>
 
 class TaggingShared
 {
@@ -38,6 +39,7 @@ public:
     QStringList TagAggregator();
     QStringList FetchTags(QString id);
     void SaveTags(QString tags);
+    QListWidgetItem DeclareTag();
 
 };
 

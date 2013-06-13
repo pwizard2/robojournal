@@ -27,9 +27,16 @@
 #include <QStringList>
 #include "core/buffer.h"
 #include "sql/mysqlcore.h"
+#include <QListWidgetItem>
 
 TaggingShared::TaggingShared(){
 
+}
+
+QListWidgetItem TaggingShared::DeclareTag(){
+
+    QListWidgetItem newtag;
+    return newtag;
 }
 
 // 6/11/13: This method returns a list of all tags in the database. The output is used to

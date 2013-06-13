@@ -202,6 +202,11 @@ QString HTMLCore::Do_Post_Processing(QString rawtext, int wordcount){
         QRegExp notation("\\d+(st|nd|rd|th)",Qt::CaseInsensitive);
         QStringList notation_match;
 
+        QRegExp notation_th("th",Qt::CaseInsensitive);
+        QRegExp notation_rd("rd",Qt::CaseInsensitive);
+        QRegExp notation_nd("nd",Qt::CaseInsensitive);
+        QRegExp notation_st("st",Qt::CaseInsensitive);
+
         int n_count = 0;
         int n_pos = 0;
         while ((n_pos = notation.indexIn(body, n_pos)) != -1) {
@@ -217,22 +222,22 @@ QString HTMLCore::Do_Post_Processing(QString rawtext, int wordcount){
             //cout << "Next: " << next.toStdString() << endl;
             QString fixed;
 
-            if((next.contains("st")) || (next.contains("ST"))){
+            if(next.contains(notation_st)){
                 fixed=next.section("",0,next.length()-2);
                 fixed=fixed + "<sup>st</sup>";
             }
 
-            if((next.contains("nd")) || (next.contains("ND"))){
+            if(next.contains(notation_nd)){
                 fixed=next.section("",0,next.length()-2);
                 fixed=fixed + "<sup>nd</sup>";
             }
 
-            if((next.contains("rd")) || (next.contains("RD"))){
+            if(next.contains(notation_rd)){
                 fixed=next.section("",0,next.length()-2);
                 fixed=fixed + "<sup>rd</sup>";
             }
 
-            if((next.contains("th")) || (next.contains("TH"))){
+            if(next.contains(notation_th)){
                 fixed=next.section("",0,next.length()-2);
                 fixed=fixed + "<sup>th</sup>";
             }
