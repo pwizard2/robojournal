@@ -96,8 +96,14 @@ void EditorTagManager::RevertTags(){
 // 6/13/13: Add a new tag to the AvailableTags list. This uses the new TaggingShared class.
 void EditorTagManager::DefineTag(){
 
+    // get the latest batch of tags just in case new ones have been added since the form was loaded
+    QStringList current_list;
+    for(int i=0; i < ui->AvailableTags->count(); i++){
+        current_list.append(ui->AvailableTags->itemText(i));
+    }
+
     TaggingShared ts;
-    QString tag=ts.DefineTag();
+    QString tag=ts.DefineTag(current_list);
 
     if(!tag.isEmpty()){
         QIcon newicon(":/icons/tag_red_add.png");
@@ -292,8 +298,8 @@ void EditorTagManager::AddTag(QString newtag){
 
     if(!add_entry){
         QMessageBox m;
-        m.critical(this,"RoboJournal", "This entry has already been tagged with <b>"
-                   + newtag + "</b>.");
+        m.critical(this,"RoboJournal", "This entry has already been tagged with \""
+                   + newtag + "\".");
         ui->AvailableTags->clearEditText();
         ui->AvailableTags->setFocus();
 

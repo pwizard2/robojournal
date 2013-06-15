@@ -38,7 +38,7 @@ TaggingShared::TaggingShared(){
 // DefineTag() is meant to be used with the tagging system in several different classes.
 // If the tag is good, it is returned as a QString. Invalid tags are returned as empty
 // QStrings (the referring method(s) prevent empty strings from being used).
-QString TaggingShared::DefineTag(){
+QString TaggingShared::DefineTag(QStringList ExistingTags){
 
     QInputDialog d;
     QString tag=d.getText(NULL, "RoboJournal", "Enter the new tag:", QLineEdit::Normal);
@@ -52,12 +52,11 @@ QString TaggingShared::DefineTag(){
     // only proceed if the user clicked ok; cancel returns a null string
     if(!tag.isEmpty()){
 
-        // do some tag validation
-        QStringList current_tags=TagAggregator();
 
-        if(current_tags.contains(tag)){
+
+        if(ExistingTags.contains(tag)){
             goodtag=false;
-            m.critical(NULL,"RoboJournal","<b>" + tag + "</b> is already on the Available Tags List.");
+            m.critical(NULL,"RoboJournal","\"" + tag + "\" is already on the <b>Available tags</b> List.");
             tag.clear();
         }
 

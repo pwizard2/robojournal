@@ -94,6 +94,7 @@ void Tagger::PrimaryConfig(){
     bar->addWidget(spacer1);
     bar->addWidget(ui->TagChooser);
 
+
     QVBoxLayout *layout=new QVBoxLayout(this);
     layout->addWidget(bar);
     layout->addWidget(ui->TagList);
@@ -132,6 +133,14 @@ void Tagger::PrimaryConfig(){
     // Create Tag List
     TagAggregator();
     ui->TagChooser->clearEditText();
+
+    // Add the fat spacer and the RevertTags button now because the layout has been applied
+    // by this point. This means the spacer should stretch to fit the layout (docking the button on the right).
+    QWidget* fat_spacer = new QWidget();
+    fat_spacer->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+
+    bar->addWidget(fat_spacer);
+    bar->addWidget(ui->RevertTags);
 }
 
 //#########################################################################################################
@@ -159,8 +168,8 @@ void Tagger::AddTag(QString newtag){
 
     if(!add_entry){
         QMessageBox m;
-        m.critical(this,"RoboJournal", "This entry has already been tagged with <b>"
-                   + newtag + "</b>.");
+        m.critical(this,"RoboJournal", "This entry has already been tagged with \""
+                   + newtag + "\".");
         ui->TagChooser->clearEditText();
         ui->TagChooser->setFocus();
 
@@ -204,8 +213,14 @@ void Tagger::AddTag(QString newtag){
 // Add Tag to the list
 void Tagger::AddTagToList(){
 
+    // get the latest batch of tags just in case new ones have been added since the form was loaded
+    QStringList current_list;
+    for(int i=0; i < ui->TagChooser->count(); i++){
+        current_list.append(ui->TagChooser->itemText(i));
+    }
+
     TaggingShared ts;
-    QString tag=ts.DefineTag();
+    QString tag=ts.DefineTag(current_list);
 
         if(!tag.isEmpty()){
             QIcon newicon(":/icons/tag_red_add.png");

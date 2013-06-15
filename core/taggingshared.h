@@ -39,7 +39,7 @@ public:
     QStringList TagAggregator();
     QStringList FetchTags(QString id);
     void SaveTags(QString tags);
-    QString DefineTag();
+    QString DefineTag(QStringList ExistingTags);
 
 };
 
