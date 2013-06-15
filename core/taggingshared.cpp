@@ -27,16 +27,55 @@
 #include <QStringList>
 #include "core/buffer.h"
 #include "sql/mysqlcore.h"
-#include <QListWidgetItem>
+#include <QInputDialog>
+#include <QMessageBox>
 
 TaggingShared::TaggingShared(){
 
 }
 
-QListWidgetItem TaggingShared::DeclareTag(){
+// 6/13/13: Define a new tag if it is not already in the current/available tags list.
+// DefineTag() is meant to be used with the tagging system in several different classes.
+// If the tag is good, it is returned as a QString. Invalid tags are returned as empty
+// QStrings (the referring method(s) prevent empty strings from being used).
+QString TaggingShared::DefineTag(){
 
-    QListWidgetItem newtag;
-    return newtag;
+    QInputDialog d;
+    QString tag=d.getText(NULL, "RoboJournal", "Enter the new tag:", QLineEdit::Normal);
+
+    tag=tag.trimmed();
+    tag=tag.simplified();
+
+    bool goodtag=true;
+    QMessageBox m;
+
+    // only proceed if the user clicked ok; cancel returns a null string
+    if(!tag.isEmpty()){
+
+        // do some tag validation
+        QStringList current_tags=TagAggregator();
+
+        if(current_tags.contains(tag)){
+            goodtag=false;
+            m.critical(NULL,"RoboJournal","<b>" + tag + "</b> is already on the Available Tags List.");
+            tag.clear();
+        }
+
+        // Bugfix for 0.4.1 (3/5/13): Replace simple operator check with a "smarter" regexp.
+        // The user should NEVER be allowed to declare "null" (case insensitive) as a tag
+        // because that is a reserved word in the tagging system; entries marked with Null have
+        // "No tags for this post" as their tag data.
+        QRegExp banned("null", Qt::CaseInsensitive);
+
+        if(banned.exactMatch(tag)){
+            goodtag=false;
+            m.critical(NULL,"RoboJournal","You are not allowed to declare \"" + tag +
+                       "\" (or any other uppercase/lowercase variant of it) because it is a reserved keyword.");
+            tag.clear();
+        }
+    }
+
+    return tag;
 }
 
 // 6/11/13: This method returns a list of all tags in the database. The output is used to

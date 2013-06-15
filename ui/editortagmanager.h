@@ -24,6 +24,9 @@
 
 #include <QWidget>
 #include <QMenu>
+#include <QAction>
+#include <QListWidgetItem>
+#include <QToolBar>
 
 namespace Ui {
 class EditorTagManager;
@@ -49,17 +52,35 @@ private slots:
 
     void s_newTag();
 
+    void s_revertTag();
+
     void showPopup();
+
+    void on_NewTag_clicked();
+
+    void on_RemoveTag_clicked();
+
+    void on_TagList_itemClicked(QListWidgetItem *item);
+
+
+    void on_RevertTags_clicked();
 
 private:
     Ui::EditorTagManager *ui;
     void PrimaryConfig();
     void CreateTagList();
-
+    void DefineTag();
     void AddTag(QString newtag);
     void RemoveTag();
+    void LoadTags(QString id);
+    void TagCount(int count);
+    void RevertTags();
 
     QMenu *contextmenu;
+    QAction *remove;
+    QAction *revert;
+
+    bool no_tags;
 };
 
 #endif // EDITORTAGMANAGER_H

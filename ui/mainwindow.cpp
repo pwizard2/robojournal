@@ -624,16 +624,14 @@ void MainWindow::Tag(){
         }
 
         // pass title and id to Tagger class
-        Tagger::title=title;
         Tagger::id_num=selected->text(1);
 
         // prevent Tagger from opening when we are positioned on a non-entry or DB title
         // after all, we don't want to tag those things.
         if((CurrentID != "-1") && (title != Buffer::database_name)){
 
-            // pass title and id to Tagger class
-            Tagger::title=title;
-            Tagger::id_num=selected->text(1);
+            // pass id to Tagger class
+             Tagger::id_num=selected->text(1);
 
             Tagger t(this);
             t.setWindowTitle("Manage Tags");

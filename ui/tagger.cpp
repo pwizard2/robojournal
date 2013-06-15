@@ -15,6 +15,14 @@
 
     You should have received a copy of the GNU General Public License
     along with RoboJournal.  If not, see <http://www.gnu.org/licenses/>.
+
+    CLASS DESCRIPTION: This class is basically legacy code since a built-in tagger
+    was added to the Editor class in version 0.5. However, this class still has
+    its uses when teamed up with the TagReminder class (where launching the full
+    Editor is impractical). In version 0.5 I gave this module a facelift to
+    make it look like the EditorTagManager class to prevent user confusion.
+    --Will Kraft, 6/14/13
+
   */
 
 #include "ui/tagger.h"
@@ -30,9 +38,15 @@
 #include <QAbstractButton>
 #include <QInputDialog>
 #include "core/taggingshared.h"
+#include <QToolBar>
+#include <QVBoxLayout>
+#include <QAction>
+#include <QAbstractButton>
+#include <QPushButton>
 
 QString Tagger::id_num;
-QString Tagger::title;
+
+
 
 //#########################################################################################################
 
@@ -41,6 +55,52 @@ Tagger::Tagger(QWidget *parent) :
     ui(new Ui::Tagger)
 {
     ui->setupUi(this);
+    PrimaryConfig();
+
+
+}
+
+//#########################################################################################################
+
+Tagger::~Tagger()
+{
+    delete ui;
+}
+
+
+//#########################################################################################################
+// (6/14/13): New PrimaryConfig for 0.5 and later completely changes the appearance of the Tagger
+// from previous versions.
+void Tagger::PrimaryConfig(){
+
+    QWidget* spacer1 = new QWidget();
+    spacer1->setMinimumWidth(7);
+    spacer1->setMaximumWidth(7);
+    spacer1->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Preferred);
+
+    QWidget* spacer2 = new QWidget();
+    spacer2->setMinimumWidth(7);
+    spacer2->setMaximumWidth(7);
+    spacer2->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Preferred);
+
+
+    QToolBar *bar = new QToolBar(this);
+    bar->addWidget(ui->NewTag);
+    bar->addSeparator();
+    bar->addWidget(ui->RemoveTag);
+    bar->addWidget(ui->AddTag);
+    bar->addWidget(spacer2);
+    bar->addWidget(ui->label);
+    bar->addWidget(spacer1);
+    bar->addWidget(ui->TagChooser);
+
+    QVBoxLayout *layout=new QVBoxLayout(this);
+    layout->addWidget(bar);
+    layout->addWidget(ui->TagList);
+    layout->addWidget(ui->line);
+    layout->addWidget(ui->buttonBox);
+
+    this->setLayout(layout);
 
     // hide question mark button in title bar when running on Windows
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -50,18 +110,8 @@ Tagger::Tagger(QWidget *parent) :
     this->setMaximumSize(width,height);
     this->setMinimumSize(width,height);
 
-
     // Do initial setup
-    //ui->TagList->clear();
     ui->RemoveTag->setDisabled(true);
-
-    //ui->TagChooser->setFocus();
-    //ui->EntryName->setText(Tagger::title);
-
-    // New behavior in >= 0.4: Hide EntryName field because we don't really need it.
-    ui->EntryName->setVisible(false);
-
-
 
     QAbstractButton *ok=ui->buttonBox->button(QDialogButtonBox::Ok);
     ok->setDisabled(true);
@@ -82,14 +132,6 @@ Tagger::Tagger(QWidget *parent) :
     // Create Tag List
     TagAggregator();
     ui->TagChooser->clearEditText();
-
-}
-
-//#########################################################################################################
-
-Tagger::~Tagger()
-{
-    delete ui;
 }
 
 //#########################################################################################################
@@ -162,41 +204,10 @@ void Tagger::AddTag(QString newtag){
 // Add Tag to the list
 void Tagger::AddTagToList(){
 
-    QString tag=QInputDialog::getText(this, "RoboJournal", "Enter the new tag:", QLineEdit::Normal);
+    TaggingShared ts;
+    QString tag=ts.DefineTag();
 
-    tag=tag.trimmed();
-    tag=tag.simplified();
-
-    bool goodtag=true;
-
-    // only proceed if the user clicked ok; cancel returns a null string
-    if(!tag.isEmpty()){
-        // do some tag validation
-        for (int i=0; i < ui->TagChooser->count(); i++){
-            QMessageBox m;
-            if(ui->TagChooser->itemText(i)==tag){
-                goodtag=false;
-                m.critical(this,"RoboJournal","<b>" + tag + "</b> is already on the Available Tags List.");
-                break;
-
-            }
-
-            // Bugfix for 0.4.1 (3/5/13): Replace simple operator check with a "smarter" regexp.
-            // The user should NEVER be allowed to declare "null" (case insensitive) as a tag
-            // because that is a reserved word in the tagging system; entries marked with Null have
-            // "No tags for this post" as their tag data.
-            QRegExp banned("null", Qt::CaseInsensitive);
-
-            if(banned.exactMatch(tag)){
-                goodtag=false;
-                m.critical(this,"RoboJournal","You are not allowed to declare \"" + tag +
-                           "\" (or any other uppercase/lowercase variant of it) because it is a reserved keyword.");
-                break;
-            }
-        }
-
-        // if the tag is still good add it to the list.
-        if(goodtag){
+        if(!tag.isEmpty()){
             QIcon newicon(":/icons/tag_red_add.png");
             ui->TagChooser->insertItem(0,newicon,tag);
 
@@ -209,7 +220,6 @@ void Tagger::AddTagToList(){
 
         ui->TagChooser->setEnabled(true);
         ui->TagChooser->setCurrentIndex(0);
-    }
 }
 
 //#########################################################################################################
@@ -260,7 +270,6 @@ void Tagger::DeleteTag(){
     if(!cancel->isEnabled()){
         cancel->setEnabled(true);
     }
-
 }
 
 //#########################################################################################################

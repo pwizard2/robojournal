@@ -33,6 +33,8 @@
 #include <QMessageBox>
 #include <QMenu>
 #include <QAction>
+#include "ui/editor.h"
+#include "core/buffer.h"
 
 EditorTagManager::EditorTagManager(QWidget *parent) :
     QWidget(parent),
@@ -49,10 +51,76 @@ EditorTagManager::~EditorTagManager()
     delete ui;
 }
 
+// Public method that retuns the contents of ui->TagList as a semicolon-separated QString.
+// This method is NOT to be confused with the private function that gets tags from the database.
 QString EditorTagManager::GetTags(){
 
-    QString tags;
-    return tags;
+
+}
+
+// 6/14/13: Revert tags to their default values. This method is only accessible if the Editor
+// is in Edit Mode (since new entries have no pre-existing data to revert to).
+void EditorTagManager::RevertTags(){
+
+    if(Buffer::showwarnings){
+        QMessageBox m;
+        int choice=m.question(this,"RoboJournal","Do you really want to discard the changes you made to this entry\'s tags?",
+                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+        switch(choice){
+        case QMessageBox::Yes:
+            if(no_tags){
+                ui->TagList->clear();
+            }
+            else{
+                ui->TagList->clear();
+                LoadTags(Buffer::editentry);
+            }
+            break;
+
+        case QMessageBox::No:
+            // Do nothing
+            break;
+        }
+    }
+    else{
+        if(no_tags){
+            ui->TagList->clear();
+        }
+        else{
+            ui->TagList->clear();
+            LoadTags(Buffer::editentry);
+        }
+    }
+}
+
+// 6/13/13: Add a new tag to the AvailableTags list. This uses the new TaggingShared class.
+void EditorTagManager::DefineTag(){
+
+    TaggingShared ts;
+    QString tag=ts.DefineTag();
+
+    if(!tag.isEmpty()){
+        QIcon newicon(":/icons/tag_red_add.png");
+        ui->AvailableTags->insertItem(0,newicon,tag);
+        ui->AvailableTags->setCurrentIndex(0);
+
+        if(!ui->AddTag->isEnabled()){
+            ui->AddTag->setEnabled(true);
+        }
+    }
+}
+
+// 6/14/13: Update current tag count in toolbar.
+void EditorTagManager::TagCount(int count){
+
+    QString taglabel;
+    if(count==1){
+        taglabel=" tag";
+    }
+    else{
+        taglabel=" tags";
+    }
+    ui->TagCount->setText(QString::number(count) + taglabel);
 }
 
 // 6/10/13: Create toolbar and layout for this class.
@@ -72,6 +140,7 @@ void EditorTagManager::PrimaryConfig(){
     spacer3->setMinimumWidth(7);
     spacer3->setMaximumWidth(7);
     spacer3->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Preferred);
+
 
     // set background and stylesheet for TagList element
     QPalette pal;
@@ -99,6 +168,7 @@ void EditorTagManager::PrimaryConfig(){
     bar->addWidget(spacer2);
     bar->addWidget(ui->TagCount);
 
+
     // Force everything into a vboxlayout so the tag interface stretches to fill all available space.
     QVBoxLayout *layout=new QVBoxLayout(this);
     layout->setSpacing(0);
@@ -109,19 +179,17 @@ void EditorTagManager::PrimaryConfig(){
 
     this->setLayout(layout);
 
-    CreateTagList();
-
     QIcon inserticon(":/icons/tag--arrow.png");
     QIcon removeicon(":/icons/tag--minus.png");
     QIcon declareicon(":/icons/tag--pencil.png");
+    QIcon reverticon(":/icons/arrow_rotate_clockwise.png");
 
     // Setup Context Menu for tagarea
-    QAction *insert = new QAction(tr("Add current tag"),this);
+    QAction *insert = new QAction(tr("Apply current tag"),this);
     insert->setIcon(inserticon);
     connect(insert, SIGNAL(triggered()), this, SLOT(s_addTag()));
 
-
-    QAction *remove = new QAction(tr("Remove selected tag"),this);
+    remove = new QAction(tr("Remove selected tag"),this);
     remove->setIcon(removeicon);
     connect(remove, SIGNAL(triggered()), this, SLOT(s_removeTag()));
 
@@ -129,13 +197,61 @@ void EditorTagManager::PrimaryConfig(){
     define->setIcon(declareicon);
     connect(define, SIGNAL(triggered()), this, SLOT(s_newTag()));
 
+    revert = new QAction(tr("Revert tag changes"),this);
+    revert->setIcon(reverticon);
+    connect(revert, SIGNAL(triggered()), this, SLOT(s_revertTag()));
+
     contextmenu=new QMenu(ui->TagList);
     contextmenu->addAction(define);
     contextmenu->addSeparator();
     contextmenu->addAction(insert);
     contextmenu->addAction(remove);
+    contextmenu->addSeparator();
+    contextmenu->addAction(revert);
 
     connect(ui->TagList, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showPopup()));
+
+    // Get list of tags and disable AddTag button if there are none
+
+    CreateTagList();
+
+    if(ui->AvailableTags->count()==0){
+        ui->AddTag->setEnabled(false);
+
+    }
+
+    // if there are no items left disable the Remove button.
+    if(ui->TagList->count() == 0){
+        ui->RemoveTag->setDisabled(true);
+        remove->setDisabled(true);
+    }
+
+    // Load the existing tags if Editor is in Edit Mode.
+    if(Buffer::editmode){
+        LoadTags(Buffer::editentry);
+
+        // Remember if this entry had 0 tags assigned to it at load time.
+        if(ui->TagList->count()==0){
+            no_tags=true;
+        }
+        else{
+            no_tags=false;
+        }
+    }
+    else{
+        ui->RevertTags->setEnabled(false);
+        revert->setEnabled(false);
+    }
+
+
+    // Add the fat spacer and the RevertTags button now because the layout has been applied
+    // by this point. This means the spacer should stretch to fit the layout (docking the button on the right).
+    QWidget* fat_spacer = new QWidget();
+    fat_spacer->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+
+    bar->addWidget(fat_spacer);
+    bar->addWidget(ui->RevertTags);
+
 }
 
 //6/11/13: Create drop-down tag list. Use the new TaggingShared class.
@@ -189,6 +305,8 @@ void EditorTagManager::AddTag(QString newtag){
         ui->TagList->addItem(entry);
         ui->TagList->setCurrentItem(entry);
         ui->RemoveTag->setEnabled(true);
+        this->remove->setEnabled(true);
+
         ui->AvailableTags->setFocus();
         ui->AvailableTags->clearEditText();
         bool add_to_list=true;
@@ -204,21 +322,42 @@ void EditorTagManager::AddTag(QString newtag){
             ui->AvailableTags->addItem(newtag);
         }
 
-        tag_count=ui->TagList->count();
-        QString taglabel;
-        if(tag_count==1){
-            taglabel=" tag";
-        }
-        else{
-            taglabel=" tags";
-        }
-        ui->TagCount->setText(QString::number(tag_count) + taglabel);
+        TagCount(ui->TagList->count());
     }
 }
 
 // (6/11/13) Remove currently-selected tag from Tag list
 void EditorTagManager::RemoveTag(){
+    QListWidgetItem *item=ui->TagList->currentItem();
+    delete item;
 
+    // if there are no items left, disable the Remove button and context menu item.
+    if(ui->TagList->count() == 0){
+        ui->RemoveTag->setDisabled(true);
+        remove->setDisabled(true);
+    }
+
+    TagCount(ui->TagList->count());
+}
+
+// (6/14/13) Fetch current tags from database. This is NOT to be confused with the
+// public method that Exports the tags.
+void EditorTagManager::LoadTags(QString id){
+
+    TaggingShared ts;
+    QStringList tags=ts.FetchTags(id);
+
+    for(int i=0; i < tags.size(); i++){
+
+        // Exclude null entries from tag list
+        if((tags.at(i) != "null") && (tags.at(i) != "Null")){
+            QIcon tagicon(":/icons/tag_orange.png");
+            QListWidgetItem *entry=new QListWidgetItem(tagicon,tags.at(i));
+            ui->TagList->addItem(entry);
+        }
+    }
+
+    TagCount(ui->TagList->count());
 }
 
 // Slot that gets triggered when the user clicks the AddTag toolbar button.
@@ -237,16 +376,44 @@ void EditorTagManager::s_addTag(){
 
 // 6/13/13: slot that gets triggered from context menu -- remove selected tag
 void EditorTagManager::s_removeTag(){
-
+    RemoveTag();
 }
 
 // 6/13/13: slot that gets triggered from context menu -- define tag
 void EditorTagManager::s_newTag(){
+    DefineTag();
+}
 
+// 6/14/13: slot that gets triggered from context menu -- revert tags
+void EditorTagManager::s_revertTag(){
+    RevertTags();
 }
 
 // 6/13/13: Slot that controls the pop-up context menu in the tag list
 void EditorTagManager::showPopup(){
     QPoint p=QCursor::pos();
     contextmenu->popup(p);
+}
+
+void EditorTagManager::on_NewTag_clicked()
+{
+    DefineTag();
+}
+
+void EditorTagManager::on_RemoveTag_clicked()
+{
+    RemoveTag();
+}
+
+void EditorTagManager::on_TagList_itemClicked(QListWidgetItem *item)
+{
+    if(item->isSelected()){
+        ui->RemoveTag->setEnabled(true);
+        remove->setEnabled(true);
+    }
+}
+
+void EditorTagManager::on_RevertTags_clicked()
+{
+    RevertTags();
 }

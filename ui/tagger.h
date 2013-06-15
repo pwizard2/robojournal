@@ -15,6 +15,13 @@
 
     You should have received a copy of the GNU General Public License
     along with RoboJournal.  If not, see <http://www.gnu.org/licenses/>.
+
+    CLASS DESCRIPTION: This class is basically legacy code since a built-in tagger
+    was added to the Editor class in version 0.5. However, this class still has
+    its uses when teamed up with the TagReminder class (where launching the full
+    Editor is impractical). In version 0.5 I gave this module a facelift to
+    make it look like the EditorTagManager class to prevent user confusion.
+    --Will Kraft, 6/14/13
 */
 
 #ifndef TAGGER_H
@@ -36,7 +43,7 @@ public:
     ~Tagger();
 
     static QString id_num;
-    static QString title;
+
     
 
 
@@ -65,6 +72,8 @@ private:
     void LoadTags();
     void AddTagToList();
     QString ExportTagList();
+
+    void PrimaryConfig();
 
 
 };

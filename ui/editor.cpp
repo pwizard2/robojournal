@@ -50,7 +50,6 @@ int Editor::day;
 int Editor::month;
 int Editor::year;
 
-
 void Editor::reject(){
     ConfirmExit();
 }
@@ -252,6 +251,7 @@ void Editor::PrimaryConfig(){
 
     // Add tagging interface as QWidget Object (6/10/13)
     et=new EditorTagManager(this);
+    et->setMinimumWidth(this->width());
 
 
     layout->addWidget(bar,1);

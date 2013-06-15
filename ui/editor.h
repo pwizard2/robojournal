@@ -48,7 +48,6 @@ public:
 
     bool UpdateEntry();
 
-
     static QString title;
     static QString body;
     static int month;
@@ -111,6 +110,7 @@ private slots:
     void on_Underline_toggled(bool checked);
 
     void on_bold_toggled(bool checked);
+
 
 private:
     Ui::Editor *ui;
