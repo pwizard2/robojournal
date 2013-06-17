@@ -96,6 +96,7 @@ void Tagger::PrimaryConfig(){
 
 
     QVBoxLayout *layout=new QVBoxLayout(this);
+
     layout->addWidget(bar);
     layout->addWidget(ui->TagList);
     layout->addWidget(ui->line);

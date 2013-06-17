@@ -1522,6 +1522,19 @@ void MainWindow::PrimaryConfig(){
     f.exec();
     */
 
+    // 6/16/13: Make the splitter easier to see. Windows renders these things as flat by default so the idea
+    // is to emulate the old-school raised splitter bar appearance so the user will know something is there.
+    QSplitterHandle *handle=ui->splitter->handle(1);
+    QVBoxLayout *h_layout = new QVBoxLayout(handle);
+    h_layout->setSpacing(0);
+    h_layout->setMargin(0);
+    h_layout->setContentsMargins(0,0,0,0); // make sure the splitter goes all the way to the edge of the frame
+
+    QFrame *line = new QFrame(handle);
+    line->setFrameStyle(QFrame::WinPanel | QFrame::Raised);
+    line->setLineWidth(3);
+    h_layout->addWidget(line);
+
     //#############################################################################
     // New for RoboJournal 0.4
     // force initial 50/50 ratio on splitter. This involves a weird hack that requires the right side to be set to a huge number

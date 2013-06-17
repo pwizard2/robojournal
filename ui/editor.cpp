@@ -43,6 +43,7 @@
 #include "ui/editortagmanager.h"
 #include "ui_editortagmanager.h"
 #include "core/htmlcore.h"
+#include <QSplitterHandle>
 
 QString Editor::body;
 QString Editor::title;
@@ -239,6 +240,7 @@ void Editor::PrimaryConfig(){
     layout->addWidget(ui->line);
 
 
+
 #ifdef _WIN32
     // Delete the toolbar dividing line on Windows. On most Linux window managers it helps to have a divider, but
     // on Windows it just looks bad.
@@ -346,6 +348,20 @@ void Editor::PrimaryConfig(){
     // This signal/slot pair connects the divider to the Manage Tags toolbar button. If the user drags the
     // slider up or down, emit a signal to toggle the toolbar button on or off.
     connect(divide, SIGNAL(splitterMoved(int,int)), this, SLOT(splitterMoved()));
+
+    // 6/16/13: Make the splitter easier to see. Windows renders these things as flat by default so the idea
+    // is to emulate the old-school raised splitter bar appearance so the user will know something is there.
+    QSplitterHandle *handle=divide->handle(1);
+    QVBoxLayout *h_layout = new QVBoxLayout(handle);
+    h_layout->setSpacing(0);
+    h_layout->setMargin(0);
+    h_layout->setContentsMargins(0,0,0,0); // make sure the splitter goes all the way to the edge of the frame
+
+    QFrame *line = new QFrame(handle);
+    line->setFrameStyle(QFrame::WinPanel | QFrame::Raised);
+    line->setLineWidth(3);
+    h_layout->addWidget(line);
+
 }
 
 
