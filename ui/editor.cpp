@@ -219,7 +219,7 @@ void Editor::PrimaryConfig(){
     masterbar->addWidget(spacer3);
 
     QVBoxLayout *layout=new QVBoxLayout(this);
-    layout->setContentsMargins(2,6,2,0);
+    layout->setContentsMargins(0,0,0,0);
     layout->setSpacing(1);
 
 
@@ -349,7 +349,9 @@ void Editor::PrimaryConfig(){
     // slider up or down, emit a signal to toggle the toolbar button on or off.
     connect(divide, SIGNAL(splitterMoved(int,int)), this, SLOT(splitterMoved()));
 
-    // 6/16/13: Make the splitter easier to see. Windows renders these things as flat by default so the idea
+
+#ifdef _WIN32
+    // 6/16/13: Make the splitter easier to see. Windows 7 renders these things as flat by default so the idea
     // is to emulate the old-school raised splitter bar appearance so the user will know something is there.
     QSplitterHandle *handle=divide->handle(1);
     QVBoxLayout *h_layout = new QVBoxLayout(handle);
@@ -361,6 +363,7 @@ void Editor::PrimaryConfig(){
     line->setFrameStyle(QFrame::WinPanel | QFrame::Raised);
     line->setLineWidth(3);
     h_layout->addWidget(line);
+#endif
 
 }
 
