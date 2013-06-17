@@ -107,11 +107,23 @@
 
 <p>The following changes were made in this release:</p>
 <ol>
+  <li>Vastly improved the Editor window:
+    <ol>
+      <li><span class="added">Added</span> tagging support to the Editor. This
+        allows you to write or modify an entry and apply tags to it using the
+        same interface.</li>
+      <li><span class="added">Added</span> rich text formatting
+      capabilities.</li>
+      <li>Moved the <strong>Save this Entry</strong> and <strong>Discard
+        Entry</strong> buttons to the upper toolbar to make more room for the
+        new formatting buttons on the lower toolbar.</li>
+    </ol>
+  </li>
   <li><span class="added">Added</span> SQLite database support.</li>
   <li><span class="added">Added</span> new Journal Creator. The new class is
     very similar to the Newconfig class added in version 0.4; the new class is
     designed to be highly modular with support for several different databases.
-    Each database is represented by a "page".
+    Each database is represented by a "page". 
     <ol>
       <li><span class="deprecated">Deprecated</span> old Journal Creator class
         and removed its files (journalcreator.cpp, journalcreator.h, and
@@ -119,13 +131,28 @@
       needed.</li>
       <li><span class="added">Added</span> SQLite page to the Journal
       Creator.</li>
-      <li>Converted existing MySQL settings into a new page for the new Journal
+      <li>Converted existing MySQL settings into a page for the new Journal
         Creator.</li>
       <li><span class="added">Added</span> password strength meter to MySQL
         page.</li>
     </ol>
   </li>
-  <li>Fixed "ugly 16x16 icon" bug on Windows 7.</li>
+  <li><span class="bugfix">Bugfix:</span> Fixed "ugly 16x16 icon" bug on
+    Windows 7. This bug caused an overstretched icon to be used on the ALT+TAB
+    window list and similar places.</li>
+  <li>Improved the layout efficiency on the Mainwindow by removing unneeded
+    padding space around various objects.</li>
+  <li><span class="added">Added</span> old-school raised splitter bars to the
+    Mainwindow and Editor classes to make the splitters easier to see. This was
+    necessary because Windows tends to render splitters as flat and they
+    blended into the layout too much.</li>
+  <li>Gave the original tag manager window (Tagger class) a complete overhaul
+    to make it resemble the Editor's built-in tag interface in order to improve
+    consistency.</li>
+  <li>Consolidated many tagging-related functions into their own TaggingShared
+    class. This is a better design because common tagging functions are now
+    shared; the same code can be used in the various tagging-related functions
+    throughout the entire program (thereby eliminating redundancy).</li>
 </ol>
 </div>
 
