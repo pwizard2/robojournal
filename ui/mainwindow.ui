@@ -19,7 +19,19 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <property name="margin">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <property name="spacing">
      <number>0</number>
     </property>
     <item row="2" column="0">
@@ -217,6 +229,12 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="frameShape">
+       <enum>QFrame::Panel</enum>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
@@ -242,7 +260,16 @@
          <string>&amp;Entries</string>
         </attribute>
         <layout class="QGridLayout" name="gridLayout_2">
-         <property name="margin">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
           <number>0</number>
          </property>
          <property name="spacing">
@@ -250,8 +277,14 @@
          </property>
          <item row="0" column="0">
           <widget class="QTreeWidget" name="EntryList">
+           <property name="midLineWidth">
+            <number>1</number>
+           </property>
            <property name="verticalScrollBarPolicy">
             <enum>Qt::ScrollBarAsNeeded</enum>
+           </property>
+           <property name="horizontalScrollBarPolicy">
+            <enum>Qt::ScrollBarAlwaysOff</enum>
            </property>
            <property name="editTriggers">
             <set>QAbstractItemView::NoEditTriggers</set>
@@ -567,7 +600,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>734</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -606,6 +639,7 @@ p, li { white-space: pre-wrap; }
      </property>
      <addaction name="actionMain_toolbar"/>
      <addaction name="actionEntry_List"/>
+     <addaction name="actionRestore_Splitter_Position"/>
     </widget>
     <widget class="QMenu" name="menuToolbar_Position">
      <property name="title">
@@ -670,7 +704,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <attribute name="toolBarArea">
-    <enum>LeftToolBarArea</enum>
+    <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
     <bool>false</bool>
@@ -709,9 +743,6 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
-   </property>
-   <property name="softKeyRole">
-    <enum>QAction::NoSoftKey</enum>
    </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
@@ -1074,6 +1105,18 @@ p, li { white-space: pre-wrap; }
   <action name="actionNew_Preferences">
    <property name="text">
     <string>New Preferences</string>
+   </property>
+  </action>
+  <action name="actionRestore_Splitter_Position">
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/ui-splitter.png</normaloff>:/icons/ui-splitter.png</iconset>
+   </property>
+   <property name="text">
+    <string>Restore Splitter Position</string>
+   </property>
+   <property name="toolTip">
+    <string>Restore the splitter position to default (50:50)</string>
    </property>
   </action>
  </widget>

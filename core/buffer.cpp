@@ -143,6 +143,7 @@ bool Buffer::show_reminder_next_time;
 QStringList Buffer::sqlite_favorites;
 QString Buffer::sqlite_default;
 bool Buffer::use_my_journals;
+QByteArray Buffer::mw_splitter_size;
 
 Buffer::Buffer()
 {

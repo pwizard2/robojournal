@@ -2,7 +2,7 @@
 #define SETTINGSMANAGER_H
 
 #include <QSettings>
-
+#include <QByteArray>
 
 class SettingsManager
 {
@@ -22,6 +22,7 @@ public:
     void SavePreviewSize(QSize geo);
     void SaveMainWindowSize(QByteArray geo);
     void SaveNagPreferences();
+    void SaveSplitterPos(QByteArray value);
 
 private:
     //extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;

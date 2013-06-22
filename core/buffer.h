@@ -169,6 +169,7 @@ public:
     static bool use_my_journals;
     static QString sqlite_default;
     static QStringList sqlite_favorites;
+    static QByteArray mw_splitter_size; // added 6/21/13
 
 };
 

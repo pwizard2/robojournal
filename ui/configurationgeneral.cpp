@@ -89,7 +89,13 @@ void ConfigurationGeneral::PopulateForm(){
 
     ui->AlwaysUseDefaults->setChecked(Buffer::alwaysusedefaults);
     ui->UseConfirmation->setChecked(Buffer::showwarnings);
+
+    // 6/21/13: Hide the UsetoolbarLabels object because that item is deprecated in 0.5.
+    // Hiding it is easier than stripping out the code from every class but I'm sure I'll do it eventually.
+    // -- Will Kraft
+    ui->UseToolbarLabels->setVisible(false);
     ui->UseToolbarLabels->setChecked(Buffer::show_icon_labels);
+
     ui->Usealternating->setChecked(Buffer::alternate_rows);
     ui->NameTitlebar->setChecked(Buffer::name_in_titlebar);
     ui->ToolbarPosition->setCurrentIndex(Buffer::toolbar_pos);

@@ -84,5 +84,6 @@
         <file>icons/tag--pencil.png</file>
         <file>icons/tag--arrow.png</file>
         <file>icons/edit-code.png</file>
+        <file>icons/ui-splitter.png</file>
     </qresource>
 </RCC>

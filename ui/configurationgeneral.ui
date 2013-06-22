@@ -48,6 +48,9 @@
         <property name="text">
          <string>Show &amp;labels on toolbar buttons</string>
         </property>
+        <property name="checkable">
+         <bool>false</bool>
+        </property>
        </widget>
       </item>
       <item>

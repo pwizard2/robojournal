@@ -117,6 +117,8 @@ private slots:
 
     void on_actionJournal_Selector_triggered();
 
+    void on_actionRestore_Splitter_Position_triggered();
+
 private:
     Ui::MainWindow *ui;
     void PrimaryConfig();

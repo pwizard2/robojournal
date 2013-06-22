@@ -41,6 +41,23 @@
 SettingsManager::SettingsManager(){}
 
 //###################################################################################################
+// Saves the current splitter position from the MainWindow. This allows someone to customize it once
+// and have it stay that way. This should only be called when the mainwindow closes.
+// New feature for 0.5. -- Will Kraft,  6/21/13 (Litha/summer solstice!)
+
+void SettingsManager::SaveSplitterPos(QByteArray value){
+
+    QString config_path=QDir::homePath()+ QDir::separator() + ".robojournal"+ QDir::separator() + "robojournal.ini";
+    QSettings settings(config_path,QSettings::IniFormat);
+
+    settings.beginGroup("Behavior");
+    settings.setValue("mw_splitter_position", value);
+    settings.endGroup();
+}
+
+//###################################################################################################
+
+
 // Save the behavior if the user opts to disable the tagging nag screen. This function should NOT
 // be called from the preferences window!  New for 0.4.1; 2/26/13
 void SettingsManager::SaveNagPreferences(){
@@ -68,7 +85,6 @@ void SettingsManager::SavePreviewSize(QSize geo){
     settings.beginGroup("Appearance");
     settings.setValue("preview_size", geo);
     settings.endGroup();
-
 }
 
 
@@ -272,12 +288,13 @@ void SettingsManager::NewConfig(QString host, QString db_name, QString port, QSt
     settings.setValue("enable_rich_text", false);
     settings.setValue("use_dow", true);
 
-
+    // Update for 0.5: never enable tooblar button text by default. This feature is actually
+    // deprecated as of 6/21/13 because it wastes too much space.
     if((!Buffer::show_icon_labels) && (!Buffer::firstrun)){
        settings.setValue("enable_toolbar_button_text", false);
     }
     else{
-       settings.setValue("enable_toolbar_button_text", true);
+       settings.setValue("enable_toolbar_button_text", false);
     }
 
     settings.setValue("autoload_recent_entry", true);
@@ -356,7 +373,9 @@ void SettingsManager::NewConfig(QString host, QString db_name, QString port, QSt
     LoadConfig();
 }
 
+
 //##################################################################################
+// Load the current raw config data from the robojournal.ini file and buffer it.
 void SettingsManager::LoadConfig(){
     using namespace std;
 
@@ -535,6 +554,7 @@ void SettingsManager::LoadConfig(){
         Buffer::use_my_journals=settings.value("SQLite/use_my_journals").toBool();
         Buffer::sqlite_default=settings.value("SQLite/sqlite_default").toString();
         Buffer::sqlite_favorites=settings.value("SQLite/sqlite_favorites").toStringList();
+        Buffer::mw_splitter_size=settings.value("Behavior/mw_splitter_position").toByteArray(); // added 6/21/13
 
         if(reload){
             LoadConfig();
