@@ -1,9 +1,31 @@
+/*
+    This file is part of RoboJournal.
+    Copyright (c) 2013 by Will Kraft <pwizard@gmail.com>.
+    MADE IN USA
+
+    RoboJournal is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    RoboJournal is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with RoboJournal.  If not, see <http://www.gnu.org/licenses/>.
+
+    6/23/13: This class contains all journal creation functions for MySQL backends.
+*/
+
 #include "mysqljournalpage.h"
 #include "ui_mysqljournalpage.h"
 #include "ui/newjournalcreator.h"
 #include <iostream>
 #include <QMessageBox>
 #include "core/buffer.h"
+#include "sql/sqlshield.h"
 
 MySQLJournalPage::MySQLJournalPage(QWidget *parent) :
     QWidget(parent),
@@ -128,7 +150,7 @@ void MySQLJournalPage::PasswordsMatch(){
     QPixmap bad(":/icons/cross-circle.png");
 
     if((ui->Password1->text() == ui->Password2->text()) && (ui->Password1->text().length() > 0)
-            && (ui->Password1->text().length() >= 7)){
+       && (ui->Password1->text().length() >= 7)){
         ui->MatchNotify->setText("Passwords match");
         ui->MatchNotify->setStyleSheet("font-weight: bold; color: green");
         ui->MatchIcon->setPixmap(good);
@@ -238,11 +260,11 @@ bool MySQLJournalPage::Validate(){
                               "Are you sure you want to use it?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
 
         switch(choice){
-        case QMessageBox::Yes:
+            case QMessageBox::Yes:
             return true;
             break;
 
-        case QMessageBox::No:
+            case QMessageBox::No:
             return false;
             break;
         }
@@ -254,22 +276,36 @@ bool MySQLJournalPage::Validate(){
 // Get form data from widgets and shunt it back to the NewJournalCreator class.
 void MySQLJournalPage::HarvestData(){
 
+    QString raw_host, raw_pass, raw_user, raw_root_pass, raw_port, raw_journal;
+
     if(ui->JournalHost->text().isEmpty()){
-        NewJournalCreator::hostname=ui->JournalHost->placeholderText();
+        raw_host=ui->JournalHost->placeholderText();
     }
     else{
-        NewJournalCreator::hostname=ui->JournalHost->text();
+        raw_host=ui->JournalHost->text();
     }
 
-    NewJournalCreator::password=ui->Password1->text();
-    NewJournalCreator::username=ui->Username->text();
-    NewJournalCreator::journal_name=ui->JournalName->text();
-    NewJournalCreator::root_password=ui->RootPassword->text();
+    raw_pass=ui->Password1->text();
+    raw_user=ui->Username->text();
+    raw_journal=ui->JournalName->text();
+    raw_root_pass=ui->RootPassword->text();
 
     if(ui->Port->text().isEmpty()){
-        NewJournalCreator::port=ui->Port->placeholderText();
+        raw_port=ui->Port->placeholderText();
     }
     else{
-        NewJournalCreator::port=ui->Port->text();
+        raw_port=ui->Port->text();
     }
+
+    // Break potential SQL injections so an attacker won't be able to nuke the database.
+    // 0.5 Bugfix -- Will Kraft, 6/23/13
+
+    SQLShield s;
+
+    NewJournalCreator::hostname=s.Break_Injections(raw_host);
+    NewJournalCreator::password=s.Break_Injections(raw_pass);
+    NewJournalCreator::username=s.Break_Injections(raw_user);
+    NewJournalCreator::journal_name=s.Break_Injections(raw_journal);
+    NewJournalCreator::root_password=s.Break_Injections(raw_root_pass);
+    NewJournalCreator::port=s.Break_Injections(raw_port);
 }

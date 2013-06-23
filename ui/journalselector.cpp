@@ -29,6 +29,8 @@
 #include "core/buffer.h"
 #include "ui/firstrun.h"
 #include "ui_firstrun.h"
+#include "ui/permissionmanager.h"
+#include "sql/sqlshield.h"
 
 JournalSelector::JournalSelector(QWidget *parent) :
     QDialog(parent),
@@ -118,6 +120,13 @@ void JournalSelector::SetPreferences(){
     QString host=ui->Host->text();
     QString port=ui->Port->text();
 
+    // Break potential SQL injections so an attacker won't be able to nuke the database.
+    // 0.5 Bugfix -- Will Kraft, 6/23/13
+    SQLShield s;
+    user=s.Break_Injections(user);
+    host=s.Break_Injections(host);
+    port=s.Break_Injections(port);
+
     QTreeWidgetItem *selected=ui->JournalList->currentItem();
     QString database=selected->text(0);
 
@@ -173,6 +182,14 @@ void JournalSelector::JournalSearch(){
 
     QString username=ui->Username->text();
     QString password=ui->Password->text();
+
+    // Break potential SQL injections so an attacker won't be able to nuke the database.
+    // 0.5 Bugfix -- Will Kraft, 6/23/13
+    SQLShield s;
+    hostname=s.Break_Injections(hostname);
+    port=s.Break_Injections(port);
+    username=s.Break_Injections(username);
+    password=s.Break_Injections(password);
 
     MySQLCore m;
 
@@ -296,4 +313,10 @@ void JournalSelector::on_JournalList_itemDoubleClicked(QTreeWidgetItem *item, in
     if(item->text(column)!= ui->Username->text() + "@" + ui->Host->text()){
         SetPreferences();
     }
+}
+
+void JournalSelector::on_pushButton_clicked()
+{
+    PermissionManager m(this);
+m.exec();
 }

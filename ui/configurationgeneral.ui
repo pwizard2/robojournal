@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>357</width>
-    <height>534</height>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,7 +33,7 @@
       <item>
        <widget class="QCheckBox" name="UseConfirmation">
         <property name="toolTip">
-         <string>&lt;p&gt;&lt;b&gt;(Recommended)&lt;/b&gt; This safety protocol requires RoboJournal to require user confirmation before executing commands that delete data. &lt;/p&gt;</string>
+         <string>&lt;p&gt;&lt;b&gt;(Highly Recommended)&lt;/b&gt; This safety protocol forces RoboJournal to request user confirmation before executing potentially dangerous commands. You are strongly encouraged to leave this option enabled at all times!&lt;/p&gt;</string>
         </property>
         <property name="text">
          <string>Always show &amp;confirmation dialogs</string>

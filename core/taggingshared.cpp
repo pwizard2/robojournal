@@ -29,6 +29,7 @@
 #include "sql/mysqlcore.h"
 #include <QInputDialog>
 #include <QMessageBox>
+#include "sql/sqlshield.h"
 
 TaggingShared::TaggingShared(){
 
@@ -45,6 +46,11 @@ QString TaggingShared::DefineTag(QStringList ExistingTags){
 
     tag=tag.trimmed();
     tag=tag.simplified();
+
+    // Break potential SQL injections so an attacker won't be able to nuke the database.
+    // 0.5 Bugfix -- Will Kraft, 6/23/13
+    SQLShield s;
+    tag=s.Break_Injections(tag);
 
     bool goodtag=true;
     QMessageBox m;

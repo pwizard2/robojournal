@@ -16,30 +16,34 @@
     You should have received a copy of the GNU General Public License
     along with RoboJournal.  If not, see <http://www.gnu.org/licenses/>.
 
-    6/23/13: This class is just a cover page for the NewJournalCreator class.
-    Its purpose is to provide info about each type of backend RoboJournal can use.
-
+    6/23/13: This class simplifies the granting of journal database permissions
+    to low-level user accounts. Once this works properly, the user will no
+    longer have to run GRANT or CREATE USER queries manually.
 */
 
-#ifndef JOURNALCREATORCOVERPAGE_H
-#define JOURNALCREATORCOVERPAGE_H
+#ifndef PERMISSIONMANAGER_H
+#define PERMISSIONMANAGER_H
 
-#include <QWidget>
+#include <QDialog>
+#include <QPushButton>
+#include "sql/sqlshield.h"
 
 namespace Ui {
-class JournalCreatorCoverPage;
+    class PermissionManager;
 }
 
-class JournalCreatorCoverPage : public QWidget
+class PermissionManager : public QDialog
 {
     Q_OBJECT
-    
+
 public:
-    explicit JournalCreatorCoverPage(QWidget *parent = 0);
-    ~JournalCreatorCoverPage();
-    
+    explicit PermissionManager(QWidget *parent = 0);
+    ~PermissionManager();
+
 private:
-    Ui::JournalCreatorCoverPage *ui;
+    Ui::PermissionManager *ui;
+    void PrimaryConfig();
+    QPushButton *ok;
 };
 
-#endif // JOURNALCREATORCOVERPAGE_H
+#endif // PERMISSIONMANAGER_H

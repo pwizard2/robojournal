@@ -233,8 +233,8 @@ docked to the left for more convenient numbering).</span></p>
         has been set and you have decided to display the entry range indicator.
         For instance, <img alt="Entry Count WITH Range Indicator"
         src="img/screens/range_indicator.png" width="142" height="27"
-        style="vertical-align: -8px; display: inline"> means that RoboJournal
-        is displaying six entries made over the course of two years.</p>
+        style="vertical-align: -8px; display: inline"> means RoboJournal is
+        displaying six entries made over the course of two years.</p>
       </td>
     </tr>
     <tr>
@@ -286,7 +286,7 @@ docked to the left for more convenient numbering).</span></p>
 
 <h2 id="connect">Making a Connection</h2>
 
-<p>You must initiate a new connection before you may work with a journal. A
+<p>You must initiate a new connection before you can work with a journal. A
 connection creates a persistent link between the RoboJournal interface and the
 database you are currently working with. As such, all actions initiated during
 the session only affect the journal you are currently connected to. RoboJournal
@@ -307,12 +307,12 @@ RoboJournal if you need to work with more than one journal simultaneously.</p>
     and <strong>Username</strong> fields on the New Connection dialog are
     automatically populated with default values if the <strong>Always suggest
     default values</strong> option is enabled in the RoboJournal Preferences
-    window. You may temporarily override this functionality by unchecking the
+    window. You can temporarily override this functionality by unchecking the
     <strong>Use default host/database</strong> and <strong>Use default user
     account</strong> checkboxes on the New Connection dialog. <br>
     <br>
     After doing so, the <strong>Host</strong>, <strong>Database</strong>, and
-    <strong>Username</strong> fields are cleared and made writable so you may
+    <strong>Username</strong> fields are cleared and made writable so you can
     enter your own values. This override is only effective for the current
     session; the next connection automatically reverts back to the default
     values. You must <a href="preferences.html#mysql_settings_page">edit the
@@ -344,7 +344,7 @@ connections in a single instance of RoboJournal. </p>
 <p>In RoboJournal version 0.4.1 (or newer), RoboJournal displays the <a
 href="tags.html#tag_reminder">Tag Reminder window</a> immediately after login
 if your journal contains any untagged entries. You are required to tag the
-entries in the list or close the Tag Reminder window before you may access the
+entries in the list or close the Tag Reminder window before you can access the
 rest of your journal.</p>
 
 <div class="FYI">
@@ -356,14 +356,11 @@ RoboJournal refuses to load any database that fails the sanity check. </div>
 
 <h2 id="disconnect">Disconnecting</h2>
 
-<p>You may disconnect at any time while RoboJournal is in Connected Mode.
+<p>You can disconnect at any time while RoboJournal is in Connected Mode.
 Disconnecting returns RoboJournal to a condition very similar to Default State.
-Once you have disconnected, you may make another connection or quit the
-program. </p>
-
-<div class="FYI">
-<strong>FYI:</strong> You may safely quit without disconnecting but RoboJournal
-usually requires you to confirm your decision.</div>
+Once you have disconnected, you can make another connection or quit the
+program. For the sake of convenience, you can safely quit RoboJournal without
+disconnecting first.</p>
 
 <p>Click the <strong>Disconnect</strong> toolbar button (indicated by the red
 circle in Figure 5) to proceed:</p>
@@ -375,7 +372,7 @@ connection.</span></p>
 
 <h2 id="new_entry">Writing a New Entry</h2>
 
-<p>You may write a new entry at any time once RoboJournal is in Connected Mode.
+<p>You can write a new entry at any time once RoboJournal is in Connected Mode.
 Each entry is represented by a node in the Chronological Entry List. Unlike
 day, month, or year-level nodes, entry-level nodes are marked with an icon and
 have no subordinate nodes. </p>
@@ -387,9 +384,8 @@ number (not shown in the user interface) to each entry to prevent conflicts
 between two or more entries with the same title and/or body text. This
 identification number is <em>never</em> used more than once in the same
 journal. There is a theoretical limit to how many entries a MySQL-based journal
-may contain but the number is so large (within the billions) that nobody ever
-comes close to reaching it. Therefore, feel free to write as often as you want.
-</p>
+can contain but the number is so large (within the billions) nobody ever comes
+close to reaching it. Therefore, feel free to write as often as you want. </p>
 
 <p>The following procedure adds a new entry to the current journal:</p>
 <ol class="list">
@@ -409,10 +405,10 @@ comes close to reaching it. Therefore, feel free to write as often as you want.
     <div class="FYI">
     <strong>FYI:</strong> The <strong>Character count</strong> and
     <strong>Remaining characters</strong> values indicate how much longer the
-    body text may be (MySQL allows up to 65,535 characters). If the
-    <strong>Remaining characters</strong> value is negative, RoboJournal
-    prevents you from saving the entry until this value is greater than or
-    equal to zero. </div>
+    body text can be (MySQL allows up to 65,535 characters). RoboJournal allows
+    you to save the entry if the <strong>Remaining characters</strong> value is
+    positive (negative values are displayed in red and indicate how many
+    characters must be removed before the entry can be saved).</div>
   </li>
   <li>When finished, click the <strong>Save this Entry</strong> button
     (indicated by the circled toolbar icon in the following screenshot):<img
@@ -423,7 +419,7 @@ comes close to reaching it. Therefore, feel free to write as often as you want.
   <li>RoboJournal displays a confirmation message ("<em>entry_title</em>" was
     successfully added to your journal) if the save was successful.</li>
   <li>The new entry is added to the Chronological Entry List. If desired, you
-    may click on the new entry to display its contents in the Entry Output
+    can click on the new entry to display its contents in the Entry Output
     Pane:<img alt="Figure 9" src="img/screens/mw_new_entry_2.png" width="753"
     height="589" class="screenshot"><span class="caption">Figure 9: The new
     entry is displayed in the Chronological Entry List.</span></li>
@@ -432,25 +428,25 @@ comes close to reaching it. Therefore, feel free to write as often as you want.
 <h2 id="modify_entry">Modifying an Existing Entry</h2>
 
 <p>The Editor dialog allows you to modify existing entries after they have been
-saved to the journal database. You may change the title and body text in any
+saved to the journal database. You can change the title and body text in any
 way you see fit. However, RoboJournal prevents you from changing the date
-because that often creates problems with the rest of the database. Any special
-characters/conditions in the entry text that are affected by <a
+because that would create integrity problems in the database. Any special
+characters/conditions in the entry text affected by <a
 href="preferences.html#post_processing">post-processing</a> (e.g. ellipsis
 characters, dashes, smart quotes, etc.) revert to their original state during
-the editing session in order to make them easier to work with. All applicable
+the editing session to make them easier to work with. All applicable
 post-processing features are automatically re-applied after the changes have
 been saved.</p>
 
 <p>The following procedure allows you to change an existing entry:</p>
 <ol class="list">
-  <li>Select the entry that is to be modified by clicking on its node in the
+  <li>Select the entry that is to be modified by clicking its node in the
     Chronological Entry List (as shown in the large red oval in Figure 10).
     <img alt="Figure 10" src="img/screens/mw_modify1.png" width="750"
     height="584" class="screenshot"><span class="caption">Figure 10: Selecting
     the entry to be modified.</span></li>
   <li>Click the <strong>Modify Entry</strong> toolbar button (indicated by the
-    small red circle in Figure 10). You may visually distinguish the
+    small red circle in Figure 10). You can visually distinguish the
     <strong>Modify Entry</strong> button from the <strong>Write in
     Journal</strong> button by the <strong>Modify Entry</strong> button's
     orange pencil color, its central position in the button group, and its
@@ -464,17 +460,16 @@ been saved.</p>
     red circle in Figure 12) to commit your changes to the database. The
     <strong>Save Changes</strong> button replaces the <strong>Save this
     Entry</strong> toolbar button while the Editor dialog is in Edit Mode. If
-    you wish to cancel your edits, you may click the <strong>Discard
+    you wish to cancel your edits, you can click the <strong>Discard
     Changes</strong> button (located to the immediate right of the <strong>Save
     Changes</strong> button) to return to the main window.<img alt="Figure 12"
     src="img/screens/modify2.png" width="656" height="518"
     class="screenshot"><span class="caption">Figure 12: Saving changes once the
     edits are complete.</span></li>
-  <li>A confirmation message ("<em>entry_title</em>" was successfully updated.)
-    is displayed if RoboJournal was able to save the entry successfully.
-    Otherwise, RoboJournal displays a message explaining what went wrong. In
-    either case, click the <strong>OK</strong> button in the dialog to
-  continue.</li>
+  <li>A confirmation message ("[Entry title]" was successfully updated.) is
+    displayed if RoboJournal saved the entry successfully. Otherwise,
+    RoboJournal displays a message explaining what went wrong. In either case,
+    click the <strong>OK</strong> button in the dialog to continue.</li>
   <li>If the save was successful, the updated entry is displayed in the Entry
     Output Pane on the RoboJournal main window. <span class="caption"><img
     alt="Figure 13" src="img/screens/mw_modify2.png" width="750" height="584"
@@ -484,14 +479,15 @@ been saved.</p>
 
 <h2 id="delete_entry">Deleting an Entry</h2>
 
-<p>RoboJournal's delete function provides a way to easily remove the currently
-selected entry from the database. You should always exercise caution when using
-this feature because delete operations are <em>permanent</em>. The only way to
-undo an accidental deletion is to restore an earlier version of the journal
-that contains the lost data from a backup. </p>
+<p>RoboJournal's delete function provides a way to easily remove the current
+entry from the database. You should always exercise caution when using this
+feature because delete operations are <em>permanent</em>. The only way to undo
+an accidental deletion is by restoring a backup of the journal that contains
+the lost data (recovery is impossible if no such backup exists). You should
+back up your journal on a regular basis for this reason alone.</p>
 <ol class="list">
-  <li>Select the entry to be deleted by clicking on its node in the
-    Chronological Entry List (shown in the large oval area in Figure 14). </li>
+  <li>Select the entry to be deleted by clicking its node in the Chronological
+    Entry List (shown in the large oval area in Figure 14). </li>
   <li>Click the <strong>Delete Entry</strong> toolbar button (indicated by the
     small circle in Figure 14). <img alt="Figure 14"
     src="img/screens/mw_delete1.png" width="750" height="584"
@@ -518,7 +514,7 @@ that contains the lost data from a backup. </p>
   </li>
   <li>You are returned to the main window regardless of your decision in the
     previous step. If you chose to continue with the delete operation, the
-    previously-selected entry is now gone: <img alt="Figure 16"
+    previously-selected entry is gone: <img alt="Figure 16"
     src="img/screens/mw_delete3.png" width="750" height="584"
     class="screenshot"><span class="caption">Figure 16: The entry you deleted
     is no longer displayed in the Chronological Entry List.</span></li>
@@ -548,12 +544,12 @@ locks to indicate that further browsing in that direction is impossible (as
 shown in Figure 18 where the <strong>Next Entry</strong> button is locked
 because the latest entry is already being displayed). </p>
 
-<p>You may use the <strong>Latest Entry</strong> toolbar button (indicated by
+<p>You can use the <strong>Latest Entry</strong> toolbar button (indicated by
 the red circle in Figure 18) to immediately jump to the most recent entry in
 the database:<img alt="Figure 18" src="img/screens/mw_navigation2.png"
 width="750" height="585" class="screenshot"><span class="caption">Figure 18:
-You may use the <strong>Latest Entry</strong> button to display the newest
-entry at any time. RoboJournal may also be configured to display the latest
+You can use the <strong>Latest Entry</strong> button to display the newest
+entry at any time. RoboJournal can also be configured to display the latest
 entry by default.</span></p>
 
 <h2 id="tag_entry">Tagging an Entry</h2>
