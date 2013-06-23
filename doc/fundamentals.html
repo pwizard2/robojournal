@@ -72,6 +72,46 @@ functionality.</p>
 
 <h2 id="anatomy">Main Window Anatomy</h2>
 
+<p>On a superficial level, RoboJournal's main window consists of two large
+areas bifurcated by a movable splitter object. The Chronological Entry List
+(Item 12 in Figure 2) is always located on the left side of the splitter while
+the Entry Output Pane (Item 18) is always on the right. The rest of the window
+contains a movable toolbar, a status bar, and the standard drop-down File,
+Edit, etc. menus common to most Windows programs. </p>
+
+<p>RoboJournal's toolbar can be docked on the left, right, or top margin of the
+main window. The toolbar cannot be free-floated or discarded (although it can
+be temporarily hidden by selecting the appropriate option in the
+<strong>Show</strong> sub-menu on the <strong>Window</strong> drop-down menu).
+You can change the location of the toolbar by dragging the toolbar docking
+widget to the position where you want the toolbar to be or by selecting the
+desired position from the <strong>Toolbar position</strong> sub-menu on the
+<strong>Window</strong> drop-down menu. For ease of identification, the toolbar
+docking widget is always on the far left side of the toolbar or on the very top
+if the toolbar is currently docked vertically (the docking widget's appearance
+may vary by operating system). Your mouse pointer changes to a four-directional
+arrow while it is hovering over the toolbar docking widget. The layout
+automatically adjusts once the toolbar has been moved to a new location. Be
+advised that moving the toolbar this way is temporary; the only way to
+permanently change the toolbar orientation is by selecting a different default
+position in <a href="preferences.html#global_preferences">RoboJournal
+Preferences</a>. </p>
+
+<p>The splitter object separates the Chronological Entry List from the Entry
+Output Pane and determines how much window space is allocated to each. By
+default, the splitter divides the RoboJournal main window roughly in half on
+the vertical axis, regardless of window size. If desired, you can drag the
+splitter bar left or right to shrink or grow the sizes of the Chronological
+Entry List and the Entry Output Pane. Moving the splitter all the way left or
+all the way right collapses the object on that side, rendering it invisible.
+The remaining object expands to fill the entire horizontal axis of the window.
+If you move the splitter bar to a new location, RoboJournal saves the
+coordinates and automatically applies them to future sessions. RoboJournal
+reverts the splitter to the default position if the coordinate data becomes
+unavailable for some reason or if you choose to move the splitter back to the
+default position (via the <strong>Revert splitter position</strong> command on
+the <strong>Window</strong> drop-down tool menu).</p>
+
 <p>The following diagram and table provide a complete explanation of each
 element in the main window layout. Each numbered item in Figure 2 corresponds
 to the table row bearing the same number:</p>
@@ -542,8 +582,8 @@ documentation.</p>
 <a href="tags.html">Working with Tags</a> »</div>
 </div>
 
-<p class="copyright">Copyright © 2013 by Will Kraft. All parts of the RoboJournal Documentation
-are covered by the terms of the <a
+<p class="copyright">Copyright © 2013 by Will Kraft. All parts of the
+RoboJournal Documentation are covered by the terms of the <a
 href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation License</a>.
 </p>
 </div>

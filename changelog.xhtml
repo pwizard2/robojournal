@@ -107,7 +107,7 @@
 
 <p>The following changes were made in this release:</p>
 <ol>
-  <li>Vastly improved the Editor window:
+  <li>Vastly improved the Editor window: 
     <ol>
       <li><span class="added">Added</span> tagging support to the Editor. This
         allows you to write or modify an entry and apply tags to it using the
@@ -153,6 +153,24 @@
     class. This is a better design because common tagging functions are now
     shared; the same code can be used in the various tagging-related functions
     throughout the entire program (thereby eliminating redundancy).</li>
+  <li><span class="deprecated">Deprecated</span> text labels on toolbar buttons
+    and removed that option from the Preferences/General window. This is
+    because text labels are no longer practical on the Editor layout with so
+    many new buttons (tooltips alone are sufficient for identification
+    purposes) and it would be strange to have some of the buttons contain
+    labels while others do not. Many buttons (bold, italic, etc.) use universal
+    symbols, making labels unnecessary in such cases. </li>
+  <li><span class="bugfix">Bugfix:</span> The vertical splitter bar on the
+    Mainwindow now remembers its position between program sessions. The
+    splitter only reverts to its default 50/50 position if the saved position
+    data is unavailable.
+    <ol>
+      <li><span class="added">Added</span> an option to restore the default
+        splitter position to the Mainwindow/Window drop-down menu. This option
+        overrides the current saved position.</li>
+    </ol>
+  </li>
+  <li></li>
 </ol>
 </div>
 

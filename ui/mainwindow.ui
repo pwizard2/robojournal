@@ -19,16 +19,7 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <property name="leftMargin">
-     <number>0</number>
-    </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
+    <property name="margin">
      <number>0</number>
     </property>
     <property name="spacing">
@@ -260,16 +251,7 @@
          <string>&amp;Entries</string>
         </attribute>
         <layout class="QGridLayout" name="gridLayout_2">
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
+         <property name="margin">
           <number>0</number>
          </property>
          <property name="spacing">
@@ -600,7 +582,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>734</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -639,7 +621,6 @@ p, li { white-space: pre-wrap; }
      </property>
      <addaction name="actionMain_toolbar"/>
      <addaction name="actionEntry_List"/>
-     <addaction name="actionRestore_Splitter_Position"/>
     </widget>
     <widget class="QMenu" name="menuToolbar_Position">
      <property name="title">
@@ -653,6 +634,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="separator"/>
     <addaction name="menuToolbar_Position"/>
     <addaction name="separator"/>
+    <addaction name="actionRestore_Splitter_Position"/>
    </widget>
    <widget class="QMenu" name="menuDatabase">
     <property name="title">
@@ -1113,7 +1095,7 @@ p, li { white-space: pre-wrap; }
      <normaloff>:/icons/ui-splitter.png</normaloff>:/icons/ui-splitter.png</iconset>
    </property>
    <property name="text">
-    <string>Restore Splitter Position</string>
+    <string>Revert splitter position</string>
    </property>
    <property name="toolTip">
     <string>Restore the splitter position to default (50:50)</string>

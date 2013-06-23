@@ -43,7 +43,7 @@ SettingsManager::SettingsManager(){}
 //###################################################################################################
 // Saves the current splitter position from the MainWindow. This allows someone to customize it once
 // and have it stay that way. This should only be called when the mainwindow closes.
-// New feature for 0.5. -- Will Kraft,  6/21/13 (Litha/summer solstice!)
+// New feature for 0.5. -- Will Kraft,  6/21/13
 
 void SettingsManager::SaveSplitterPos(QByteArray value){
 
@@ -69,7 +69,7 @@ void SettingsManager::SaveNagPreferences(){
       settings.setValue("show_untagged_reminder", Buffer::show_reminder_next_time);
     settings.endGroup();
 
-    // Save and Reload Config after making changes
+    // Save and reload config after making changes because this function is called during app runtime.
     settings.sync();
     LoadConfig();
 
@@ -99,8 +99,6 @@ void SettingsManager::SaveConfigSize(QSize geo){
     settings.beginGroup("Appearance");
     settings.setValue("config_size", geo);
     settings.endGroup();
-
-
 }
 
 
