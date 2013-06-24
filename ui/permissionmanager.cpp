@@ -27,6 +27,8 @@
 #include <QPushButton>
 #include "sql/mysqlcore.h"
 #include "sql/sqlshield.h"
+#include <QIcon>
+#include <QMessageBox>
 
 PermissionManager::PermissionManager(QWidget *parent) :
     QDialog(parent),
@@ -36,6 +38,10 @@ PermissionManager::PermissionManager(QWidget *parent) :
     PrimaryConfig();
 
 }
+
+int PermissionManager::backend;
+QString PermissionManager::username;
+QString PermissionManager::password;
 
 PermissionManager::~PermissionManager()
 {
@@ -51,10 +57,179 @@ void PermissionManager::PrimaryConfig(){
     this->setMaximumSize(width,height);
     this->setMinimumSize(width,height);
 
-    ok=ui->buttonBox->button(QDialogButtonBox::Ok);
+    QPushButton *ok=ui->buttonBox->button(QDialogButtonBox::Ok);
     ok->setEnabled(false);
 
     // define default settings
     ui->CreateUser->setChecked(true);
     ui->GrantSettings->setDisabled(true);
+
+    ui->RootPassword->setFocus();
+
+    //connect(ui->RootPassword, SIGNAL(returnPressed()), ui->Scan, SLOT(click()));
+
+    switch(backend){
+        case 0:
+            this->setWindowTitle(this->windowTitle() + " - MySQL");
+        break;
+
+        case 1:
+            // do nothing; SQLite doesn't need configuration.
+        break;
+
+        case 2:
+            this->setWindowTitle(this->windowTitle() + " - Postgres");
+        break;
+    }
+}
+
+void PermissionManager::DatabaseScan(){
+
+    // MySQL Mode
+    if(backend==0){
+
+        ui->Databases->clear();
+
+        QString hostname, port, root_password;
+
+        hostname=ui->DBHost->text();
+
+        if(ui->DBHost->text().isEmpty()){
+            hostname=ui->DBHost->placeholderText();
+        }
+
+        port=ui->Port->text();
+
+        if(port.isEmpty()){
+            port=ui->Port->placeholderText();
+        }
+
+        root_password=ui->RootPassword->text();
+
+        SQLShield s;
+
+        hostname=s.Break_Injections(hostname);
+        port=s.Break_Injections(port);
+        root_password=s.Break_Injections(root_password);
+
+        QIcon db(":/icons/database.png");
+
+        MySQLCore m;
+
+        QStringList journals=m.GetDatabaseList(hostname,port,"root",root_password);
+        journals.sort();
+
+        for(int i=0; i<journals.size(); i++){
+            QString db_name=journals.at(i);
+            ui->Databases->addItem(db,db_name);
+        }
+
+        ui->GrantSettings->setEnabled(true);
+
+        if(ui->Databases->count() > 0){
+
+            ui->Scan->setEnabled(false);
+
+            // unlock ok button
+            QPushButton *ok=ui->buttonBox->button(QDialogButtonBox::Ok);
+            ok->setEnabled(true);
+        }
+
+        if((!username.isEmpty()) || (!password.isEmpty())){
+            ui->Username->setText(username);
+            ui->Password->setText(password);
+        }
+    }
+}
+
+void PermissionManager::ResetForm(){
+
+}
+
+
+bool PermissionManager::Validate(){
+
+    QMessageBox m;
+
+    if(ui->Username->text().isEmpty()){
+        m.critical(this,"RoboJournal","You must enter a username.");
+        ui->Username->setFocus();
+        return false;
+    }
+
+    if(ui->Password->text().isEmpty()){
+        m.critical(this,"RoboJournal","You must enter a password.");
+        ui->Password->setFocus();
+        return false;
+    }
+
+    else{
+        return true;
+    }
+}
+
+void PermissionManager::on_Scan_clicked()
+{
+    DatabaseScan();
+}
+
+void PermissionManager::on_buttonBox_accepted()
+{
+    bool valid=Validate();
+
+    if(valid){
+
+        // Grant permissions to a MySQL user
+        if(backend==0){
+
+            QString hostname, port, root_password, user_host, username, password, database;
+
+            hostname=ui->DBHost->text();
+
+            if(ui->DBHost->text().isEmpty()){
+                hostname=ui->DBHost->placeholderText();
+            }
+
+            port=ui->Port->text();
+
+            if(port.isEmpty()){
+                port=ui->Port->placeholderText();
+            }
+
+            root_password=ui->RootPassword->text();
+
+            user_host=ui->UserHost->text();
+
+            if(user_host.isEmpty()){
+                user_host=ui->UserHost->placeholderText();
+            }
+
+            username=ui->Username->text();
+            password=ui->Password->text();
+            database=ui->Databases->currentText();
+
+            SQLShield s;
+            hostname=s.Break_Injections(hostname);
+            port=s.Break_Injections(port);
+            root_password=s.Break_Injections(root_password);
+            user_host=s.Break_Injections(user_host);
+            username=s.Break_Injections(username);
+            password=s.Break_Injections(password);
+
+            QMessageBox b;
+            MySQLCore m;
+            bool success2=m.GrantPermissions(ui->CreateUser->isChecked(),database,user_host,
+                                             username,port,hostname,password,root_password);
+
+            if(success2){
+                b.information(this,"RoboJournal","The necessary permissions to access database <b>" + database
+                              + "</b> have been granted to " + username + "@" + user_host + ".");
+                close();
+            }
+            else{
+                b.critical(this,"RoboJournal","Due to an unknown error, RoboJournal could not grant permission to use <b>"
+                           + database + "</b> to " + username + "@" + user_host + ".");
+            }
+        }
+    }
 }

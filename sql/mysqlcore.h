@@ -69,7 +69,7 @@ public:
     QList<QStringList> SearchDatabase(QString searchterm, int index, QString tag, bool wholewords);
 
 
-    // Nerw for 0.4: Reduce overhead by getting all the entry data with one query and returning it as a StringList.
+    // New for 0.4: Reduce overhead by getting all the entry data with one query and returning it as a StringList.
     QStringList Get_Entry_New(QString id);
     QStringList Get_Latest_New(QString id);
 
@@ -83,12 +83,19 @@ public:
 
     static QString error_code;
 
+    // New for 0.5, 6/23/13
+    bool GrantPermissions(bool create_account, QString database, QString user_host, QString username,
+                          QString user_port, QString root_host, QString user_password, QString root_password);
+
 
 
 private:
 
     QString old_username;
     QString old_password;
+
+    QString old_username2;
+    QString old_password2;
 };
 
 #endif // MYSQLCORE_H

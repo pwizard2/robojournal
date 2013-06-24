@@ -52,7 +52,8 @@ JournalSelector::JournalSelector(QWidget *parent) :
 
     //disable other db options for now b/c we only have mysql support
     ui->DBType->setEnabled(true);
-    ui->DBType->removeItem(0);
+    ui->Browse->setDisabled(true);
+
 
     ui->Username->setFocus();
 
@@ -82,15 +83,15 @@ bool JournalSelector::Validate(){
     }
     else{
         if(no_Username){
-           valid=false;
-           b.critical(this,"RoboJournal","You must enter a username!");
-		   ui->Username->setFocus();
+            valid=false;
+            b.critical(this,"RoboJournal","You must enter a username!");
+            ui->Username->setFocus();
         }
 
         if(no_Password){
             valid=false;
             b.critical(this,"RoboJournal","You must enter a password!");
-			ui->Password->setFocus();
+            ui->Password->setFocus();
         }
     }
 
@@ -134,8 +135,8 @@ void JournalSelector::SetPreferences(){
     if((Buffer::showwarnings) && (!Buffer::firstrun)){
         QMessageBox a;
         int choice=a.question(this,"RoboJournal","You are about to make <b>" + database + "</b> your default journal.<br><br>"
-                   "This action will partially replace your current configuration with default settings."
-                   " Are you sure you want to proceed?",QMessageBox::Yes | QMessageBox::No,QMessageBox::No);
+                              "This action replaces part of your current configuration with default settings."
+                              " Are you sure you want to proceed?",QMessageBox::Yes | QMessageBox::No,QMessageBox::No);
         if(choice==QMessageBox::Yes){
             SettingsManager b;
             b.NewConfig(host,database,port,user);
@@ -148,6 +149,7 @@ void JournalSelector::SetPreferences(){
             // do nothing
         }
     }
+
     // firstrun or blind (no confirm) mode
     else{
         SettingsManager sm;
@@ -315,8 +317,28 @@ void JournalSelector::on_JournalList_itemDoubleClicked(QTreeWidgetItem *item, in
     }
 }
 
-void JournalSelector::on_pushButton_clicked()
+void JournalSelector::on_ManagePermissions_clicked()
 {
     PermissionManager m(this);
-m.exec();
+
+    PermissionManager::backend=ui->DBType->currentIndex();
+    PermissionManager::username=ui->Username->text();
+    PermissionManager::password=ui->Password->text();
+
+    m.exec();
+}
+
+void JournalSelector::on_DBType_currentIndexChanged(int index)
+{
+    switch(index){
+        case 0:
+            ui->Browse->setEnabled(false);
+            ui->ConnectionSettings->setEnabled(true);
+        break;
+
+        case 1:
+            ui->Browse->setEnabled(true);
+            ui->ConnectionSettings->setEnabled(false);
+        break;
+    }
 }

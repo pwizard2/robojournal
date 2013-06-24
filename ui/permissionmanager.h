@@ -40,10 +40,21 @@ public:
     explicit PermissionManager(QWidget *parent = 0);
     ~PermissionManager();
 
+    static int backend;
+    static QString username;
+    static QString password;
+
+private slots:
+    void on_Scan_clicked();
+
+    void on_buttonBox_accepted();
+
 private:
     Ui::PermissionManager *ui;
     void PrimaryConfig();
-    QPushButton *ok;
+    bool Validate();
+    void DatabaseScan();
+    void ResetForm();
 };
 
 #endif // PERMISSIONMANAGER_H

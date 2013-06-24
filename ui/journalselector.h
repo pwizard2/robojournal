@@ -49,7 +49,9 @@ private slots:
 
     void on_JournalList_itemDoubleClicked(QTreeWidgetItem *item, int column);
 
-    void on_pushButton_clicked();
+    void on_ManagePermissions_clicked();
+
+    void on_DBType_currentIndexChanged(int index);
 
 private:
     Ui::JournalSelector *ui;

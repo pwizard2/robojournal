@@ -48,6 +48,53 @@ MySQLCore::MySQLCore()
 }
 
 //################################################################################################
+// New feature for 0.5, 6/23/13 -- Will Kraft.
+// Use the root account to grant permission to use "database" to user "username". Create username account if necessary.
+bool MySQLCore::GrantPermissions(bool create_account, QString database, QString user_host, QString username, QString port,
+                                 QString root_host, QString user_password, QString root_password){
+
+    // Bugfix 8/21/12: Save old login data in case login fails. That way other connections won't get broken after
+    // exiting JournalSelector
+    old_username2=db.userName();
+    old_password2=db.password();
+
+    bool success=true; //success should be true unless something goes wrong and changes it to false
+
+    int db_port=port.toInt();
+
+    db = QSqlDatabase::addDatabase("QMYSQL");
+    db.setHostName(root_host);
+    db.setPort(db_port);
+    db.setUserName("root");
+    db.setPassword(root_password);
+    db.open();
+
+    if(create_account){
+        QSqlQuery q("CREATE USER \'" + username + "\'@\'" + user_host +
+                    "\' IDENTIFIED BY \'" + user_password + "\'");
+        q.exec();
+    }
+
+    QSqlQuery q2("GRANT INSERT,DELETE,UPDATE,SELECT ON " + database + ".entries TO \'" +
+                 username + "\'@\'" + user_host + "\'");
+    success=q2.exec();
+
+    db.close();
+
+    // if login fails, restore the old values before closing the database. That way, the connections in the rest of
+    // the app won't get broken.
+    if(!success){
+        db.setUserName(old_username2);
+        db.setPassword(old_password2);
+        // clean up
+        old_password2.clear();
+        old_username2.clear();
+    }
+
+    return success;
+}
+
+//################################################################################################
 // New tag reminder function for 0.4.1 (added 2/25/13). This code does a lookup for rows where tags are null
 // (i.e. this entry has not been tagged yet) and returns the results as a qlist full of qstringlists.
 
@@ -507,7 +554,9 @@ QStringList MySQLCore::GetDatabaseList(QString hostname, QString port, QString u
 
         if(journals.size()==0){
             QMessageBox b;
-            b.information(NULL,"RoboJournal","RoboJournal found no databases on <b>" + hostname + "</b>.");
+            b.information(NULL,"RoboJournal","RoboJournal found no databases belonging to user \""
+                          + username + "@" + hostname + "\". You should use the <b>Assign Permissions</b> tool "
+                          "to give this account access to one or more databases on the host.");
         }
     }
     else{
