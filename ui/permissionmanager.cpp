@@ -157,6 +157,15 @@ bool PermissionManager::Validate(){
         return false;
     }
 
+    QRegExp root("root", Qt::CaseInsensitive);
+
+    if(root.exactMatch(ui->Username->text())){
+        m.critical(this,"RoboJournal","You cannot use root as a username! Please enter something else.");
+        ui->Username->setFocus();
+        ui->Username->clear();
+        return false;
+    }
+
     if(ui->Password->text().isEmpty()){
         m.critical(this,"RoboJournal","You must enter a password.");
         ui->Password->setFocus();
