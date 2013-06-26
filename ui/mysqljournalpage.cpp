@@ -91,8 +91,9 @@ void MySQLJournalPage::ClearForm(){
     PrimaryConfig();
 }
 
-// Gauge password strength (0-100) based on certain rules and return the score as an integer.
-// This doesn't take everything into account (yet). --Will Kraft 5/29/13
+// Calculate password strength (0-100) based on certain rules and return the score as an integer.
+//  --Will Kraft 5/29/13
+
 int MySQLJournalPage::PasswordStrength(QString passwd){
     using namespace std;
 
@@ -116,13 +117,13 @@ int MySQLJournalPage::PasswordStrength(QString passwd){
         score=score+(len-alphaLC)*2.5; // calculate lowercase letters.
 
         // Dock points for adjacent lowercase letters
-        QRegExp lowercase_consecutive("[a-z]{2,}",Qt::CaseSensitive);
-        int repeat_lc=passwd.count(lowercase_consecutive);
+        QRegExp lowercase_adj("[a-z]{2,}",Qt::CaseSensitive);
+        int repeat_lc=passwd.count(lowercase_adj);
         score=score-(repeat_lc*len);
 
         // Dock points for adjacent uppercase letters
-        QRegExp uppercase_consecutive("[A-Z]{2,}",Qt::CaseSensitive);
-        int repeat_uc=passwd.count(uppercase_consecutive);
+        QRegExp uppercase_adj("[A-Z]{2,}",Qt::CaseSensitive);
+        int repeat_uc=passwd.count(uppercase_adj);
         score=score-(repeat_uc*len);
 
         // Dock points for adjacent numbers
@@ -130,12 +131,61 @@ int MySQLJournalPage::PasswordStrength(QString passwd){
         int repeat_int=passwd.count(int_consecutive);
         score=score-(repeat_int*len);
 
+        // Dock points for repeated numbers (6/26/13)
+        QString num_seed="1,2,3,4,5,6,7,8,9,0";
+        QStringList num_array=num_seed.split(",");
+
+        for(int i=0; i < num_array.size(); i++){
+            QString var1=num_array.at(i);
+             int num_dupes=passwd.count(var1);
+
+             if(num_dupes >= 2){
+                 cout << "WARNING: Docking points from score because password has " << num_dupes <<
+                         " occurrence(s) of " << var1.toStdString() << endl;
+                 score=score-(num_dupes * 4);
+             }
+        }
+
+        // Dock points for multiple occurrences of each UC/LC letter (6/26/13)
+        QString alpha_seed="a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z"; // Now I know my ABC's...
+        QStringList alpha_array=alpha_seed.split(",");
+
+        for(int i=0; i < alpha_array.size(); i++){
+            QString var2=alpha_array.at(i);
+             int alpha_dupes=passwd.count(var2,Qt::CaseInsensitive);
+
+             if(alpha_dupes >= 2){
+                 cout << "WARNING: Docking points from score because password has " << alpha_dupes <<
+                         " occurrence(s) of " << var2.toStdString() << endl;
+                 score=score-(alpha_dupes * 4);
+             }
+        }
+
+        // Dock points for multiple occurrences of symbols. (6/23/13)
+        QString sym_seed="!,@,#,$,%,^,&,*,(,),[,],{,},?,~,`,\",\'";
+        QStringList sym_array=sym_seed.split(",");
+
+        for(int i=0; i < sym_array.size(); i++){
+            QString var3=sym_array.at(i);
+             int sym_dupes=passwd.count(var3);
+
+             if(sym_dupes >= 2){
+                 cout << "WARNING: Docking points from score because password has " << sym_dupes <<
+                         " occurrence(s) of " << var3.toStdString() << endl;
+                 score=score-(sym_dupes * 4);
+             }
+        }
+
         // prevent score from going out of range
         if(score>100){
             score=100;
         }
 
-        // make sure the number is whole w/o decimals
+        if(score < 0){
+            score=0;
+        }
+
+        // make sure the score is a whole integer w/o decimals
         score=qRound(score);
     }
 

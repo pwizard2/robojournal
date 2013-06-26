@@ -30,7 +30,12 @@ alt="RoboJournal Documentation" class="masthead">
 <h2 id="TOC">Sections</h2>
 <ol class="toc">
   <li><a href="#firstrun">First-Run Overview</a></li>
-  <li><a href="#create">Creating a New Journal Database</a></li>
+  <li><a href="#create">Creating a New Journal Database</a> 
+    <ol>
+      <li><a href="#sqlite_journal">Creating a SQLite-based Journal</a></li>
+      <li><a href="#mysql_journal">Creating a MySQL-Based Journal</a></li>
+    </ol>
+  </li>
   <li><a href="#permissions">Assigning Permissions to a Database</a> 
     <ol class="toc">
       <li><a href="#assign_permissions">Assign Permissions Extension</a></li>
@@ -93,67 +98,92 @@ created. </p>
 
 <h2 id="create">Creating a New Journal Database</h2>
 
-<p>The Journal Creator consists of a tabbed interface. Each tab must be
-completed in full before a journal can be created. Completing this dialog
-requires root-level access to the MySQL installation on the host you specify.
-Without root access, you will not be able to create any journals. </p>
+<p>The Journal Creator has been completely redesigned for RoboJournal 0.5. It
+now consists of a highly modular "paged" design much like that of the
+RoboJournal Preferences window that was introduced in RoboJournal 0.4. The
+Journal Creator can be directly accessed during first-run or by clicking the
+<strong>Journal Creator</strong> item in the <strong>Database</strong>
+drop-down list on the RoboJournal main window. </p>
 
 <p>The <strong>Set this new journal as my default</strong> checkbox is always
 checked (and locked) during first-run. If you run the Journal Creator again at
 a later time, this checkbox (then unchecked and unlocked) gives you the option
-to replace the current default with the brand-new journal.</p>
+to replace the current default with the brand-new journal. The Journal Creator
+always shows the Overview page by default each time it is initiated.</p>
 
-<p>Complete the following procedure to create a brand-new, empty journal:</p>
+<p>Select the <strong>Create a new journal database</strong> option on the
+Welcome to RoboJournal dialog and click the <strong>OK</strong> button to
+launch the Journal Creator:<img alt="Figure 2" src="img/screens/welcome1.png"
+width="410" height="353" class="screenshot"><span class="caption_wide">Figure
+2: Initializing the Journal Creator from the Welcome to RoboJournal
+window.</span> </p>
+
+<p>The <strong>Journal Creator</strong> window is displayed:<img alt="Figure 3"
+src="img/screens/new_jc1.png" width="585" height="518" class="screenshot"><span
+class="caption">Figure 3: Journal Creator Overview page.</span> </p>
+
+<h3 id="sqlite_journal">Creating a SQLite-based Journal</h3>
+
+<p>More to come later-- keep this text as a placeholder.</p>
+
+<h3 id="mysql_journal">Creating a MySQL-Based Journal</h3>
+
+<p>RoboJournal requires root permissions to create a new MySQL-based journal
+database. Be sure you have root-level database access before completing the
+following steps:</p>
 <ol class="list">
-  <li>Select the <strong>Create a new journal database option</strong> on the
-    <strong>Welcome to RoboJournal</strong> dialog and click the
-    <strong>OK</strong> button. The <strong>Journal Creator</strong> dialog is
-    displayed: <img alt="Figure 2" src="img/screens/jc0.png" width="867"
-    height="411" class="screenshot-noshadow"><span class="caption">Figure 2:
-    Launching the Journal Creator during first-run.</span></li>
-  <li>Click the <strong>2. Basic Settings</strong> tab. The fields that govern
-    essential parameters for the new journal are displayed:<img
-    alt="Journal Creator: Basic Settings Tab" src="img/screens/jc2.png"
-    width="414" height="393" class="screenshot"><span class="caption">Figure 3:
-    Journal Creator — <strong>Basic Settings</strong> tab.</span></li>
-  <li>Enter a name for this journal database into the <strong>Journal
-    name</strong> field. This name must be unique (no other database with the
-    same name should exist on the indicated host). Short names are best; use
-    underscores instead of spaces to separate words.</li>
-  <li>Enter the host for this journal into the <strong>Journal host</strong>
-    field (if necessary). The default value of "localhost" is used if this
-    field is left blank. Localhost (also known as "127.0.0.1") refers to the
-    current machine that RoboJournal is running on. If you intend to store
-    RoboJournal <em>and</em> the database on the same machine, leave the
-    <strong>Journal host</strong> field blank. Otherwise, enter the domain name
-    or IP address of the machine on which the journal should be stored (that
-    machine <em>must</em> have a working MySQL server process).</li>
-  <li>Specify a username to associate with this journal and enter it into the
-    <strong>Username</strong> field. You may <em>not</em> use "root" for the
-    username!</li>
-  <li>Choose a password to associate with the username you specified in the
-    previous step. Enter this password in the <strong>Password</strong> and
-    <strong>Repeat</strong> fields. The <strong></strong>contents of the
-    <strong>Password</strong> and <strong>Repeat</strong> fields are always
-    obscured for security purposes but the password indicator text notifies you
-    when both passwords match. When both passwords are identical, the
-    <strong>OK</strong> button for the Journal Creator is unlocked.</li>
-  <li>Switch to the <strong>3. Authentication</strong> tab by clicking on it.
-    The authentication-related options are displayed:<img
-    alt="Journal Creator: Authentication" src="img/screens/jc3.png" width="414"
-    height="393" class="screenshot"><span class="caption_wide">Figure 4:
-    Journal Creator — <strong>Authentication</strong> tab.</span></li>
-  <li>Enter the <strong>Root password</strong> for the host you specified in
-    the <strong>Journal Host</strong> field on the <strong>2. Basic
-    Settings</strong> tab. The contents of the <strong>Root password</strong>
-    field are always obscured for security reasons.</li>
-  <li>RoboJournal automatically sets a value of "3306" for the
-    <strong>Port</strong> field; this is the standard port for MySQL servers.
-    Make sure this value is correct for your particular situation and change it
-    if necessary.</li>
-  <li>Click the OK button on the <strong>Journal Creator</strong> dialog
-    window. A confirmation dialog is displayed if the journal creation process
-    was successful. 
+  <li>Once the Journal Creator window is open, click the <strong>MySQL
+    Journal</strong> option in the menu on the left side of the window. The
+    MySQL-related options are displayed:<img alt="Figure 4"
+    src="img/screens/new_jc2.png" width="585" height="518"
+    class="screenshot"><span class="caption">Figure 4: The Journal Creator
+    populates several fields automatically based on your operating system
+    settings.</span></li>
+  <li>Change the values of the <strong>Journal name</strong> and
+    <strong>Username</strong> fields if desired. RoboJournal automatically
+    suggests default values based on your system-level username (which you log
+    in as on Windows or Linux) to keep things consistent but some users may
+    wish to change the default values to something else.</li>
+  <li>Make up a password at least seven characters in length to go with your
+    new username and enter it into the <strong>Password</strong> and
+    <strong>Repeat</strong> fields. You must type your password twice to
+    eliminate the possibility of typing mistakes. Once both password fields
+    match, the <strong>OK</strong> button is unlocked and the Journal Creator
+    assigns a strength rating to your password based on certain criteria. The
+    strength ratings range from 0% (extremely weak) to 100% (extremely strong).
+    In most situations, a strength rating of at least 75% means your password
+    is strong enough to resist most attempts to crack it. <img alt="Figure 5"
+    src="img/screens/new_jc3.png" width="585" height="518"
+    class="screenshot"><span class="caption">Figure 5: The <strong>Password
+    strength</strong> meter provides a visual indicator of password quality and
+    resilience.</span> 
+
+    <div class="FYI">
+    <strong>FYI:</strong> Password strength is calculated according to length
+    and diversity. A strong ( &gt;50%) password contains a randomized mixture
+    of glyphs (upper and lowercase letters, integers, and symbols) and no
+    dictionary words. RoboJournal adds points to the score for long passwords
+    and the inclusion of all glyph varieties but docks points for adjacent
+    glyphs of the same type (two or more letters, numbers, or symbols in a row)
+    and repeating glyphs (two or more instances of the same character). If you
+    need help creating suitable passwords, you should consult the <a
+    href="http://www.strongpasswordgenerator.com">Strong Password Generator</a>
+    or install <a
+    href="http://www.softpedia.com/get/Security/Password-Managers-Generators/Randompass.shtml">Randompass</a>.</div>
+  </li>
+  <li>Adjust the values in the <strong>Hostname</strong> and
+    <strong>Port</strong> fields if necessary. Leaving these fields blank
+    causes RoboJournal to use the built-in placeholder values ("localhost" for
+    <strong>Hostname</strong> and "3306" for <strong>Port</strong>).</li>
+  <li>Enter the <strong>Root password</strong> for the server you specified in
+    the <strong>Hostname</strong> field. </li>
+  <li>Click the <strong>OK</strong> button on the Journal Creator window. If
+    your password strength is less than 50% and confirmation dialogs <a
+    href="preferences.html#global_preferences">are enabled</a>, RoboJournal
+    issues a warning and requires you to verify your decision to use a weak
+    password. <img alt="Figure 6" src="img/screens/new_jc4.png" width="585"
+    height="518" class="screenshot"><span class="caption">Figure 6: The MySQL
+    Page completely filled out.</span> 
 
     <div class="FYI">
     <strong>FYI:</strong> The next two steps are displayed <em>only</em> if
@@ -162,9 +192,11 @@ to replace the current default with the brand-new journal.</p>
     </div>
   </li>
   <li>A text input dialog is displayed. Enter your name (as you prefer it) and
-    click the <strong>OK</strong> button. You may click the
-    <strong>Cancel</strong> button if you wish to skip this step.<img
-    alt="Figure 5" src="img/screens/set_name.png" width="336" height="128"
+    click the <strong>OK</strong> button. You can click the
+    <strong>Cancel</strong> button if you wish to skip this step. Skipping this
+    step causes RoboJournal to use your username (instead of your full name) as
+    an identifier in the Entry Output Pane's header area.<img alt="Figure 5"
+    src="img/screens/set_name.png" width="336" height="128"
     class="screenshot"><span class="caption">Figure 5: This value sets the
     user's full name in the configuration file.</span></li>
   <li>A gender selection dialog is displayed. Select your gender by clicking
@@ -174,9 +206,11 @@ to replace the current default with the brand-new journal.</p>
     connection is active.</span></li>
 </ol>
 
-<p>RoboJournal is now successfully configured. For more information on how to
-use core RoboJournal functionality, refer to the <a
-href="fundamentals.html">RoboJournal Fundamentals</a> documentation.</p>
+<p>Once the configuration file has been created and there is at least one
+journal on the host, RoboJournal ceases to operate in first-run mode and is now
+ready to be used normally. For more information on how to use core RoboJournal
+functionality, refer to the <a href="fundamentals.html">RoboJournal
+Fundamentals</a> documentation.</p>
 
 <h2 id="permissions">Assigning Permissions to a Database</h2>
 
@@ -197,12 +231,12 @@ likelihood of unauthorized remote tampering by restricting access to a few
 <h3 id="assign_permissions">Assign Permissions Extension</h3>
 
 <p>RoboJournal 0.5 introduces the Assign Permissions extension to the Journal
-Selector. This new feature greatly simplifies the process of granting user
-access permissions to an existing database and is intended to be a replacement
-for the old <a href="#mysql_procedure">MySQL Manual Procedure</a> (which
-required you to access the MySQL command interface directly). The Assign
-Permissions interface is also the easiest way to create a user account for
-yourself if one does not already exist. </p>
+Selector. This new feature greatly simplifies the process of associating an
+existing database with your own user account and is intended to be a
+replacement for the old <a href="#mysql_procedure">MySQL Manual Procedure</a>
+(which required you to access the MySQL command line interface directly). The
+Assign Permissions extension is also the easiest way to create a user account
+for yourself if one does not already exist on the host server. </p>
 
 <p>You need root-level database access in order to change database permissions
 and create user accounts, so make sure you have all required clearance before
@@ -215,8 +249,8 @@ until the necessary access permissions have been granted.</p>
 <p>The Assign Permissions extension is initiated by clicking the <strong>Assign
 Permissions</strong> button on the Journal Selector window:<img alt="Figure 7"
 src="img/screens/assign_permissions1.png" width="517" height="428"
-class="screenshot"><span class="caption">Figure 7: The Assign Permissionswindow
-is accessed through the Journal Selector.</span></p>
+class="screenshot"><span class="caption">Figure 7: The Assign Permissions
+window is accessed through the Journal Selector.</span></p>
 
 <p>The Assign Permissions window is displayed:<img alt="Figure 8"
 src="img/screens/assign_permissions2.png" width="354" height="412"
@@ -224,14 +258,14 @@ class="screenshot"><span class="caption">Figure 8: The Assign Permissions
 window immediately after launch. </span></p>
 
 <p>Since it is an extension to the Journal Selector (rather than being an
-independent module), the Assign Permissions window inherits its database mode
-from the current setting of the Journal Selector's <strong>Database</strong>
-field. For instance, the Assign Permissions extension starts in MySQL mode if
-the Journal Creator is configured to work with MySQL databases at the time. The
-current mode is displayed on the Assign Permissions window title bar (i.e.
-"Assign Permissions - MySQL"). It is impossible to switch database modes
-without first changing the current backend on the Journal Selector window and
-then re-initializing the Assign Permissions window.</p>
+independent module), the Assign Permissions extension inherits its database
+mode from the current setting of the Journal Selector's
+<strong>Database</strong> field. For instance, the Assign Permissions extension
+starts in MySQL mode if the Journal Creator is configured to work with MySQL
+databases at the time. The current mode is displayed in the Assign Permissions
+window title bar (i.e. "Assign Permissions - MySQL"). It is impossible to
+switch database modes without first changing the current backend on the Journal
+Selector window and then re-initializing the Assign Permissions extension.</p>
 
 <p>Certain fields on the Assign Permissions window can never be cleared.
 Instead, they use placeholder text as default values that represent the most
@@ -251,7 +285,14 @@ color (gray instead of black). </p>
     for that particular database type.</li>
   <li>Enter the <strong>Root password</strong> for the database server located
     at <strong>Hostname</strong> (the contents of the <strong>Root
-    password</strong> field are obscured for security reasons).</li>
+    password</strong> field are obscured for security reasons). 
+
+    <div class="FYI">
+    <strong>FYI:</strong> As a security precaution, MySQL forbids remote root
+    logins (i.e. using Computer #1 to log into the root account on Computer #2)
+    unless you grant the necessary permissions beforehand. Consult the <a
+    href="#mysql_procedure">MySQL Manual Procedure</a> for details.</div>
+  </li>
   <li>Click the <strong>Scan</strong> button to run a search. Since this
     connection is through the root-level account, <em>every</em> database on
     the host is added to the <strong>Select database</strong> drop-down list.
@@ -265,23 +306,25 @@ color (gray instead of black). </p>
     class="screenshot"><span class="caption">Figure 9: Logging in through the
     Root account allows you to access every database on the server.</span></li>
   <li>The next three steps determine which user account the selected database
-    should be bound to. Enter your account's username into the
-    <strong>Username</strong> field in the <strong>Grant Settings</strong>
-    group. If you do not have a user account yet, create a username for
-    yourself.</li>
+    should be bound to. If you already have an account, enter your username
+    into the <strong>Username</strong> field in the <strong>Grant
+    Settings</strong> group. To create a new user account, make up a username
+    and enter it into the <strong>Username</strong> field at this time.</li>
   <li>Enter the password that goes with your username into the
     <strong>Password</strong> field (the contents of the
-    <strong>Password</strong> field are obscured for security reasons). If your
-    account does not exist yet, make up a password and enter it into the field
-    now.</li>
+    <strong>Password</strong> field are obscured for security reasons). If you
+    wish to create a new user account, make up a password and enter it into the
+    <strong>Password</strong> field now.</li>
   <li>Enter the correct hostname for your user account into the <strong>User
-    host</strong> field (if necessary). Most of the time, you should leave this
-    field blank; the placeholder value of "localhost" is used in all such
-    instances. The User host value is only important if you intend to access
-    your journal from a remote location. If this is the case, enter the
-    hostname of the remote terminal into the field; for instance, you should
-    enter "192.168.2.4" into the field if your journal is stored on 192.168.2.3
-    and you wish to access it from the computer at 192.168.2.4. </li>
+    host</strong> field (if necessary). Leaving the field blank causes
+    RoboJournal to use the placeholder value ("localhost"). The User host value
+    is only important if you intend to access your journal from a remote
+    location. If this is the case, enter the hostname of the remote terminal
+    into the field. For instance, you should enter "192.168.2.4" into the field
+    if your journal database is stored on 192.168.2.3 and you wish to access it
+    from the computer at 192.168.2.4. Enter "%" into the <strong>User
+    host</strong> field if you wish to be able to access the database from
+    <em>any</em> host (not recommended).</li>
   <li>Click the <strong>OK</strong> button to continue.<img alt="Figure 10:"
     src="img/screens/assign_permissions4.png" width="354" height="412"
     class="screenshot"><span class="caption">Figure 10: The <strong>OK</strong>
@@ -290,24 +333,23 @@ color (gray instead of black). </p>
 </ol>
 
 <p>If the operation was successful, the database you selected is now associated
-with your user account. From now on, it should be visible in your list of
-databases on the Journal Selector window whenever you log in with your
-credentials. The <strong>Create user account if it does not exist</strong>
-checkbox instructs RoboJournal to create a new user account for you with the
-username and password you provided if an account matching those credentials
-does not already exist. This option does <em>not</em> alter an existing
-account's username or password; if your account exists, the current database is
-simply added to the list of those associated with you, thereby allowing you to
-access it through RoboJournal.</p>
+with your user account. From now on, it should be included in your list of
+databases that is displayed whenever you log in with your account credentials
+on the Journal Selector window. The <strong>Create user account if it does not
+exist</strong> checkbox instructs RoboJournal to create a new user account for
+you with the username and password you provided if an account matching those
+credentials does not already exist. This option does <em>not</em> alter an
+existing account's username or password; if your account exists, the current
+database is simply added to the list of those associated with you, thereby
+allowing you to access it through RoboJournal.</p>
 
 <h3 id="mysql_procedure">MySQL Manual Procedure (deprecated)</h3>
 
 <div class="FYI">
 <strong>FYI:</strong> This section is preserved in the documentation for
 legacy/failsafe purposes only. Most users should use the <a
-href="#assign_permissions">Assign Permissions</a> tool instead since that new
-feature accomplishes the same task as this MySQL Manual Procedure much more
-easily. </div>
+href="#assign_permissions">Assign Permissions</a> extension instead since that
+new feature accomplishes the same task much more easily. </div>
 
 <p>All permission changes to a remote database require root-level access
 privileges and <em>must</em> be performed on the same machine where the
@@ -370,7 +412,7 @@ real-world context:</p>
     <div class="FYI">
     <strong>FYI:</strong> You should only grant permissions that are absolutely
     necessary (i.e. INSERT, DELETE, UPDATE, and SELECT) because additional
-    permissions will not make your account work any better and can actually be
+    permissions do not make your account work any better and can actually be
     dangerous to other databases. </div>
   </li>
   <li>Type <span class="console">exit</span> and press Enter to disconnect from
@@ -384,11 +426,22 @@ wish to access it through the "john_doe" user account on your workstation at
 192.168.2.3. You would log in (as root) to the MySQL command interface on
 192.168.2.1 and run <span class="console">GRANT INSERT,DELETE,UPDATE,SELECT ON
 test.entries TO 'john_doe'@'192.168.2.3';</span> to give yourself permission to
-access the journal. </p>
+access the journal. You are ready to begin the journal selection procedure once
+you have assigned the correct permissions to the database you wish to set as
+your default.</p>
 
-<p>You are ready to begin the journal selection procedure once you have
-assigned the correct permissions to the database you wish to set as your
-default.</p>
+<p>If you need to enable remote root logins, execute <span
+class="console">GRANT ALL PRIVILEGES ON *.* TO 'root'@'[host]' IDENTIFIED BY
+'[password]' WITH GRANT OPTION;</span> where [host] refers to the host you wish
+to enable remote access from (for instance, 192.168.2.4) and [password]
+indicates the current root password. Using the wild card (<span
+class="console">%</span>) value for [host] is <em>extremely</em> dangerous
+because it allows root access from any computer. After executing that query,
+run <span class="console">FLUSH PRIVILEGES;</span> and quit the current MySQL
+session. Next, open the MySQL configuration file (my.cnf) in a text editor and
+comment out the line that says "bind-address = 127.0.0.1". Save the file and
+quit. Remote root access will be enabled the next time the MySQL server starts.
+</p>
 
 <h2 id="connect">Connecting to an Existing Journal Database</h2>
 
@@ -415,8 +468,8 @@ to find it.</p>
     launched via the Welcome to RoboJournal dialog.</span></li>
   <li>The Journal Selector window is displayed. Change the
     <strong>Host</strong> and <strong>Port</strong> values if necessary (you
-    must uncheck the <strong>Use default host and port</strong> box to make the
-    <strong>Host</strong> and <strong>Port</strong> fields writable).<img
+    must un-check the <strong>Use default host and port</strong> box to make
+    the <strong>Host</strong> and <strong>Port</strong> fields writable).<img
     alt="Figure 8" src="img/screens/js0.png" width="526" height="417"
     class="screenshot"><span class="caption">Figure 8: The
     <strong>Host</strong> and <strong>Port</strong> fields are automatically
