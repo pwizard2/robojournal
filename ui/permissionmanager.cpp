@@ -142,8 +142,18 @@ void PermissionManager::DatabaseScan(){
     }
 }
 
+// reset form values. 6/27/13.
 void PermissionManager::ResetForm(){
-
+    ui->DBHost->clear();
+    ui->Databases->clear();
+    ui->Password->clear();
+    ui->Username->clear();
+    ui->Port->clear();
+    ui->UserHost->clear();
+    ui->Scan->setEnabled(true);
+    ui->RootPassword->clear();
+    ui->CreateUser->setChecked(true);
+    ui->GrantSettings->setEnabled(false);
 }
 
 
@@ -240,5 +250,12 @@ void PermissionManager::on_buttonBox_accepted()
                            + database + "</b> to " + username + "@" + user_host + ".");
             }
         }
+    }
+}
+
+void PermissionManager::on_buttonBox_clicked(QAbstractButton *button)
+{
+    if(button->text()=="Restore Defaults"){
+        ResetForm();
     }
 }
