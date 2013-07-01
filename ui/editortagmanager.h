@@ -39,7 +39,7 @@ class EditorTagManager : public QWidget
 public:
     explicit EditorTagManager(QWidget *parent = 0);
     ~EditorTagManager();
-    QString GetTags();
+    QString HarvestTags();
 
     static int tag_count;
     
@@ -75,6 +75,7 @@ private:
     void LoadTags(QString id);
     void TagCount(int count);
     void RevertTags();
+
 
     QMenu *contextmenu;
     QAction *remove;

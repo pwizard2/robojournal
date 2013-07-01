@@ -32,6 +32,14 @@ HTMLCore::HTMLCore()
 }
 
 //#############################################################################################################
+// This function takes the raw output from the Editor and strips out the extra HTML so it can be stored
+// in the database. The part that needs to be stripped out is everything except what is between the <body> tags.
+// (6/30/13).
+QString HTMLCore::ProcessEntryFromEditor(QString rawtext){
+
+}
+
+//#############################################################################################################
 // This function applies Post-processing features to the body text. This function used to be part of the Editor
 // class but it got moved to the HTMLCore in version 0.5. (6/13/13)
 QString HTMLCore::Do_Post_Processing(QString rawtext, int wordcount){

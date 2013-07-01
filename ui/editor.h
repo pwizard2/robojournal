@@ -53,6 +53,7 @@ public:
     static int month;
     static int day;
     static int year;
+    static QString tags; // new for 0.5, added 6/29/13
 
     SpellTextEdit *spell;
     Highlighter *high;

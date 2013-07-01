@@ -111,7 +111,7 @@ QList<QStringList> MySQLCore::NullSearch(){
 
 
     while(q.next()){
-            QStringList entry;
+        QStringList entry;
         QVariant v0=q.value(0); //id;
         QVariant v1=q.value(1); //title
         QVariant v2=q.value(2); //day
@@ -142,7 +142,7 @@ QList<QStringList> MySQLCore::NullSearch(){
             break;
         }
 
-       entry << id << title << datestamp;
+        entry << id << title << datestamp;
 
         //append the row to the main list
         values.append(entry);
@@ -739,16 +739,18 @@ void MySQLCore::Disconnect(){
 }
 //################################################################################################
 // Update a row with new data. This is invoked from the Editor class if editmode==true.
-bool MySQLCore::Update(QString title, int month, int day, int year,  QString body, QString id){
+bool MySQLCore::Update(QString title, int month, int day, int year,  QString body, QString id, QString tags){
     using namespace std;
     db.open();
 
-    QSqlQuery update("UPDATE entries set title=?, month=?, day=?, year=?, body=? WHERE id=" + id);
+    QSqlQuery update("UPDATE entries set title=?, month=?, day=?, year=?, tags=?, body=? WHERE id=" + id);
     update.bindValue(0, title);
     update.bindValue(1, month);
     update.bindValue(2, day);
     update.bindValue(3, year);
-    update.bindValue(4, body);
+    update.bindValue(4, tags); // Add tags parameter for 0.5, 6/29/13.
+    update.bindValue(5, body);
+
 
     bool success=update.exec();
     db.close();
@@ -775,7 +777,7 @@ bool MySQLCore::AddEntry(){
     int month=Editor::month;
     int day=Editor::day;
     int year=Editor::year;
-    QString tags="Null";
+    QString tags=Editor::tags;
     QString body=Editor::body;
 
 

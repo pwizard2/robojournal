@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>346</width>
-    <height>405</height>
+    <height>402</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -65,7 +65,7 @@
          <widget class="QLineEdit" name="Port">
           <property name="maximumSize">
            <size>
-            <width>50</width>
+            <width>60</width>
             <height>16777215</height>
            </size>
           </property>

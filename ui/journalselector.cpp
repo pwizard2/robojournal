@@ -32,6 +32,7 @@
 #include "ui/permissionmanager.h"
 #include "sql/sqlshield.h"
 
+
 JournalSelector::JournalSelector(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::JournalSelector)
@@ -50,17 +51,35 @@ JournalSelector::JournalSelector(QWidget *parent) :
     QPushButton *okbutton=ui->buttonBox->button(QDialogButtonBox::Ok);
     okbutton->setDisabled(true);
 
-    //disable other db options for now b/c we only have mysql support
+
     ui->DBType->setEnabled(true);
-    ui->Browse->setDisabled(true);
-
-
+    ui->Browse->setDisabled(true); // Browse should only be enabled for SQLite databases
     ui->Username->setFocus();
 
     // Select the use defaults button when the class is instantiated.
     // Bugfix 12/8/12: It should always be checked if we're in firstrun mode.
     if((Buffer::alwaysusedefaults) || (Buffer::firstrun)){
         ui->UseDefaults->click();
+    }
+}
+
+//################################################################################################
+// Allow the user to easily reset the form to default state. New for 0.5, 6/29/13.
+void JournalSelector::ResetForm(){
+
+    ui->DBType->setCurrentIndex(0);
+    ui->Username->clear();
+    ui->Password->clear();
+    ui->JournalList->clear();
+
+    if(Buffer::alwaysusedefaults){
+        while(!ui->UseDefaults->isChecked()){
+            ui->UseDefaults->click();
+        }
+    }
+    else{
+        ui->Host->clear();
+        ui->Port->clear();
     }
 }
 
@@ -340,5 +359,12 @@ void JournalSelector::on_DBType_currentIndexChanged(int index)
             ui->Browse->setEnabled(true);
             ui->ConnectionSettings->setEnabled(false);
         break;
+    }
+}
+
+void JournalSelector::on_buttonBox_clicked(QAbstractButton *button)
+{
+    if(button->text()=="Restore Defaults"){
+        ResetForm();
     }
 }

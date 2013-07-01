@@ -35,6 +35,7 @@
 #include <QAction>
 #include "ui/editor.h"
 #include "core/buffer.h"
+#include <iostream>
 
 EditorTagManager::EditorTagManager(QWidget *parent) :
     QWidget(parent),
@@ -46,18 +47,34 @@ EditorTagManager::EditorTagManager(QWidget *parent) :
 
 int EditorTagManager::tag_count;
 
+// ###################################################################################################
+
 EditorTagManager::~EditorTagManager()
 {
     delete ui;
 }
 
+// ###################################################################################################
+
 // Public method that retuns the contents of ui->TagList as a semicolon-separated QString.
 // This method is NOT to be confused with the private function that gets tags from the database.
-QString EditorTagManager::GetTags(){
+// The code for this was lifted directly from the old Tagger class. 6/29/13
+QString EditorTagManager::HarvestTags(){
+    using namespace std;
 
+    QStringList taglist;
 
+    for(int i=0; i < ui->TagList->count(); i++){
+        QListWidgetItem *current=ui->TagList->item(i);
+        taglist.append(current->text());
+    }
+
+    QString tags=taglist.join(";");
+    cout << "Tags: " << tags.toStdString() << endl;
+    return tags;
 }
 
+// ###################################################################################################
 // 6/14/13: Revert tags to their default values. This method is only accessible if the Editor
 // is in Edit Mode (since new entries have no pre-existing data to revert to).
 void EditorTagManager::RevertTags(){
@@ -93,6 +110,8 @@ void EditorTagManager::RevertTags(){
     }
 }
 
+// ###################################################################################################
+
 // 6/13/13: Add a new tag to the AvailableTags list. This uses the new TaggingShared class.
 void EditorTagManager::DefineTag(){
 
@@ -116,6 +135,8 @@ void EditorTagManager::DefineTag(){
     }
 }
 
+// ###################################################################################################
+
 // 6/14/13: Update current tag count in toolbar.
 void EditorTagManager::TagCount(int count){
 
@@ -128,6 +149,8 @@ void EditorTagManager::TagCount(int count){
     }
     ui->TagCount->setText(QString::number(count) + taglabel);
 }
+
+// ###################################################################################################
 
 // 6/10/13: Create toolbar and layout for this class.
 void EditorTagManager::PrimaryConfig(){
@@ -260,6 +283,8 @@ void EditorTagManager::PrimaryConfig(){
 
 }
 
+// ###################################################################################################
+
 //6/11/13: Create drop-down tag list. Use the new TaggingShared class.
 void EditorTagManager::CreateTagList(){
 
@@ -274,6 +299,8 @@ void EditorTagManager::CreateTagList(){
         count++;
     }
 }
+
+// ###################################################################################################
 
 // (6/11/13) Add currently-selected tag in ui > AvailableTags to tag list.
 void EditorTagManager::AddTag(QString newtag){
@@ -332,6 +359,8 @@ void EditorTagManager::AddTag(QString newtag){
     }
 }
 
+// ###################################################################################################
+
 // (6/11/13) Remove currently-selected tag from Tag list
 void EditorTagManager::RemoveTag(){
     QListWidgetItem *item=ui->TagList->currentItem();
@@ -345,6 +374,8 @@ void EditorTagManager::RemoveTag(){
 
     TagCount(ui->TagList->count());
 }
+
+// ###################################################################################################
 
 // (6/14/13) Fetch current tags from database. This is NOT to be confused with the
 // public method that Exports the tags.
@@ -366,12 +397,16 @@ void EditorTagManager::LoadTags(QString id){
     TagCount(ui->TagList->count());
 }
 
+// ###################################################################################################
+
 // Slot that gets triggered when the user clicks the AddTag toolbar button.
 void EditorTagManager::on_AddTag_clicked()
 {
     QString newtag=ui->AvailableTags->currentText();
     AddTag(newtag);
 }
+
+// ###################################################################################################
 
 // 6/13/13: slot that gets triggered from context menu -- add tag
 void EditorTagManager::s_addTag(){
@@ -380,20 +415,28 @@ void EditorTagManager::s_addTag(){
     AddTag(newtag);
 }
 
+// ###################################################################################################
+
 // 6/13/13: slot that gets triggered from context menu -- remove selected tag
 void EditorTagManager::s_removeTag(){
     RemoveTag();
 }
+
+// ###################################################################################################
 
 // 6/13/13: slot that gets triggered from context menu -- define tag
 void EditorTagManager::s_newTag(){
     DefineTag();
 }
 
+// ###################################################################################################
+
 // 6/14/13: slot that gets triggered from context menu -- revert tags
 void EditorTagManager::s_revertTag(){
     RevertTags();
 }
+
+// ###################################################################################################
 
 // 6/13/13: Slot that controls the pop-up context menu in the tag list
 void EditorTagManager::showPopup(){
@@ -401,15 +444,21 @@ void EditorTagManager::showPopup(){
     contextmenu->popup(p);
 }
 
+// ###################################################################################################
+
 void EditorTagManager::on_NewTag_clicked()
 {
     DefineTag();
 }
 
+// ###################################################################################################
+
 void EditorTagManager::on_RemoveTag_clicked()
 {
     RemoveTag();
 }
+
+// ###################################################################################################
 
 void EditorTagManager::on_TagList_itemClicked(QListWidgetItem *item)
 {
@@ -418,6 +467,8 @@ void EditorTagManager::on_TagList_itemClicked(QListWidgetItem *item)
         remove->setEnabled(true);
     }
 }
+
+// ###################################################################################################
 
 void EditorTagManager::on_RevertTags_clicked()
 {

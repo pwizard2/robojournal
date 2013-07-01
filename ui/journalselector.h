@@ -23,6 +23,7 @@
 
 #include <QDialog>
 #include <QTreeWidgetItem>
+#include <QAbstractButton>
 
 namespace Ui {
 class JournalSelector;
@@ -53,6 +54,8 @@ private slots:
 
     void on_DBType_currentIndexChanged(int index);
 
+    void on_buttonBox_clicked(QAbstractButton *button);
+
 private:
     Ui::JournalSelector *ui;
 
@@ -60,6 +63,7 @@ private:
     void CreateTree(QStringList journals);
     void SetPreferences();
     bool Validate();
+    void ResetForm();
 
 };
 

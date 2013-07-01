@@ -50,6 +50,7 @@ QString Editor::title;
 int Editor::day;
 int Editor::month;
 int Editor::year;
+QString Editor::tags;
 
 void Editor::reject(){
     ConfirmExit();
@@ -605,8 +606,11 @@ bool Editor::UpdateEntry(){
     int month=post_date.month();
     int year=post_date.year();
 
+    // Get the tags from the EditorTagManager. New for 0.5, 6/29/13.
+    QString taglist=et->HarvestTags();
+
     MySQLCore m;
-    bool success=m.Update(title,month,day,year,body,Buffer::editentry);
+    bool success=m.Update(title,month,day,year,body,Buffer::editentry,taglist);
     return success;
 
 }
@@ -648,14 +652,23 @@ bool Editor::NewEntry(){
     QRegExp badchars("[,]+|[\"]+|[\']+");
     title=title.remove(badchars);
 
-
     Editor::title=title;
     QDate post_date=ui->EntryDate->date();
-
 
     Editor::day=post_date.day();
     Editor::month=post_date.month();
     Editor::year=post_date.year();
+
+    // Get the tags from the EditorTagManager. New for 0.5, 6/29/13.
+
+    QString tags=et->HarvestTags();
+
+    if(!tags.isEmpty()){
+        Editor::tags=tags;
+    }
+    else{
+        Editor::tags="Null";
+    }
 
 
     bool success=false;

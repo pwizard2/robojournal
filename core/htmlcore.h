@@ -32,6 +32,7 @@ class HTMLCore
 public:
     HTMLCore();
     QString Do_Post_Processing(QString rawtext, int wordcount);
+    QString ProcessEntryFromEditor(QString rawtext);
 };
 
 #endif // HTMLCORE_H
