@@ -54,7 +54,7 @@ EntryExporter::EntryExporter(QWidget *parent) :
     int width=this->width();
     int height=this->height();
     this->setMaximumSize(width,height);
-    this->setMinimumSize(width,height);
+    this->setMinimumSize(width,height); 
 
     // do primary config
     PrimaryConfig();
@@ -784,6 +784,10 @@ void EntryExporter::PrimaryConfig(){
     // mass export tab
     ui->HTML_2->click();
     ui->desc->click();
+
+    ui->tabWidget->setContentsMargins(0,6,0,9);
+    ui->label->setContentsMargins(9,0,0,0);
+    ui->buttonBox->setContentsMargins(9,0,9,9);
 
     // add filename and journal name
     QString homepath=QDir::homePath();

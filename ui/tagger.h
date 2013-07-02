@@ -62,6 +62,8 @@ private slots:
 
     void on_TagChooser_currentIndexChanged();
 
+    void on_RevertTags_clicked();
+
 private:
     Ui::Tagger *ui;
 
@@ -72,8 +74,11 @@ private:
     void LoadTags();
     void AddTagToList();
     QString ExportTagList();
+    void RevertTags();
 
     void PrimaryConfig();
+
+    bool no_tags;
 
 
 };

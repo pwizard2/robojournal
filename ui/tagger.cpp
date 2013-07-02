@@ -67,6 +67,38 @@ Tagger::~Tagger()
     delete ui;
 }
 
+//#########################################################################################################
+void Tagger::RevertTags(){
+    if(Buffer::showwarnings){
+        QMessageBox m;
+        int choice=m.question(this,"RoboJournal","Do you really want to discard the changes you made "
+                              "to this entry\'s tags?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+        switch(choice){
+        case QMessageBox::Yes:
+            if(no_tags){
+                ui->TagList->clear();
+            }
+            else{
+                ui->TagList->clear();
+                LoadTags();
+            }
+            break;
+
+        case QMessageBox::No:
+            // Do nothing
+            break;
+        }
+    }
+    else{
+        if(no_tags){
+            ui->TagList->clear();
+        }
+        else{
+            ui->TagList->clear();
+            LoadTags();
+        }
+    }
+}
 
 //#########################################################################################################
 // (6/14/13): New PrimaryConfig for 0.5 and later completely changes the appearance of the Tagger
@@ -94,11 +126,24 @@ void Tagger::PrimaryConfig(){
     bar->addWidget(spacer1);
     bar->addWidget(ui->TagChooser);
 
+    bar->setContentsMargins(0,0,0,0);
+    ui->TagList->setContentsMargins(0,0,0,0);
 
     QVBoxLayout *layout=new QVBoxLayout(this);
 
+    layout->setContentsMargins(0,0,0,0);
     layout->addWidget(bar);
     layout->addWidget(ui->TagList);
+
+
+    QWidget* spacer3 = new QWidget();
+    spacer3->setMaximumHeight(6);
+    spacer3->setMinimumHeight(6);
+    spacer3->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
+
+
+    ui->buttonBox->setContentsMargins(9,0,9,9);
+    layout->addWidget(spacer3);
     layout->addWidget(ui->line);
     layout->addWidget(ui->buttonBox);
 
@@ -195,7 +240,6 @@ void Tagger::AddTag(QString newtag){
 
         if(add_to_list){
             ui->TagChooser->addItem(newtag);
-
         }
 
         // Unlock the Apply button once we have changed tag data
@@ -223,19 +267,19 @@ void Tagger::AddTagToList(){
     TaggingShared ts;
     QString tag=ts.DefineTag(current_list);
 
-        if(!tag.isEmpty()){
-            QIcon newicon(":/icons/tag_red_add.png");
-            ui->TagChooser->insertItem(0,newicon,tag);
+    if(!tag.isEmpty()){
+        QIcon newicon(":/icons/tag_red_add.png");
+        ui->TagChooser->insertItem(0,newicon,tag);
 
-            // if tag append button is disabled enable it now.
-            if(!ui->AddTag->isEnabled()){
-                ui->AddTag->setEnabled(true);
+        // if tag append button is disabled enable it now.
+        if(!ui->AddTag->isEnabled()){
+            ui->AddTag->setEnabled(true);
 
-            }
         }
+    }
 
-        ui->TagChooser->setEnabled(true);
-        ui->TagChooser->setCurrentIndex(0);
+    ui->TagChooser->setEnabled(true);
+    ui->TagChooser->setCurrentIndex(0);
 }
 
 //#########################################################################################################
@@ -312,6 +356,13 @@ void Tagger::LoadTags(){
     TaggingShared ts;
     QStringList t_array=ts.FetchTags(Tagger::id_num);
 
+    if(t_array.size()==0){
+        no_tags=true;
+    }
+    else{
+        no_tags=false;
+    }
+
     for(int i=0; i < t_array.size(); i++){
 
         // Exclude null entries from tag list
@@ -344,6 +395,7 @@ void Tagger::on_AddTag_clicked()
     AddTag(newtag);
 }
 
+//#########################################################################################################
 void Tagger::on_TagChooser_editTextChanged(const QString &arg1)
 {
     if(arg1==""){
@@ -354,8 +406,7 @@ void Tagger::on_TagChooser_editTextChanged(const QString &arg1)
     }
 }
 
-
-
+//#########################################################################################################
 void Tagger::on_buttonBox_clicked(QAbstractButton *button)
 {
     using namespace std;
@@ -374,7 +425,6 @@ void Tagger::on_buttonBox_clicked(QAbstractButton *button)
         QAbstractButton *cancel=ui->buttonBox->button(QDialogButtonBox::Cancel);
         cancel->setDisabled(true);
 
-
         if(Buffer::backend=="MySQL"){
             MySQLCore m;
             bool success=m.UpdateTags(tag_data,Tagger::id_num);
@@ -390,12 +440,20 @@ void Tagger::on_buttonBox_clicked(QAbstractButton *button)
     }
 }
 
+//#########################################################################################################
 void Tagger::on_NewTag_clicked()
 {
     AddTagToList();
 }
 
+//#########################################################################################################
 void Tagger::on_TagChooser_currentIndexChanged()
 {
     ui->AddTag->setEnabled(true);
+}
+
+//#########################################################################################################
+void Tagger::on_RevertTags_clicked()
+{
+    RevertTags();
 }
