@@ -128,15 +128,16 @@ void Tagger::PrimaryConfig(){
     QVBoxLayout *layout=new QVBoxLayout(this);
 
     layout->setContentsMargins(0,0,0,0);
+    layout->setSpacing(0);
     layout->addWidget(bar);
     layout->addWidget(ui->TagList);
 
     QWidget* spacer3 = new QWidget();
-    spacer3->setMaximumHeight(6);
-    spacer3->setMinimumHeight(6);
+    spacer3->setMaximumHeight(9);
+    spacer3->setMinimumHeight(9);
     spacer3->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
 
-    ui->buttonBox->setContentsMargins(9,0,9,9);
+    ui->buttonBox->setContentsMargins(9,9,9,9);
     layout->addWidget(spacer3);
     layout->addWidget(ui->line);
     layout->addWidget(ui->buttonBox);

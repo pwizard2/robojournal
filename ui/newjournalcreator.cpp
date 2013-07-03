@@ -111,6 +111,9 @@ void NewJournalCreator::PrimaryConfig(){
         ui->SetAsDefault->setEnabled(false);
     }
 
+    // limit how much the form width can be compressed. New for 0.5, 7/2/13.
+    ui->PageArea->setMinimumWidth(s->width());
+
     // Certain events on the MySQL and SQLite pages muct be controlled by signals/slots because that is
     // the best way to communicate across classes.
 

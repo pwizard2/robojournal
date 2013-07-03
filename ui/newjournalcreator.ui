@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>577</width>
-    <height>499</height>
+    <height>477</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,13 +21,7 @@
    <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
+   <property name="margin">
     <number>0</number>
    </property>
    <item>
@@ -37,9 +31,15 @@
      </property>
      <item>
       <widget class="QListWidget" name="DatabaseType">
+       <property name="minimumSize">
+        <size>
+         <width>140</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
-         <width>200</width>
+         <width>180</width>
          <height>16777215</height>
         </size>
        </property>
@@ -103,8 +103,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>369</width>
-          <height>397</height>
+          <width>389</width>
+          <height>392</height>
          </rect>
         </property>
        </widget>
