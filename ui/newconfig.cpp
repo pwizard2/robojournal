@@ -220,6 +220,9 @@ void Newconfig::PrimaryConfig(){
     stack->addWidget(m=new ConfigurationMySQL(this));
     stack->addWidget(s=new ConfigurationSQLite(this));
 
+    // Limit how much the width of the window can be compressed. New for 0.5 (7/2/13).
+    ui->PageArea->setMinimumWidth(g->width());
+
     // put the stack in the ScrollArea.
     ui->PageArea->setWidget(stack);
     ui->PageArea->setWidgetResizable(true);
@@ -241,9 +244,6 @@ void Newconfig::PrimaryConfig(){
     // Ensure the General Widget is visible when window opens.
     stack->setCurrentIndex(0);
 
-
-
-
     // restore window size from previous session
     bool usetemp=!Buffer::config_temporarysize.isEmpty();
     //cout << " Temporary size is valid : " << usetemp << endl;
@@ -258,6 +258,8 @@ void Newconfig::PrimaryConfig(){
 
     startup=false;
 
+    // Add necessary padding to ui elements. New for 0.5.
+    ui->buttonBox->setContentsMargins(0,0,9,9);
 
 }
 

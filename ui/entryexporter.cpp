@@ -785,7 +785,7 @@ void EntryExporter::PrimaryConfig(){
     ui->HTML_2->click();
     ui->desc->click();
 
-    ui->tabWidget->setContentsMargins(0,6,0,9);
+    ui->tabWidget->setContentsMargins(0,9,0,9);
     ui->label->setContentsMargins(9,0,0,0);
     ui->buttonBox->setContentsMargins(9,0,9,9);
 
@@ -831,52 +831,56 @@ void EntryExporter::PrimaryConfig(){
     SetName();
 }
 
-
-
+//#########################################################################################################
 void EntryExporter::on_BrowseButton_clicked()
 {
     Browse();
 }
 
+//#########################################################################################################
 void EntryExporter::on_PlainText_clicked()
 {
     SetName();
 }
 
+//#########################################################################################################
 void EntryExporter::on_HTML_clicked()
 {
     SetName();
 }
 
+//#########################################################################################################
 void EntryExporter::on_IncludeDate_clicked()
 {
     SetName();
 }
 
+//#########################################################################################################
 void EntryExporter::on_IncludeJournalName_clicked()
 {
     SetName();
 }
 
+//#########################################################################################################
 void EntryExporter::on_buttonBox_accepted()
 {
     Validate();
 
 }
 
-
-
+//#########################################################################################################
 void EntryExporter::on_HTML_2_clicked()
 {
     Set_Mass_Name();
-
 }
+
+//#########################################################################################################
 void EntryExporter::on_PlainText_2_clicked()
 {
     Set_Mass_Name();
 }
 
-
+//#########################################################################################################
 void EntryExporter::on_IncludeExportDate_clicked()
 {
     Set_Mass_Name();

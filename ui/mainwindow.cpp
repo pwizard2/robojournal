@@ -460,15 +460,17 @@ void MainWindow::SearchDatabase(){
                 }
 
                 if(count==1){
-                    ui->SearchCount->setText("Search complete: " + QString::number(count) + " result");
-                    has_search_results=true;
+                    ui->SearchCount->setText("<img src=\":/icons/information.png\">&nbsp;Search complete: " +
+                                             QString::number(count) + " result.");
 
+                    has_search_results=true;
                     this->setCursor(Qt::ArrowCursor);
                 }
                 else{
-                    ui->SearchCount->setText("Search complete: " + QString::number(count) + " results");
-                    has_search_results=true;
+                    ui->SearchCount->setText("<img src=\":/icons/information.png\">&nbsp;Search complete: " +
+                                             QString::number(count) + " results.");
 
+                    has_search_results=true;
                     this->setCursor(Qt::ArrowCursor);
 
                     // Show notification if search returns null. That way, people won't be scratching their heads wondering
@@ -1089,7 +1091,7 @@ void MainWindow::ShowHelp(){
 
                 b.critical(this,"RoboJournal","RoboJournal could not locate the collection file"
                            " (robojournal.qhc) or the compiled help file (robojournal.qch). Please"
-                           " locate these files and copy them into <b>" + location + "</b>.");
+                           " locate these two files and copy them into <b>" + location + "</b>.");
                 this->setCursor(Qt::ArrowCursor);
 
             }

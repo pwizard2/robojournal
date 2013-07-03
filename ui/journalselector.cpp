@@ -56,6 +56,8 @@ JournalSelector::JournalSelector(QWidget *parent) :
     ui->Browse->setDisabled(true); // Browse should only be enabled for SQLite databases
     ui->Username->setFocus();
 
+    ui->buttonBox->setContentsMargins(9,0,9,9);
+
     // Select the use defaults button when the class is instantiated.
     // Bugfix 12/8/12: It should always be checked if we're in firstrun mode.
     if((Buffer::alwaysusedefaults) || (Buffer::firstrun)){
@@ -129,7 +131,6 @@ bool JournalSelector::Validate(){
     return valid;
 }
 
-
 //################################################################################################
 // Forward the settings to the config file. This function has NO validation so it must be validated before it gets called!
 // If not, bad things will probably happen. 
@@ -179,6 +180,7 @@ void JournalSelector::SetPreferences(){
 
     }
 }
+
 //################################################################################################
 // Query the database to see what type of databases we have available, and return the query as a qstringlist
 void JournalSelector::JournalSearch(){
@@ -278,6 +280,7 @@ void JournalSelector::on_SearchButton_clicked()
         JournalSearch();
     }
 }
+
 //################################################################################################
 void JournalSelector::on_UseDefaults_clicked(bool checked)
 {
@@ -294,6 +297,7 @@ void JournalSelector::on_UseDefaults_clicked(bool checked)
         ui->Host->clear();
     }
 }
+
 //################################################################################################
 void JournalSelector::on_JournalList_itemClicked(QTreeWidgetItem *item, int column)
 {
@@ -309,6 +313,7 @@ void JournalSelector::on_JournalList_itemClicked(QTreeWidgetItem *item, int colu
         ok->setDisabled(true);
     }
 }
+
 //################################################################################################
 void JournalSelector::on_buttonBox_accepted()
 {
@@ -362,6 +367,7 @@ void JournalSelector::on_DBType_currentIndexChanged(int index)
     }
 }
 
+//#########################################################################################################
 void JournalSelector::on_buttonBox_clicked(QAbstractButton *button)
 {
     if(button->text()=="Restore Defaults"){

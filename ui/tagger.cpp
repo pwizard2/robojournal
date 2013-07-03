@@ -46,10 +46,7 @@
 
 QString Tagger::id_num;
 
-
-
 //#########################################################################################################
-
 Tagger::Tagger(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Tagger)
@@ -61,7 +58,6 @@ Tagger::Tagger(QWidget *parent) :
 }
 
 //#########################################################################################################
-
 Tagger::~Tagger()
 {
     delete ui;
@@ -135,12 +131,10 @@ void Tagger::PrimaryConfig(){
     layout->addWidget(bar);
     layout->addWidget(ui->TagList);
 
-
     QWidget* spacer3 = new QWidget();
     spacer3->setMaximumHeight(6);
     spacer3->setMinimumHeight(6);
     spacer3->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
-
 
     ui->buttonBox->setContentsMargins(9,0,9,9);
     layout->addWidget(spacer3);

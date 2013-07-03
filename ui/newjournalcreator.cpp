@@ -62,11 +62,14 @@ NewJournalCreator::NewJournalCreator(QWidget *parent) :
     PrimaryConfig();
 }
 
+//#########################################################################################################
+
 NewJournalCreator::~NewJournalCreator()
 {
     delete ui;
 }
 
+//#########################################################################################################
 
 void NewJournalCreator::PrimaryConfig(){
 
@@ -128,7 +131,12 @@ void NewJournalCreator::PrimaryConfig(){
 
     // Clicking the Restore Defaults button in this class tells the SQLite page to reset the form if SQLite page is active
     connect(this, SIGNAL(Clear_SQLite()), s, SLOT(ClearForm()));
+
+    ui->buttonBox->setContentsMargins(9,3,9,9);
+    ui->SetAsDefault->setContentsMargins(9,0,0,0);
 }
+
+//#########################################################################################################
 
 //Create new SQLite journal (6/9/13)
 bool NewJournalCreator::Create_SQLite_Database(){
@@ -145,12 +153,12 @@ bool NewJournalCreator::Create_SQLite_Database(){
                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
 
         switch(choice){
-            case QMessageBox::Yes:
-                proceed=true;
+        case QMessageBox::Yes:
+            proceed=true;
             break;
 
-            case QMessageBox::No:
-                proceed=false;
+        case QMessageBox::No:
+            proceed=false;
             break;
         }
     }
@@ -164,6 +172,8 @@ bool NewJournalCreator::Create_SQLite_Database(){
 
     return success;
 }
+
+//#########################################################################################################
 
 // Create a new mysql journal (6/1/13)
 bool NewJournalCreator::Create_MySQL_Database(){
@@ -204,30 +214,31 @@ bool NewJournalCreator::Create_MySQL_Database(){
     }
 }
 
-
+//#########################################################################################################
 // This method gets called whenever the user clicks the "Restore Defaults"
 // button. This sends a signal to a slot on a specific page depending on
 // which item is selected in the DatabaseType list.
 void NewJournalCreator::RestoreDefaults(){
 
     switch(ui->DatabaseType->currentRow()){
-        case 0:
-            // Do nothing; This never gets called because the Restore Defaults
-            // button is disabled while row 0 is selected in DatabaseType.
+    case 0:
+        // Do nothing; This never gets called because the Restore Defaults
+        // button is disabled while row 0 is selected in DatabaseType.
         break;
 
-        case 1:
-            // sqlite reset
-            emit Clear_SQLite();
+    case 1:
+        // sqlite reset
+        emit Clear_SQLite();
         break;
 
 
-        case 2: // MySQL reset
-            emit Clear_MySQL();
+    case 2: // MySQL reset
+        emit Clear_MySQL();
         break;
     }
 }
 
+//#########################################################################################################
 void NewJournalCreator::on_DatabaseType_currentRowChanged(int currentRow)
 {
     stack->setCurrentIndex(currentRow);
@@ -242,6 +253,7 @@ void NewJournalCreator::on_DatabaseType_currentRowChanged(int currentRow)
     }
 }
 
+//#########################################################################################################
 // Unlock the OK button to allow the user to submit the form. This also locks the
 // DatabaseType object to prevent the user from switching journal types before clicking OK.
 void NewJournalCreator::unlockOKButton(){
@@ -252,6 +264,7 @@ void NewJournalCreator::unlockOKButton(){
     ui->DatabaseType->setEnabled(false);
 }
 
+//#########################################################################################################
 // Lock the OK button to allow the user to prevent the form from being submitted  This also unlocks the
 // DatabaseType object so the user can switch the journal type if necessary.
 void NewJournalCreator::lockOKButton(){
@@ -260,6 +273,7 @@ void NewJournalCreator::lockOKButton(){
     ui->DatabaseType->setEnabled(true);
 }
 
+//#########################################################################################################
 void NewJournalCreator::on_buttonBox_clicked(QAbstractButton *button)
 {
     if(button->text()=="Restore Defaults"){
@@ -267,6 +281,7 @@ void NewJournalCreator::on_buttonBox_clicked(QAbstractButton *button)
     }
 }
 
+//#########################################################################################################
 // Only accept the form if everything passes validation
 void NewJournalCreator::accept(){
 
@@ -295,7 +310,7 @@ void NewJournalCreator::accept(){
 
         bool successful2;
         if(valid){
-           successful2=Create_SQLite_Database();
+            successful2=Create_SQLite_Database();
         }
 
         // Close the form
@@ -313,6 +328,7 @@ void NewJournalCreator::accept(){
     }
 }
 
+//#########################################################################################################
 void NewJournalCreator::on_buttonBox_rejected()
 {
     // If this is the firstrun, return to the FirstRun class. It doesn't exist anymore at this
@@ -326,9 +342,3 @@ void NewJournalCreator::on_buttonBox_rejected()
         this->reject();
     }
 }
-
-
-
-
-
-
