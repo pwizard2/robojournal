@@ -97,8 +97,8 @@ void MySQLJournalPage::ClearForm(){
 int MySQLJournalPage::PasswordStrength(QString passwd){
     using namespace std;
 
-    int score=0;
 
+    int score=0;
     int len=passwd.length();
 
     // count of each element in passwd string
@@ -116,20 +116,42 @@ int MySQLJournalPage::PasswordStrength(QString passwd){
         score=score+(len-alphaUC)*2.5; // calculate uppercase letters.
         score=score+(len-alphaLC)*2.5; // calculate lowercase letters.
 
+        int total_deductions=0;
+
         // Dock points for adjacent lowercase letters
         QRegExp lowercase_adj("[a-z]{2,}",Qt::CaseSensitive);
         int repeat_lc=passwd.count(lowercase_adj);
-        score=score-(repeat_lc*len);
+
+        if(repeat_lc > 0){
+            cout << "WARNING: Docking " << repeat_lc*len << " points from score because password has " << repeat_lc <<
+                    " adjacent lowercase letters."  << endl;
+            score=score-(repeat_lc*len);
+            total_deductions=total_deductions+(repeat_lc*len);
+        }
+
 
         // Dock points for adjacent uppercase letters
         QRegExp uppercase_adj("[A-Z]{2,}",Qt::CaseSensitive);
         int repeat_uc=passwd.count(uppercase_adj);
-        score=score-(repeat_uc*len);
+
+        if(repeat_uc > 0){
+            cout << "WARNING: Docking " << repeat_uc*len << " points from score because password has " << repeat_uc <<
+                    " adjacent uppercase letters."  << endl;
+            score=score-(repeat_uc*len);
+            total_deductions=total_deductions+(repeat_uc*len);
+        }
+
 
         // Dock points for adjacent numbers
         QRegExp int_consecutive("[0-9]{2,}");
         int repeat_int=passwd.count(int_consecutive);
-        score=score-(repeat_int*len);
+
+        if(repeat_int > 0){
+            cout << "WARNING: Docking " << repeat_int*len << " points from score because password has " << repeat_int <<
+                    " adjacent integers."  << endl;
+            score=score-(repeat_int*len);
+            total_deductions=total_deductions+(repeat_int*len);
+        }
 
         // Dock points for repeated numbers (6/26/13)
         QString num_seed="1,2,3,4,5,6,7,8,9,0";
@@ -137,14 +159,18 @@ int MySQLJournalPage::PasswordStrength(QString passwd){
 
         for(int i=0; i < num_array.size(); i++){
             QString var1=num_array.at(i);
-             int num_dupes=passwd.count(var1);
+            int num_dupes=passwd.count(var1);
 
-             if(num_dupes >= 2){
-                 cout << "WARNING: Docking points from score because password has " << num_dupes <<
-                         " occurrence(s) of " << var1.toStdString() << endl;
-                 score=score-(num_dupes * 4);
-             }
+            if(num_dupes >= 2){
+                cout << "WARNING: Docking " << num_dupes * 4 << " points from score because password has " << num_dupes <<
+                        " occurrences of " << var1.toStdString() << "." << endl;
+                score=score-(num_dupes * 4);
+
+                total_deductions=total_deductions+(num_dupes * 4);
+            }
         }
+
+
 
         // Dock points for multiple occurrences of each UC/LC letter (6/26/13)
         QString alpha_seed="a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z"; // Now I know my ABC's...
@@ -152,13 +178,15 @@ int MySQLJournalPage::PasswordStrength(QString passwd){
 
         for(int i=0; i < alpha_array.size(); i++){
             QString var2=alpha_array.at(i);
-             int alpha_dupes=passwd.count(var2,Qt::CaseInsensitive);
+            int alpha_dupes=passwd.count(var2,Qt::CaseInsensitive);
 
-             if(alpha_dupes >= 2){
-                 cout << "WARNING: Docking points from score because password has " << alpha_dupes <<
-                         " occurrence(s) of " << var2.toStdString() << endl;
-                 score=score-(alpha_dupes * 4);
-             }
+            if(alpha_dupes >= 2){
+                cout << "WARNING: Docking " << alpha_dupes * 4 << " points from score because password has " << alpha_dupes <<
+                        " occurrences of " << var2.toStdString() << "." << endl;
+                score=score-(alpha_dupes * 4);
+
+                total_deductions=total_deductions+(alpha_dupes * 4);
+            }
         }
 
         // Dock points for multiple occurrences of symbols. (6/23/13)
@@ -167,13 +195,15 @@ int MySQLJournalPage::PasswordStrength(QString passwd){
 
         for(int i=0; i < sym_array.size(); i++){
             QString var3=sym_array.at(i);
-             int sym_dupes=passwd.count(var3);
+            int sym_dupes=passwd.count(var3);
 
-             if(sym_dupes >= 2){
-                 cout << "WARNING: Docking points from score because password has " << sym_dupes <<
-                         " occurrence(s) of " << var3.toStdString() << endl;
-                 score=score-(sym_dupes * 4);
-             }
+            if(sym_dupes >= 2){
+                cout << "WARNING: Docking " << sym_dupes * 4 << " points from score because password has " << sym_dupes <<
+                        " occurrences of " << var3.toStdString() << "." << endl;
+                score=score-(sym_dupes * 4);
+
+                total_deductions=total_deductions+(sym_dupes * 4);
+            }
         }
 
         // prevent score from going out of range
@@ -187,6 +217,9 @@ int MySQLJournalPage::PasswordStrength(QString passwd){
 
         // make sure the score is a whole integer w/o decimals
         score=qRound(score);
+
+        cout << "================================================================================" << endl;
+        cout << "Total Point Deductions: " << total_deductions << " / 100 " << endl;
     }
 
     return score;
@@ -359,3 +392,5 @@ void MySQLJournalPage::HarvestData(){
     NewJournalCreator::root_password=s.Break_Injections(raw_root_pass);
     NewJournalCreator::port=s.Break_Injections(raw_port);
 }
+
+

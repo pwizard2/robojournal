@@ -74,9 +74,6 @@ private slots:
     void on_buttonBox_rejected();
 
 
-
-
-
 private:
     Ui::NewJournalCreator *ui;
 
@@ -91,6 +88,8 @@ private:
     bool Create_SQLite_Database();
 
     void accept();
+
+
 };
 
 #endif // NEWJOURNALCREATOR_H

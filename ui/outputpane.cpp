@@ -16,26 +16,26 @@
     You should have received a copy of the GNU General Public License
     along with RoboJournal.  If not, see <http://www.gnu.org/licenses/>.
 
-    Class description/purpose (6/13/13), --Will Kraft:
-    The HTMLCore class contains all methods that are required to turn raw Editor
-    class output into a viable HTML-based entry that can be stored in a database.
-    Once processed, the HTMLCore output is ready to be fed to MySQLCore or SQLiteCore.
-    The HTMLCore also converts raw database output into a HTML document each time
-    an entry needs to be displayed.
+    Class description/purpose (7/4/13), --Will Kraft:
+    The OutputPane class holds the current entry AND its tags. This is
+    designed to work with the completely redesigned Rich Text entry system.
+    I originally planned to implement this and the rich text entry system
+    in version 0.5 but due to the sheer scope of the necessary changes AND
+    the requisite months of debugging it looks like it's going to have to
+    wait until 0.6.
 */
 
-#ifndef HTMLCORE_H
-#define HTMLCORE_H
+#include "outputpane.h"
+#include "ui_outputpane.h"
 
-#include <QString>
-
-class HTMLCore
+OutputPane::OutputPane(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::OutputPane)
 {
-public:
-    HTMLCore();
-    QString Do_Post_Processing(QString rawtext, int wordcount);
-    QString ProcessEntryFromEditor(QString rawtext);
-    QString AssembleEntry(QString id);
-};
+    ui->setupUi(this);
+}
 
-#endif // HTMLCORE_H
+OutputPane::~OutputPane()
+{
+    delete ui;
+}

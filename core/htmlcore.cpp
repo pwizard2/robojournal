@@ -20,23 +20,78 @@
     The HTMLCore class contains all methods that are required to turn raw Editor
     class output into a viable HTML-based entry that can be stored in a database.
     Once processed, the HTMLCore output is ready to be fed to MySQLCore or SQLiteCore.
+    The HTMLCore also converts raw database output into a HTML document each time
+    an entry needs to be displayed.
 */
 
 #include "htmlcore.h"
 #include <QRegExp>
 #include <QStringList>
 #include "core/buffer.h"
+#include "sql/mysqlcore.h"
 
 HTMLCore::HTMLCore()
 {
 }
 
+
+//############################################################################################################
+// This public function takes the raw database output array (QList<QString>) and builds a full html document to use
+// in the new WebKit-based Entry Output Pane. Whenever RJ needs to display an entry, this function should be
+// called INSTEAD of invoking any of the SQL cores directly. QString id corresponds to DB row number. Planned for 0.6. (7/4/13).
+QString HTMLCore::AssembleEntry(QString id){
+
+    QString title="title goes here";
+    QString background="000000";
+    QString foreground="FFFFFF";
+    QString author=Buffer::full_name;
+    QString date="today";
+    QString time="12:00 pm";
+
+
+    QStringList assembler;
+    assembler.append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">");
+    assembler.append("<html>");
+    assembler.append("<head>");
+    assembler.append("<title>" + title + "</title>");
+    assembler.append("</head>");
+    assembler.append("<body>");
+    assembler.append("<h1>" + title + "</h1>");
+    assembler.append("<div style=\"width: 100%; background: #" + background + "; color:" +
+                     foreground + "; border: solid 1px black; margin-bottom: 10px;\">");
+
+    assembler.append("<small>On " + date + " at " + time + ", " + author + " wrote:</small>");
+    assembler.append("</div>");
+
+    assembler.append("<div style=\"width: 100%; background: #" + background + "; color:" +
+                     foreground + "; border: solid 1px black; margin-bottom: 10px;\">");
+    assembler.append("<small>Tags:</small>");
+    assembler.append("</div>");
+    assembler.append("</body>");
+    assembler.append("</html>");
+
+    QString entry=assembler.join("\n");
+
+    return entry;
+}
+
 //#############################################################################################################
-// This function takes the raw output from the Editor and strips out the extra HTML so it can be stored
-// in the database. The part that needs to be stripped out is everything except what is between the <body> tags.
-// (6/30/13).
+// This function takes the raw HTML output from the Editor and strips out the extra code, leaving only what
+// is between the <body> tags intact. Return the clean entry as a QString so another function can feed it into the
+// database. New for 0.5. (7/3/13). UPDATE 7/4/13: Delay this to version 0.6.
 QString HTMLCore::ProcessEntryFromEditor(QString rawtext){
 
+    QString body=rawtext;
+
+    while(!body.startsWith("<p", Qt::CaseInsensitive)){
+        body=body.remove(0,1);
+    }
+
+    body=body.remove("</body></html>");
+
+    body=body.trimmed();
+
+    return body;
 }
 
 //#############################################################################################################

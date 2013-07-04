@@ -60,7 +60,8 @@ SOURCES += main.cpp\
         ui/editortagmanager.cpp \
         core/taggingshared.cpp \
         core/htmlcore.cpp \
-    ui/permissionmanager.cpp
+    ui/permissionmanager.cpp \
+    ui/outputpane.cpp
 
 HEADERS  += ui/mainwindow.h \
 	core/buffer.h \
@@ -111,7 +112,8 @@ HEADERS  += ui/mainwindow.h \
         ui/editortagmanager.h \
         core/taggingshared.h \
         core/htmlcore.h \
-    ui/permissionmanager.h
+    ui/permissionmanager.h \
+    ui/outputpane.h
 
 
 FORMS    += ui/mainwindow.ui \
@@ -138,7 +140,8 @@ FORMS    += ui/mainwindow.ui \
         ui/journalcreatorcoverpage.ui \
         ui/configurationsqlite.ui \
         ui/editortagmanager.ui \
-    ui/permissionmanager.ui
+    ui/permissionmanager.ui \
+    ui/outputpane.ui
 
 # Declaration of images and other to-be-embedded resources.
 RESOURCES  = images.qrc
@@ -197,6 +200,9 @@ win32{
     CONFIG += qt release
     message(Creating 32-bit Windows release build...)
 }
+
+
+
 
 
 

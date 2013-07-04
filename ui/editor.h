@@ -27,6 +27,7 @@
 #include <QSplitter>
 #include "ui/editortagmanager.h"
 #include "ui_editortagmanager.h"
+#include <QTextDocument>
 
 namespace Ui {
 class Editor;
@@ -113,6 +114,8 @@ private slots:
     void on_bold_toggled(bool checked);
 
 
+
+
 private:
     Ui::Editor *ui;
 
@@ -125,6 +128,10 @@ private:
     QString WordCount(QString data);
     void ConfirmExit();
     void reject();
+
+    void ToggleHTML(bool checked);
+
+    QTextDocument *doc;
 
 
 

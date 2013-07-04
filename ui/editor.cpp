@@ -56,6 +56,24 @@ void Editor::reject(){
     ConfirmExit();
 }
 
+// This function shows/hides the HTML code in the editor TextEdit. New for 0.5. 7/3/13.
+//############################################################################################################
+void Editor::ToggleHTML(bool checked){
+
+    QString html=ui->EntryPost->toHtml();
+    ui->EntryPost->clear();
+
+    if(checked){
+
+
+    ui->EntryPost->setPlainText(html);
+    }
+    else{
+
+    ui->EntryPost->setHtml(doc->toPlainText());
+    }
+}
+
 //#############################################################################################################
 // Set up form (create toolbars and statusbar) and bind everything to a vbox layout. New for 0.4.
 void Editor::PrimaryConfig(){
@@ -134,7 +152,11 @@ void Editor::PrimaryConfig(){
 
 
 
-    // populate primary toolbar.
+
+    /* ###############################################################################
+    Update 7/4/13: Postpone these rich text formatting actions to 0.6 because the rich text
+    display/editing system has been delayed. Hide these actions for now.
+
     bar->addAction(boldAction);
     bar->addAction(emAction);
     bar->addAction(uAction);
@@ -146,6 +168,21 @@ void Editor::PrimaryConfig(){
     bar->addAction(rpAction);
     bar->addAction(bqAction);
 
+    bar->addSeparator();
+    */
+
+    ui->bold->setVisible(false);
+    ui->Italic->setVisible(false);
+    ui->Underline->setVisible(false);
+    ui->ParaLeft->setVisible(false);
+    ui->ParaCenter->setVisible(false);
+    ui->ParaRight->setVisible(false);
+    ui->ShowCode->setVisible(false);
+    //###############################################################################
+
+    // populate primary toolbar.
+    bar->addAction(postAction);
+    bar->addAction(cancelAction);
     bar->addSeparator();
 
     bar->addAction(cutAction);
@@ -159,7 +196,7 @@ void Editor::PrimaryConfig(){
 
     bar->addSeparator();
 
-    bar->addAction(tcAction);
+    //bar->addAction(tcAction);
     bar->addAction(spellAction);
     bar->addAction(tagAction);
 
@@ -203,11 +240,6 @@ void Editor::PrimaryConfig(){
     masterbar->setLayoutDirection(Qt::LeftToRight);
     masterbar->setContextMenuPolicy(Qt::PreventContextMenu);
 
-    // 6/9/13: Move post and cancel buttons to master toolbar because we need the space on the second toolbar for
-    // the formatting buttons in version 0.5 and later.
-    masterbar->addAction(postAction);
-    masterbar->addAction(cancelAction);
-    masterbar->addSeparator();
 
     masterbar->addWidget(spacer1);
     masterbar->addWidget(ui->label);
@@ -349,6 +381,8 @@ void Editor::PrimaryConfig(){
     // This signal/slot pair connects the divider to the Manage Tags toolbar button. If the user drags the
     // slider up or down, emit a signal to toggle the toolbar button on or off.
     connect(divide, SIGNAL(splitterMoved(int,int)), this, SLOT(splitterMoved()));
+
+    doc=new QTextDocument();
 
 
 #ifdef _WIN32
@@ -640,8 +674,14 @@ bool Editor::NewEntry(){
         Editor::body=h.Do_Post_Processing(spell->toPlainText(),wordcount);
     }
     else{
-        Editor::body=h.Do_Post_Processing(ui->EntryPost->toPlainText(),wordcount);
-    }
+
+        QString body_text=ui->EntryPost->toPlainText();
+
+        //body_text=h.ProcessEntryFromEditor(body_text);
+
+        Editor::body=h.Do_Post_Processing(body_text,wordcount);
+
+   }
 
 
     //Bugfix for 0.2
@@ -807,6 +847,8 @@ QString Editor::WordCount(QString data){
 void Editor::on_EntryPost_textChanged()
 {
     DocumentStats();
+
+    doc->setHtml(ui->EntryPost->toHtml());
 }
 
 //#############################################################################################################
@@ -1009,6 +1051,7 @@ void Editor::splitterMoved(){
 
 void Editor::on_ShowCode_toggled(bool checked)
 {
+    ToggleHTML(checked);
 
 }
 

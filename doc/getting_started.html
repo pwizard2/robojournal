@@ -43,7 +43,11 @@ alt="RoboJournal Documentation" class="masthead">
       (deprecated)</a></li>
     </ol>
   </li>
-  <li><a href="#connect">Connecting to an Existing Journal Database</a> </li>
+  <li><a href="#connect">Connecting to an Existing Journal Database</a> 
+    <ol>
+      <li><a href="#js_mysql">Selecting a MySQL Journal</a></li>
+    </ol>
+  </li>
 </ol>
 
 <h2 id="firstrun">First-Run Overview </h2>
@@ -105,22 +109,27 @@ Journal Creator can be directly accessed during first-run or by clicking the
 <strong>Journal Creator</strong> item in the <strong>Database</strong>
 drop-down list on the RoboJournal main window. </p>
 
+<p>Select the <strong>Create a new journal database</strong> option on the
+Welcome to RoboJournal dialog and click the <strong>OK</strong> button to
+launch the Journal Creator. Alternatively, you can select the <strong>Journal
+Creator</strong> option from the main window's <strong>Database</strong>
+drop-down list:<img alt="Figure 2" src="img/screens/jc_launch.png" width="744"
+height="371" class="screenshot-noshadow"><span class="caption_wide">Figure 2:
+The Journal Creator can be invoked from the Welcome to RoboJournal window or
+the main window's <strong>Database</strong> drop-down menu.</span> </p>
+
+<p>In either case, the <strong>Journal Creator</strong> window is
+displayed:<img alt="Figure 3" src="img/screens/new_jc1.png" width="593"
+height="515" class="screenshot"><span class="caption">Figure 3: Journal Creator
+Overview page.</span> </p>
+
 <p>The <strong>Set this new journal as my default</strong> checkbox is always
 checked (and locked) during first-run. If you run the Journal Creator again at
 a later time, this checkbox (then unchecked and unlocked) gives you the option
 to replace the current default with the brand-new journal. The Journal Creator
-always shows the Overview page by default each time it is initiated.</p>
-
-<p>Select the <strong>Create a new journal database</strong> option on the
-Welcome to RoboJournal dialog and click the <strong>OK</strong> button to
-launch the Journal Creator:<img alt="Figure 2" src="img/screens/welcome1.png"
-width="410" height="353" class="screenshot"><span class="caption_wide">Figure
-2: Initializing the Journal Creator from the Welcome to RoboJournal
-window.</span> </p>
-
-<p>The <strong>Journal Creator</strong> window is displayed:<img alt="Figure 3"
-src="img/screens/new_jc1.png" width="585" height="518" class="screenshot"><span
-class="caption">Figure 3: Journal Creator Overview page.</span> </p>
+always shows the Overview page by default. The Overview page helps you make a
+decision about which database to use by explaining the main advantages and
+disadvantages of each option.</p>
 
 <h3 id="sqlite_journal">Creating a SQLite-based Journal</h3>
 
@@ -134,8 +143,8 @@ following steps:</p>
 <ol class="list">
   <li>Once the Journal Creator window is open, click the <strong>MySQL
     Journal</strong> option in the menu on the left side of the window. The
-    MySQL-related options are displayed:<img alt="Figure 4"
-    src="img/screens/new_jc2.png" width="585" height="518"
+    MySQL Journal page is displayed:<img alt="Figure 4"
+    src="img/screens/new_jc2.png" width="593" height="515"
     class="screenshot"><span class="caption">Figure 4: The Journal Creator
     populates several fields automatically based on your operating system
     settings.</span></li>
@@ -153,7 +162,7 @@ following steps:</p>
     strength ratings range from 0% (extremely weak) to 100% (extremely strong).
     In most situations, a strength rating of at least 75% means your password
     is strong enough to resist most attempts to crack it. <img alt="Figure 5"
-    src="img/screens/new_jc3.png" width="585" height="518"
+    src="img/screens/new_jc3.png" width="593" height="515"
     class="screenshot"><span class="caption">Figure 5: The <strong>Password
     strength</strong> meter provides a visual indicator of password quality and
     resilience.</span> 
@@ -166,10 +175,11 @@ following steps:</p>
     and the inclusion of all glyph varieties but docks points for adjacent
     glyphs of the same type (two or more letters, numbers, or symbols in a row)
     and repeating glyphs (two or more instances of the same character). If you
-    need help creating suitable passwords, you should consult the <a
+    need help creating strong passwords, tools like <a
     href="http://www.strongpasswordgenerator.com">Strong Password Generator</a>
-    or install <a
-    href="http://www.softpedia.com/get/Security/Password-Managers-Generators/Randompass.shtml">Randompass</a>.</div>
+    or <a
+    href="http://www.softpedia.com/get/Security/Password-Managers-Generators/Randompass.shtml">Randompass</a>
+    can produce an unlimited number of suitable glyph combinations.</div>
   </li>
   <li>Adjust the values in the <strong>Hostname</strong> and
     <strong>Port</strong> fields if necessary. Leaving these fields blank
@@ -243,12 +253,12 @@ and create user accounts, so make sure you have all required clearance before
 you begin. The Assign Permissions extension should be used whenever it is
 necessary to grant permissions to a database. For instance, migrated or
 restored databases are usually owned by the root user; all other user accounts
-(and therefore RoboJournal) are unable to access or modify these databases
-until the necessary access permissions have been granted.</p>
+(and therefore RoboJournal) are unable to access or modify such databases until
+the necessary access permissions have been granted.</p>
 
 <p>The Assign Permissions extension is initiated by clicking the <strong>Assign
 Permissions</strong> button on the Journal Selector window:<img alt="Figure 7"
-src="img/screens/assign_permissions1.png" width="517" height="428"
+src="img/screens/assign_permissions1.png" width="545" height="462"
 class="screenshot"><span class="caption">Figure 7: The Assign Permissions
 window is accessed through the Journal Selector.</span></p>
 
@@ -446,54 +456,82 @@ quit. Remote root access will be enabled the next time the MySQL server starts.
 <h2 id="connect">Connecting to an Existing Journal Database</h2>
 
 <p>RoboJournal's journal selection tool provides an easy way to select the
-default journal during the first-run session. This tool allows you to specify
-the username and password for a pre-existing account on a host machine (local
-or remote). Once you have provided this information, RoboJournal displays all
-databases associated with that specific user account. </p>
+default journal during the first-run session or any other time the default
+journal needs to be changed. This tool allows you to specify the username and
+password for a pre-existing account on a host machine (local or remote). Once
+you have provided this information, RoboJournal displays all databases
+associated with that specific user account. If you do not have a user account
+at this time, you <em>must</em> use the <a href="#assign_permissions">Assign
+Permissions extension</a> to create a new account and bind at least one journal
+database to it before you can use the Journal Selector. </p>
 
-<p>In order to use this tool successfully, you <em>must</em> know the correct
-username and password for the account you wish to access since RoboJournal
-currently has no way of retrieving a full list of accounts from the host.
-Furthermore, this tool only lists databases that are associated with the user
-account you provide (all others are ignored). Before you use the Journal
+<p>In order to use the Journal Selector successfully, you <em>must</em> know
+the correct username and password for the account you wish to access since
+RoboJournal currently has no way of retrieving a full list of accounts from the
+host. Furthermore, this tool only lists databases that are associated with the
+user account you provide (all others are ignored). Before you use the Journal
 Selector, you <em>must</em> <a href="#permissions">assign the correct user
 permissions</a> to the database you wish to use or RoboJournal will be unable
 to find it.</p>
+
+<p>Click to select the <strong>Connect to an existing journal database</strong>
+option on the Welcome to RoboJournal dialog and click the <strong>OK</strong>
+button. If RoboJournal is not in first-run mode, click the <strong>Journal
+Selector</strong> option on the main window's <strong>Database</strong>
+drop-down menu:</p>
+
+<p><img alt="Figure 7" src="img/screens/js_launch.png" width="765" height="368"
+class="screenshot-noshadow"><span class="caption">Figure 7: The Journal
+Selector is launched via the Welcome to RoboJournal dialog <em>or</em> the
+<strong>Database</strong> drop-down menu on the main window.</span>In both
+instances, the Journal Selector window is displayed: <img alt="Figure 8"
+src="img/screens/js_launch2.png" width="545" height="462"
+class="screenshot"><span class="caption">Figure 8: The Journal Selector's
+default appearance.</span></p>
+
+<p>The Journal Selector in RoboJournal 0.5 and later is designed to work with
+multiple database types. This functionality is controlled by the
+<strong>Database</strong> drop-down menu in the <strong>Backend</strong> group
+and affects which window options are available at any given time. The Journal
+Selector always starts in MySQL mode, which means it is configured to work with
+MySQL databases by default. As such, the <strong>Connection and User Settings
+group</strong> is unlocked and ready for input. The <strong>Browse</strong>
+button in the <strong>Backend</strong> group is always locked while the Journal
+Selector is in MySQL mode because file browsing functionality is inapplicable
+to MySQL databases. On the other hand, switching to SQLite mode causes the
+<strong>Connection and User Settings group</strong> to lock and the
+<strong>Browse</strong> button to unlock because SQLite databases exist as
+discrete files on your computer's hard drive.</p>
+
+<h3 id="js_mysql">Selecting a MySQL Journal</h3>
 <ol class="list">
-  <li>Click to select the <strong>Connect to an existing journal
-    database</strong> option on the Welcome to RoboJournal dialog and click the
-    <strong>OK</strong> button. <img alt="Figure 7"
-    src="img/screens/welcome2.png" width="411" height="354"
-    class="screenshot"><span class="caption">Figure 7: The Journal Selector is
-    launched via the Welcome to RoboJournal dialog.</span></li>
-  <li>The Journal Selector window is displayed. Change the
-    <strong>Host</strong> and <strong>Port</strong> values if necessary (you
-    must un-check the <strong>Use default host and port</strong> box to make
-    the <strong>Host</strong> and <strong>Port</strong> fields writable).<img
-    alt="Figure 8" src="img/screens/js0.png" width="526" height="417"
-    class="screenshot"><span class="caption">Figure 8: The
+  <li>Change the <strong>Host</strong> and <strong>Port</strong> values if
+    necessary (you must un-check the <strong>Use default host and port</strong>
+    box to make the <strong>Host</strong> and <strong>Port</strong> fields
+    writable).<img alt="Figure 9" src="img/screens/js0.png" width="545"
+    height="462" class="screenshot"><span class="caption">Figure 9: The
     <strong>Host</strong> and <strong>Port</strong> fields are automatically
     populated with the most common default values. </span></li>
   <li>Enter the appropriate username and password into their respective fields
-    (indicated within the red circle in Figure 9). These values should belong
+    (indicated within the red circle in Figure 10). These values should belong
     to the account you wish to use as your own (do not use root). The contents
     of the <strong>Password</strong> field are always obscured for security
-    reasons. <img alt="Figure 9" src="img/screens/js1.png" width="526"
-    height="417" class="screenshot"><span class="caption">Figure 9: Fill in the
-    indicated fields to display a list of journals associated with a specific
-    account.</span></li>
+    reasons. <img alt="Figure 10" src="img/screens/js1.png" width="545"
+    height="462" class="screenshot"><span class="caption">Figure 10: Fill in
+    the indicated fields to display a list of journals associated with a
+    specific account.</span></li>
   <li>Click the <strong>Search for Journals</strong> button. </li>
   <li>A list of journals associated with the user account you provided is
-    displayed in the large open area on the left:<img alt="Figure 10"
-    src="img/screens/js2.png" width="526" height="417" class="screenshot"><span
-    class="caption">Figure 10: The Journal Selector displays all databases
+    displayed in the large open area on the left:<img alt="Figure 11"
+    src="img/screens/js2.png" width="545" height="462" class="screenshot"><span
+    class="caption">Figure 11: The Journal Selector displays all databases
     associated with a specific user account.</span></li>
   <li>Select the journal you wish to use by clicking on its node in the
     hierarchy. Once a journal has been selected, the <strong>OK</strong> button
-    on the Journal Selector window is unlocked (as shown in Figure 11).</li>
-  <li>Click the <strong>OK</strong> button to continue.<img alt="Figure 11"
-    src="img/screens/js3.png" width="526" height="417" class="screenshot"><span
-    class="caption">Figure 11: The <strong>OK</strong> button unlocks once you
+    on the Journal Selector window is unlocked (as shown in Figure 12).</li>
+  <li>Click the <strong>OK</strong> button to continue.<img alt="Figure 12"
+    src="img/screens/js3.png" width="545" height="462" class="screenshot"><span
+    class="caption">Figure 12: The <strong>OK</strong> button unlocks once you
     have selected an entry.</span> 
 
     <div class="FYI">
@@ -506,15 +544,15 @@ to find it.</p>
     settings are not changed at all if you decide to abort.</div>
   </li>
   <li>A text input dialog is displayed. Enter your name (as you prefer it) and
-    click the <strong>OK</strong> button. You may click the
+    click the <strong>OK</strong> button. You can click the
     <strong>Cancel</strong> button if you wish to skip this step.<img
     alt="Figure 12" src="img/screens/set_name.png" width="336" height="128"
-    class="screenshot"><span class="caption">Figure 12: This value sets the
+    class="screenshot"><span class="caption">Figure 13: This value sets the
     user's full name in the configuration file.</span></li>
   <li>A gender selection dialog is displayed. Select your gender by clicking
-    the appropriate button.<img alt="Figure 13"
+    the appropriate button.<img alt="Figure 14"
     src="img/screens/set_gender.png" width="214" height="120"
-    class="screenshot"><span class="caption">Figure 13: The gender selection
+    class="screenshot"><span class="caption">Figure 14: The gender selection
     dialog determines which avatar icon is used while a connection is
     active.</span></li>
 </ol>
