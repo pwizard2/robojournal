@@ -17,7 +17,10 @@
     along with RoboJournal.  If not, see <http://www.gnu.org/licenses/>.
 
     6/10/13: This class is the built-in tag interface for the Editor window.
-
+    As of 7/12/13, it has become the universal tag interface for the entire
+    application. The Tagger class used to contain a redundant copy of this
+    code because it was the original tag management interface. Now, The
+    Tagger is just a window frame that contains an instance of this object.
 */
 
 #include "editortagmanager.h"
