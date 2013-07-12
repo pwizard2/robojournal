@@ -287,7 +287,8 @@ void Editor::PrimaryConfig(){
     // Add tagging interface as QWidget Object (6/10/13)
     et=new EditorTagManager(this);
     et->setMinimumWidth(this->width());
-
+    et->setMaximumHeight(125);
+    EditorTagManager::standalone_tagger=false; // false b/c this EditorTagManager is not contained in the standalone Tagger interface
 
     layout->addWidget(bar,1);
 
@@ -368,6 +369,9 @@ void Editor::PrimaryConfig(){
     if(Buffer::editmode){
         ui->Cancel->setText("Discard Changes");
         ui->Cancel->setToolTip("Discard Changes");
+
+        // 7/12/13: Get current list of tags
+        et->LoadTags(Buffer::editentry);
     }
     else{
         ui->Cancel->setText("Discard Entry");

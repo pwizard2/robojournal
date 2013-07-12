@@ -43,6 +43,7 @@
 #include <QAction>
 #include <QAbstractButton>
 #include <QPushButton>
+#include "ui/editortagmanager.h"
 
 QString Tagger::id_num;
 
@@ -63,86 +64,39 @@ Tagger::~Tagger()
     delete ui;
 }
 
-//#########################################################################################################
-void Tagger::RevertTags(){
-    if(Buffer::showwarnings){
-        QMessageBox m;
-        int choice=m.question(this,"RoboJournal","Do you really want to discard the changes you made "
-                              "to this entry\'s tags?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
-        switch(choice){
-        case QMessageBox::Yes:
-            if(no_tags){
-                ui->TagList->clear();
-            }
-            else{
-                ui->TagList->clear();
-                LoadTags();
-            }
-            break;
 
-        case QMessageBox::No:
-            // Do nothing
-            break;
-        }
-    }
-    else{
-        if(no_tags){
-            ui->TagList->clear();
-        }
-        else{
-            ui->TagList->clear();
-            LoadTags();
-        }
-    }
-}
 
 //#########################################################################################################
 // (6/14/13): New PrimaryConfig for 0.5 and later completely changes the appearance of the Tagger
 // from previous versions.
+
+// (7/12/13): The Tagger is now just a window frame that contains an EditorTagManager object. The tagger still
+// looks like it did before and this method decreases code redundancy.
+
 void Tagger::PrimaryConfig(){
 
     QWidget* spacer1 = new QWidget();
-    spacer1->setMinimumWidth(7);
-    spacer1->setMaximumWidth(7);
+    spacer1->setMinimumHeight(9);
+    spacer1->setMaximumHeight(9);
     spacer1->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Preferred);
 
-    QWidget* spacer2 = new QWidget();
-    spacer2->setMinimumWidth(7);
-    spacer2->setMaximumWidth(7);
-    spacer2->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Preferred);
-
-
-    QToolBar *bar = new QToolBar(this);
-    bar->addWidget(ui->NewTag);
-    bar->addSeparator();
-    bar->addWidget(ui->RemoveTag);
-    bar->addWidget(ui->AddTag);
-    bar->addWidget(spacer2);
-    bar->addWidget(ui->label);
-    bar->addWidget(spacer1);
-    bar->addWidget(ui->TagChooser);
-
-    bar->setContentsMargins(0,0,0,0);
-    ui->TagList->setContentsMargins(0,0,0,0);
+    et=new EditorTagManager(ui->TagWidget);
+    EditorTagManager::standalone_tagger=true; // true b/c this EditorTagManager is contained in the standalone Tagger interface
 
     QVBoxLayout *layout=new QVBoxLayout(this);
 
     layout->setContentsMargins(0,0,0,0);
     layout->setSpacing(0);
-    layout->addWidget(bar);
-    layout->addWidget(ui->TagList);
-
-    QWidget* spacer3 = new QWidget();
-    spacer3->setMaximumHeight(9);
-    spacer3->setMinimumHeight(9);
-    spacer3->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
-
-    ui->buttonBox->setContentsMargins(9,9,9,9);
-    layout->addWidget(spacer3);
+    layout->addWidget(ui->TagWidget);
+    layout->addWidget(spacer1);
     layout->addWidget(ui->line);
     layout->addWidget(ui->buttonBox);
 
     this->setLayout(layout);
+
+    et->setMaximumWidth(this->width());
+    et->setMaximumHeight(1000);
+    et->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
     // hide question mark button in title bar when running on Windows
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -152,9 +106,6 @@ void Tagger::PrimaryConfig(){
     this->setMaximumSize(width,height);
     this->setMinimumSize(width,height);
 
-    // Do initial setup
-    ui->RemoveTag->setDisabled(true);
-
     QAbstractButton *ok=ui->buttonBox->button(QDialogButtonBox::Ok);
     ok->setDisabled(true);
 
@@ -162,243 +113,23 @@ void Tagger::PrimaryConfig(){
     QAbstractButton *apply=ui->buttonBox->button(QDialogButtonBox::Apply);
     apply->setDisabled(true);
 
-    // set background and stylesheet for TagList element
-    QPalette pal;
-    QBrush bg=pal.light();
-    QColor bgcolor=bg.color();
-    ui->TagList->setStyleSheet("padding: 8px; background-color: "+ bgcolor.name() + ";");
-
     // Load Tags
-    LoadTags();
+    et->LoadTags(Tagger::id_num);
 
-    // Create Tag List
-    TagAggregator();
-    ui->TagChooser->clearEditText();
 
-    // Add the fat spacer and the RevertTags button now because the layout has been applied
-    // by this point. This means the spacer should stretch to fit the layout (docking the button on the right).
-    QWidget* fat_spacer = new QWidget();
-    fat_spacer->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+    ui->buttonBox->setContentsMargins(9,9,9,9);
 
-    bar->addWidget(fat_spacer);
-    bar->addWidget(ui->RevertTags);
+    // Allow communication between Tagger container class and EditorTagManager child widget
+    connect(et, SIGNAL(Sig_UnlockTaggerApplyButton()), this, SLOT(UnlockApply()));
+
 }
 
 //#########################################################################################################
-// Add a tag to the list
-
-void Tagger::AddTag(QString newtag){
-    using namespace std;
-
-    // get rid of semicolons since that is how tags are delimited in the database
-    newtag=newtag.replace(";","");
-
-    bool add_entry=true;
-
-    int count=ui->TagList->count();
-
-    for(int i=0; i < count; i++){
-
-        QListWidgetItem *c=ui->TagList->item(i);
-        //cout << "Loop: " << i << endl;
-        if(c->text()== newtag){
-            add_entry=false;
-            break;
-        }
-    }
-
-    if(!add_entry){
-        QMessageBox m;
-        m.critical(this,"RoboJournal", "This entry has already been tagged with \""
-                   + newtag + "\".");
-        ui->TagChooser->clearEditText();
-        ui->TagChooser->setFocus();
-
-    }
-    else{
-        // Create new ListwidgetItem
-        QIcon tagicon(":/icons/tag_orange.png");
-        QListWidgetItem *entry=new QListWidgetItem(tagicon,newtag);
-        ui->TagList->addItem(entry);
-        ui->TagList->setCurrentItem(entry);
-        ui->RemoveTag->setEnabled(true);
-        ui->TagChooser->setFocus();
-        ui->TagChooser->clearEditText();
-        bool add_to_list=true;
-
-        for(int a=0; a < ui->TagChooser->count(); a++){
-            if(ui->TagChooser->itemText(a)==newtag){
-                add_to_list=false;
-                break;
-            }
-        }
-
-        if(add_to_list){
-            ui->TagChooser->addItem(newtag);
-        }
-
-        // Unlock the Apply button once we have changed tag data
-        QAbstractButton *apply=ui->buttonBox->button(QDialogButtonBox::Apply);
-        apply->setEnabled(true);
-
-        // re-unlock Cancel button
-        QAbstractButton *cancel=ui->buttonBox->button(QDialogButtonBox::Cancel);
-        if(!cancel->isEnabled()){
-            cancel->setEnabled(true);
-        }
-    }
-}
-
-//#########################################################################################################
-// Add Tag to the list
-void Tagger::AddTagToList(){
-
-    // get the latest batch of tags just in case new ones have been added since the form was loaded
-    QStringList current_list;
-    for(int i=0; i < ui->TagChooser->count(); i++){
-        current_list.append(ui->TagChooser->itemText(i));
-    }
-
-    TaggingShared ts;
-    QString tag=ts.DefineTag(current_list);
-
-    if(!tag.isEmpty()){
-        QIcon newicon(":/icons/tag_red_add.png");
-        ui->TagChooser->insertItem(0,newicon,tag);
-
-        // if tag append button is disabled enable it now.
-        if(!ui->AddTag->isEnabled()){
-            ui->AddTag->setEnabled(true);
-
-        }
-    }
-
-    ui->TagChooser->setEnabled(true);
-    ui->TagChooser->setCurrentIndex(0);
-}
-
-//#########################################################################################################
-// Create Tag Aggregator list. This populates the drop-down list with tags.
-
-void Tagger::TagAggregator(){
-    using namespace std;
-
-    TaggingShared ts; //New shared tagging class for 0.5 (6/11/13)
-    QStringList tag_list=ts.TagAggregator();
-
-    QIcon tagicon(":/icons/tag_red.png");
-    int count=0;
-
-    for(int z=1; z < tag_list.size(); z++){
-        QString text=tag_list[z];
-        ui->TagChooser->addItem(tagicon,text);
-        count++;
-    }
-
-    // bugfix 9/14/12: Prevent user from adding a blank tag to the entry. This can happen in brand-new journals with no tag data.
-    // If there are no tags, disable the Add Tag button & Tag list.
-    if(ui->TagChooser->count()==0){
-        ui->AddTag->setDisabled(true);
-        ui->TagChooser->setDisabled(true);
-    }
-}
-
-//#########################################################################################################
-// Delete a tag entry from the list
-
-void Tagger::DeleteTag(){
-    using namespace std;
-    QListWidgetItem *item=ui->TagList->currentItem();
-    delete item;
-
-    // if there are no items left disable the Remove button.
-    if(ui->TagList->count() == 0){
-        ui->RemoveTag->setDisabled(1);
-    }
-
-    // Unlock the Apply button once we have changed tag data
+// Slot that unclocks the Apply button whenever the Sig_UnlockTaggerApplyButton() is emitted from EditorTagManager.
+// -- Will Kraft, 7/12/13
+void Tagger::UnlockApply(){
     QAbstractButton *apply=ui->buttonBox->button(QDialogButtonBox::Apply);
     apply->setEnabled(true);
-
-    // re-unlock Cancel button
-    QAbstractButton *cancel=ui->buttonBox->button(QDialogButtonBox::Cancel);
-    if(!cancel->isEnabled()){
-        cancel->setEnabled(true);
-    }
-}
-
-//#########################################################################################################
-// return a semicolon-delimited QString containing all tags
-QString Tagger::ExportTagList(){
-    using namespace std;
-    QStringList taglist;
-
-    for(int i=0; i < ui->TagList->count(); i++){
-        QListWidgetItem *current=ui->TagList->item(i);
-        taglist.append(current->text());
-    }
-
-    QString tags=taglist.join(";");
-    //cout << "Tags: " << tags.toStdString() << endl;
-    return tags;
-}
-
-//#########################################################################################################
-// Load tagdata from database and convert to tag objects in GUI
-
-void Tagger::LoadTags(){
-    using namespace std;
-    TaggingShared ts;
-    QStringList t_array=ts.FetchTags(Tagger::id_num);
-
-    if(t_array.size()==0){
-        no_tags=true;
-    }
-    else{
-        no_tags=false;
-    }
-
-    for(int i=0; i < t_array.size(); i++){
-
-        // Exclude null entries from tag list
-        if((t_array.at(i) != "null") && (t_array.at(i) != "Null")){
-            QIcon tagicon(":/icons/tag_orange.png");
-            QListWidgetItem *entry=new QListWidgetItem(tagicon,t_array.at(i));
-            ui->TagList->addItem(entry);
-        }
-    }
-}
-
-//#########################################################################################################
-// delete tag from a list
-void Tagger::on_RemoveTag_clicked()
-{
-    DeleteTag();
-}
-
-//#########################################################################################################
-
-void Tagger::on_TagList_itemSelectionChanged()
-{
-    ui->RemoveTag->setEnabled(true);
-}
-
-//#########################################################################################################
-void Tagger::on_AddTag_clicked()
-{
-    QString newtag=ui->TagChooser->currentText();
-    AddTag(newtag);
-}
-
-//#########################################################################################################
-void Tagger::on_TagChooser_editTextChanged(const QString &arg1)
-{
-    if(arg1==""){
-        ui->AddTag->setDisabled(true);
-    }
-    else{
-        ui->AddTag->setEnabled(true);
-    }
 }
 
 //#########################################################################################################
@@ -406,7 +137,7 @@ void Tagger::on_buttonBox_clicked(QAbstractButton *button)
 {
     using namespace std;
     if(button==ui->buttonBox->button(QDialogButtonBox::Apply)){
-        QString tag_data=ExportTagList();
+        QString tag_data=et->HarvestTags();
 
         // unlock OK button
         QAbstractButton *ok=ui->buttonBox->button(QDialogButtonBox::Ok);
@@ -431,24 +162,5 @@ void Tagger::on_buttonBox_clicked(QAbstractButton *button)
                 cout << "ERROR: Tag data failed to update!" << endl;
             }
         }
-
     }
-}
-
-//#########################################################################################################
-void Tagger::on_NewTag_clicked()
-{
-    AddTagToList();
-}
-
-//#########################################################################################################
-void Tagger::on_TagChooser_currentIndexChanged()
-{
-    ui->AddTag->setEnabled(true);
-}
-
-//#########################################################################################################
-void Tagger::on_RevertTags_clicked()
-{
-    RevertTags();
 }

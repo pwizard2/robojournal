@@ -36,6 +36,7 @@
 #include "ui/editor.h"
 #include "core/buffer.h"
 #include <iostream>
+#include "ui/tagger.h"
 
 EditorTagManager::EditorTagManager(QWidget *parent) :
     QWidget(parent),
@@ -46,6 +47,7 @@ EditorTagManager::EditorTagManager(QWidget *parent) :
 }
 
 int EditorTagManager::tag_count;
+bool EditorTagManager::standalone_tagger;
 
 // ###################################################################################################
 
@@ -83,20 +85,24 @@ void EditorTagManager::RevertTags(){
         QMessageBox m;
         int choice=m.question(this,"RoboJournal","Do you really want to discard the changes you made to this entry\'s tags?",
                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
-        switch(choice){
-        case QMessageBox::Yes:
+
+        if(choice==QMessageBox::Yes){
+
             if(no_tags){
                 ui->TagList->clear();
             }
             else{
                 ui->TagList->clear();
-                LoadTags(Buffer::editentry);
-            }
-            break;
 
-        case QMessageBox::No:
-            // Do nothing
-            break;
+                if(EditorTagManager::standalone_tagger){
+                    emit Sig_UnlockTaggerApplyButton();
+
+                    LoadTags(Tagger::id_num);
+                }
+                else{
+                    LoadTags(Buffer::editentry);
+                }
+            }
         }
     }
     else{
@@ -105,7 +111,14 @@ void EditorTagManager::RevertTags(){
         }
         else{
             ui->TagList->clear();
-            LoadTags(Buffer::editentry);
+
+            if(EditorTagManager::standalone_tagger){
+                emit Sig_UnlockTaggerApplyButton();
+                LoadTags(Tagger::id_num);
+            }
+            else{
+                LoadTags(Buffer::editentry);
+            }
         }
     }
 }
@@ -175,8 +188,8 @@ void EditorTagManager::PrimaryConfig(){
     QPalette pal;
     QBrush bg=pal.light();
     QColor bgcolor=bg.color();
-    ui->TagList->setStyleSheet("padding: 8px; background-color: "+ bgcolor.name() + ";");
-
+    //ui->TagList->setStyleSheet("padding: 8px; background-color: "+ bgcolor.name() + ";");
+    //ui->TagList->setStyleSheet("margin: 8px;");
     ui->TagCount->setText("0 tags");
 
     // Create toolbar.
@@ -253,25 +266,8 @@ void EditorTagManager::PrimaryConfig(){
     if(ui->TagList->count() == 0){
         ui->RemoveTag->setDisabled(true);
         remove->setDisabled(true);
-    }
 
-    // Load the existing tags if Editor is in Edit Mode.
-    if(Buffer::editmode){
-        LoadTags(Buffer::editentry);
-
-        // Remember if this entry had 0 tags assigned to it at load time.
-        if(ui->TagList->count()==0){
-            no_tags=true;
-        }
-        else{
-            no_tags=false;
-        }
     }
-    else{
-        ui->RevertTags->setEnabled(false);
-        revert->setEnabled(false);
-    }
-
 
     // Add the fat spacer and the RevertTags button now because the layout has been applied
     // by this point. This means the spacer should stretch to fit the layout (docking the button on the right).
@@ -281,11 +277,16 @@ void EditorTagManager::PrimaryConfig(){
     bar->addWidget(fat_spacer);
     bar->addWidget(ui->RevertTags);
 
+    // Disable Revert Tags button if this is a new entry because a new item has no tags to revert to.
+    if((!Buffer::editmode) && (standalone_tagger)){
+        ui->RevertTags->setDisabled(true);
+    }
+
 }
 
 // ###################################################################################################
-
 //6/11/13: Create drop-down tag list. Use the new TaggingShared class.
+
 void EditorTagManager::CreateTagList(){
 
     TaggingShared ts;
@@ -301,7 +302,6 @@ void EditorTagManager::CreateTagList(){
 }
 
 // ###################################################################################################
-
 // (6/11/13) Add currently-selected tag in ui > AvailableTags to tag list.
 void EditorTagManager::AddTag(QString newtag){
     using namespace std;
@@ -356,6 +356,10 @@ void EditorTagManager::AddTag(QString newtag){
         }
 
         TagCount(ui->TagList->count());
+
+        if(EditorTagManager::standalone_tagger){
+            emit Sig_UnlockTaggerApplyButton();
+        }
     }
 }
 
@@ -373,6 +377,10 @@ void EditorTagManager::RemoveTag(){
     }
 
     TagCount(ui->TagList->count());
+
+    if(EditorTagManager::standalone_tagger){
+        emit Sig_UnlockTaggerApplyButton();
+    }
 }
 
 // ###################################################################################################
@@ -383,6 +391,14 @@ void EditorTagManager::LoadTags(QString id){
 
     TaggingShared ts;
     QStringList tags=ts.FetchTags(id);
+
+    // Remember if this entry originally had tags or not
+    if(tags.size()==0){
+        no_tags=true;
+    }
+    else{
+        no_tags=false;
+    }
 
     for(int i=0; i < tags.size(); i++){
 

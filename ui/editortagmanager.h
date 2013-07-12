@@ -40,8 +40,12 @@ public:
     explicit EditorTagManager(QWidget *parent = 0);
     ~EditorTagManager();
     QString HarvestTags();
-
+    void LoadTags(QString id);
     static int tag_count;
+    static bool standalone_tagger;
+
+signals:
+    void Sig_UnlockTaggerApplyButton();
     
 private slots:
     void on_AddTag_clicked();
@@ -65,6 +69,7 @@ private slots:
 
     void on_RevertTags_clicked();
 
+
 private:
     Ui::EditorTagManager *ui;
     void PrimaryConfig();
@@ -72,7 +77,6 @@ private:
     void DefineTag();
     void AddTag(QString newtag);
     void RemoveTag();
-    void LoadTags(QString id);
     void TagCount(int count);
     void RevertTags();
 

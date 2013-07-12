@@ -29,6 +29,7 @@
 
 #include <QDialog>
 #include <QAbstractButton>
+#include "ui/editortagmanager.h"
 
 namespace Ui {
 class Tagger;
@@ -44,41 +45,18 @@ public:
 
     static QString id_num;
 
-    
-
-
 private slots:
-    void on_RemoveTag_clicked();
-
-    void on_TagList_itemSelectionChanged();
-
-    void on_AddTag_clicked();
-
-    void on_TagChooser_editTextChanged(const QString &arg1);
 
     void on_buttonBox_clicked(QAbstractButton *button);
-
-    void on_NewTag_clicked();
-
-    void on_TagChooser_currentIndexChanged();
-
-    void on_RevertTags_clicked();
+    void UnlockApply();
 
 private:
+
     Ui::Tagger *ui;
 
-    void AddTag(QString newtag);
-    void DeleteTag();
-    void TagAggregator();
-    void SaveTags();
-    void LoadTags();
-    void AddTagToList();
-    QString ExportTagList();
-    void RevertTags();
-
     void PrimaryConfig();
-
     bool no_tags;
+    EditorTagManager *et;
 
 
 };

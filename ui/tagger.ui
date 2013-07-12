@@ -20,8 +20,8 @@
   <widget class="Line" name="line">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>170</y>
+     <x>10</x>
+     <y>180</y>
      <width>341</width>
      <height>16</height>
     </rect>
@@ -33,8 +33,8 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>190</y>
+     <x>70</x>
+     <y>200</y>
      <width>267</width>
      <height>27</height>
     </rect>
@@ -49,189 +49,20 @@
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QWidget" name="TagWidget" native="true">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>40</y>
-     <width>85</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Available tags</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-   </property>
-  </widget>
-  <widget class="QListWidget" name="TagList">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>60</y>
-     <width>321</width>
-     <height>101</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"/>
-   </property>
-   <property name="editTriggers">
-    <set>QAbstractItemView::NoEditTriggers</set>
-   </property>
-   <property name="tabKeyNavigation">
-    <bool>true</bool>
-   </property>
-   <property name="showDropIndicator" stdset="0">
-    <bool>false</bool>
-   </property>
-   <property name="dragDropMode">
-    <enum>QAbstractItemView::NoDragDrop</enum>
-   </property>
-   <property name="alternatingRowColors">
-    <bool>true</bool>
-   </property>
-   <property name="selectionMode">
-    <enum>QAbstractItemView::SingleSelection</enum>
-   </property>
-   <property name="textElideMode">
-    <enum>Qt::ElideNone</enum>
-   </property>
-   <property name="flow">
-    <enum>QListView::LeftToRight</enum>
-   </property>
-   <property name="isWrapping" stdset="0">
-    <bool>true</bool>
-   </property>
-   <property name="layoutMode">
-    <enum>QListView::SinglePass</enum>
-   </property>
-   <property name="spacing">
-    <number>10</number>
-   </property>
-   <property name="viewMode">
-    <enum>QListView::ListMode</enum>
-   </property>
-   <property name="modelColumn">
-    <number>0</number>
-   </property>
-   <property name="uniformItemSizes">
-    <bool>false</bool>
-   </property>
-   <property name="wordWrap">
-    <bool>true</bool>
-   </property>
-   <property name="selectionRectVisible">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QComboBox" name="TagChooser">
-   <property name="geometry">
-    <rect>
-     <x>110</x>
+     <x>10</x>
      <y>10</y>
-     <width>200</width>
-     <height>25</height>
+     <width>491</width>
+     <height>171</height>
     </rect>
    </property>
-   <property name="minimumSize">
-    <size>
-     <width>150</width>
-     <height>0</height>
-    </size>
-   </property>
-   <property name="toolTip">
-    <string>&lt;p&gt;Show all available tags&lt;/p&gt;</string>
-   </property>
-   <property name="editable">
-    <bool>false</bool>
-   </property>
-   <property name="currentIndex">
-    <number>-1</number>
-   </property>
-   <property name="insertPolicy">
-    <enum>QComboBox::InsertAtTop</enum>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="AddTag">
-   <property name="geometry">
-    <rect>
-     <x>80</x>
-     <y>10</y>
-     <width>22</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>&lt;p&gt;Apply the current item on the &lt;/span&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Available tags&lt;/span&gt;&lt;span style=&quot; font-family:'Sans';&quot;&gt; list.&lt;/span&gt;&lt;/p&gt;</string>
-   </property>
-   <property name="text">
-    <string>&amp;Apply Tag</string>
-   </property>
-   <property name="icon">
-    <iconset resource="../images.qrc">
-     <normaloff>:/icons/tag--arrow.png</normaloff>:/icons/tag--arrow.png</iconset>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="NewTag">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>10</y>
-     <width>22</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Define a new tag.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
-   <property name="text">
-    <string>&amp;New Tag</string>
-   </property>
-   <property name="icon">
-    <iconset resource="../images.qrc">
-     <normaloff>:/icons/tag--pencil.png</normaloff>:/icons/tag--pencil.png</iconset>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="RemoveTag">
-   <property name="geometry">
-    <rect>
-     <x>50</x>
-     <y>10</y>
-     <width>22</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>&lt;p&gt;Remove the selected tag from this entry.&lt;/p&gt;</string>
-   </property>
-   <property name="layoutDirection">
-    <enum>Qt::LeftToRight</enum>
-   </property>
-   <property name="text">
-    <string>&amp;Remove Tag</string>
-   </property>
-   <property name="icon">
-    <iconset resource="../images.qrc">
-     <normaloff>:/icons/tag--minus.png</normaloff>:/icons/tag--minus.png</iconset>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="RevertTags">
-   <property name="geometry">
-    <rect>
-     <x>320</x>
-     <y>10</y>
-     <width>25</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>...</string>
-   </property>
-   <property name="icon">
-    <iconset resource="../images.qrc">
-     <normaloff>:/icons/arrow_rotate_clockwise.png</normaloff>:/icons/arrow_rotate_clockwise.png</iconset>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
    </property>
   </widget>
  </widget>
