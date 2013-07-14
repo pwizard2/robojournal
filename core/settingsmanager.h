@@ -7,7 +7,6 @@
 class SettingsManager
 {
 
-
 public:
     SettingsManager();
 
@@ -26,6 +25,8 @@ public:
 
 private:
     //extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
+    std::string ok_param;
+    std::string fail_param;
 };
 
 #endif // SETTINGSMANAGER_H

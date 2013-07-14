@@ -676,7 +676,7 @@ void MainWindow::closeEvent(QCloseEvent *event){
             q.exec();
 
             if(q.clickedButton() == quit){
-                cout << "OUTPUT: User quit the program" << endl;
+                cout << "OUTPUT: User quit the program." << endl;
                 event->accept();
             }
             else{
@@ -688,14 +688,14 @@ void MainWindow::closeEvent(QCloseEvent *event){
         // dialog that gets shown if user is NOT connected to a journal
         // update: Don't show dialog if there is no journal active b/c it can get annoying after awhile
         else{
-            cout << "OUTPUT: User quit the program" << endl;
+            cout << "OUTPUT: User quit the program." << endl;
             event->accept();
         }
     }
 
     // just quit silently if user has turned off confirm dialogs
     else{
-        cout << "OUTPUT: User quit the program" << endl;
+        cout << "OUTPUT: User quit the program." << endl;
         event->accept();
     }
 }

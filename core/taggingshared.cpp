@@ -17,12 +17,13 @@
     along with RoboJournal.  If not, see <http://www.gnu.org/licenses/>.
 
     --Will Kraft, 6/11/13. New for Version 0.5.
-    This class contains tag-related methods that are "shared" between many classes.
-    When one of these functions is needed, the app calls the method in this class
-    instead of handling everything internally. It makes more sense to design the app
+    This class contains tag-related functions that are "shared" between many classes.
+    When one of these functions is needed, the app calls the method from this class
+    instead of handling everything internally. It made more sense to design the app
     this way instead of having redundant code.
   */
 
+#include <iostream>
 #include "taggingshared.h"
 #include <QStringList>
 #include "core/buffer.h"
@@ -31,14 +32,17 @@
 #include <QMessageBox>
 #include "sql/sqlshield.h"
 
+//#########################################################################################################
 TaggingShared::TaggingShared(){
 
 }
 
+//#########################################################################################################
 // 6/13/13: Define a new tag if it is not already in the current/available tags list.
 // DefineTag() is meant to be used with the tagging system in several different classes.
+// A new tag is declared ONLY if it is not already in the ExistingTags stringlist.
 // If the tag is good, it is returned as a QString. Invalid tags are returned as empty
-// QStrings (the referring method(s) prevent empty strings from being used).
+// QStrings. (All referring method(s) are supposed to have safeguards that prevent empty strings from being used).
 QString TaggingShared::DefineTag(QStringList ExistingTags){
 
     QInputDialog d;
@@ -46,6 +50,10 @@ QString TaggingShared::DefineTag(QStringList ExistingTags){
 
     tag=tag.trimmed();
     tag=tag.simplified();
+
+    // Bugfix 7/13/13:
+    // Remove semicolons from raw tag data because those are used to delimit tags in the database table rows.
+    tag=tag.remove(";");
 
     // Break potential SQL injections so an attacker won't be able to nuke the database.
     // 0.5 Bugfix -- Will Kraft, 6/23/13
@@ -57,8 +65,6 @@ QString TaggingShared::DefineTag(QStringList ExistingTags){
 
     // only proceed if the user clicked ok; cancel returns a null string
     if(!tag.isEmpty()){
-
-
 
         if(ExistingTags.contains(tag)){
             goodtag=false;
@@ -83,6 +89,7 @@ QString TaggingShared::DefineTag(QStringList ExistingTags){
     return tag;
 }
 
+//#########################################################################################################
 // 6/11/13: This method returns a list of all tags in the database. The output is used to
 // populate tag lists in several different classes (Mainwindow, Tagger, and EditorTagManager).
 QStringList TaggingShared::TagAggregator(){
@@ -121,6 +128,7 @@ QStringList TaggingShared::TagAggregator(){
     return tag_list;
 }
 
+//#########################################################################################################
 // Get the tags for entry "id" from the database.(6/11/13)
 QStringList TaggingShared::FetchTags(QString id){
 
@@ -136,8 +144,21 @@ QStringList TaggingShared::FetchTags(QString id){
     return t_array;
 }
 
-// Save the tags. This is used when the tags are modified; not when they are created at
-// the same time as the entry itself. (6/11/13)
-void TaggingShared::SaveTags(QString tags){
+//#########################################################################################################
+// Save the tags. This method is used when the tags are modified through the Tagger class (7/13/13).
+// Tags declared/changed through the Editor are saved with the rest of the entry data.
+void TaggingShared::SaveTags(QString tags, QString id){
+    using namespace std;
 
+    if(Buffer::backend=="MySQL"){
+        MySQLCore m;
+        bool success=m.UpdateTags(tags,id);
+
+        if(success){
+            cout << "OUTPUT: Tag data updated successfully." << endl;
+        }
+        else{
+            cout << "ERROR: Tag data failed to update!" << endl;
+        }
+    }
 }

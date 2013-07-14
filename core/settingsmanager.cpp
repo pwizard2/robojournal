@@ -33,12 +33,17 @@
 #include <QFile>
 #include "ui/newconfig.h"
 
+
+
 /* This class is meant to be a full *replacement* of the ConfigManager class from RoboJournal 0.1-0.3.
  * Once SettingManager has been fully implemented, ConfigManager is to be deprecated and removed
  * from the source package. (deprecation completed by 2/26/13)
  */
 
-SettingsManager::SettingsManager(){}
+SettingsManager::SettingsManager(){
+ok_param="[OK]";
+fail_param="[FAILED]";
+}
 
 //###################################################################################################
 // Saves the current splitter position from the MainWindow. This allows someone to customize it once
@@ -142,6 +147,7 @@ void SettingsManager::InstallDictionaries(){
     using namespace std;
 
     QString path= QDir::homePath() + QDir::separator() + ".robojournal" + QDir::separator();
+    path=QDir::toNativeSeparators(path);
 
     QFile EN_dict(path + "en_US.dic");
     QFile EN_dict_aff(path +  "en_US.aff");
@@ -161,25 +167,24 @@ void SettingsManager::InstallDictionaries(){
         d2.copy(":/en_US.aff", path + "en_US.aff");
 
 
-        cout << "OUTPUT: Reinstalled (English US) dictionaries to" << path.toStdString() << endl;
+        cout << "OUTPUT: Reinstalled (English US) dictionaries to " << path.toStdString() << endl;
 
         //qt_ntfs_permission_lookup--;
 
     }
     else{
-        cout << "OUTPUT: Found default (English US) dictionary at" << path.toStdString() << endl;
+        cout << "OUTPUT: Found default (English US) dictionary at " << path.toStdString() << endl;
 
-        if((!EN_dict.isWritable()) || (!EN_dict_aff.isWritable())){
-            cout << "OUTPUT: Making sure the dictionary is writable........";
+        if((!EN_dict.isWritable()) && (!EN_dict_aff.isWritable())){
+            cout << "OUTPUT: Making sure the dictionary is writable.............................";
             EN_dict.setPermissions(QFile::ReadOwner | QFile::WriteOwner | QFile::ReadGroup | QFile::ReadOther);
             EN_dict_aff.setPermissions(QFile::ReadOwner | QFile::WriteOwner | QFile::ReadGroup | QFile::ReadOther);
-            cout << "DONE!" << endl;
+            cout << ok_param << endl;
         }
         else{
             cout << "OUTPUT: Dictionary is properly writable. Proceeding with startup." << endl;
         }
     }
-
 }
 
 
@@ -383,19 +388,21 @@ void SettingsManager::LoadConfig(){
 
     // construct a file object where the config file is supposed to be.
     QFile config(config_path);
-    cout << "OUTPUT: Searching for config file..." << endl;
+    cout << "OUTPUT: Searching for config file..........................................";
 
     // if config file exists, read its contents
     if(config.exists()){
 
+        cout << ok_param << endl;
+
 #ifdef _WIN32
         // Use backslashes to separate dirs on Windows.
-        config_path=config_path.replace("/","\\");
+        config_path=QDir::toNativeSeparators(config_path);
 #endif
 
-        cout << "OUTPUT: Config file found: "<< config_path.toStdString()  << endl;
+        //cout << "OUTPUT: Config file found: "<< config_path.toStdString()  << endl;
         QSettings settings(config_path,QSettings::IniFormat);
-        cout << "OUTPUT: Buffering data from config file...";
+        cout << "OUTPUT: Buffering data from config file....................................";
 
         Buffer::toolbar_pos = settings.value("Behavior/toolbar_location").toInt();
         Buffer::allowroot = settings.value("Behavior/allow_root_login").toBool();
@@ -558,13 +565,14 @@ void SettingsManager::LoadConfig(){
             LoadConfig();
         }
 
-        cout << "Done!" << endl;
-        cout << "OUTPUT: Stage 1 completed, proceeding to Stage 2..." << endl;
+        cout << ok_param << endl;
+        cout << "OUTPUT: Stage 1 completed, proceeding to Stage 2." << endl;
     }
 
     // if config doesn't exist, rebuild it.
     else{
-        cout << "WARNING: Config file does not exist! Starting first run mode..." << endl;
+        cout << fail_param << endl;
+        cout << "OUTPUT: Starting first run mode to replace missing configuration." << endl;
 
         // give the journal creator a way to know its the first run
         Buffer::firstrun=true;

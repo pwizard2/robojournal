@@ -17,12 +17,11 @@
     along with RoboJournal.  If not, see <http://www.gnu.org/licenses/>.
 
     --Will Kraft, 6/11/13. New for Version 0.5.
-    This class contains tag-related methods that are "shared" between many classes.
-    When one of these functions is needed, the app calls the method in this class
-    instead of handling everything internally. It makes more sense to design the app
+    This class contains tag-related functions that are "shared" between many classes.
+    When one of these functions is needed, the app calls the method from this class
+    instead of handling everything internally. It made more sense to design the app
     this way instead of having redundant code.
   */
-
 
 #ifndef TAGGINGSHARED_H
 #define TAGGINGSHARED_H
@@ -38,7 +37,7 @@ public:
 
     QStringList TagAggregator();
     QStringList FetchTags(QString id);
-    void SaveTags(QString tags);
+    void SaveTags(QString tags, QString id);
     QString DefineTag(QStringList ExistingTags);
 
 };

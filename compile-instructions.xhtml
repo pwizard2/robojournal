@@ -202,7 +202,7 @@ following:</p>
 <ol>
   <li>RoboJournal source tarball (and any extra software required to unpack the
     tar.gz archive). The current stable version at the time of this writing is
-    0.4.1.<br />
+    0.5.<br />
     <br />
     Alternatively, you can acquire RoboJournal's source code by cloning the
     contents of the <a
@@ -448,12 +448,12 @@ system but do not change anything else). After that, run win32_compile.bat to
 compile RoboJournal in one easy step.</p>
 
 <p>The build helper script builds robojournal.exe inside a separate "release"
-folder in the robojournal-0.4.1 directory. After the helper script is finished,
+folder in the robojournal-0.5 directory. After the helper script is finished,
 you must locate the required <a href="#depends">dependency</a> files if
 necessary.</p>
 
 <p>You can run the win32_cleanup.bat file to completely clean the
-robojournal-0.4.1 folder between builds.</p>
+robojournal-0.5 folder between builds.</p>
 </div>
 
 <div class="FYI">
@@ -476,7 +476,7 @@ directory, and run <span class="console">./linux_compile.pl</span>.</p>
 you wish to compile RoboJournal manually instead of using the build helper
 script, follow the procedure below. For the sake of simplicity in this
 procedure, assume Qt is located in C:\Qt, MinGW is located in C:\MinGW, and
-RoboJournal's source code is located in C:\robojournal-0.4.1. In a real-world
+RoboJournal's source code is located in C:\robojournal-0.5. In a real-world
 situation, these locations vary depending on where you installed everything.
 You will receive errors if you fail to revise the paths to match your actual
 configuration.</p>
@@ -485,13 +485,13 @@ configuration.</p>
     cmd.exe window is displayed. From this point on, all input should be
     directed to the cmd.exe window unless otherwise indicated.</li>
   <li>Navigate to the RoboJournal source folder.  Type <span
-    class="console">cd C:\robojournal-0.4.1</span> and press Enter.</li>
+    class="console">cd C:\robojournal-0.5</span> and press Enter.</li>
   <li>Type <span class="console">path C:\Qt\bin</span> and press Enter. This
     changes the current path for cmd.exe and allows you to run any program from
-    C:\Qt\bin even though you should still be in the C:\robojournal-0.4.1
+    C:\Qt\bin even though you should still be in the C:\robojournal-0.5
     directory.</li>
   <li>Type <span class="console">qmake –config release robojournal.pro</span>
-    and press Enter. QMake will create a Makefile in the C:\robojournal-0.4.1
+    and press Enter. QMake will create a Makefile in the C:\robojournal-0.5
     directory.</li>
   <li>When QMake is finished, type <span class="console">dir</span> (and press
     Enter) to display the file list.</li>
@@ -507,14 +507,14 @@ configuration.</p>
   <li>Wait for mingw32-make to finish (the build is done when text stops
     auto-scrolling and the terminal accepts input again).</li>
   <li>At this point, you should have a robojournal.exe file in the
-    C:\robojournal-0.4.1 (or C:\robojournal-0.4.1\release) directory.</li>
+    C:\robojournal-0.5 (or C:\robojournal-0.5\release) directory.</li>
   <li>Resolve dependencies if necessary (refer to the <a
     href="#depends">section</a> below). </li>
   <li>Type <span class="console">robojournal.exe</span> and press Enter to
     start the program for the first time. You can also start the program by
-    opening Windows Explorer, navigating to the C:\robojournal-0.4.1 (or
-    C:\robojournal-0.4.1\release) folder, and double-clicking the
-    robojournal.exe program icon.</li>
+    opening Windows Explorer, navigating to the C:\robojournal-0.5 (or
+    C:\robojournal-0.5\release) folder, and double-clicking the robojournal.exe
+    program icon.</li>
 </ol>
 <hr />
 
@@ -529,8 +529,8 @@ occasionally be a problem.</p>
 
 <p>If your Qt is <em>not</em> static, locate the following files on your hard
 drive (they <em>must</em> be from the same Qt and MinGW libraries you compiled
-against) and copy them to the C:\robojournal-0.4.1 (or
-C:\robojournal-0.4.1\release) folder. The following list displays the required
+against) and copy them to the C:\robojournal-0.5 (or
+C:\robojournal-0.5\release) folder. The following list displays the required
 files and where they are most likely to be located:</p>
 <ul>
   <li>libgcc_s_dw2-1.dll (MinGW bin folder)</li>
@@ -548,20 +548,20 @@ files and where they are most likely to be located:</p>
       <li>qsqllite4.dll (Qt 4.x plugins/sqldrivers folder)*</li>
     </ul>
   </li>
-  <li>robojournal.qch (should already exist in the C:\robojournal-0.4.1\release
+  <li>robojournal.qch (should already exist in the C:\robojournal-0.5\release
     folder after the build process)</li>
-  <li>robojournal.qhc (should already exist in the C:\robojournal-0.4.1\release
+  <li>robojournal.qhc (should already exist in the C:\robojournal-0.5\release
     folder after the build process)</li>
 </ul>
 
-<p><small>* Place this file in C:\robojournal-0.4.1\release\sqldrivers (create
+<p><small>* Place this file in C:\robojournal-0.5\release\sqldrivers (create
 the "sqldrivers" folder if it does not exist).</small></p>
 <hr />
 
 <h3 id="debian_requirements">Debian, Ubuntu, and Linux Mint Requirements</h3>
 
 <p>Users of Debian-family distros (including Debian itself, Ubuntu, Linux Mint,
-et al.) must install the the following packages through apt-get: </p>
+<i>et al.</i>) must install the the following packages through apt-get: </p>
 <ul>
   <li>libqt4-core</li>
   <li>libqt4-gui</li>
@@ -583,12 +583,19 @@ libqt4-webkit libqt4-sql libqt4-sql-mysql libqt4-sql-sqlite libqt4-help
 qt4-dev-tools qt4-qmake libx11-dev build-essential</span>. Ensure that the
 entire command consists of one unbroken line before you copy and paste it into
 the terminal.</p>
+
+<p>Newer versions of Ubuntu, Debian, and Linux Mint allow you to install Qt
+4.x.x and Qt 5.x in parallel. Since RoboJournal has not been ported to Qt 5.x
+yet, you <em>must</em> use the Qt 4.x.x version of QMake for all RoboJournal
+builds. On systems that have multiple versions of Qt installed, the correct
+version of QMake is called "qmake-qt4". It is usually installed at
+/usr/bin/qmake-qt4.</p>
 <hr />
 
 <h3 id="fedora_requirements">Fedora Requirements</h3>
 
 <p>The Qt environment on Fedora is unusual because certain utilities have
-slightly different names: Qmake is called "qmake-qt4" while Qt Assistant is
+slightly different names: QMake is called "qmake-qt4" while Qt Assistant is
 called "assistant-qt4". Be sure to take these name changes into consideration
 in order to prevent problems during the build process. </p>
 
@@ -602,7 +609,6 @@ following packages through the yum package management system:</p>
   <li>qt-devel</li>
   <li>qt-webkit</li>
   <li>qt-webkit-devel</li>
-  <li>patch</li>
   <li>gcc-c++ *</li>
 </ul>
 
@@ -614,18 +620,8 @@ RoboJournal dependencies.</small></p>
 
 <p>You can install all these packages at once by running <span
 class="console">sudo yum install qt qt-assistant qt-mysql qt-devel qt-webkit
-qt-webkit-devel patch gcc-c++</span>. Ensure that the entire command consists
-of one unbroken line before you copy and paste it into the terminal.</p>
-
-<p>In addition to resolving the basic package requirements, you must also patch
-the Makefile (once you have created one with qmake-qt4) because Fedora requires
-direct linking to the X11 libraries. You must apply the
-<em>fedora_build.patch</em> file to the Makefile by running <span
-class="console">patch Makefile &lt; fedora_build.patch</span> prior to running
-make. Alternatively, the Linux build helper script can automatically apply the
-patch for you if you instruct it to do so during the question-and-answer
-configuration steps. Forgetting to patch the Makefile causes the build process
-to fail even if the other requirements have been satisfied.</p>
+qt-webkit-devel gcc-c++</span>. Ensure that the entire command consists of one
+unbroken line before you copy and paste it into the terminal.</p>
 <hr />
 
 <h3 id="linux">Manual Linux Procedure</h3>
@@ -634,16 +630,17 @@ to fail even if the other requirements have been satisfied.</p>
 packages, there is no configure script that must be used prior to the compile
 process (QMake handles this role instead). For the purpose of this example,
 assume that the RoboJournal source code is located in your home directory
-(~/robojournal-0.4.1) and all utilities are stored in /usr/bin. </p>
+(~/robojournal-0.5) and all utilities are stored in /usr/bin. </p>
 <ol>
   <li>Open a terminal application (xterm or similar). There is no specific
     shell requirement; most systems use Bash by default. From this point on,
     all input should be directed to the terminal unless otherwise
   indicated.</li>
-  <li>Type <span class="console">cd ~/robojoural-0.4.1</span> and press
+  <li>Type <span class="console">cd ~/robojoural-0.5</span> and press
   Enter.</li>
   <li>Type <span class="console">qmake robojournal.pro</span> and press Enter
-    (substitute "qmake" with "qmake-qt4" on Fedora). 
+    (substitute "qmake" with "qmake-qt4" on Fedora and on systems where Qt 5 is
+    also installed). 
 
     <div class="FYI">
     <strong>FYI:</strong> If you need to create a package build for Debian, you
@@ -653,9 +650,7 @@ assume that the RoboJournal source code is located in your home directory
     <em>unless</em> you are a Debian maintainer and you need to package
     RoboJournal for inclusion in the repositories. </div>
   </li>
-  <li>Wait for the QMake process to finish. If you are using Fedora, apply the
-    patch to the Makefile once Qmake has finished: <span class="console">patch
-    Makefile &lt; fedora_build.patch</span>.</li>
+  <li>Wait for the QMake process to finish.</li>
   <li>Type <span class="console">make</span> and press Enter. You can
     accelerate the compile process by running <span class="console">make -j
     2</span> instead. This instructs the compiler to process two jobs at once,
@@ -667,7 +662,7 @@ assume that the RoboJournal source code is located in your home directory
   <li>Type <span class="console">./robojournal</span> and press Enter to start
     the program for the first time. You can also start the program by opening a
     graphical file manager like Nautilus or Dolphin, navigating to the
-    ~/robojournal-0.4.1 folder, and clicking the "robojournal" file. 
+    ~/robojournal-0.5 folder, and clicking the "robojournal" file. 
     <p>The build process is complete after Step 7. The next three steps are
     completely optional and deal with system-wide installation. Properly
     installing RoboJournal makes it available to all users whereas running it
@@ -695,20 +690,20 @@ assume that the RoboJournal source code is located in your home directory
 <p>RoboJournal is now installed for all users. For convenience, the install
 process places a launcher for RoboJournal in the Office sub-group of your
 Applications list. This launcher is available to all users and points to the
-installed copy of RoboJournal (not the one in the ~/robojournal-0.4.1 build
+installed copy of RoboJournal (not the one in the ~/robojournal-0.5 build
 folder). The installed copy is henceforth referred to as the "global copy" in
 this documentation. You can also launch the global copy of RoboJournal by
 entering <span class="console">robojournal</span> at any command prompt (do not
 precede the command with ./).</p>
 
-<p>To uninstall, navigate to the ~/robojournal-0.4.1 directory, switch to root
+<p>To uninstall, navigate to the ~/robojournal-0.5 directory, switch to root
 (or use sudo), type <span class="console">make uninstall</span>, and press
 Enter. This completely removes the global copy and any shortcuts that point to
 it. You should always uninstall prior to upgrading to a newer version of
 RoboJournal; do not install a new global copy over an existing one. If you wish
 to clean up the object code (*.o files) left behind by the compiler, type <span
 class="console">make clean</span> (and press Enter) in the build folder. This
-action cleans the ~/robojournal-0.4.1 folder but spares the Makefile and the
+action cleans the ~/robojournal-0.5 folder but spares the Makefile and the
 executable made during the most recent build.</p>
 
 <p>Type <span class="console">make distclean</span> (and press Enter) if you
@@ -717,7 +712,7 @@ including the Makefile and executable. You <em>must</em> run a distclean
 between every build.</p>
 <hr />
 
-<p>Last updated: May 20, 2013</p>
+<p>Last updated: July 5, 2013</p>
 
 <p>Copyright © 2012, 2013 by Will Kraft. This documentation is part of
 RoboJournal and is available under the <a

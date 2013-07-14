@@ -75,7 +75,10 @@ QString EditorTagManager::HarvestTags(){
     }
 
     QString tags=taglist.join(";");
-    cout << "Tags: " << tags.toStdString() << endl;
+
+    //Output used for debugging purposes, comment out in final build
+    //cout << "Tags: " << tags.toStdString() << endl;
+
     return tags;
 }
 

@@ -151,16 +151,7 @@ void Tagger::on_buttonBox_clicked(QAbstractButton *button)
         QAbstractButton *cancel=ui->buttonBox->button(QDialogButtonBox::Cancel);
         cancel->setDisabled(true);
 
-        if(Buffer::backend=="MySQL"){
-            MySQLCore m;
-            bool success=m.UpdateTags(tag_data,Tagger::id_num);
-
-            if(success){
-                cout << "OUTPUT: Tag data updated successfully" << endl;
-            }
-            else{
-                cout << "ERROR: Tag data failed to update!" << endl;
-            }
-        }
+        TaggingShared ts;
+        ts.SaveTags(tag_data,Tagger::id_num);
     }
 }

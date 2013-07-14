@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     cout << "\n   \"Free Journal Software For Everyone\"" << endl;
     cout << "=============================================="<< endl;
 
-    cout << "STAGE 1: LOADING CONFIGURATION DATA..." << endl;
+    cout << "STAGE 1: LOADING CONFIGURATION DATA" << endl;
     cout << "=============================================="<< endl;
     cout << "OUTPUT: Running as process ID: "<<  a.applicationPid() << endl;
 
