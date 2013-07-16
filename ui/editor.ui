@@ -577,7 +577,7 @@ p, li { white-space: pre-wrap; }
     <string>Manage Tags</string>
    </property>
    <property name="text">
-    <string/>
+    <string>Manage Tags</string>
    </property>
    <property name="icon">
     <iconset resource="../images.qrc">

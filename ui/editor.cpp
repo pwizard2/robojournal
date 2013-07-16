@@ -80,20 +80,24 @@ void Editor::PrimaryConfig(){
     using namespace std;
 
     if(Buffer::show_icon_labels){
-        ui->PostEntry->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->Cancel->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->CutButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->CopyButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->PasteButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->UndoButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->RedoButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->ShowErrors->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        ui->PostEntry->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->Cancel->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->CutButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->CopyButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->PasteButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->UndoButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->RedoButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->ShowErrors->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->TagButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     }
 
     QToolBar *bar=new QToolBar(this);
     bar->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
     bar->setLayoutDirection(Qt::LeftToRight);
     bar->setContextMenuPolicy(Qt::DefaultContextMenu);
+
+    QFont toolbarFont("Sans",7);
+    bar->setFont(toolbarFont);
 
 
     // Bind the Toolbar Buttons to QWidgetActions before adding them to the toolbar. This allows the toolbar overflow
@@ -285,7 +289,9 @@ void Editor::PrimaryConfig(){
     // Add tagging interface as QWidget Object (6/10/13)
     et=new EditorTagManager(this);
     et->setMinimumWidth(this->width());
-    et->setMaximumHeight(125);
+
+    et->setMaximumHeight(100);
+
     EditorTagManager::standalone_tagger=false; // false b/c this EditorTagManager is not contained in the standalone Tagger interface
 
     layout->addWidget(bar,1);

@@ -204,6 +204,32 @@ void EditorTagManager::PrimaryConfig(){
     bar->setLayoutDirection(Qt::LeftToRight);
     bar->setContextMenuPolicy(Qt::DefaultContextMenu);
 
+    QFont toolbarFont("Sans",7);
+    bar->setFont(toolbarFont);
+
+    if(Buffer::show_icon_labels){
+        ui->NewTag->setText("Define Tag");
+        ui->RemoveTag->setText("Remove Current Tag");
+        ui->AddTag->setText("Add Current Tag");
+        ui->RevertTags->setText("Revert Tags");
+
+        ui->NewTag->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->RemoveTag->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->AddTag->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->RevertTags->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
+        if(!standalone_tagger){
+             setMaximumHeight(175);
+        }
+    }
+
+    // Use full-size font for certain objects no matter what
+    QFont fullFont("Sans",9);
+    ui->TagCount->setFont(fullFont);
+    ui->AvailableTags->setFont(fullFont);
+    ui->SelectTag->setFont(fullFont);
+
+
     // Populate toolbar with loose UI elements.
     bar->addWidget(ui->NewTag);
     bar->addWidget(ui->RemoveTag);
@@ -219,6 +245,7 @@ void EditorTagManager::PrimaryConfig(){
     //tighten up toolbar spacing for 0.5 (7/15/13).
     QSize barSize(16,16);
     bar->setIconSize(barSize);
+    bar->setContentsMargins(0,2,0,0);
 
 
     // Force everything into a vboxlayout so the tag interface stretches to fill all available space.
