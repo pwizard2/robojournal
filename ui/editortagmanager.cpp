@@ -216,6 +216,10 @@ void EditorTagManager::PrimaryConfig(){
     bar->addWidget(spacer2);
     bar->addWidget(ui->TagCount);
 
+    //tighten up toolbar spacing for 0.5 (7/15/13).
+    QSize barSize(16,16);
+    bar->setIconSize(barSize);
+
 
     // Force everything into a vboxlayout so the tag interface stretches to fill all available space.
     QVBoxLayout *layout=new QVBoxLayout(this);

@@ -936,17 +936,20 @@ void MainWindow::Decorate_GUI(){
         ui->ExportEntry->setToolButtonStyle(Qt::ToolButtonIconOnly);
     }
     else{ // restore values in case user wishes to enable them at runime
-        ui->ConnectButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->DisconnectButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->LastEntry->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->WriteButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->EditEntryButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->DeleteEntry->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->NextEntry->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->TodayButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->ConfigButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->Tag->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->ExportEntry->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        ui->ConnectButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->DisconnectButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->LastEntry->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->WriteButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->EditEntryButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->DeleteEntry->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->NextEntry->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->TodayButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->ConfigButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->Tag->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->ExportEntry->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
+        QFont toolbarFont("Sans",7);
+        ui->mainToolBar->setFont(toolbarFont);
     }
 
     if(Buffer::use_custom_theme){
@@ -1369,8 +1372,6 @@ void MainWindow::PrimaryConfig(){
 
     QIcon unixicon(":/icons/robojournal-icon-big.png");
     this->setWindowIcon(unixicon);
-
-
 
     // declare magic sizing algorithm for MainWindow splitter. For some unknown reason the TabWidget throws this off
     // so it is necessary to compensate.

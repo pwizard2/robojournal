@@ -151,8 +151,6 @@ void Editor::PrimaryConfig(){
     tcAction->setDefaultWidget(ui->ShowCode);
 
 
-
-
     /* ###############################################################################
     Update 7/4/13: Postpone these rich text formatting actions to 0.6 because the rich text
     display/editing system has been delayed. Hide these actions for now.
@@ -404,6 +402,10 @@ void Editor::PrimaryConfig(){
     h_layout->addWidget(line);
 #endif
 
+    //tighten up toolbar spacing for 0.5 (7/15/13)
+    QSize barSize(16,16);
+    masterbar->setIconSize(barSize);
+    bar->setIconSize(barSize);
 }
 
 
