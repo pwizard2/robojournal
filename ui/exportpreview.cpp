@@ -45,6 +45,7 @@ ExportPreview::ExportPreview(QWidget *parent) :
     // hide question mark button in title bar when running on Windows
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
+    ui->buttonBox->setContentsMargins(9,9,9,9);
 
     QString output=PrepareHTML();
 
@@ -53,7 +54,6 @@ ExportPreview::ExportPreview(QWidget *parent) :
     if(!Buffer::preview_geometry.isEmpty()){
         resize(Buffer::preview_geometry);
     }
-
 }
 
 //###########################################################################################################
