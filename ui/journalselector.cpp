@@ -31,6 +31,7 @@
 #include "ui_firstrun.h"
 #include "ui/permissionmanager.h"
 #include "sql/sqlshield.h"
+#include "core/favoritecore.h"
 
 
 JournalSelector::JournalSelector(QWidget *parent) :
@@ -220,6 +221,15 @@ void JournalSelector::JournalSearch(){
     journals.sort();
 
     CreateTree(journals);
+
+    // (7/18/13): Add the list of databases to the list of known databases. This is so the
+    // user can choose favorite databases later. New for 0.5.
+    FavoriteCore f;
+
+    for(int i=0; i < journals.size(); i++){
+        QString database=journals.at(i);
+        f.Add_to_DB(database,username,hostname);
+    }
 
     this->setCursor(Qt::ArrowCursor);
 

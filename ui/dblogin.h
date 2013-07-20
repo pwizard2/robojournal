@@ -66,8 +66,12 @@ private slots:
 
     void on_buttonBox_rejected();
 
+    void on_AllowEditing_clicked(bool checked);
+
 private:
     Ui::DBLogin *ui;
+
+    void PopulateComboBoxes();
 };
 
 #endif // DBLOGIN_H

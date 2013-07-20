@@ -26,6 +26,7 @@
 #include <iostream>
 #include <QtSql/QSqlDatabase>
 #include <QDebug>
+#include "core/favoritecore.h"
 
 
 int main(int argc, char *argv[])
@@ -51,7 +52,13 @@ int main(int argc, char *argv[])
 
     j.InstallDictionaries();
 
+    // Load Favorites Core. New for 0.5 (7/18/13).
+    FavoriteCore f;
+    f.init();
+
     j.LoadConfig();
+
+
 
     // This ifdef block came from Clementine 1.0.1 source.
 #ifdef Q_OS_LINUX
@@ -77,8 +84,6 @@ int main(int argc, char *argv[])
     cout << "Stage 2: SHOWING MAIN WINDOW" <<endl;
     cout << "=============================================="<< endl;
     w.show();
-
-
 
     return a.exec();
 }

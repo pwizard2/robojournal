@@ -39,6 +39,7 @@
 #include "core/settingsmanager.h"
 #include "ui/firstrun.h"
 #include <QDir>
+#include "core/favoritecore.h"
 
 
 // MySQL data
@@ -204,6 +205,10 @@ bool NewJournalCreator::Create_MySQL_Database(){
         if(Buffer::firstrun){
             Buffer::firstrun=false;
         }
+
+        // Add the new database to the list of known databases.
+        FavoriteCore f;
+        f.Add_to_DB(journal_name,username,hostname);
 
         return true;
     }

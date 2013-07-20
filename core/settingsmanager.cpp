@@ -144,6 +144,7 @@ void SettingsManager::SaveMainWindowSize(QByteArray geo){
 // install dictionaries to ~/.robojournal folder if necessary. This function makes sure the dictionaries
 // are available and reinstalls them if necessary. New for 0.4.
 void SettingsManager::InstallDictionaries(){
+
     using namespace std;
 
     QString path= QDir::homePath() + QDir::separator() + ".robojournal" + QDir::separator();
@@ -152,31 +153,26 @@ void SettingsManager::InstallDictionaries(){
     QFile EN_dict(path + "en_US.dic");
     QFile EN_dict_aff(path +  "en_US.aff");
 
-
+    cout << "OUTPUT: Searching for default (US English) dictionary.........";
 
     if((!EN_dict.exists()) || (!EN_dict_aff.exists())){
 
-        //qt_ntfs_permission_lookup++;
+        cout << fail_param << endl;
 
         QFile d1(":/en_US.dic");
         d1.copy(":/en_US.dic", path + "en_US.dic");
 
-
-
         QFile d2(":/en_US.aff");
         d2.copy(":/en_US.aff", path + "en_US.aff");
 
-
         cout << "OUTPUT: Reinstalled (English US) dictionaries to " << path.toStdString() << endl;
-
-        //qt_ntfs_permission_lookup--;
-
     }
+
     else{
-        cout << "OUTPUT: Found default (English US) dictionary at " << path.toStdString() << endl;
+        cout << ok_param << endl;
 
         if((!EN_dict.isWritable()) && (!EN_dict_aff.isWritable())){
-            cout << "OUTPUT: Making sure the dictionary is writable.............................";
+            cout << "OUTPUT: Making sure the dictionary is writable................";
             EN_dict.setPermissions(QFile::ReadOwner | QFile::WriteOwner | QFile::ReadGroup | QFile::ReadOther);
             EN_dict_aff.setPermissions(QFile::ReadOwner | QFile::WriteOwner | QFile::ReadGroup | QFile::ReadOther);
             cout << ok_param << endl;
@@ -186,7 +182,6 @@ void SettingsManager::InstallDictionaries(){
         }
     }
 }
-
 
 //###################################################################################################
 // Get the user's full name
@@ -388,7 +383,7 @@ void SettingsManager::LoadConfig(){
 
     // construct a file object where the config file is supposed to be.
     QFile config(config_path);
-    cout << "OUTPUT: Searching for config file..........................................";
+    cout << "OUTPUT: Searching for config file.............................";
 
     // if config file exists, read its contents
     if(config.exists()){
@@ -402,7 +397,7 @@ void SettingsManager::LoadConfig(){
 
         //cout << "OUTPUT: Config file found: "<< config_path.toStdString()  << endl;
         QSettings settings(config_path,QSettings::IniFormat);
-        cout << "OUTPUT: Buffering data from config file....................................";
+        cout << "OUTPUT: Buffering data from config file.......................";
 
         Buffer::toolbar_pos = settings.value("Behavior/toolbar_location").toInt();
         Buffer::allowroot = settings.value("Behavior/allow_root_login").toBool();
@@ -566,6 +561,7 @@ void SettingsManager::LoadConfig(){
         }
 
         cout << ok_param << endl;
+
         cout << "OUTPUT: Stage 1 completed, proceeding to Stage 2." << endl;
     }
 

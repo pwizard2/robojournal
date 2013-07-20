@@ -61,7 +61,8 @@ SOURCES += main.cpp\
         core/taggingshared.cpp \
         core/htmlcore.cpp \
     ui/permissionmanager.cpp \
-    ui/outputpane.cpp
+    ui/outputpane.cpp \
+    core/favoritecore.cpp
 
 HEADERS  += ui/mainwindow.h \
 	core/buffer.h \
@@ -113,7 +114,8 @@ HEADERS  += ui/mainwindow.h \
         core/taggingshared.h \
         core/htmlcore.h \
     ui/permissionmanager.h \
-    ui/outputpane.h
+    ui/outputpane.h \
+    core/favoritecore.h
 
 
 FORMS    += ui/mainwindow.ui \

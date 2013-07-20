@@ -2468,8 +2468,6 @@ void MainWindow::CreateTree(){
 
             QString db=Buffer::database_name;
 
-
-
             QTreeWidgetItem *root = new QTreeWidgetItem(ui->EntryList);
             root->setText(0, db);
             root->setIcon(0,rooticon);
@@ -3398,8 +3396,6 @@ void MainWindow::on_actionManage_Tags_2_triggered()
     Tag();
 }
 
-
-
 void MainWindow::on_actionSelect_Default_Journal_triggered()
 {
     if((ui->DisconnectButton->isEnabled()) || (Buffer::On_Search)){
@@ -3413,7 +3409,6 @@ void MainWindow::on_actionSelect_Default_Journal_triggered()
         else{
             Disconnect();
         }
-
     }
 
     // launch JournalSelector
@@ -3423,7 +3418,6 @@ void MainWindow::on_actionSelect_Default_Journal_triggered()
 
 void MainWindow::on_ExportEntry_clicked()
 {
-
     ExportEntry();
 }
 
@@ -3492,7 +3486,6 @@ void MainWindow::on_actionJournal_Creator_triggered()
     //Disconnect first
     if((ui->DisconnectButton->isEnabled()) || (Buffer::On_Search)){
 
-
         // Switch back to Entry mode before disconnecting so we don't mess up which buttons should be enabled
         if(Buffer::On_Search){
             ui->tabWidget->setCurrentIndex(0);
@@ -3507,10 +3500,6 @@ void MainWindow::on_actionJournal_Creator_triggered()
     NewJournalCreator jc(this);
     jc.exec();
 }
-
-
-
-
 
 void MainWindow::on_tabWidget_currentChanged(int index)
 {
@@ -3565,7 +3554,6 @@ void MainWindow::on_actionJournal_Selector_triggered()
         else{
             Disconnect();
         }
-
     }
 
     // launch JournalSelector

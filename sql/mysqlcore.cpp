@@ -799,9 +799,6 @@ bool MySQLCore::AddEntry(){
         addentry.bindValue(6, timestamp);
         //cout << "OUTPUT: Current timestamp: " << timestamp.toStdString() << endl;
         success=addentry.exec();
-
-
-
     }
     else{
         QString insert="INSERT INTO entries(title, month, day, year, tags, body) VALUES(?,?,?,?,?,?)";
@@ -815,6 +812,7 @@ bool MySQLCore::AddEntry(){
         success=addentry.exec();
     }
     db.close();
+
     return success;
 }
 

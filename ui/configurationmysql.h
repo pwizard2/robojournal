@@ -23,9 +23,10 @@
 #define CONFIGURATIONMYSQL_H
 
 #include <QWidget>
+#include <QTreeWidgetItem>
 
 namespace Ui {
-    class ConfigurationMySQL;
+class ConfigurationMySQL;
 }
 
 class ConfigurationMySQL : public QWidget
@@ -42,9 +43,15 @@ private slots:
 
     void on_Port_textChanged(const QString &arg1);
 
+    void on_KnownJournals_itemDoubleClicked(QTreeWidgetItem *item);
+
 private:
+
     Ui::ConfigurationMySQL *ui;
     void PopulateForm();
+    void Show_Known_Journals();
+    void ApplyDefaultProperties(QTreeWidgetItem *item);
+    void Harvest_Favorite_Databases();
 
 };
 

@@ -24,6 +24,8 @@
 #include "core/buffer.h"
 #include <iostream>
 #include <QMessageBox>
+#include "core/favoritecore.h"
+#include "sql/mysqlcore.h"
 
 // Will Kraft: 6/1/13
 // Stripped out caps lock checker because it caused more problems during build time than it solved.
@@ -52,7 +54,19 @@ DBLogin::DBLogin(QWidget *parent) :
     this->setMaximumSize(width,height);
     this->setMinimumSize(width,height);
 
+    //New 0.5 code
 
+    ui->buttonBox->setContentsMargins(9,9,9,9);
+
+    if(Buffer::backend=="MySQL"){
+        ui->tabWidget->setTabEnabled(1,false);
+    }
+
+    if(Buffer::backend=="SQLite"){
+        ui->tabWidget->setTabEnabled(0,false);
+    }
+
+    PopulateComboBoxes();
 }
 
 DBLogin::~DBLogin()
@@ -71,17 +85,13 @@ void DBLogin::ResetPassword(){
 void DBLogin::Refresh(){
     // Check to see if defaults are being used
     if(Buffer::alwaysusedefaults){
-        ui->UseDBDefault->click();
         ui->UseUserDefault->click();
     }
 
-    if(ui->UseDBDefault->isChecked() && ui->UseUserDefault->isChecked()){
+    if(ui->UseUserDefault->isChecked()){
         ui->Password->setFocus(Qt::PopupFocusReason);
     }
-
 }
-
-
 
 void DBLogin::on_UseUserDefault_clicked()
 {
@@ -99,19 +109,7 @@ void DBLogin::on_UseUserDefault_clicked()
 
 void DBLogin::on_UseDBDefault_clicked()
 {
-    if(ui->UseDBDefault->isChecked()){
-        ui->DBHost->setReadOnly(true);
-        ui->WhichDB->setReadOnly(true);
-        ui->DBHost->setText(Buffer::defaulthost);
-        ui->WhichDB->setText(Buffer::defaultdatabase);
 
-    }
-    else{
-        ui->DBHost->setReadOnly(false);
-        ui->WhichDB->setReadOnly(false);
-        ui->DBHost->clear();
-        ui->WhichDB->clear();
-    }
 }
 
 void DBLogin::on_buttonBox_accepted()
@@ -129,8 +127,8 @@ void DBLogin::on_buttonBox_accepted()
             if(choice==QMessageBox::Yes){
                 // get data from form and pass it to Buffer class
                 Buffer::login_succeeded=true;
-                Buffer::database_name=ui->WhichDB->text();
-                Buffer::host=ui->DBHost->text();
+                Buffer::database_name=ui->WhichDB->currentText();
+                Buffer::host=ui->DBHost->currentText();
                 Buffer::username=ui->Username->text();
                 Buffer::password=ui->Password->text();
 
@@ -158,16 +156,86 @@ void DBLogin::on_buttonBox_accepted()
 
         // get data from form and pass it to Buffer class
         Buffer::login_succeeded=true;
-        Buffer::database_name=ui->WhichDB->text();
-        Buffer::host=ui->DBHost->text();
+        Buffer::database_name=ui->WhichDB->currentText();
+        Buffer::host=ui->DBHost->currentText();
         Buffer::username=ui->Username->text();
         Buffer::password=ui->Password->text();
+
+        // Create/maintain Favorite DB list during each login. This is necessary because it allows
+        // RoboJournal to do maintenance behind the scenes in case a new DB gets added or one
+        // gets dropped, etc. New for 0.5. --Will Kraft (7/20/13).
+
+        MySQLCore m;
+
+        QString port=QString::number(Buffer::databaseport);
+        QStringList journals=m.GetDatabaseList(Buffer::host,port,Buffer::username,Buffer::password);
+        journals.sort();
+
+        FavoriteCore f;
+
+        if(!journals.isEmpty()){
+            for(int i=0; i < journals.size(); i++){
+                QString database=journals.at(i);
+                f.Add_to_DB(database,Buffer::username,Buffer::host);
+            }
+        }
     }
 }
 
 void DBLogin::on_buttonBox_rejected()
 {
-
     //login_succeeded=0;
     Buffer::login_succeeded=false;
+}
+
+
+// Populate Comboboxes. New for 0.5. --Will Kraft (7/20/13).
+void DBLogin::PopulateComboBoxes(){
+
+    ui->DBHost->clear();
+    ui->WhichDB->clear();
+
+    FavoriteCore f;
+    QStringList hosts=f.GetHosts();
+
+    ui->DBHost->addItems(hosts);
+
+    QString current=ui->DBHost->currentText();
+
+    QStringList journals=f.GetFavorites(current);
+
+    ui->WhichDB->addItems(journals);
+
+    // Select default host and DB by default.
+    for(int i=0; i < hosts.size(); i++){
+
+        if(hosts.at(i)==Buffer::defaulthost){
+            ui->DBHost->setCurrentIndex(i);
+            break;
+        }
+    }
+
+    for(int j=0; j < journals.size(); j++){
+        if(journals.at(j)==Buffer::defaultdatabase){
+            ui->WhichDB->setCurrentIndex(j);
+            break;
+        }
+    }
+}
+
+void DBLogin::on_AllowEditing_clicked(bool checked)
+{
+    if(checked){
+        ui->DBHost->setEditable(true);
+        ui->WhichDB->setEditable(true);
+    }
+    else{
+        ui->DBHost->setEditable(false);
+        ui->WhichDB->setEditable(false);
+
+        ui->DBHost->clear();
+        ui->WhichDB->clear();
+
+        PopulateComboBoxes();
+    }
 }
