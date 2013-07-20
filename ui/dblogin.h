@@ -67,10 +67,13 @@ private slots:
     void on_buttonBox_rejected();
 
 
+    void on_DBHost_currentIndexChanged(const QString &arg1);
+
 private:
     Ui::DBLogin *ui;
 
     void PopulateComboBoxes();
+    void RefreshJournalList(QString host);
 };
 
 #endif // DBLOGIN_H

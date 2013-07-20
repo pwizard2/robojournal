@@ -2468,6 +2468,7 @@ void MainWindow::CreateTree(){
 
             QString db=Buffer::database_name;
 
+
             QTreeWidgetItem *root = new QTreeWidgetItem(ui->EntryList);
             root->setText(0, db);
             root->setIcon(0,rooticon);
@@ -2629,6 +2630,7 @@ void MainWindow::CreateTree(){
             //ui->EntryList->setHeaderHidden(false);
 
             QString db=Buffer::database_name;
+
 
             QTreeWidgetItem *root = new QTreeWidgetItem(ui->EntryList);
 

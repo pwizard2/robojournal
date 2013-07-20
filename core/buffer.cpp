@@ -145,6 +145,8 @@ QString Buffer::sqlite_default;
 bool Buffer::use_my_journals;
 QByteArray Buffer::mw_splitter_size;
 
+
+
 Buffer::Buffer()
 {
 

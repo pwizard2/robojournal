@@ -69,19 +69,20 @@ DBLogin::DBLogin(QWidget *parent) :
     PopulateComboBoxes();
 }
 
+//###################################################################################################
 DBLogin::~DBLogin()
 {
     delete ui;
 }
 
-
+//###################################################################################################
 // function that checks if the config has changed
 // and refreshes the form if necessary
-
 void DBLogin::ResetPassword(){
     ui->Password->setText(NULL);
 }
 
+//###################################################################################################
 void DBLogin::Refresh(){
     // Check to see if defaults are being used
     if(Buffer::alwaysusedefaults){
@@ -93,6 +94,7 @@ void DBLogin::Refresh(){
     }
 }
 
+//###################################################################################################
 void DBLogin::on_UseUserDefault_clicked()
 {
 
@@ -112,6 +114,7 @@ void DBLogin::on_UseDBDefault_clicked()
 
 }
 
+//###################################################################################################
 void DBLogin::on_buttonBox_accepted()
 {
 
@@ -156,7 +159,9 @@ void DBLogin::on_buttonBox_accepted()
 
         // get data from form and pass it to Buffer class
         Buffer::login_succeeded=true;
+
         Buffer::database_name=ui->WhichDB->currentText();
+
         Buffer::host=ui->DBHost->currentText();
         Buffer::username=ui->Username->text();
         Buffer::password=ui->Password->text();
@@ -188,8 +193,9 @@ void DBLogin::on_buttonBox_rejected()
     Buffer::login_succeeded=false;
 }
 
-
-// Populate Comboboxes. New for 0.5. --Will Kraft (7/20/13).
+//###################################################################################################
+// Populate Comboboxes. This method only populates the Host CB because adding the host fields automatically
+// triggers a slot that calls RefreshJournalList. New for 0.5. --Will Kraft (7/20/13).
 void DBLogin::PopulateComboBoxes(){
 
     ui->DBHost->clear();
@@ -205,17 +211,6 @@ void DBLogin::PopulateComboBoxes(){
         ui->DBHost->setItemIcon(g,h);
     }
 
-    QString current=ui->DBHost->currentText();
-
-    QStringList journals=f.GetFavorites(current);
-
-    ui->WhichDB->addItems(journals);
-
-    QIcon db(":/icons/database.png");
-    for (int i=0; i< journals.size(); i++){
-        ui->WhichDB->setItemIcon(i,db);
-    }
-
     // Select default host and DB by default.
     for(int i=0; i < hosts.size(); i++){
 
@@ -224,6 +219,26 @@ void DBLogin::PopulateComboBoxes(){
             break;
         }
     }
+}
+
+//###################################################################################################
+// Refresh the current journal list when the user switches to a different host.
+// This should only be used when DBHost emits a currentIndexChanged. New for 0.5 --Will Kraft(7/20/13).
+void DBLogin::RefreshJournalList(QString host){
+
+    ui->WhichDB->clear();
+    FavoriteCore f;
+
+    QStringList journals=f.GetFavorites(host);
+
+    ui->WhichDB->addItems(journals);
+
+    QIcon db(":/icons/database.png");
+    for (int i=0; i< journals.size(); i++){
+        ui->WhichDB->setItemIcon(i,db);
+    }
+
+    // Select default DB by default.
 
     for(int j=0; j < journals.size(); j++){
         if(journals.at(j)==Buffer::defaultdatabase){
@@ -231,4 +246,12 @@ void DBLogin::PopulateComboBoxes(){
             break;
         }
     }
+}
+
+//###################################################################################################
+
+void DBLogin::on_DBHost_currentIndexChanged(const QString &arg1)
+{
+    RefreshJournalList(arg1);
+
 }
