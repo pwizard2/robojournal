@@ -60,7 +60,7 @@ public:
     QString GetTags(QString id);
     bool UpdateTags(QString tag_data, QString id);
 
-    QStringList GetDatabaseList(QString hostname, QString port, QString username, QString password);
+    QStringList GetDatabaseList(QString hostname, QString port, QString username, QString password, bool silentMode);
 
     QList<QStringList> DumpDatabase(bool asc);
 

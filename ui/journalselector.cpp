@@ -217,7 +217,7 @@ void JournalSelector::JournalSearch(){
 
     MySQLCore m;
 
-    QStringList journals=m.GetDatabaseList(hostname,port,username,password);
+    QStringList journals=m.GetDatabaseList(hostname,port,username,password,false);
     journals.sort();
 
     CreateTree(journals);

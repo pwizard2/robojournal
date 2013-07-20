@@ -116,7 +116,7 @@ void PermissionManager::DatabaseScan(){
 
         MySQLCore m;
 
-        QStringList journals=m.GetDatabaseList(hostname,port,"root",root_password);
+        QStringList journals=m.GetDatabaseList(hostname,port,"root",root_password,false);
         journals.sort();
 
         for(int i=0; i<journals.size(); i++){

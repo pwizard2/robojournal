@@ -500,7 +500,7 @@ QList<QStringList> MySQLCore::DumpDatabase(bool asc){
 //################################################################################################
 
 // Get list of databases for JournalSelector class
-QStringList MySQLCore::GetDatabaseList(QString hostname, QString port, QString username, QString password){
+QStringList MySQLCore::GetDatabaseList(QString hostname, QString port, QString username, QString password, bool silentMode){
     using namespace std;
 
     // Bugfix 8/8/12: Save old login data in case login fails. That way other connections won't get broken after
@@ -570,7 +570,7 @@ QStringList MySQLCore::GetDatabaseList(QString hostname, QString port, QString u
                        "This problem occurs if the Qt environment used to compile RoboJournal was built without MySQL support.");
         }
 
-        if(db.isOpenError()){
+        if((db.isOpenError()) && (!silentMode)){
             QMessageBox m;
             QString reason;
 

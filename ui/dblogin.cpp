@@ -168,7 +168,7 @@ void DBLogin::on_buttonBox_accepted()
         MySQLCore m;
 
         QString port=QString::number(Buffer::databaseport);
-        QStringList journals=m.GetDatabaseList(Buffer::host,port,Buffer::username,Buffer::password);
+        QStringList journals=m.GetDatabaseList(Buffer::host,port,Buffer::username,Buffer::password,true);
         journals.sort();
 
         FavoriteCore f;
@@ -200,11 +200,21 @@ void DBLogin::PopulateComboBoxes(){
 
     ui->DBHost->addItems(hosts);
 
+    QIcon h(":/icons/server.png");
+    for (int g=0; g< hosts.size(); g++){
+        ui->DBHost->setItemIcon(g,h);
+    }
+
     QString current=ui->DBHost->currentText();
 
     QStringList journals=f.GetFavorites(current);
 
     ui->WhichDB->addItems(journals);
+
+    QIcon db(":/icons/database.png");
+    for (int i=0; i< journals.size(); i++){
+        ui->WhichDB->setItemIcon(i,db);
+    }
 
     // Select default host and DB by default.
     for(int i=0; i < hosts.size(); i++){
@@ -220,22 +230,5 @@ void DBLogin::PopulateComboBoxes(){
             ui->WhichDB->setCurrentIndex(j);
             break;
         }
-    }
-}
-
-void DBLogin::on_AllowEditing_clicked(bool checked)
-{
-    if(checked){
-        ui->DBHost->setEditable(true);
-        ui->WhichDB->setEditable(true);
-    }
-    else{
-        ui->DBHost->setEditable(false);
-        ui->WhichDB->setEditable(false);
-
-        ui->DBHost->clear();
-        ui->WhichDB->clear();
-
-        PopulateComboBoxes();
     }
 }
