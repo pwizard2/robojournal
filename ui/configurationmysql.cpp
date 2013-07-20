@@ -101,45 +101,56 @@ void ConfigurationMySQL::Show_Known_Journals(){
 
     QIcon db(":/icons/database.png");
 
-    FavoriteCore f;
-    QList<QStringList> journals=f.getKnownJournals();
-
-    for(int i=0; i < journals.size(); i++){
-
-        QStringList row=journals.at(i);
-
-        QTreeWidgetItem *new_item=new QTreeWidgetItem(ui->KnownJournals);
-        new_item->setIcon(0,db);
-        new_item->setText(0,row.at(1));
-        new_item->setText(1,row.at(2));
-        new_item->setText(2,row.at(0));
-
-        new_item->setToolTip(0,"Check this item to select it as a favorite.");
-        new_item->setToolTip(1,"Check this item to select it as a favorite.");
-
-        new_item->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
-
-        switch(row.at(4).toInt()){
-        case 0:
-            new_item->setCheckState(0, Qt::Unchecked);
-            break;
-
-        case 1:
-            new_item->setCheckState(0, Qt::Checked);
-            break;
-        }
-
-
-        if(row.at(1)==Buffer::defaultdatabase){
-            //ApplyDefaultProperties(new_item);
-        }
-    }
-
     ui->KnownJournals->setHeaderHidden(false);
     ui->KnownJournals->resizeColumnToContents(0);
     ui->KnownJournals->resizeColumnToContents(1);
     ui->KnownJournals->setColumnHidden(2,true);
     ui->KnownJournals->sortByColumn(0, Qt::AscendingOrder);
+
+    FavoriteCore f;
+    QList<QStringList> journals=f.getKnownJournals();
+
+    if(journals.isEmpty()){
+
+        QMessageBox m;
+        m.information(this,"RoboJournal","The list of known MySQL-based journals is currently empty. This problem "
+                      "should automatically resolve itself the next time you make a connection or use the Journal Selector.");
+
+    }
+    else{
+        for(int i=0; i < journals.size(); i++){
+
+            QStringList row=journals.at(i);
+
+            QTreeWidgetItem *new_item=new QTreeWidgetItem(ui->KnownJournals);
+            new_item->setIcon(0,db);
+            new_item->setText(0,row.at(1));
+            new_item->setText(1,row.at(2));
+            new_item->setText(2,row.at(0));
+
+            new_item->setToolTip(0,"Check this item to select it as a favorite.");
+            new_item->setToolTip(1,"Check this item to select it as a favorite.");
+
+            new_item->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
+
+            switch(row.at(4).toInt()){
+            case 0:
+                new_item->setCheckState(0, Qt::Unchecked);
+                break;
+
+            case 1:
+                new_item->setCheckState(0, Qt::Checked);
+                break;
+            }
+
+
+            if(row.at(1)==Buffer::defaultdatabase){
+                //ApplyDefaultProperties(new_item);
+            }
+        }
+        ui->KnownJournals->resizeColumnToContents(0);
+        ui->KnownJournals->resizeColumnToContents(1);
+    }
 }
 
 

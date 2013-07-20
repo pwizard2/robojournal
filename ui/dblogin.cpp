@@ -200,23 +200,27 @@ void DBLogin::PopulateComboBoxes(){
 
     ui->DBHost->clear();
     ui->WhichDB->clear();
-
+    QIcon h(":/icons/server.png");
     FavoriteCore f;
     QStringList hosts=f.GetHosts();
 
-    ui->DBHost->addItems(hosts);
-
-    QIcon h(":/icons/server.png");
-    for (int g=0; g< hosts.size(); g++){
-        ui->DBHost->setItemIcon(g,h);
+    if(hosts.isEmpty()){
+        ui->DBHost->addItem(h,Buffer::defaulthost);
     }
+    else{
+        ui->DBHost->addItems(hosts);
 
-    // Select default host and DB by default.
-    for(int i=0; i < hosts.size(); i++){
+        for (int g=0; g< hosts.size(); g++){
+            ui->DBHost->setItemIcon(g,h);
+        }
 
-        if(hosts.at(i)==Buffer::defaulthost){
-            ui->DBHost->setCurrentIndex(i);
-            break;
+        // Select default host and DB by default.
+        for(int i=0; i < hosts.size(); i++){
+
+            if(hosts.at(i)==Buffer::defaulthost){
+                ui->DBHost->setCurrentIndex(i);
+                break;
+            }
         }
     }
 }
@@ -228,22 +232,26 @@ void DBLogin::RefreshJournalList(QString host){
 
     ui->WhichDB->clear();
     FavoriteCore f;
-
+    QIcon db(":/icons/database.png");
     QStringList journals=f.GetFavorites(host);
 
-    ui->WhichDB->addItems(journals);
-
-    QIcon db(":/icons/database.png");
-    for (int i=0; i< journals.size(); i++){
-        ui->WhichDB->setItemIcon(i,db);
+    if(journals.isEmpty()){
+        ui->WhichDB->addItem(db,Buffer::defaultdatabase);
     }
+    else{
+        ui->WhichDB->addItems(journals);
 
-    // Select default DB by default.
+        for (int i=0; i< journals.size(); i++){
+            ui->WhichDB->setItemIcon(i,db);
+        }
 
-    for(int j=0; j < journals.size(); j++){
-        if(journals.at(j)==Buffer::defaultdatabase){
-            ui->WhichDB->setCurrentIndex(j);
-            break;
+        // Select default DB by default.
+
+        for(int j=0; j < journals.size(); j++){
+            if(journals.at(j)==Buffer::defaultdatabase){
+                ui->WhichDB->setCurrentIndex(j);
+                break;
+            }
         }
     }
 }
