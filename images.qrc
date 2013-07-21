@@ -86,5 +86,6 @@
         <file>icons/edit-code.png</file>
         <file>icons/ui-splitter.png</file>
         <file>icons/information.png</file>
+        <file>icons/database-gold.png</file>
     </qresource>
 </RCC>

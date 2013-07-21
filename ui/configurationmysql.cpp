@@ -145,7 +145,7 @@ void ConfigurationMySQL::Show_Known_Journals(){
 
 
             if(row.at(1)==Buffer::defaultdatabase){
-                //ApplyDefaultProperties(new_item);
+                ApplyDefaultProperties(new_item);
             }
         }
         ui->KnownJournals->resizeColumnToContents(0);
@@ -165,17 +165,40 @@ void ConfigurationMySQL::GetChanges(){
     Harvest_Favorite_Databases();
 }
 
-// Apply special properties to the default database QtreeWidgetItem. Also, make sure it is checked.
+// Apply special properties to the default database QtreeWidgetItem by bolding the text
+// and giving it a gold database icon. Also, make sure it is checked.
 // New for 0.5. --Will Kraft 7/19/13.
 void ConfigurationMySQL::ApplyDefaultProperties(QTreeWidgetItem *item){
 
-    QFont special("Sans",9);
+    QFont special;
     special.setBold(true);
+    //special.setUnderline(true);
     item->setFont(0,special);
 
-    QBrush blue(Qt::blue);
-    item->setForeground(0,blue);
     item->setCheckState(0, Qt::Checked);
+    QIcon gold_db(":/icons/database-gold.png");
+    item->setIcon(0,gold_db);
+
+    Buffer::defaultdatabase=item->text(0);
+    default_db=item;
+
+    ui->KnownJournals->resizeColumnToContents(0);
+    ui->KnownJournals->resizeColumnToContents(1);
+}
+
+// Demote the old default database whenever a new one is chosen from the list.
+// New for 0.5. --Will Kraft (7/20/13)
+void ConfigurationMySQL::demoteDatabase(QTreeWidgetItem *item){
+
+    QFont normal;
+    normal.setBold(false);
+    //special.setUnderline(true);
+    item->setFont(0,normal);
+    item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsUserCheckable);
+
+    item->setCheckState(0, Qt::Checked);
+    QIcon db(":/icons/database.png");
+    item->setIcon(0,db);
 }
 
 
@@ -196,7 +219,8 @@ void ConfigurationMySQL::on_KnownJournals_itemDoubleClicked(QTreeWidgetItem *ite
 
             case QMessageBox::Yes:
                 ui->Database->setText(new_choice);
-                //ApplyDefaultProperties(item);
+                demoteDatabase(default_db);
+                ApplyDefaultProperties(item);
                 break;
 
             case QMessageBox::No: // do nothing
@@ -206,7 +230,9 @@ void ConfigurationMySQL::on_KnownJournals_itemDoubleClicked(QTreeWidgetItem *ite
         }
         else{
             ui->Database->setText(new_choice);
-            //ApplyDefaultProperties(item);
+            demoteDatabase(default_db);
+            ApplyDefaultProperties(item);
+
         }
     }
 }

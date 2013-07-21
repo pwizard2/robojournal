@@ -52,6 +52,9 @@ private:
     void Show_Known_Journals();
     void ApplyDefaultProperties(QTreeWidgetItem *item);
     void Harvest_Favorite_Databases();
+    void demoteDatabase(QTreeWidgetItem *item);
+
+    QTreeWidgetItem *default_db;
 
 };
 
