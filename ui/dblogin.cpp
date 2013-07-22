@@ -26,6 +26,7 @@
 #include <QMessageBox>
 #include "core/favoritecore.h"
 #include "sql/mysqlcore.h"
+#include <QPushButton>
 
 // Will Kraft: 6/1/13
 // Stripped out caps lock checker because it caused more problems during build time than it solved.
@@ -54,8 +55,12 @@ DBLogin::DBLogin(QWidget *parent) :
     this->setMaximumSize(width,height);
     this->setMinimumSize(width,height);
 
-    //New 0.5 code
+    // Add connect button. New for 0.5 (7/21/13).
+    QIcon plug(":/icons/plug-connect.png");
 
+    QPushButton *connect=ui->buttonBox->addButton("Co&nnect",QDialogButtonBox::AcceptRole);
+    connect->setIcon(plug);
+    connect->setDefault(true);
     ui->buttonBox->setContentsMargins(9,9,9,9);
 
     if(Buffer::backend=="MySQL"){
@@ -261,5 +266,12 @@ void DBLogin::RefreshJournalList(QString host){
 void DBLogin::on_DBHost_currentIndexChanged(const QString &arg1)
 {
     RefreshJournalList(arg1);
+    ui->Password->setFocus();
+}
 
+
+//###################################################################################################
+void DBLogin::on_WhichDB_currentIndexChanged()
+{
+    ui->Password->setFocus();
 }

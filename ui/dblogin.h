@@ -69,6 +69,8 @@ private slots:
 
     void on_DBHost_currentIndexChanged(const QString &arg1);
 
+    void on_WhichDB_currentIndexChanged();
+
 private:
     Ui::DBLogin *ui;
 
