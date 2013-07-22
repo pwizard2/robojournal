@@ -55,12 +55,14 @@ DBLogin::DBLogin(QWidget *parent) :
     this->setMaximumSize(width,height);
     this->setMinimumSize(width,height);
 
-    // Add connect button. New for 0.5 (7/21/13).
-    QIcon plug(":/icons/plug-connect.png");
-
-    QPushButton *connect=ui->buttonBox->addButton("Co&nnect",QDialogButtonBox::AcceptRole);
+    // Add a nifty new "Connect" button b/c the original OK button didn't really make sense in context.
+    // The Connect button now has an icon to help differentiate it from the Cancel button (since both start with "c").
+    // New for 0.5 -- Will Kraft (7/21/13).
+    QIcon plug(":/icons/connect.png");
+    QPushButton *connect=ui->buttonBox->addButton(tr("Co&nnect"),QDialogButtonBox::AcceptRole);
     connect->setIcon(plug);
     connect->setDefault(true);
+
     ui->buttonBox->setContentsMargins(9,9,9,9);
 
     if(Buffer::backend=="MySQL"){
