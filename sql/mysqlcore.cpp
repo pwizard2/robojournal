@@ -244,9 +244,9 @@ QStringList MySQLCore::Get_Entry_New(QString id){
 }
 
 
-QStringList MySQLCore::Get_Latest_New(QString id){
+//QStringList MySQLCore::Get_Latest_New(QString id){
 
-}
+//}
 
 //################################################################################################
 // Search database, new for 0.4

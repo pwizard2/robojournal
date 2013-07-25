@@ -251,3 +251,16 @@ QStringList FavoriteCore::GetHosts(){
 
     return hosts;
 }
+
+//###################################################################################################
+// Do maintenance to see if any databases need to be removed from the favorites list. This is used to clean up
+// in case a database got dropped or moved. After all ,it wouldn't do to have RoboJournal try to connect to a
+// "known" database that doesn't exist anymore. favorites_list refers to the current list of favorites from
+// favorites.db while dynamic_list is the list of databases generated from MySQL queries.
+// New for 0.5 --Will Kraft (7/24/13).
+void FavoriteCore::Do_Maintenance(QList<QStringList> favorites_list, QStringList dynamic_list){
+
+    for(int i=0; i < dynamic_list.size(); i++){
+
+    }
+}

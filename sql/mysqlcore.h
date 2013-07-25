@@ -71,7 +71,7 @@ public:
 
     // New for 0.4: Reduce overhead by getting all the entry data with one query and returning it as a StringList.
     QStringList Get_Entry_New(QString id);
-    QStringList Get_Latest_New(QString id);
+    //QStringList Get_Latest_New(QString id);
 
     static int ID;
 

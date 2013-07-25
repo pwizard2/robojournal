@@ -331,10 +331,15 @@ void EditorTagManager::CreateTagList(){
     QIcon tagicon(":/icons/tag_red.png");
     int count=0;
 
-    for(int z=1; z < tags.size(); z++){
+     // Bugfix for 0.5: fix bug that causes the first tag in the list to be omitted.
+     // int z used to start at 1 for some reason but it's fixed now. --Will Kraft (7/23/13).
+    for(int z=0; z < tags.size(); z++){
         QString text=tags[z];
-        ui->AvailableTags->addItem(tagicon,text);
-        count++;
+
+        if((text != " ") && !text.isEmpty()){
+            ui->AvailableTags->addItem(tagicon,text);
+            count++;
+        }
     }
 }
 
