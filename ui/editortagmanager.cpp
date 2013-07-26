@@ -40,6 +40,9 @@
 #include "core/buffer.h"
 #include <iostream>
 #include "ui/tagger.h"
+#include <QTreeWidget>
+#include <QTreeWidgetItem>
+#include <QTreeWidgetItemIterator>
 
 EditorTagManager::EditorTagManager(QWidget *parent) :
     QWidget(parent),
@@ -69,16 +72,20 @@ QString EditorTagManager::HarvestTags(){
 
     QStringList taglist;
 
-    for(int i=0; i < ui->TagList->count(); i++){
-        QListWidgetItem *current=ui->TagList->item(i);
-        taglist.append(current->text());
+    QTreeWidgetItemIterator it(ui->AvailableTags);
+
+    while(*it){
+
+        QTreeWidgetItem *current=*it;
+
+        if(Qt::Checked == current->checkState(0)){
+            taglist.append(current->text(0));
+        }
+
+        it++;
     }
 
     QString tags=taglist.join(";");
-
-    //Output used for debugging purposes, comment out in final build
-    //cout << "Tags: " << tags.toStdString() << endl;
-
     return tags;
 }
 
@@ -94,32 +101,10 @@ void EditorTagManager::RevertTags(){
 
         if(choice==QMessageBox::Yes){
 
-            if(no_tags){
-                ui->TagList->clear();
-            }
-            else{
-                ui->TagList->clear();
-
-                if(EditorTagManager::standalone_tagger){
-                    emit Sig_UnlockTaggerApplyButton();
-
-                    LoadTags(Tagger::id_num);
-                }
-                else{
-                    LoadTags(Buffer::editentry);
-                }
-            }
-        }
-    }
-    else{
-        if(no_tags){
-            ui->TagList->clear();
-        }
-        else{
-            ui->TagList->clear();
 
             if(EditorTagManager::standalone_tagger){
                 emit Sig_UnlockTaggerApplyButton();
+
                 LoadTags(Tagger::id_num);
             }
             else{
@@ -127,6 +112,18 @@ void EditorTagManager::RevertTags(){
             }
         }
     }
+
+    else{
+
+        if(EditorTagManager::standalone_tagger){
+            emit Sig_UnlockTaggerApplyButton();
+            LoadTags(Tagger::id_num);
+        }
+        else{
+            LoadTags(Buffer::editentry);
+        }
+    }
+
 }
 
 // ###################################################################################################
@@ -136,37 +133,25 @@ void EditorTagManager::DefineTag(){
 
     // get the latest batch of tags just in case new ones have been added since the form was loaded
     QStringList current_list;
-    for(int i=0; i < ui->AvailableTags->count(); i++){
-        current_list.append(ui->AvailableTags->itemText(i));
+    QTreeWidgetItemIterator it(ui->AvailableTags);
+    QIcon newicon(":/icons/tag_red_add.png");
+
+    while(*it){
+        QTreeWidgetItem *current=*it;
+        current_list.append(current->text(0));
+        ++it;
     }
 
     TaggingShared ts;
     QString tag=ts.DefineTag(current_list);
 
     if(!tag.isEmpty()){
-        QIcon newicon(":/icons/tag_red_add.png");
-        ui->AvailableTags->insertItem(0,newicon,tag);
-        ui->AvailableTags->setCurrentIndex(0);
-
-        if(!ui->AddTag->isEnabled()){
-            ui->AddTag->setEnabled(true);
-        }
+        QTreeWidgetItem *defined=new QTreeWidgetItem(ui->AvailableTags);
+        defined->setText(0,tag);
+        defined->setIcon(0,newicon);
+        defined->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
+        defined->setCheckState(0, Qt::Unchecked);
     }
-}
-
-// ###################################################################################################
-
-// 6/14/13: Update current tag count in toolbar.
-void EditorTagManager::TagCount(int count){
-
-    QString taglabel;
-    if(count==1){
-        taglabel=" tag";
-    }
-    else{
-        taglabel=" tags";
-    }
-    ui->TagCount->setText(QString::number(count) + taglabel);
 }
 
 // ###################################################################################################
@@ -189,15 +174,6 @@ void EditorTagManager::PrimaryConfig(){
     spacer3->setMaximumWidth(7);
     spacer3->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Preferred);
 
-
-    // set background and stylesheet for TagList element
-    QPalette pal;
-    QBrush bg=pal.light();
-    QColor bgcolor=bg.color();
-    //ui->TagList->setStyleSheet("padding: 8px; background-color: "+ bgcolor.name() + ";");
-    //ui->TagList->setStyleSheet("margin: 8px;");
-    ui->TagCount->setText("0 tags");
-
     // Create toolbar.
     QToolBar *bar = new QToolBar(this);
     bar->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
@@ -209,102 +185,36 @@ void EditorTagManager::PrimaryConfig(){
 
     if(Buffer::show_icon_labels){
         ui->NewTag->setText("Define Tag");
-        ui->RemoveTag->setText("Remove Current Tag");
-        ui->AddTag->setText("Add Current Tag");
+        //ui->RemoveTag->setText("Remove Current Tag");
+
         ui->RevertTags->setText("Revert Tags");
 
         ui->NewTag->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-        ui->RemoveTag->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-        ui->AddTag->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        //ui->RemoveTag->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         ui->RevertTags->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-
-        if(!standalone_tagger){
-             setMaximumHeight(175);
-        }
     }
-
-    // Use full-size font for certain objects no matter what
-    QFont fullFont("Sans",9);
-    ui->TagCount->setFont(fullFont);
-    ui->AvailableTags->setFont(fullFont);
-    ui->SelectTag->setFont(fullFont);
-
 
     // Populate toolbar with loose UI elements.
     bar->addWidget(ui->NewTag);
-    bar->addWidget(ui->RemoveTag);
     bar->addSeparator();
-    bar->addWidget(ui->AddTag);
     bar->addWidget(spacer1);
-    bar->addWidget(ui->SelectTag);
-    bar->addWidget(spacer3);
-    bar->addWidget(ui->AvailableTags);
-    bar->addWidget(spacer2);
-    bar->addWidget(ui->TagCount);
 
     //tighten up toolbar spacing for 0.5 (7/15/13).
     QSize barSize(16,16);
     bar->setIconSize(barSize);
     bar->setContentsMargins(0,2,0,0);
 
-
     // Force everything into a vboxlayout so the tag interface stretches to fill all available space.
     QVBoxLayout *layout=new QVBoxLayout(this);
     layout->setSpacing(0);
     layout->setContentsMargins(0,0,0,0);
     layout->addWidget(bar,0);
-    layout->addWidget(ui->TagList,0);
-
+    layout->addWidget(ui->AvailableTags);
 
     this->setLayout(layout);
 
-    QIcon inserticon(":/icons/tag--arrow.png");
-    QIcon removeicon(":/icons/tag--minus.png");
-    QIcon declareicon(":/icons/tag--pencil.png");
-    QIcon reverticon(":/icons/arrow_rotate_clockwise.png");
-
-    // Setup Context Menu for tagarea
-    QAction *insert = new QAction(tr("Apply current tag"),this);
-    insert->setIcon(inserticon);
-    connect(insert, SIGNAL(triggered()), this, SLOT(s_addTag()));
-
-    remove = new QAction(tr("Remove selected tag"),this);
-    remove->setIcon(removeicon);
-    connect(remove, SIGNAL(triggered()), this, SLOT(s_removeTag()));
-
-    QAction *define = new QAction(tr("Define new tag"),this);
-    define->setIcon(declareicon);
-    connect(define, SIGNAL(triggered()), this, SLOT(s_newTag()));
-
-    revert = new QAction(tr("Revert tag changes"),this);
-    revert->setIcon(reverticon);
-    connect(revert, SIGNAL(triggered()), this, SLOT(s_revertTag()));
-
-    contextmenu=new QMenu(ui->TagList);
-    contextmenu->addAction(define);
-    contextmenu->addSeparator();
-    contextmenu->addAction(insert);
-    contextmenu->addAction(remove);
-    contextmenu->addSeparator();
-    contextmenu->addAction(revert);
-
-    connect(ui->TagList, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showPopup()));
-
-    // Get list of tags and disable AddTag button if there are none
-
+    // Get list of tags
     CreateTagList();
-
-    if(ui->AvailableTags->count()==0){
-        ui->AddTag->setEnabled(false);
-
-    }
-
-    // if there are no items left disable the Remove button.
-    if(ui->TagList->count() == 0){
-        ui->RemoveTag->setDisabled(true);
-        remove->setDisabled(true);
-
-    }
 
     // Add the fat spacer and the RevertTags button now because the layout has been applied
     // by this point. This means the spacer should stretch to fit the layout (docking the button on the right).
@@ -328,100 +238,18 @@ void EditorTagManager::CreateTagList(){
 
     TaggingShared ts;
     QStringList tags=ts.TagAggregator();
+
     QIcon tagicon(":/icons/tag_red.png");
-    int count=0;
+    ui->AvailableTags->setRootIsDecorated(0);
 
-     // Bugfix for 0.5: fix bug that causes the first tag in the list to be omitted.
-     // int z used to start at 1 for some reason but it's fixed now. --Will Kraft (7/23/13).
-    for(int z=0; z < tags.size(); z++){
-        QString text=tags[z];
-
-        if((text != " ") && !text.isEmpty()){
-            ui->AvailableTags->addItem(tagicon,text);
-            count++;
-        }
-    }
-}
-
-// ###################################################################################################
-// (6/11/13) Add currently-selected tag in ui > AvailableTags to tag list.
-void EditorTagManager::AddTag(QString newtag){
-    using namespace std;
-
-    // get rid of semicolons since that is how tags are delimited in the database
-    newtag=newtag.replace(";","");
-
-    bool add_entry=true;
-
-    int count=ui->TagList->count();
-
-    for(int i=0; i < count; i++){
-
-        QListWidgetItem *c=ui->TagList->item(i);
-        //cout << "Loop: " << i << endl;
-        if(c->text()== newtag){
-            add_entry=false;
-            break;
-        }
-    }
-
-    if(!add_entry){
-        QMessageBox m;
-        m.critical(this,"RoboJournal", "This entry has already been tagged with \""
-                   + newtag + "\".");
-        ui->AvailableTags->clearEditText();
-        ui->AvailableTags->setFocus();
-
-    }
-    else{
-        // Create new ListwidgetItem
-        QIcon tagicon(":/icons/tag_orange.png");
-        QListWidgetItem *entry=new QListWidgetItem(tagicon,newtag);
-        ui->TagList->addItem(entry);
-        ui->TagList->setCurrentItem(entry);
-        ui->RemoveTag->setEnabled(true);
-        this->remove->setEnabled(true);
-
-        ui->AvailableTags->setFocus();
-        ui->AvailableTags->clearEditText();
-        bool add_to_list=true;
-
-        for(int a=0; a < ui->AvailableTags->count(); a++){
-            if(ui->AvailableTags->itemText(a)==newtag){
-                add_to_list=false;
-                break;
-            }
-        }
-
-        if(add_to_list){
-            ui->AvailableTags->addItem(newtag);
-        }
-
-        TagCount(ui->TagList->count());
-
-        if(EditorTagManager::standalone_tagger){
-            emit Sig_UnlockTaggerApplyButton();
-        }
-    }
-}
-
-// ###################################################################################################
-
-// (6/11/13) Remove currently-selected tag from Tag list
-void EditorTagManager::RemoveTag(){
-    QListWidgetItem *item=ui->TagList->currentItem();
-    delete item;
-
-    // if there are no items left, disable the Remove button and context menu item.
-    if(ui->TagList->count() == 0){
-        ui->RemoveTag->setDisabled(true);
-        remove->setDisabled(true);
-    }
-
-    TagCount(ui->TagList->count());
-
-    if(EditorTagManager::standalone_tagger){
-        emit Sig_UnlockTaggerApplyButton();
+    // Bugfix for 0.5: fix bug that causes the first tag in the list to be omitted.
+    // int z used to start at 1 for some reason but it's fixed now. --Will Kraft (7/23/13).
+    for(int i=0; i < tags.size(); i++){
+        QTreeWidgetItem *next=new QTreeWidgetItem(ui->AvailableTags);
+        next->setText(0,tags.at(i));
+        next->setIcon(0,tagicon);
+        next->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
+        next->setCheckState(0, Qt::Unchecked);
     }
 }
 
@@ -434,50 +262,18 @@ void EditorTagManager::LoadTags(QString id){
     TaggingShared ts;
     QStringList tags=ts.FetchTags(id);
 
-    // Remember if this entry originally had tags or not
-    if(tags.size()==0){
-        no_tags=true;
-    }
-    else{
-        no_tags=false;
-    }
+    QTreeWidgetItemIterator it(ui->AvailableTags);
 
-    for(int i=0; i < tags.size(); i++){
+    while(*it){
 
-        // Exclude null entries from tag list
-        if((tags.at(i) != "null") && (tags.at(i) != "Null")){
-            QIcon tagicon(":/icons/tag_orange.png");
-            QListWidgetItem *entry=new QListWidgetItem(tagicon,tags.at(i));
-            ui->TagList->addItem(entry);
+        QTreeWidgetItem *current=*it;
+
+        if(tags.contains(current->text(0))){
+            current->setCheckState(0,Qt::Checked);
         }
+
+        it++;
     }
-
-    TagCount(ui->TagList->count());
-}
-
-// ###################################################################################################
-
-// Slot that gets triggered when the user clicks the AddTag toolbar button.
-void EditorTagManager::on_AddTag_clicked()
-{
-    QString newtag=ui->AvailableTags->currentText();
-    AddTag(newtag);
-}
-
-// ###################################################################################################
-
-// 6/13/13: slot that gets triggered from context menu -- add tag
-void EditorTagManager::s_addTag(){
-
-    QString newtag=ui->AvailableTags->currentText();
-    AddTag(newtag);
-}
-
-// ###################################################################################################
-
-// 6/13/13: slot that gets triggered from context menu -- remove selected tag
-void EditorTagManager::s_removeTag(){
-    RemoveTag();
 }
 
 // ###################################################################################################
@@ -496,14 +292,6 @@ void EditorTagManager::s_revertTag(){
 
 // ###################################################################################################
 
-// 6/13/13: Slot that controls the pop-up context menu in the tag list
-void EditorTagManager::showPopup(){
-    QPoint p=QCursor::pos();
-    contextmenu->popup(p);
-}
-
-// ###################################################################################################
-
 void EditorTagManager::on_NewTag_clicked()
 {
     DefineTag();
@@ -511,24 +299,20 @@ void EditorTagManager::on_NewTag_clicked()
 
 // ###################################################################################################
 
-void EditorTagManager::on_RemoveTag_clicked()
-{
-    RemoveTag();
-}
-
-// ###################################################################################################
-
-void EditorTagManager::on_TagList_itemClicked(QListWidgetItem *item)
-{
-    if(item->isSelected()){
-        ui->RemoveTag->setEnabled(true);
-        remove->setEnabled(true);
-    }
-}
-
-// ###################################################################################################
-
 void EditorTagManager::on_RevertTags_clicked()
 {
     RevertTags();
+}
+
+// ###################################################################################################
+void EditorTagManager::on_AvailableTags_itemClicked(QTreeWidgetItem *item)
+{
+    if(Qt::Checked == item->checkState(0)){
+        item->setCheckState(0, Qt::Unchecked);
+    }
+    else{
+        item->setCheckState(0, Qt::Checked);
+    }
+
+    emit Sig_UnlockTaggerApplyButton();
 }

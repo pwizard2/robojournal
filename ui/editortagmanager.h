@@ -31,6 +31,7 @@
 #include <QAction>
 #include <QListWidgetItem>
 #include <QToolBar>
+#include <QTreeWidgetItem>
 
 namespace Ui {
 class EditorTagManager;
@@ -49,45 +50,27 @@ public:
     static bool standalone_tagger;
 
 signals:
+
     void Sig_UnlockTaggerApplyButton();
     
 private slots:
-    void on_AddTag_clicked();
-
-    void s_addTag();
-
-    void s_removeTag();
 
     void s_newTag();
 
     void s_revertTag();
 
-    void showPopup();
-
     void on_NewTag_clicked();
-
-    void on_RemoveTag_clicked();
-
-    void on_TagList_itemClicked(QListWidgetItem *item);
-
 
     void on_RevertTags_clicked();
 
+    void on_AvailableTags_itemClicked(QTreeWidgetItem *item);
 
 private:
     Ui::EditorTagManager *ui;
     void PrimaryConfig();
     void CreateTagList();
     void DefineTag();
-    void AddTag(QString newtag);
-    void RemoveTag();
-    void TagCount(int count);
     void RevertTags();
-
-
-    QMenu *contextmenu;
-    QAction *remove;
-    QAction *revert;
 
     bool no_tags;
 };

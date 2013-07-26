@@ -94,8 +94,11 @@ void Tagger::PrimaryConfig(){
 
     this->setLayout(layout);
 
-    et->setMaximumWidth(this->width());
-    et->setMaximumHeight(1000);
+    int widget_height=this->height()-ui->line->height()-ui->buttonBox->height()-14;
+
+    et->setMinimumWidth(this->width());
+    et->setMaximumHeight(widget_height);
+    et->setMinimumHeight(widget_height);
     et->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
     // hide question mark button in title bar when running on Windows

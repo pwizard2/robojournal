@@ -106,6 +106,7 @@ void ConfigurationMySQL::Show_Known_Journals(){
     ui->KnownJournals->resizeColumnToContents(1);
     ui->KnownJournals->setColumnHidden(2,true);
     ui->KnownJournals->sortByColumn(0, Qt::AscendingOrder);
+    ui->KnownJournals->setRootIsDecorated(0);
 
     FavoriteCore f;
     QList<QStringList> journals=f.getKnownJournals();
@@ -119,9 +120,7 @@ void ConfigurationMySQL::Show_Known_Journals(){
     }
     else{
         for(int i=0; i < journals.size(); i++){
-
             QStringList row=journals.at(i);
-
             QTreeWidgetItem *new_item=new QTreeWidgetItem(ui->KnownJournals);
             new_item->setIcon(0,db);
             new_item->setText(0,row.at(1));

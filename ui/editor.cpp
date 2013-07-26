@@ -66,11 +66,11 @@ void Editor::ToggleHTML(bool checked){
     if(checked){
 
 
-    ui->EntryPost->setPlainText(html);
+        ui->EntryPost->setPlainText(html);
     }
     else{
 
-    ui->EntryPost->setHtml(doc->toPlainText());
+        ui->EntryPost->setHtml(doc->toPlainText());
     }
 }
 
@@ -99,6 +99,9 @@ void Editor::PrimaryConfig(){
     QFont toolbarFont("Sans",7);
     bar->setFont(toolbarFont);
 
+    // set the lower toolbar icon size to 16x16.
+    QSize s(16,16);
+    bar->setIconSize(s);
 
     // Bind the Toolbar Buttons to QWidgetActions before adding them to the toolbar. This allows the toolbar overflow
     // menu to work where it would not if we had added the buttons to the toolbar directly (using QToolBar::addWidget).
@@ -238,10 +241,11 @@ void Editor::PrimaryConfig(){
     ui->EntryTitle->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 
 
+    // Set up the upper (master) toolbar.
     QToolBar *masterbar= new QToolBar(this);
     masterbar->setLayoutDirection(Qt::LeftToRight);
     masterbar->setContextMenuPolicy(Qt::PreventContextMenu);
-
+    masterbar->setIconSize(s);
 
     masterbar->addWidget(spacer1);
     masterbar->addWidget(ui->label);
@@ -257,6 +261,12 @@ void Editor::PrimaryConfig(){
     layout->setContentsMargins(0,0,0,0);
     layout->setSpacing(1);
 
+    QVBoxLayout *left_half=new QVBoxLayout(this);
+    left_half->setContentsMargins(0,0,0,0);
+    left_half->setSpacing(1);
+
+    // New for 0.5: Create the widget that contains the editor toolbar and textarea (7/25/13).
+    QWidget *editor_panel=new QWidget(this);
 
     // create status bar and populate it
     QStatusBar *sbar=new QStatusBar(this);
@@ -273,7 +283,7 @@ void Editor::PrimaryConfig(){
 
     layout->addWidget(masterbar);
     layout->addWidget(ui->line);
-
+    left_half->addWidget(bar);
 
 
 #ifdef _WIN32
@@ -284,17 +294,15 @@ void Editor::PrimaryConfig(){
 
     // (added for 0.5 -- 6/10/13) Set up vertical splitter for text area and tag area.
     divide=new QSplitter(this);
-    divide->setOrientation(Qt::Vertical);
+    divide->setOrientation(Qt::Horizontal);
 
     // Add tagging interface as QWidget Object (6/10/13)
     et=new EditorTagManager(this);
-    et->setMinimumWidth(this->width());
-
-    et->setMaximumHeight(100);
+    et->setMinimumWidth(275);
+    et->setMaximumWidth(275);
 
     EditorTagManager::standalone_tagger=false; // false b/c this EditorTagManager is not contained in the standalone Tagger interface
-
-    layout->addWidget(bar,1);
+    //layout->addWidget(bar,1);
 
     // Decide which TextEdit to use depending on whether user enabled spellcheck in preferences:
 
@@ -312,8 +320,6 @@ void Editor::PrimaryConfig(){
         connect(spell,SIGNAL(addWord(QString)), high,SLOT(slot_addWord(QString)));
         connect(spell, SIGNAL(textChanged()), this, SLOT(on_spell_textChanged()));
 
-
-
         layout->addWidget(spell,true);
 
     }
@@ -321,7 +327,10 @@ void Editor::PrimaryConfig(){
     // Option 2: If we're not using spellcheck, just use a regular QTextEdit. This is unchanged from =< 0.3.
     else{
 
-        divide->insertWidget(0,ui->EntryPost);
+        left_half->addWidget(ui->EntryPost,true);
+        editor_panel->setLayout(left_half);
+
+        divide->insertWidget(0,editor_panel);
         divide->insertWidget(1,et);
         //layout->addWidget(ui->EntryPost,true);
     }
@@ -486,12 +495,12 @@ void Editor::ConfirmExit(){
         int choice=m.exec();
 
         switch(choice){
-            case QMessageBox::Yes:
-                this->done(0);
+        case QMessageBox::Yes:
+            this->done(0);
             break;
 
-            case QMessageBox::No:
-                // do nothing
+        case QMessageBox::No:
+            // do nothing
             break;
         }
     }
@@ -693,7 +702,7 @@ bool Editor::NewEntry(){
 
         Editor::body=h.Do_Post_Processing(body_text,wordcount);
 
-   }
+    }
 
 
     //Bugfix for 0.2
