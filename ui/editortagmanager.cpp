@@ -43,12 +43,14 @@
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 #include <QTreeWidgetItemIterator>
+#include <QColor>
 
 EditorTagManager::EditorTagManager(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::EditorTagManager)
 {
     ui->setupUi(this);
+
     PrimaryConfig();
 }
 
@@ -94,6 +96,9 @@ QString EditorTagManager::HarvestTags(){
 // is in Edit Mode (since new entries have no pre-existing data to revert to).
 void EditorTagManager::RevertTags(){
 
+    QFont normal_font;
+    normal_font.setBold(false);
+
     if(Buffer::showwarnings){
         QMessageBox m;
         int choice=m.question(this,"RoboJournal","Do you really want to discard the changes you made to this entry\'s tags?",
@@ -101,7 +106,21 @@ void EditorTagManager::RevertTags(){
 
         if(choice==QMessageBox::Yes){
 
+            // purge all current checked items...
+            QTreeWidgetItemIterator it(ui->AvailableTags);
 
+            while(*it){
+                QTreeWidgetItem *current=*it;
+
+                current->setFont(0, normal_font);
+                current->setBackgroundColor(0, plain_bg);
+                current->setForeground(0, plain_fg);
+                current->setCheckState(0,Qt::Unchecked);
+
+                it++;
+            }
+
+            // ... And regenerate the saved list.
             if(EditorTagManager::standalone_tagger){
                 emit Sig_UnlockTaggerApplyButton();
 
@@ -110,11 +129,27 @@ void EditorTagManager::RevertTags(){
             else{
                 LoadTags(Buffer::editentry);
             }
+
+            emit Sig_LockTaggerApplyButton();
         }
     }
 
     else{
 
+        // purge all current checked items...
+        QTreeWidgetItemIterator it(ui->AvailableTags);
+
+        while(*it){
+            QTreeWidgetItem *current=*it;
+
+            current->setFont(0, normal_font);
+            current->setBackgroundColor(0, plain_bg);
+            current->setForeground(0, plain_fg);
+            current->setCheckState(0,Qt::Unchecked);
+            it++;
+        }
+
+        // ... And regenerate the saved list.
         if(EditorTagManager::standalone_tagger){
             emit Sig_UnlockTaggerApplyButton();
             LoadTags(Tagger::id_num);
@@ -122,8 +157,9 @@ void EditorTagManager::RevertTags(){
         else{
             LoadTags(Buffer::editentry);
         }
-    }
 
+        emit Sig_LockTaggerApplyButton();
+    }
 }
 
 // ###################################################################################################
@@ -159,20 +195,20 @@ void EditorTagManager::DefineTag(){
 // 6/10/13: Create toolbar and layout for this class.
 void EditorTagManager::PrimaryConfig(){
 
-    QWidget* spacer1 = new QWidget();
-    spacer1->setMinimumWidth(7);
-    spacer1->setMaximumWidth(7);
-    spacer1->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Preferred);
+    // find and use system colors for selected/clear tags.
+    QPalette pal;
 
-    QWidget* spacer2 = new QWidget();
-    spacer2->setMinimumWidth(15);
-    spacer2->setMaximumWidth(15);
-    spacer2->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Preferred);
+    QBrush bg=pal.alternateBase();
+    QBrush fg=pal.buttonText();
 
-    QWidget* spacer3 = new QWidget();
-    spacer3->setMinimumWidth(7);
-    spacer3->setMaximumWidth(7);
-    spacer3->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Preferred);
+    QBrush p_bg=pal.base();
+    QBrush p_fg=pal.windowText();
+
+    selected_bg=bg.color();
+    selected_fg=fg.color();
+
+    plain_bg=p_bg.color();
+    plain_fg=p_fg.color();
 
     // Create toolbar.
     QToolBar *bar = new QToolBar(this);
@@ -183,21 +219,24 @@ void EditorTagManager::PrimaryConfig(){
     QFont toolbarFont("Sans",7);
     bar->setFont(toolbarFont);
 
+    QFont grepFont("Sans",9);
+    ui->GrepBox->setFont(grepFont);
+
     if(Buffer::show_icon_labels){
         ui->NewTag->setText("Define Tag");
-        //ui->RemoveTag->setText("Remove Current Tag");
-
         ui->RevertTags->setText("Revert Tags");
 
         ui->NewTag->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-        //ui->RemoveTag->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->StripTags->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         ui->RevertTags->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     }
 
     // Populate toolbar with loose UI elements.
     bar->addWidget(ui->NewTag);
+    bar->addWidget(ui->StripTags);
     bar->addSeparator();
-    bar->addWidget(spacer1);
+    bar->addWidget(ui->GrepBox);
+    bar->addWidget(ui->ClearButton);
 
     //tighten up toolbar spacing for 0.5 (7/15/13).
     QSize barSize(16,16);
@@ -218,10 +257,10 @@ void EditorTagManager::PrimaryConfig(){
 
     // Add the fat spacer and the RevertTags button now because the layout has been applied
     // by this point. This means the spacer should stretch to fit the layout (docking the button on the right).
-    QWidget* fat_spacer = new QWidget();
-    fat_spacer->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
-
-    bar->addWidget(fat_spacer);
+    //    QWidget* fat_spacer = new QWidget();
+    //    fat_spacer->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+    //    bar->addWidget(fat_spacer);
+    bar->addSeparator();
     bar->addWidget(ui->RevertTags);
 
     // Disable Revert Tags button if this is a new entry because a new item has no tags to revert to.
@@ -245,11 +284,14 @@ void EditorTagManager::CreateTagList(){
     // Bugfix for 0.5: fix bug that causes the first tag in the list to be omitted.
     // int z used to start at 1 for some reason but it's fixed now. --Will Kraft (7/23/13).
     for(int i=0; i < tags.size(); i++){
-        QTreeWidgetItem *next=new QTreeWidgetItem(ui->AvailableTags);
-        next->setText(0,tags.at(i));
-        next->setIcon(0,tagicon);
-        next->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
-        next->setCheckState(0, Qt::Unchecked);
+
+        if(!tags.at(i).isEmpty()){
+            QTreeWidgetItem *next=new QTreeWidgetItem(ui->AvailableTags);
+            next->setText(0,tags.at(i));
+            next->setIcon(0,tagicon);
+            next->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
+            next->setCheckState(0, Qt::Unchecked);
+        }
     }
 }
 
@@ -262,6 +304,9 @@ void EditorTagManager::LoadTags(QString id){
     TaggingShared ts;
     QStringList tags=ts.FetchTags(id);
 
+    QFont bold_font;
+    bold_font.setBold(true);
+
     QTreeWidgetItemIterator it(ui->AvailableTags);
 
     while(*it){
@@ -270,24 +315,14 @@ void EditorTagManager::LoadTags(QString id){
 
         if(tags.contains(current->text(0))){
             current->setCheckState(0,Qt::Checked);
+
+            current->setFont(0, bold_font);
+            current->setBackgroundColor(0, selected_bg);
+            current->setForeground(0,selected_fg);
         }
 
         it++;
     }
-}
-
-// ###################################################################################################
-
-// 6/13/13: slot that gets triggered from context menu -- define tag
-void EditorTagManager::s_newTag(){
-    DefineTag();
-}
-
-// ###################################################################################################
-
-// 6/14/13: slot that gets triggered from context menu -- revert tags
-void EditorTagManager::s_revertTag(){
-    RevertTags();
 }
 
 // ###################################################################################################
@@ -307,12 +342,77 @@ void EditorTagManager::on_RevertTags_clicked()
 // ###################################################################################################
 void EditorTagManager::on_AvailableTags_itemClicked(QTreeWidgetItem *item)
 {
+    QFont bold_font;
+    bold_font.setBold(true);
+
+    QFont normal_font;
+    normal_font.setBold(false);
+
     if(Qt::Checked == item->checkState(0)){
         item->setCheckState(0, Qt::Unchecked);
+        item->setFont(0, normal_font);
+        item->setBackgroundColor(0, plain_bg);
+        item->setForeground(0, plain_fg);
     }
     else{
         item->setCheckState(0, Qt::Checked);
+        item->setFont(0, bold_font);
+        item->setBackgroundColor(0, selected_bg);
+        item->setForeground(0,selected_fg);
     }
 
     emit Sig_UnlockTaggerApplyButton();
+}
+
+
+// ###################################################################################################
+void EditorTagManager::on_StripTags_clicked()
+{
+
+    QFont normal_font;
+    normal_font.setBold(false);
+
+    if(Buffer::showwarnings){
+        QMessageBox m;
+
+        int choice=m.question(this,"RoboJournal","Do you really want to remove all tags from this entry?",
+                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+
+        if(choice==QMessageBox::Yes){
+
+            // purge all current checked items...
+            QTreeWidgetItemIterator it(ui->AvailableTags);
+
+            while(*it){
+                QTreeWidgetItem *current=*it;
+
+                current->setFont(0, normal_font);
+                current->setBackgroundColor(0, plain_bg);
+                current->setForeground(0, plain_fg);
+                current->setCheckState(0,Qt::Unchecked);
+
+                it++;
+            }
+
+            emit Sig_UnlockTaggerApplyButton();
+        }
+    }
+    else{
+
+        // purge all current checked items...
+        QTreeWidgetItemIterator it(ui->AvailableTags);
+
+        while(*it){
+            QTreeWidgetItem *current=*it;
+
+            current->setFont(0, normal_font);
+            current->setBackgroundColor(0, plain_bg);
+            current->setForeground(0, plain_fg);
+            current->setCheckState(0,Qt::Unchecked);
+
+            it++;
+        }
+
+        emit Sig_UnlockTaggerApplyButton();
+    }
 }

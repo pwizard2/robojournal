@@ -124,15 +124,30 @@ void Tagger::PrimaryConfig(){
 
     // Allow communication between Tagger container class and EditorTagManager child widget
     connect(et, SIGNAL(Sig_UnlockTaggerApplyButton()), this, SLOT(UnlockApply()));
+    connect(et,SIGNAL(Sig_LockTaggerApplyButton()), this, SLOT(LockApply()));
 
 }
 
 //#########################################################################################################
-// Slot that unclocks the Apply button whenever the Sig_UnlockTaggerApplyButton() is emitted from EditorTagManager.
+// Slot that unlocks the Apply button whenever the Sig_UnlockTaggerApplyButton() is emitted from EditorTagManager.
 // -- Will Kraft, 7/12/13
 void Tagger::UnlockApply(){
     QAbstractButton *apply=ui->buttonBox->button(QDialogButtonBox::Apply);
     apply->setEnabled(true);
+}
+
+//#########################################################################################################
+// Slot that Locks the Apply button whenever the Sig_LockTaggerApplyButton() is emitted from EditorTagManager.
+// -- Will Kraft, 7/26/13
+void Tagger::LockApply(){
+    QAbstractButton *apply=ui->buttonBox->button(QDialogButtonBox::Apply);
+    apply->setEnabled(false);
+
+    QAbstractButton *cancel=ui->buttonBox->button(QDialogButtonBox::Cancel);
+    cancel->setEnabled(true);
+
+    QAbstractButton *ok=ui->buttonBox->button(QDialogButtonBox::Ok);
+    ok->setEnabled(false);
 }
 
 //#########################################################################################################

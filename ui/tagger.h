@@ -49,6 +49,7 @@ private slots:
 
     void on_buttonBox_clicked(QAbstractButton *button);
     void UnlockApply();
+    void LockApply();
 
 private:
 

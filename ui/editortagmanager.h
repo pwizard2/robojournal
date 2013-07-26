@@ -32,6 +32,7 @@
 #include <QListWidgetItem>
 #include <QToolBar>
 #include <QTreeWidgetItem>
+#include <QColor>
 
 namespace Ui {
 class EditorTagManager;
@@ -52,18 +53,17 @@ public:
 signals:
 
     void Sig_UnlockTaggerApplyButton();
+    void Sig_LockTaggerApplyButton();
     
 private slots:
-
-    void s_newTag();
-
-    void s_revertTag();
 
     void on_NewTag_clicked();
 
     void on_RevertTags_clicked();
 
     void on_AvailableTags_itemClicked(QTreeWidgetItem *item);
+
+    void on_StripTags_clicked();
 
 private:
     Ui::EditorTagManager *ui;
@@ -73,6 +73,12 @@ private:
     void RevertTags();
 
     bool no_tags;
+
+    QColor selected_bg;
+    QColor selected_fg;
+
+    QColor plain_bg;
+    QColor plain_fg;
 };
 
 #endif // EDITORTAGMANAGER_H

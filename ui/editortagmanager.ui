@@ -88,6 +88,53 @@
     </property>
    </column>
   </widget>
+  <widget class="QToolButton" name="StripTags">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>10</y>
+     <width>26</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Strip Tags</string>
+   </property>
+   <property name="text">
+    <string>Strip Tags</string>
+   </property>
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/tag--minus.png</normaloff>:/icons/tag--minus.png</iconset>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="GrepBox">
+   <property name="geometry">
+    <rect>
+     <x>82</x>
+     <y>10</y>
+     <width>121</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="ClearButton">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>10</y>
+     <width>26</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/clear-text.png</normaloff>:/icons/clear-text.png</iconset>
+   </property>
+  </widget>
  </widget>
  <resources>
   <include location="../images.qrc"/>
