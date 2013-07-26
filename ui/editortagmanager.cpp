@@ -198,7 +198,15 @@ void EditorTagManager::PrimaryConfig(){
     // find and use system colors for selected/clear tags.
     QPalette pal;
 
+#ifdef _WIN32
+    QBrush bg=pal.midlight();
+#endif;
+
+#ifdef unix
     QBrush bg=pal.alternateBase();
+#endif
+
+    //QBrush bg=pal.alternateBase();
     QBrush fg=pal.buttonText();
 
     QBrush p_bg=pal.base();
