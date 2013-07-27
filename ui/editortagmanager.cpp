@@ -182,11 +182,13 @@ void EditorTagManager::DefineTag(){
     QString tag=ts.DefineTag(current_list);
 
     if(!tag.isEmpty()){
-        QTreeWidgetItem *defined=new QTreeWidgetItem(ui->AvailableTags);
+        QTreeWidgetItem *defined=new QTreeWidgetItem();
         defined->setText(0,tag);
         defined->setIcon(0,newicon);
         defined->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
         defined->setCheckState(0, Qt::Unchecked);
+
+        ui->AvailableTags->insertTopLevelItem(0, defined);
     }
 }
 
@@ -275,7 +277,6 @@ void EditorTagManager::PrimaryConfig(){
     if((!Buffer::editmode) && (standalone_tagger)){
         ui->RevertTags->setDisabled(true);
     }
-
 }
 
 // ###################################################################################################
@@ -299,6 +300,7 @@ void EditorTagManager::CreateTagList(){
             next->setIcon(0,tagicon);
             next->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
             next->setCheckState(0, Qt::Unchecked);
+
         }
     }
 }
