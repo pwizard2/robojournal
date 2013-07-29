@@ -18,7 +18,16 @@
     <normaloff>:/icons/robojournal.ico</normaloff>:/icons/robojournal.ico</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
@@ -139,7 +148,7 @@
           <item row="0" column="0" colspan="2">
            <widget class="QCheckBox" name="UseDefaults">
             <property name="text">
-             <string>Use default host and port</string>
+             <string>Use &amp;default host and port</string>
             </property>
            </widget>
           </item>

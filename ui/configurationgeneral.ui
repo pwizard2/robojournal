@@ -23,7 +23,7 @@
       <item>
        <widget class="QCheckBox" name="AlwaysUseDefaults">
         <property name="toolTip">
-         <string>&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;(Recommended)&lt;/span&gt; This option requires RoboJournal to suggest (but not force) default settings wherever applicable.&lt;/p&gt;</string>
+         <string>&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;(Recommended)&lt;/span&gt; This option requires RoboJournal to suggest&amp;ndash;but not force&amp;ndash;default settings wherever applicable.&lt;/p&gt;</string>
         </property>
         <property name="text">
          <string>Always suggest &amp;default settings</string>

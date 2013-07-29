@@ -91,34 +91,15 @@ void DBLogin::ResetPassword(){
 
 //###################################################################################################
 void DBLogin::Refresh(){
-    // Check to see if defaults are being used
+
+    // Check to see if defaults are being used and fuill in the appropriate data
     if(Buffer::alwaysusedefaults){
-        ui->UseUserDefault->click();
-    }
-
-    if(ui->UseUserDefault->isChecked()){
-        ui->Password->setFocus(Qt::PopupFocusReason);
-    }
-}
-
-//###################################################################################################
-void DBLogin::on_UseUserDefault_clicked()
-{
-
-    if(ui->UseUserDefault->isChecked()){
-        ui->Username->setReadOnly(true);
-        ui->Username->setText(Buffer::defaultuser);
-
+        ui->Username->setPlaceholderText(Buffer::defaultuser);
+        ui->Password->setFocus();
     }
     else{
-        ui->Username->setReadOnly(false);
-        ui->Username->clear();
+        ui->Username->setFocus();
     }
-}
-
-void DBLogin::on_UseDBDefault_clicked()
-{
-
 }
 
 //###################################################################################################
@@ -170,7 +151,15 @@ void DBLogin::on_buttonBox_accepted()
         Buffer::database_name=ui->WhichDB->currentText();
 
         Buffer::host=ui->DBHost->currentText();
-        Buffer::username=ui->Username->text();
+
+        // For the sake of simplicity, use placeholder text for the default value. New for 0.5 (7/29/13).
+        if(ui->Username->text().isEmpty()){
+            Buffer::username=ui->Username->placeholderText();
+        }
+        else{
+             Buffer::username=ui->Username->text();
+        }
+
         Buffer::password=ui->Password->text();
 
         // Create/maintain Favorite DB list during each login. This is necessary because it allows

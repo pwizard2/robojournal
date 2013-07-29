@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>331</width>
-    <height>335</height>
+    <height>304</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -97,14 +97,7 @@
           <bool>false</bool>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
-          <item row="0" column="0" colspan="2">
-           <widget class="QCheckBox" name="UseUserDefault">
-            <property name="text">
-             <string>Use default &amp;user account</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
+          <item row="0" column="0">
            <widget class="QLabel" name="label_3">
             <property name="text">
              <string>Username</string>
@@ -114,14 +107,14 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="0" column="1">
            <widget class="QLineEdit" name="Username">
             <property name="toolTip">
              <string>&lt;p&gt;Enter the username that you want to use to connect to &lt;b&gt;Database&lt;/b&gt;@&lt;b&gt;Host&lt;/b&gt;.&lt;/p&gt;</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
+          <item row="1" column="0">
            <widget class="QLabel" name="label_4">
             <property name="text">
              <string>Password</string>
@@ -131,7 +124,7 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
+          <item row="1" column="1">
            <widget class="QLineEdit" name="Password">
             <property name="toolTip">
              <string>&lt;p&gt;Enter the password that goes with &lt;b&gt;Username&lt;/b&gt;.&lt;/p&gt;</string>
@@ -140,22 +133,6 @@
              <enum>QLineEdit::Password</enum>
             </property>
            </widget>
-          </item>
-          <item row="1" column="0">
-           <spacer name="verticalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>6</height>
-             </size>
-            </property>
-           </spacer>
           </item>
          </layout>
         </widget>
