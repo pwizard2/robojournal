@@ -206,6 +206,7 @@ void ConfigurationMySQL::demoteDatabase(QTreeWidgetItem *item){
 void ConfigurationMySQL::on_KnownJournals_itemDoubleClicked(QTreeWidgetItem *item)
 {
     QString new_choice=item->text(0);
+    QString new_host=item->text(1);
 
     if(new_choice != Buffer::defaultdatabase){
         if(Buffer::showwarnings){
@@ -218,8 +219,11 @@ void ConfigurationMySQL::on_KnownJournals_itemDoubleClicked(QTreeWidgetItem *ite
 
             case QMessageBox::Yes:
                 ui->Database->setText(new_choice);
+                ui->DefaultHost->setText(new_host);
+
                 demoteDatabase(default_db);
                 ApplyDefaultProperties(item);
+
                 break;
 
             case QMessageBox::No: // do nothing

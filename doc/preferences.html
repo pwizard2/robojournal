@@ -78,7 +78,13 @@ alt="RoboJournal Documentation" class="masthead">
           <li><a href="#export_preview">Export Preview</a></li>
         </ol>
       </li>
-      <li><a href="#mysql_settings_page">MySQL Settings Page</a></li>
+      <li><a href="#mysql_settings_page">MySQL Settings Page</a> 
+        <ol>
+          <li><a href="#default_account">Default Account</a></li>
+          <li><a href="#favorite_journals">Favorite Journals</a></li>
+          <li><a href="#security">Security</a></li>
+        </ol>
+      </li>
     </ol>
   </li>
 </ol>
@@ -887,9 +893,11 @@ to MySQL. The MySQL Settings page is displayed when you click the <strong>MySQL
 Settings</strong> list item on the left side of the Preferences window: </p>
 
 <p><img alt="RoboJournal Preferences: MySQL Page"
-src="img/screens/preferences_mysql.png" width="642" height="604"
+src="img/screens/preferences_mysql.png" width="626" height="570"
 class="screenshot"><span class="caption_wide">Figure 12: RoboJournal
 Preferences Window — MySQL Settings Page</span></p>
+
+<h3 id="default_account">Default Account</h3>
 
 <p>The <strong>Default Account</strong> group contains options that determine
 the default account for MySQL connections, including the default Host,
@@ -897,6 +905,54 @@ Database, Port, and Username to use if RoboJournal is configured to always
 suggest default settings. The <strong>Default</strong> button (to the right of
 the Port field) is an easy way to reset the Port field to its default value of
 "3306" in case you previously changed it and need to change it back. </p>
+
+<p>RoboJournal 0.5 (and later) offers an easy way to change the default
+database. Find the database you wish to use as your default in the List of
+Known Journals (Figure 13) and double-click its entry node. Once you have done
+so, your chosen database is "promoted" to the new default database (RoboJournal
+asks you to confirm your decision if confirmation dialogs are enabled). Once
+you have set a new default, the old default database is still considered to be
+a favorite unless you decide to clear its checkbox.</p>
+
+<h3 id="favorite_journals">Favorite Journals</h3>
+
+<p>RoboJournal 0.5 introduces the "Favorites" system for MySQL journals. Under
+this new design, RoboJournal automatically scans the current host for databases
+bound to your user account every time you <a
+href="fundamentals.html#connect">log in</a>, <a
+href="getting_started.html#mysql_journal">create a new journal</a>, or use the
+<a href="gettings_started.html#js_mysql">Journal Selector</a>. This list of
+databases is stored in the .robojournal folder in your home directory along
+with your RoboJournal configuration file. The Favorites system records each
+journal (and the host it is associated with) only once to ensure there are no
+duplicate entries in the list. Each time a new database is created or detected,
+it is automatically appended to the list of databases associated with your user
+account. Collectively, this data is formally called the List of Known Journals.
+The List of Known Journals is unique for each user. Some users may have only
+one journal while others may have dozens of them for various purposes. </p>
+
+<p>Because displaying the full List of Known Journals in the <a
+href="fundamentals.html#mysql_init">New Connection dialog</a> becomes
+impractical as the list increases in size, RoboJournal allows you to select one
+or more items from the list to be your "favorites". For maximum effectiveness,
+your favorite journals should be the ones you use the most frequently. All
+favorites are represented by a checked item in the List of Known Journals on
+the MySQL Page in RoboJournal Preferences:<img alt="Figure 13"
+src="img/screens/mysql_favorites.png" width="417" height="249"
+class="screenshot"><span class="caption">Figure 13: All known journals (and
+their hosts) are conveniently displayed on the MySQL Settings page.</span></p>
+
+<p>To select a journal as a favorite, click the checkbox next to its name in
+the list. To un-favorite a journal, clear the checkbox next to the appropriate
+entry. Your changes are saved once you click the <strong>OK</strong> button on
+the RoboJournal's Preferences window.</p>
+
+<p>The default journal (for instance, "journal1" in Figure 13) is
+<em>always</em> selected as a favorite because it is the journal you connect to
+most frequently. For ease of identification, the default journal is represented
+with a gold-colored database icon and bold text.</p>
+
+<h3 id="security">Security</h3>
 
 <p>Enabling the <strong>Allow root logins on host</strong> option overrides the
 security protocol that prevents users from logging in as the MySQL root user.
