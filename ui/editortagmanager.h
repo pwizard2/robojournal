@@ -43,11 +43,11 @@ class TagListDelegate : public QStyledItemDelegate
 {
 
 public:
-    TagListDelegate(QStyledItemDelegate* parent);
+    TagListDelegate(QObject* parent);
+    QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
     void paint(QPainter* painter, const QStyleOptionViewItem& option,
                 const QModelIndex& index) const;
 };
-
 
 class EditorTagManager : public QWidget
 {

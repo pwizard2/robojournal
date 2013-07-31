@@ -45,17 +45,24 @@
 #include <QTreeWidgetItemIterator>
 #include <QColor>
 #include <QStyledItemDelegate>
+#include <QPainter>
 
-TagListDelegate::TagListDelegate(QStyledItemDelegate *parent) :
-    TagListDelegate(parent){
+TagListDelegate::TagListDelegate(QObject *parent)
+    : QStyledItemDelegate(parent){
 
 }
+
+QSize TagListDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+     QSize ret = QStyledItemDelegate::sizeHint(option, index);
+     return ret;
+}
+
 
 void TagListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
                             const QModelIndex &index) const{
 
     QStyledItemDelegate::paint(painter, option, index);
-
 }
 
 EditorTagManager::EditorTagManager(QWidget *parent) :
@@ -211,8 +218,7 @@ void EditorTagManager::DefineTag(){
 void EditorTagManager::PrimaryConfig(){
 
     // use TagListDelegate to draw lines between list items
-
-    //ui->AvailableTags->setItemDelegate(new TagListDelegate(this));
+    ui->AvailableTags->setItemDelegate(new TagListDelegate(this));
 
     // find and use system colors for selected/clear tags.
     const QPalette pal;
