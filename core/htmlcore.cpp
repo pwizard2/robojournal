@@ -22,6 +22,9 @@
     Once processed, the HTMLCore output is ready to be fed to MySQLCore or SQLiteCore.
     The HTMLCore also converts raw database output into a HTML document each time
     an entry needs to be displayed.
+
+    Update 7/30/13: The HTMLCore now contains the code that outputs HTML or plain text
+    from the database.
 */
 
 #include "htmlcore.h"
@@ -29,6 +32,12 @@
 #include <QStringList>
 #include "core/buffer.h"
 #include "sql/mysqlcore.h"
+#include <QFile>
+#include <QPalette>
+#include <QDir>
+#include <QDateTime>
+#include <QTextStream>
+#include <QMessageBox>
 
 HTMLCore::HTMLCore()
 {
@@ -310,4 +319,443 @@ QString HTMLCore::Do_Post_Processing(QString rawtext, int wordcount){
     }
 
     return body;
+}
+
+//################################################################################################
+// Define CSS parameters from buffer data. This function used to be in EntryExporter but
+// it got moved to HTMLCore for version 0.5. --Will Kraft (7/30/13).
+void HTMLCore::Setup_Export_CSS(){
+
+    header_font=Buffer::header_font;
+    body_font=Buffer::body_font;
+
+    if(Buffer::header_use_em){
+        header_font_size=Buffer::header_font_size + "em";
+    }
+    else{
+        header_font_size=Buffer::header_font_size + "pt";
+    }
+
+
+
+    if(Buffer::body_use_em){
+        body_font_size=Buffer::body_font_size + "em";
+    }
+    else{
+        body_font_size=Buffer::body_font_size + "pt";
+    }
+
+
+    if(Buffer::use_system_colors){
+
+        // use system colors for datebox
+        QPalette pal;
+        QColor bg=pal.highlight().color();
+        QColor fg=pal.highlightedText().color();
+        datebox_bgcolor=bg.name();
+        datebox_color=fg.name();
+    }
+    else{
+        datebox_bgcolor="#e2e2e2";
+        datebox_color="#000000";
+    }
+}
+
+//##########################################################################################
+// Do the single entry export. This function used to be part of EntryExporter but it got
+// moved to HTMLCore in version 0.5. --Will Kraft (7/30/13).
+void HTMLCore::Do_Export(QString path, QString id, bool use_html)
+{
+    using namespace std;
+
+    // create an empty file object
+    QFile file(path);
+
+    QStringList entry;
+
+    if(Buffer::backend=="MySQL"){
+        MySQLCore my;
+        entry=my.Get_Entry_New(id);
+    }
+
+    QString title=entry.at(0);
+    QString date=entry.at(1);
+    QString timestamp=entry.at(2);
+    QString tags=entry.at(3);
+    QString body=entry.at(4);
+
+    // get current date and timestamp (NOT the ones from the entry!). This is used in the "this file was generated
+    // by RoboJournal v.X" tagline at the bottom of the document.
+    QDateTime t=QDateTime::currentDateTime();
+    QString exportdt=t.toString("dddd, MMMM d, yyyy (h:mm ap).");
+
+    // check to see if file already exists at location before writing it
+
+    if(use_html){
+        // replace newlines with HTML line breaks
+        body=body.replace("\n","<br>");
+    }
+    else{
+        // strip HTML tags
+        body.replace("<br>","\n");
+
+    }
+
+    if(file.open(QIODevice::ReadWrite)) {
+        QTextStream stream(&file);
+
+        if(use_html){
+
+            QString entry_tags=tags;
+
+            // turn tags into bullet list
+            if((tags=="null") || (tags=="Null") || (tags.isEmpty())){
+                entry_tags="<p style=\"margin-left: 3.5em;\"><b>Tags:</b> No tag data</p>";
+            }
+            else{
+                entry_tags=entry_tags.replace(";","<li class=\"tag\">");
+                entry_tags="<ul><li style=\"list-style-type: none\"><b>Tags:</b><li class=\"tag\">" + entry_tags + "</ul>";
+
+            }
+
+            // Get values for CSS fields
+            Setup_Export_CSS();
+
+            stream << "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\""
+                      "\"http://www.w3.org/TR/html4/strict.dtd\">" << endl;
+            stream << "<html>" << endl;
+            stream << "<head>" << endl;
+            stream << "<meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\">" << endl;
+            stream << "<title>"<< title << "</title>" << endl;
+            stream << "<style type=\"text/css\">" << endl;
+            stream << "\tbody{\n\t\tbackground-color: #ffffff;\n\t}\n\n" << endl;
+            stream << "\tp{\n\t\tfont-family: "+ body_font + "; \n\t\tfont-size: "+ body_font_size +" ; \n\t\tmargin-bottom: 1em;\n\t}\n\n" << endl;
+            stream << "\th1{\n\t\tfont-family: " + header_font + "; \n\t\tfont-size: " + header_font_size + ";\n\t}\n\n" << endl;
+            stream << "\t.datebox{\n\t\tbackground-color: " + datebox_bgcolor + "; \n\t\tcolor: " + datebox_color + ";\n\t\tpadding: 5px; \n\t\tborder-radius: 10px; \n\t\tborder: solid 1px gray;\n\t}\n\n" << endl;
+            stream << "\thr{\n\t\tbackground-color:silver;\n\t\tcolor: silver;\n\t\theight: 1px;\n\t\twidth:100%;\n\t\tborder: 0px;\n\t}\n\n" << endl;
+            stream << "\t.tag{\n\t\tcolor:black;\n\t\tbackground-color:#FFFEE0;\n\t\tpadding: 3px;\n\t\tborder: solid 1px #BEBE8F;"
+                      "\n\t\tlist-style-type: none;\n\t\tfont-family: calibri,verdana,sans-serif;\n\t\tfont-size: 0.7em;\n\t}\n\n" << endl;
+            stream << "\tli{\n\t\tlist-style-type:square;\n\t\tpadding-right: 1em;\n\t\tfloat: left;\n\t\tmargin-left: 1.5em;\n\t}\n\n" << endl;
+            stream << "</style>" << endl;
+            stream << "</head>" << endl;
+            stream << "<body>" << endl;
+            stream << "<h1>" << title << "</h1>" << endl;
+            stream << "<div class=\"datebox\">&nbsp;&nbsp;On " <<
+                      date << " at " << timestamp << ", " << Buffer::username << " wrote:</div>" << endl;
+            stream << "<p>" << body << "</p>" << endl;
+            stream << "\t\t<p>" << entry_tags << "</p><br><br>" << endl;
+            stream << "<hr>" << endl;
+            stream << "<p><i><small>This file was generated by RoboJournal " <<
+                      Buffer::version << " on " << exportdt << "</small></i></p>" <<  endl;
+            stream << "</body>" << endl;
+            stream << "</html>" << endl;
+        }
+
+        // do plain text export
+        else{
+            // Convert HTML Hyphens and dashes to plain text
+
+            body=body.replace(QRegExp("&mdash;"),"--");
+
+            body=body.replace(QRegExp("&ndash;"),"-");
+
+            body=body.replace(QRegExp("&hellip;"),"...");
+
+            body=body.replace(QRegExp("&rsquo;"),"\'");
+
+            body=body.replace(QRegExp("</?sup>"),"");
+
+            // format tags correctly for plain text
+            tags=tags.replace(";", " *");
+
+
+#ifdef _WIN32
+            // convert line breaks to windows-style
+            body=body.replace("\n", "\r\n");
+
+            stream << "\r\n" << title.toUpper() << "\r\n\r\n" << endl;
+            stream << "On " << date << " at " << timestamp << ", " << Buffer::username << " wrote:\r\n" << endl;
+            stream << "################################################################################" << endl;
+            stream << "\r\n\r\n" << endl;
+            stream << body << endl;
+            stream << "\r\n\r\n" << endl;
+            stream << "Tags: *" << tags << endl;
+            stream << "\r\n" << endl;
+            stream << "################################################################################" << endl;
+            stream << "\r\nThis file was generated by RoboJournal " << Buffer::version << " on " << exportdt <<  endl;
+#endif
+
+#ifdef unix
+            stream << "\n" << title.toUpper() << "\n" << endl;
+            stream << "On " << date << " at " << timestamp << ", " << Buffer::username << " wrote:\n" << endl;
+            stream << "################################################################################" << endl;
+            stream << "\n" << endl;
+            stream << body << endl;
+            stream << "\n\n" << endl;
+            stream << "Tags: *" << tags << endl;
+            stream << "\n" << endl;
+            stream << "################################################################################" << endl;
+            stream << "\nThis file was generated by RoboJournal " << Buffer::version << " on " << exportdt <<  endl;
+#endif
+        }
+    }
+
+    file.close();
+
+    QMessageBox b;
+    b.information(NULL,"RoboJournal", "<b>" + path + "</b> was successfully exported.");
+}
+
+
+//################################################################################################
+// Do mass (full journal) export. This function used to be part of EntryExporter but it got moved
+// to HTMLcore during 0.5 development. --Will Kraft (7/30/13).
+void HTMLCore::Export_Multi(QString path, bool use_html, bool sort_asc){
+    using namespace std;
+    //this->setCursor(Qt::WaitCursor);
+
+    //QString path=ui->ExportLocation->text() + QDir::separator() + ui->FileName_2->text();
+
+    // create an empty file object
+    QFile file(path);
+    QList<QStringList> journals;
+
+    if(Buffer::backend=="MySQL"){
+        // Get database dump
+        MySQLCore a;
+        journals=a.DumpDatabase(sort_asc);
+    }
+
+    QString dumptitle;
+
+    if(use_html){
+        dumptitle="Contents of&nbsp;<em>" + Buffer::database_name + "</em>";
+    }
+    else{
+        dumptitle="Contents of \"" + Buffer::database_name + "\"";
+    }
+
+    // get current date and timestamp (NOT the ones from the entry!). This is used in the "this file was generated
+    // by RoboJournal v.X" tagline at the bottom of the document.
+    QDateTime t=QDateTime::currentDateTime();
+    QString exportdt=t.toString("dddd, MMMM d, yyyy (h:mm ap).");
+
+    QListIterator<QStringList> j(journals);
+
+    int count=0;
+
+    QString intro;
+
+    if(sort_asc){
+        intro="<p>All entries have been arranged from oldest to newest.</p>";
+    }
+    else{
+        intro="<p>All entries have been arranged from newest to oldest.</p>";
+    }
+
+    if(file.open(QIODevice::ReadWrite)) {
+
+        QTextStream stream(&file);
+
+        // HTML Export
+        if(use_html){
+
+            // Prepare CSS values
+            Setup_Export_CSS();
+
+            stream << "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\""
+                      "\"http://www.w3.org/TR/html4/strict.dtd\">" << endl;
+            stream << "<html>" << endl;
+            stream << "<head>" << endl;
+            stream << "<meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\">" << endl;
+            stream << "<title>Contents of "<< Buffer::database_name << "</title>" << endl;
+            stream << "<style type=\"text/css\">" << endl;
+            stream << "\tbody{\n\t\tbackground-color: #ffffff;\n\t}\n\n" << endl;
+            stream << "\tp{\n\t\tfont-family: "+ body_font + "; \n\t\tfont-size: "+ body_font_size +" ; \n\t\tmargin-bottom: 1em;\n\t}\n\n" << endl;
+            stream << "\th1{\n\t\tfont-family: " + header_font + "; \n\t\tfont-size: " + header_font_size + ";\n\t}\n\n" << endl;
+
+            // calculate size of H2 font relative to H1 size:
+            QString header2_font_size;
+
+            if(Buffer::header_use_em){
+                float h2_size=Buffer::header_font_size.toInt();
+                h2_size=h2_size-1.5;
+                header2_font_size=QString::number(h2_size);
+                header2_font_size = header2_font_size + "em";
+            }
+            else{
+                int h2_size=Buffer::header_font_size.toInt();
+                h2_size=h2_size-6;
+                header2_font_size=QString::number(h2_size);
+                header2_font_size = header2_font_size + "pt";
+            }
+
+            stream << "\th2{\n\t\tfont-family: " + header_font + "; \n\t\tfont-size: " + header2_font_size + ";\n\t\tmargin-left: 0.5em;\n\t}\n\n" << endl;
+            stream << "\t.datebox{\n\t\tbackground-color: " + datebox_bgcolor + "; \n\t\tcolor: " + datebox_color + ";\n\t\tpadding: 5px; \n\t\tborder: solid 1px gray; ";
+
+            if(Buffer::use_rounded_corners){
+                stream << "\n\t\tborder-radius: 10px; \n\t}\n\n" << endl;
+            }
+            else{
+                stream << "\n\t}\n\n" << endl;
+            }
+
+            stream << "\thr{\n\t\tbackground-color:silver;\n\t\tcolor: silver;\n\t\theight: 1px;\n\t\twidth:100%;\n\t\tborder: 0px;\n\t}\n\n" << endl;
+            stream << "\tli{\n\t\tlist-style-type:square;\n\t\tpadding-right: 1em;\n\t\tfloat: left;\n\t\tmargin-left: 1.5em;\n\t}\n\n" << endl;
+            stream << "\t.number{\n\t\tcolor:gray;\n\t\tfont-weight: lighter;\n\t}\n\n" << endl;
+            stream << "\t.tag{\n\t\tcolor:black;\n\t\tbackground-color:#FFFEE0;\n\t\tpadding: 3px;\n\t\tborder: solid 1px #BEBE8F;"
+                      "\n\t\tlist-style-type: none;\n\t\tfont-family: calibri,verdana,sans-serif;\n\t\tfont-size: 0.7em;\n\t}\n\n" << endl;
+            stream << "</style>" << endl;
+            stream << "</head>" << endl;
+            stream << "<body>" << endl;
+            stream << "<h1>" << dumptitle << "</h1>" << endl;
+            stream << intro << endl;
+
+            while(j.hasNext()){
+
+                count++;
+
+                QString entrynumber=QString::number(count);
+
+                QStringList thisentry=j.next();
+
+                QString entry_title=thisentry.at(0);
+                QString entry_month=thisentry.at(2);
+                QString entry_day=thisentry.at(1);
+                QString entry_year=thisentry.at(3);
+                QString entry_tags=thisentry.at(4);
+                QString entry_body=thisentry.at(5);
+                QString entry_time=thisentry.at(6);
+
+                // convert newlines to linebreaks
+                entry_body=entry_body.replace("\n","<br>");
+
+                // turn tags into bullet list
+
+                if((entry_tags=="null") || (entry_tags=="Null") || (entry_tags.isEmpty())){
+                    entry_tags="<p style=\"margin-left: 3.5em;\"><b>Tags:</b> No tag data</p>";
+                }
+                else{
+                    entry_tags=entry_tags.replace(";","<li class=\"tag\">");
+                    entry_tags="<ul><li style=\"list-style-type: none\"><b>Tags:</b><li class=\"tag\">" + entry_tags + "</ul>";
+
+                }
+
+
+
+                if(entry_time.isEmpty()){
+                    entry_time="[Unknown Time]";
+                }
+
+                QString datestamp= entry_day + "/" + entry_month + "/" + entry_year;
+
+                stream << "\t<h2>" << entrynumber << ". " << entry_title << "</h2>" << endl;
+                stream << "\t\t<div class=\"datebox\">&nbsp;&nbsp;On "
+                       << datestamp << " at " << entry_time << ", " << Buffer::username << " wrote:</div>" << endl;
+                stream << "\t\t<p>" << entry_body << "</p>" << endl;
+                stream << "\t\t<p>" << entry_tags << "</p><br><br>" << endl;
+                stream << "\t\t<hr>" << endl;
+            }
+
+
+            stream << "\t<p><i><small>This file was generated by RoboJournal " <<
+                      Buffer::version << " on " << exportdt << "</small></i></p>" <<  endl;
+            stream << "</body>" << endl;
+            stream << "</html>" << endl;
+
+            file.close();
+        }
+
+        // plain text export
+        else{
+
+            QString br="\n";
+
+#ifdef _WIN32
+            // Use Windows style linebreaks if necessary. A real text editor knows what to do with \n but
+            // we have to assume most people will use Notepad. Why they don't get anything better is something
+            // I'll never understand.
+            br="\r\n";
+#endif
+
+            // remove HTML from intro
+            intro=intro.replace("</?\\w+>","");
+
+
+
+            // add title and header to text file
+            stream << dumptitle << br << br << endl;
+            stream << intro << br << br << endl;
+            stream << "##########################################################" << br << br << endl;
+
+            while(j.hasNext()){
+
+                count++;
+
+                QString entrynumber=QString::number(count);
+
+                QStringList thisentry=j.next();
+
+                QString entry_title=thisentry.at(0);
+                QString entry_month=thisentry.at(2);
+                QString entry_day=thisentry.at(1);
+                QString entry_year=thisentry.at(3);
+                QString entry_tags=thisentry.at(4);
+                QString entry_body=thisentry.at(5);
+                QString entry_time=thisentry.at(6);
+
+                entry_body=entry_body.replace("\n",br);
+
+                // Convert HTML Hyphens and dashes to plain text
+                entry_body=entry_body.replace(QRegExp("&mdash;"),"--");
+
+                entry_body=entry_body.replace(QRegExp("&ndash;"),"-");
+
+                entry_body=entry_body.replace(QRegExp("&hellip;"),"...");
+
+                entry_body=entry_body.replace(QRegExp("&rsquo;"),"\'");
+
+                entry_body=entry_body.replace(QRegExp("</?sup>"),"");
+
+                //strip HTML from entry body
+                entry_body=entry_body.replace("</?\\w+>","");
+
+                if(entry_tags.isEmpty()){
+                    entry_tags="No tag data.";
+                }
+                else{
+                    // turn tags into bullet list
+                    QString tagdiv=br + "*";
+                    entry_tags=entry_tags.replace(";",tagdiv);
+                    entry_tags= br + "Tags: " + br + br + "*" + entry_tags;
+
+                }
+
+
+
+                if(entry_time.isEmpty()){
+                    entry_time="[Unknown Time]";
+                }
+
+                QString datestamp= entry_day + "/" + entry_month + "/" + entry_year;
+
+                stream <<  entrynumber << ". " << entry_title  << br << br << endl;
+                stream << "On " << datestamp << " at " << entry_time << ", " << Buffer::username << " wrote:" << br << br<<  endl;
+                stream <<  entry_body << br << br << endl;
+                stream << entry_tags << br << br << endl;
+                stream << "##########################################################" << br << br << endl;
+            }
+
+
+            stream << "This file was generated by RoboJournal " <<
+                      Buffer::version << " on " << exportdt <<  endl;
+
+            file.close();
+        }
+
+        QMessageBox b;
+        b.information(NULL,"RoboJournal", "<nobr><b>" + path + "</b><br> was successfully exported.");
+        //this->setCursor(Qt::ArrowCursor);
+
+    }
 }

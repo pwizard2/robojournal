@@ -1,6 +1,6 @@
 /*
     This file is part of RoboJournal.
-    Copyright (c) 2012 by Will Kraft <pwizard@gmail.com>.
+    Copyright (c) 2013 by Will Kraft <pwizard@gmail.com>.
     MADE IN USA
 
     RoboJournal is free software: you can redistribute it and/or modify
@@ -15,6 +15,13 @@
 
     You should have received a copy of the GNU General Public License
     along with RoboJournal.  If not, see <http://www.gnu.org/licenses/>.
+
+    Class Description / Purpose:
+    The EntryExporter class used to be responsible for converting database
+    entries to HTML or plain text. As of RoboJournal 0.5, the EntryExporter
+    is just a container for the ExportSingle/ExportMulti pages that do
+    the actual export work. --Will Kraft (7/30/13).
+
   */
 
 
@@ -23,6 +30,10 @@
 
 #include <QDialog>
 #include <QStringList>
+#include "ui/exportmulti.h"
+#include "ui/exportsingle.h"
+#include "ui/exportcreatedump.h"
+#include <QStackedWidget>
 
 
 namespace Ui {
@@ -40,41 +51,19 @@ public:
     static QString title; // title of this entry
     static QString body; // body text of this entry
     static QString date; //date of this entry used in filename
+    static QString id; // id of this entry (added for improved export function in 0.5).
     static QString timestamp;
     void UpdateValues(QString new_title, QString new_date, QString new_body, QString new_timestamp);
 
-    
 private slots:
-    void on_BrowseButton_clicked();
 
-    void on_PlainText_clicked();
-
-    void on_HTML_clicked();
-
-    void on_IncludeDate_clicked();
-
-    void on_IncludeJournalName_clicked();
-
-    void on_buttonBox_accepted();
-
-    void on_HTML_2_clicked();
-
-    void on_PlainText_2_clicked();
-
-
-    void on_IncludeExportDate_clicked();
+    void on_Menu_currentRowChanged(int currentRow);
 
 private:
     Ui::EntryExporter *ui;
     void PrimaryConfig();
-    void SetName();
-    void Set_Mass_Name();
-    void Browse();
-    void Do_Export();
-    void Mass_Export();
-    void Validate();
-    QStringList Do_Word_Wrap(QString body);
-    void SetupCSS();
+
+    bool Validate();
 
     QString body_font;
     QString header_font;
@@ -84,6 +73,14 @@ private:
     QString datebox_color;
 
     QString ProcessEntryName(bool use_journal, bool use_date);
+
+    QStackedWidget *stack;
+    ExportSingle *single;
+    ExportMulti *multi;
+    ExportCreateDump *dump;
+
+    void accept();
+
 };
 
 #endif // ENTRYEXPORTER_H

@@ -68,10 +68,10 @@
   <widget class="QTreeWidget" name="AvailableTags">
    <property name="geometry">
     <rect>
-     <x>13</x>
-     <y>39</y>
+     <x>10</x>
+     <y>40</y>
      <width>251</width>
-     <height>154</height>
+     <height>211</height>
     </rect>
    </property>
    <property name="font">

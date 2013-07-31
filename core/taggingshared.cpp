@@ -68,7 +68,10 @@ QString TaggingShared::DefineTag(QStringList ExistingTags){
 
         if(ExistingTags.contains(tag)){
             goodtag=false;
-            m.critical(NULL,"RoboJournal","\"" + tag + "\" is already on the <b>Available tags</b> List.");
+
+            // the list isn't called the Available tags list any more in 0.5.
+            m.critical(NULL,"RoboJournal","\"" + tag + "\" is already on the tags list.");
+
             tag.clear();
         }
 

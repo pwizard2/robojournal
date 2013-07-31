@@ -44,6 +44,19 @@
 #include <QTreeWidgetItem>
 #include <QTreeWidgetItemIterator>
 #include <QColor>
+#include <QStyledItemDelegate>
+
+TagListDelegate::TagListDelegate(QStyledItemDelegate *parent) :
+    TagListDelegate(parent){
+
+}
+
+void TagListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
+                            const QModelIndex &index) const{
+
+    QStyledItemDelegate::paint(painter, option, index);
+
+}
 
 EditorTagManager::EditorTagManager(QWidget *parent) :
     QWidget(parent),
@@ -170,7 +183,7 @@ void EditorTagManager::DefineTag(){
     // get the latest batch of tags just in case new ones have been added since the form was loaded
     QStringList current_list;
     QTreeWidgetItemIterator it(ui->AvailableTags);
-    QIcon newicon(":/icons/tag_red_add.png");
+    const QIcon newicon(":/icons/tag_red_add.png");
 
     while(*it){
         QTreeWidgetItem *current=*it;
@@ -197,22 +210,18 @@ void EditorTagManager::DefineTag(){
 // 6/10/13: Create toolbar and layout for this class.
 void EditorTagManager::PrimaryConfig(){
 
+    // use TagListDelegate to draw lines between list items
+
+    //ui->AvailableTags->setItemDelegate(new TagListDelegate(this));
+
     // find and use system colors for selected/clear tags.
-    QPalette pal;
+    const QPalette pal;
 
-//#ifdef _WIN32
-//    QBrush bg=pal.midlight();
-//#endif;
+    const QBrush bg=pal.midlight(); // previously midlight
+    const QBrush fg=pal.buttonText();
 
-//#ifdef unix
-//    QBrush bg=pal.alternateBase();
-//#endif
-
-    QBrush bg=pal.midlight();
-    QBrush fg=pal.buttonText();
-
-    QBrush p_bg=pal.base();
-    QBrush p_fg=pal.windowText();
+    const QBrush p_bg=pal.base();
+    const QBrush p_fg=pal.windowText();
 
     selected_bg=bg.color();
     selected_fg=fg.color();
@@ -226,10 +235,10 @@ void EditorTagManager::PrimaryConfig(){
     bar->setLayoutDirection(Qt::LeftToRight);
     bar->setContextMenuPolicy(Qt::DefaultContextMenu);
 
-    QFont toolbarFont("Sans",7);
+    const QFont toolbarFont("Sans",7);
     bar->setFont(toolbarFont);
 
-    QFont grepFont("Sans",9);
+    const QFont grepFont("Sans",9);
     ui->GrepBox->setFont(grepFont);
 
     if(Buffer::show_icon_labels){
@@ -249,7 +258,7 @@ void EditorTagManager::PrimaryConfig(){
     bar->addWidget(ui->ClearButton);
 
     //tighten up toolbar spacing for 0.5 (7/15/13).
-    QSize barSize(16,16);
+    const QSize barSize(16,16);
     bar->setIconSize(barSize);
     bar->setContentsMargins(0,2,0,0);
 

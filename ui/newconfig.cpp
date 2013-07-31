@@ -147,11 +147,6 @@ void Newconfig::PrimaryConfig(){
     // hide question mark button in title bar when running on Windows
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
-//    int width=this->width();
-//    int height=this->height();
-//    this->setMaximumSize(width,height);
-//    this->setMinimumSize(width,height);
-
     // set up category list (icons and entries)
     QIcon general(":/icons/application.png");
     QIcon behavior(":/icons/book.png");

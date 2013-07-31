@@ -22,6 +22,9 @@
     Once processed, the HTMLCore output is ready to be fed to MySQLCore or SQLiteCore.
     The HTMLCore also converts raw database output into a HTML document each time
     an entry needs to be displayed.
+
+    Update 7/30/13: The HTMLCore now contains the code that outputs HTML or plain text
+    from the database.
 */
 
 #ifndef HTMLCORE_H
@@ -36,6 +39,16 @@ public:
     QString Do_Post_Processing(QString rawtext, int wordcount);
     QString ProcessEntryFromEditor(QString rawtext);
     QString AssembleEntry(QString id);
+    void Do_Export(QString path, QString id, bool use_html);
+    void Export_Multi(QString path, bool use_html, bool sort_asc);
+    void Setup_Export_CSS();
+
+    QString body_font;
+    QString header_font;
+    QString body_font_size;
+    QString header_font_size;
+    QString datebox_bgcolor;
+    QString datebox_color;
 };
 
 #endif // HTMLCORE_H

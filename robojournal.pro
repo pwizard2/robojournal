@@ -62,7 +62,10 @@ SOURCES += main.cpp\
         core/htmlcore.cpp \
     ui/permissionmanager.cpp \
     ui/outputpane.cpp \
-    core/favoritecore.cpp
+    core/favoritecore.cpp \
+    ui/exportsingle.cpp \
+    ui/exportmulti.cpp \
+    ui/exportcreatedump.cpp
 
 HEADERS  += ui/mainwindow.h \
 	core/buffer.h \
@@ -115,7 +118,10 @@ HEADERS  += ui/mainwindow.h \
         core/htmlcore.h \
     ui/permissionmanager.h \
     ui/outputpane.h \
-    core/favoritecore.h
+    core/favoritecore.h \
+    ui/exportsingle.h \
+    ui/exportmulti.h \
+    ui/exportcreatedump.h
 
 
 FORMS    += ui/mainwindow.ui \
@@ -143,7 +149,10 @@ FORMS    += ui/mainwindow.ui \
         ui/configurationsqlite.ui \
         ui/editortagmanager.ui \
     ui/permissionmanager.ui \
-    ui/outputpane.ui
+    ui/outputpane.ui \
+    ui/exportsingle.ui \
+    ui/exportmulti.ui \
+    ui/exportcreatedump.ui
 
 # Declaration of images and other to-be-embedded resources.
 RESOURCES  = images.qrc
@@ -153,7 +162,7 @@ RC_FILE = icon.rc
 
 # This block contains all Linux/Unix-specific build instructions.
 unix {
-    CONFIG += qt release
+    #CONFIG += qt release
 
     # The package block sets a different install path for package builds.
     package {

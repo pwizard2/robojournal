@@ -551,8 +551,11 @@ void MainWindow::GetTagList(){
 void MainWindow::ExportEntry(){
     if(CurrentID!="-1"){
         QTreeWidgetItem *selected=ui->EntryList->currentItem();
+
         EntryExporter e(this);
         EntryExporter::title=selected->text(0);
+        EntryExporter::id=selected->text(1); // capture current id number (new for 0.5, 7/30/13).
+
         e.setWindowTitle("Export Content");
         e.exec();
     }

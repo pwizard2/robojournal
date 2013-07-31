@@ -164,7 +164,7 @@
        <item>
         <widget class="QLabel" name="label_5">
          <property name="text">
-          <string>Select database</string>
+          <string>Select the database you want to use:</string>
          </property>
         </widget>
        </item>

@@ -33,10 +33,21 @@
 #include <QToolBar>
 #include <QTreeWidgetItem>
 #include <QColor>
+#include <QStyledItemDelegate>
 
 namespace Ui {
 class EditorTagManager;
 }
+
+class TagListDelegate : public QStyledItemDelegate
+{
+
+public:
+    TagListDelegate(QStyledItemDelegate* parent);
+    void paint(QPainter* painter, const QStyleOptionViewItem& option,
+                const QModelIndex& index) const;
+};
+
 
 class EditorTagManager : public QWidget
 {
