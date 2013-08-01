@@ -55,6 +55,8 @@ TagListDelegate::TagListDelegate(QObject *parent)
 QSize TagListDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
      QSize ret = QStyledItemDelegate::sizeHint(option, index);
+     ret=ret * 1.3; // add some more padding between items
+
      return ret;
 }
 

@@ -178,6 +178,9 @@ void ConfigurationMySQL::ApplyDefaultProperties(QTreeWidgetItem *item){
     QIcon gold_db(":/icons/database-gold.png");
     item->setIcon(0,gold_db);
 
+    //Bugfix (7/31/13): prevent user from un-checking the box of the current default item.
+    item->setFlags(Qt::ItemIsEnabled);
+
     Buffer::defaultdatabase=item->text(0);
     default_db=item;
 

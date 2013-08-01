@@ -44,6 +44,7 @@ class TagListDelegate : public QStyledItemDelegate
 
 public:
     TagListDelegate(QObject* parent);
+protected:
     QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
     void paint(QPainter* painter, const QStyleOptionViewItem& option,
                 const QModelIndex& index) const;
