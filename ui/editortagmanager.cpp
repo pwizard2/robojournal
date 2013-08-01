@@ -89,20 +89,37 @@ EditorTagManager::~EditorTagManager()
 // Allow the user to declare the input tag if it does not already exist in the tag list. 7/31/13.
 void EditorTagManager::EasyDeclareTag(QString input){
 
-    const QIcon newicon(":/icons/tag_red_add.png");
     QMessageBox m;
-    int choice=m.question(this,"RoboJournal","\"" + input + "\" is not on the list. Do you wish to add it as a new tag?",
-                          QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 
-    if(choice==QMessageBox::Yes){
+    // Bugfix for 0.4.1 (3/5/13): Replace simple operator check with a "smarter" regexp.
+    // The user should NEVER be allowed to declare "null" (case insensitive) as a tag
+    // because that is a reserved word in the tagging system; entries marked with Null have
+    // "No tags for this post" as their tag data.
+    QRegExp banned("null", Qt::CaseInsensitive);
 
-        QTreeWidgetItem *defined=new QTreeWidgetItem();
-        defined->setText(0,input);
-        defined->setIcon(0,newicon);
-        defined->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
-        defined->setCheckState(0, Qt::Unchecked);
+    if(banned.exactMatch(input)){
 
-        ui->AvailableTags->insertTopLevelItem(0, defined);
+        m.critical(this,"RoboJournal","You are not allowed to declare \"" + input +
+                   "\" (or any other uppercase/lowercase variant of it) because it is a reserved keyword.");
+        input.clear();
+    }
+    else{
+
+        const QIcon newicon(":/icons/tag_red_add.png");
+
+        int choice=m.question(this,"RoboJournal","\"" + input + "\" is not on the list. Do you wish to add it as a new tag?",
+                              QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+
+        if((choice==QMessageBox::Yes) && (!input.isEmpty())){
+
+            QTreeWidgetItem *defined=new QTreeWidgetItem();
+            defined->setText(0,input);
+            defined->setIcon(0,newicon);
+            defined->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
+            defined->setCheckState(0, Qt::Unchecked);
+
+            ui->AvailableTags->insertTopLevelItem(0, defined);
+        }
     }
 }
 
