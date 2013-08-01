@@ -47,7 +47,7 @@ public:
 protected:
     QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
     void paint(QPainter* painter, const QStyleOptionViewItem& option,
-                const QModelIndex& index) const;
+               const QModelIndex& index) const;
 };
 
 class EditorTagManager : public QWidget
@@ -77,12 +77,17 @@ private slots:
 
     void on_StripTags_clicked();
 
+    void query();
+
+
+
 private:
     Ui::EditorTagManager *ui;
     void PrimaryConfig();
     void CreateTagList();
     void DefineTag();
     void RevertTags();
+    void EasyDeclareTag(QString input);
 
     bool no_tags;
 

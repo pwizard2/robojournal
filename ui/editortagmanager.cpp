@@ -54,10 +54,9 @@ TagListDelegate::TagListDelegate(QObject *parent)
 
 QSize TagListDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-     QSize ret = QStyledItemDelegate::sizeHint(option, index);
-     ret=ret * 1.3; // add some more padding between items
-
-     return ret;
+    QSize ret = QStyledItemDelegate::sizeHint(option, index);
+    ret=ret * 1.3; // add some more padding between items
+    return ret;
 }
 
 
@@ -84,6 +83,27 @@ bool EditorTagManager::standalone_tagger;
 EditorTagManager::~EditorTagManager()
 {
     delete ui;
+}
+
+// ###################################################################################################
+// Allow the user to declare the input tag if it does not already exist in the tag list. 7/31/13.
+void EditorTagManager::EasyDeclareTag(QString input){
+
+    const QIcon newicon(":/icons/tag_red_add.png");
+    QMessageBox m;
+    int choice=m.question(this,"RoboJournal","\"" + input + "\" is not on the list. Do you wish to add it as a new tag?",
+                          QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+
+    if(choice==QMessageBox::Yes){
+
+        QTreeWidgetItem *defined=new QTreeWidgetItem();
+        defined->setText(0,input);
+        defined->setIcon(0,newicon);
+        defined->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
+        defined->setCheckState(0, Qt::Unchecked);
+
+        ui->AvailableTags->insertTopLevelItem(0, defined);
+    }
 }
 
 // ###################################################################################################
@@ -294,6 +314,8 @@ void EditorTagManager::PrimaryConfig(){
     if((!Buffer::editmode) && (standalone_tagger)){
         ui->RevertTags->setDisabled(true);
     }
+
+    connect(ui->GrepBox, SIGNAL(returnPressed()), this, SLOT(query()));
 }
 
 // ###################################################################################################
@@ -441,5 +463,36 @@ void EditorTagManager::on_StripTags_clicked()
         }
 
         emit Sig_UnlockTaggerApplyButton();
+    }
+}
+
+// ###################################################################################################
+void EditorTagManager::query(){
+
+    QString input=ui->GrepBox->text();
+
+    QStringList tags;
+
+    QTreeWidgetItemIterator it(ui->AvailableTags);
+
+    while(*it){
+
+        QTreeWidgetItem *current=*it;
+
+        if(Qt::Checked == current->checkState(0)){
+            tags.append(current->text(0));
+        }
+
+        it++;
+    }
+
+    // give the user a chance to declare the tag if it is not in the list
+    if(!tags.contains(input)){
+        EasyDeclareTag(input);
+    }
+
+    // otherwise, search for it.
+    else{
+        // call to filter search function goes here eventually.
     }
 }

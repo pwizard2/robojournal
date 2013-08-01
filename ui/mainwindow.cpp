@@ -566,6 +566,10 @@ void MainWindow::ExportEntry(){
 QString MainWindow::FormatTags(QString tags, QString color1, QString color2){
 
     QStringList tags_array=tags.split(";");
+
+    // group tags by alphabetical order. Bugfix for 0.5 (7/31/13).
+    tags_array.sort();
+
     QString output_tags;
     bool has_tags=true;
 
