@@ -40,6 +40,7 @@ private:
     void PrimaryConfig();
     void Browse();
     void SetName();
+    QString SetExtension(QString path);
 };
 
 #endif // EXPORTSINGLE_H

@@ -38,9 +38,35 @@ ExportSingle::~ExportSingle()
 // Get values from formdata and buffer them.
 void ExportSingle::HarvestValues(){
 
-    ExportSingle::filename=ui->FileName->text();
+    QString filename_raw=SetExtension(ui->FileName->text());
+
+
+    ExportSingle::filename=filename_raw;
     ExportSingle::path=ui->ExportLocation->text();
     ExportSingle::use_html=ui->HTML->isChecked();
+}
+
+//################################################################################################
+// make sure the output filename ends with the correct extension. --Will Kraft (8/2/13).
+QString ExportSingle::SetExtension(QString path){
+
+    bool htmlExtension=path.endsWith(".html", Qt::CaseInsensitive);
+    bool txtExtension=path.endsWith(".html", Qt::CaseInsensitive);
+
+
+    if((htmlExtension) || (txtExtension)){
+        return path;
+    }
+    else{
+
+        if(ui->HTML->isChecked()){
+            path=path.append(".html");
+        }
+        else{
+            path=path.append(".txt");
+        }
+        return path;
+    }
 }
 
 //################################################################################################
