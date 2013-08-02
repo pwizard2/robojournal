@@ -51,7 +51,7 @@ void ExportSingle::HarvestValues(){
 QString ExportSingle::SetExtension(QString path){
 
     bool htmlExtension=path.endsWith(".html", Qt::CaseInsensitive);
-    bool txtExtension=path.endsWith(".html", Qt::CaseInsensitive);
+    bool txtExtension=path.endsWith(".txt", Qt::CaseInsensitive);
 
 
     if((htmlExtension) || (txtExtension)){
