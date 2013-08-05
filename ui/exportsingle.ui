@@ -134,7 +134,7 @@
       <item>
        <widget class="QCheckBox" name="AllowFreeEdits">
         <property name="text">
-         <string>Allow f&amp;ree editing of filename value</string>
+         <string>Allow custom file&amp;name</string>
         </property>
        </widget>
       </item>

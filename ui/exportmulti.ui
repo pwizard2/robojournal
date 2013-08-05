@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>349</width>
-    <height>398</height>
+    <width>354</width>
+    <height>437</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -121,9 +127,19 @@
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="checkBox">
+       <widget class="QCheckBox" name="ExportLooseFiles">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If checked, RoboJournal exports the entire journal as a series of loose individual entries instead of merging everything into one large file (as is the default behavior). &lt;/p&gt;&lt;p&gt;This method automatically creates a new sub-folder for this purpose in the current &lt;span style=&quot; font-weight:600;&quot;&gt;Export location&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
         <property name="text">
-         <string>Allow f&amp;ree editing of filename value</string>
+         <string>&amp;Keep individual entries separate</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="PermitName">
+        <property name="text">
+         <string>Allow custom file&amp;name</string>
         </property>
        </widget>
       </item>

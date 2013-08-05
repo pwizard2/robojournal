@@ -378,7 +378,6 @@ void MainWindow::SearchDatabase(){
                     break;
                 }
 
-
                 while(a.hasNext()){
 
                     QTreeWidgetItem *item = new QTreeWidgetItem(ui->SearchList);
@@ -396,7 +395,8 @@ void MainWindow::SearchDatabase(){
                     }
 
                     // entry title + a small bit of space to pad it out.
-                    item->setText(0,nextitem.at(1) + "  ");
+                    // 0.5 Bugfix (8/4/13): Add trimmed to remove any hidden line breaks or other text debris that can affect presentation.
+                    item->setText(0,nextitem.at(1).trimmed() + "  ");
 
                     // Convert QString date to QDate to make it sort correctly/
                     // QDate automatically inherits system date settings so we should let it do the work
@@ -2022,8 +2022,10 @@ void MainWindow::DeleteSelectedEntry(){
 
         if(Buffer::showwarnings){
             QMessageBox b;
-            int choice=b.question(this,"RoboJournal","Do you really want to delete the selected journal entry?"
+
+           int choice=b.question(this,"RoboJournal","Do you really want to delete the selected journal entry?"
                                   " This action cannot be undone.",QMessageBox::Cancel,QMessageBox::Ok);
+
 
             switch(choice){
                 case QMessageBox::Ok:
@@ -3527,8 +3529,6 @@ void MainWindow::on_tabWidget_currentChanged(int index)
 
     SwitchTab(index);
 }
-
-
 
 void MainWindow::on_WholeWords_clicked()
 {

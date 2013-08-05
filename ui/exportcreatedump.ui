@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>319</width>
-    <height>300</height>
+    <width>349</width>
+    <height>403</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="Introduction">
      <property name="text">
       <string>RoboJournal can &quot;dump&quot; the current contents of this journal to a SQL backup file. You can use this backup to restore your journal (to its current state) at some point in the future or migrate it to a new host.</string>
      </property>
@@ -43,43 +43,31 @@
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>Backup settings</string>
+      <string>File Settings</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QLabel" name="label_2">
+       <widget class="QLabel" name="label">
         <property name="text">
-         <string>Path to mysqldump utility</string>
+         <string>Output filename</string>
         </property>
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0">
-        <property name="spacing">
-         <number>2</number>
-        </property>
-        <item>
-         <widget class="QLineEdit" name="DumpPath">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="DumpBrowse">
-          <property name="text">
-           <string>Browse</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../images.qrc">
-            <normaloff>:/icons/folder.png</normaloff>:/icons/folder.png</iconset>
-          </property>
-         </widget>
-        </item>
-       </layout>
+       <widget class="QLineEdit" name="DumpFileName"/>
       </item>
       <item>
-       <spacer name="verticalSpacer">
+       <widget class="QCheckBox" name="AllowCustomName">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Checking this box allows you to specify a custom filename. Otherwise, RoboJournal enforces a &lt;nobr&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;[database name]-[export date].sql&lt;/span&gt;&lt;/nobr&gt; naming convention.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="text">
+         <string>Allow custom file&amp;name</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer_2">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
@@ -116,7 +104,7 @@
         <item>
          <widget class="QPushButton" name="FileBrowse">
           <property name="text">
-           <string>Browse</string>
+           <string>&amp;Browse</string>
           </property>
           <property name="icon">
            <iconset resource="../images.qrc">
@@ -130,14 +118,74 @@
     </widget>
    </item>
    <item>
-    <spacer name="verticalSpacer_2">
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="title">
+      <string>Backup Utility</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Path to mysqldump utility</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0">
+        <property name="spacing">
+         <number>2</number>
+        </property>
+        <item>
+         <widget class="QLineEdit" name="DumpPath">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="DumpBrowse">
+          <property name="text">
+           <string>B&amp;rowse</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../images.qrc">
+            <normaloff>:/icons/folder.png</normaloff>:/icons/folder.png</iconset>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="AutoCompress">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;(GNU/Linux only)&lt;/span&gt; If checked, RoboJournal uses the common &lt;span style=&quot; font-style:italic;&quot;&gt;gzip&lt;/span&gt; utility to package the SQL backup into a .gz archive. Once compressed, the backup is saved in the output location as &lt;span style=&quot; font-style:italic;&quot;&gt;[filename].sql.gz&lt;/span&gt;. Compression often reduces file size by at least 50%.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="text">
+         <string>Compress the backup to save &amp;disk space</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+     <zorder>label_2</zorder>
+     <zorder></zorder>
+     <zorder>AutoCompress</zorder>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>32</height>
+       <height>5</height>
       </size>
      </property>
     </spacer>

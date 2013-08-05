@@ -40,6 +40,8 @@
 #include <QDir>
 #include "core/htmlcore.h"
 #include <QDebug>
+#include <QDateTime>
+#include <QFileInfo>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -100,6 +102,25 @@ void EntryExporter::PrimaryConfig(){
         QListWidgetItem *dump_row=ui->Menu->item(2);
         dump_row->setHidden(true);
     }
+
+    // Keep the window from shrinking when the sizepolicy gets changed.
+    ui->PageArea->setMinimumWidth(multi->width());
+    ui->PageArea->setMinimumHeight(single->height());
+
+    // Fix bug where a scrollbar appears on pages that don't need it. This code tells the stack that it's ok
+    // to have different-sized widgets. The loop should start on Widget 1 because Widget 0 can have a squished
+    // appearance if we set its size policy to ignore.
+    for(int i=1; i<stack->count(); i++){
+        stack->setCurrentIndex(i);
+        stack->currentWidget()->setSizePolicy(QSizePolicy::Ignored,
+                                              QSizePolicy::Ignored);
+        adjustSize();
+    }
+
+    // Ensure the first page is visible when window opens.
+    stack->setCurrentIndex(0);
+
+
 }
 
 //################################################################################################
@@ -107,6 +128,8 @@ void EntryExporter::PrimaryConfig(){
 // Changed to work with the new multi-paged interface in RoboJournal 0.5. (7/30/13).
 bool EntryExporter::Validate(){
     using namespace std;
+
+    this->setCursor(Qt::WaitCursor);
 
     HTMLCore h;
     int current_page=ui->Menu->currentRow();
@@ -129,11 +152,13 @@ bool EntryExporter::Validate(){
 
             switch(choice){
             case QMessageBox::Yes:
-                 h.Do_Export(path,EntryExporter::id,ExportSingle::use_html);
-                 return true;
+                h.Do_Export(path,EntryExporter::id,ExportSingle::use_html);
+                this->setCursor(Qt::ArrowCursor);
+                return true;
                 break;
 
             case QMessageBox::No: // do nothing
+                this->setCursor(Qt::ArrowCursor);
                 return false;
                 break;
             }
@@ -142,6 +167,7 @@ bool EntryExporter::Validate(){
         // $filename does not exist so just export data as $filename.
         else{
             h.Do_Export(path,EntryExporter::id,ExportSingle::use_html);
+            this->setCursor(Qt::ArrowCursor);
             return true;
         }
     }
@@ -149,47 +175,124 @@ bool EntryExporter::Validate(){
     // validate entire journal export.
     if(current_page==1){
 
+        multi->HarvestValues(); // get the data.
+
+        // Check to see if the journal should be exported as loose entries (true) or meged into one file (false).
+        bool no_merge=ExportMulti::no_merge;
+
+        if(no_merge){
+
+            QDateTime t=QDateTime::currentDateTime();
+            QString datestamp;
+            switch(Buffer::date_format){
+            case 0:
+                datestamp=t.toString("dd-MM-yyyy");
+                break;
+
+            case 1:
+                datestamp=t.toString("MM-dd-yyyy");
+                break;
+
+            case 2:
+                datestamp=t.toString("yyyy-MM-dd");
+                break;
+
+            }
+
+            QString type="html";
+
+            if(!ExportMulti::use_html){
+                type="txt";
+            }
+
+
+            QString exportpath=Buffer::database_name + "_" + type + "_" + datestamp;
+            QString fullpath=ExportMulti::path + QDir::separator() + exportpath;
+
+            //QDir parent_dir(ExportMulti::path);
+            QDir newfolder(fullpath);
+
+            //Check to see if there are any items in the folder.
+            QStringList items=newfolder.entryList(QDir::AllEntries);
+
+            bool isFolderEmpty=true;
+
+            if(items.count() > 0){
+                isFolderEmpty=false;
+            }
+
+            // Check to see if the export folder exists, create it if it does not.
+            if((newfolder.exists()) && (!isFolderEmpty)){
+
+                QMessageBox m;
+                int choice=m.question(this,"RoboJournal", "<nobr><b>" + newfolder.path() +"</b></nobr> already exists and has files in it. "
+                                      "Continuing the export operation will replace all items in the folder. Do you want to continue?",
+                                      QMessageBox::Yes|QMessageBox::No, QMessageBox::No);
+
+                switch(choice){
+                case QMessageBox::Yes:
+                    h.Export_Loose_Journal_Entries(fullpath,ExportMulti::use_html);
+                    this->setCursor(Qt::ArrowCursor);
+                    return true;
+                    break;
+
+                case QMessageBox::No: // do nothing
+                    this->setCursor(Qt::ArrowCursor);
+                    return false;
+                    break;
+                }
+            }
+
+            // if the fullpath folder doesn't exist, create it and proceed with the export.
+            else{
+
+                newfolder.mkdir(fullpath);
+
+                h.Export_Loose_Journal_Entries(fullpath,ExportMulti::use_html);
+                this->setCursor(Qt::ArrowCursor);
+                return true;
+            }
+        }
+        else{
+
+            QString path=ExportMulti::path + QDir::separator() + ExportMulti::filename;
+            QFile file(path);
+
+            if(file.exists()){
+                QMessageBox c;
+                int choice=c.question(this,"RoboJournal","<b>" + ExportMulti::path + "</b> already contains a file called<br><b>" +
+                                      ExportMulti::filename + "</b>.<br><br>Do you want to replace the existing file?",
+                                      QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+
+                switch(choice){
+
+                case QMessageBox::Yes:
+
+                    h.Export_Multi(path,ExportMulti::use_html,ExportMulti::sort_asc);
+                    this->setCursor(Qt::ArrowCursor);
+                    return true;
+                    break;
+
+                case QMessageBox::No: // do nothing
+                    this->setCursor(Qt::ArrowCursor);
+                    return false;
+                    break;
+                }
+
+            }
+            else{
+                h.Export_Multi(path,ExportMulti::use_html,ExportMulti::sort_asc);
+                this->setCursor(Qt::ArrowCursor);
+                return true;
+            }
+        }
     }
 
-    // This is MySQL dump feature, so no real validation is needed.
+
+    // This is the new MySQL dump feature, so no real validation is needed.
     if(current_page==2){
 
     }
-
-    /*
-    // Do mass export
-    else{
-
-        QMessageBox m;
-
-        QString path=ui->ExportLocation->text() + QDir::separator() + ui->FileName_2->text();
-
-        // create an empty file object. This is just a dummy, we don't actually do anything with this here other than see if it exists.
-        QFile file(path);
-
-        //check to see if file exists already. if so, confirm before overwriting it
-        if(file.exists()){
-
-            int choice=m.question(this,"RoboJournal","<b>" + ui->FileName_2->text() + "</b><br> already exists in <b>" +
-                                  ui->ExportLocation->text() + "</b>.<br><br>Do you want to replace the existing file?",
-                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
-
-            switch(choice){
-            case QMessageBox::Yes:
-                Mass_Export();
-                break;
-
-            case QMessageBox::No: // do nothing
-                break;
-            }
-        }
-
-        // file does not exist
-        else{
-            Mass_Export();
-        }
-    }
-  */
 }
 
 
@@ -207,10 +310,10 @@ void EntryExporter::UpdateValues(QString new_title, QString new_date, QString ne
 
 void EntryExporter::on_Menu_currentRowChanged(int currentRow)
 {
-     stack->setCurrentIndex(currentRow);
+    stack->setCurrentIndex(currentRow);
 
-     QListWidgetItem *current=ui->Menu->item(currentRow);
-     current->setSelected(true);
+    QListWidgetItem *current=ui->Menu->item(currentRow);
+    current->setSelected(true);
 }
 
 

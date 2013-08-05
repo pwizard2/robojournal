@@ -24,7 +24,7 @@
     an entry needs to be displayed.
 
     Update 7/30/13: The HTMLCore now contains the code that outputs HTML or plain text
-    from the database.
+    from the database for the EntryExporter/ExportSingle/ExportMulti classes.
 */
 
 #ifndef HTMLCORE_H
@@ -42,6 +42,7 @@ public:
     void Do_Export(QString path, QString id, bool use_html);
     void Export_Multi(QString path, bool use_html, bool sort_asc);
     void Setup_Export_CSS();
+    void Export_Loose_Journal_Entries(QString folder, bool use_html);
 
     QString body_font;
     QString header_font;

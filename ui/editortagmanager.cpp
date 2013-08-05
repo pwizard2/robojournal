@@ -66,6 +66,10 @@ void TagListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
     QStyledItemDelegate::paint(painter, option, index);
 }
 
+TagListDelegate::~TagListDelegate(){
+
+}
+
 EditorTagManager::EditorTagManager(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::EditorTagManager)
