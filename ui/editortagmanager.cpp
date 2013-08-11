@@ -56,6 +56,10 @@ QSize TagListDelegate::sizeHint(const QStyleOptionViewItem &option, const QModel
 {
     QSize ret = QStyledItemDelegate::sizeHint(option, index);
     ret=ret * 1.3; // add some more padding between items
+
+#ifdef _WIN32
+    ret=ret * 1.4; // slightly more padding is needed for Windows
+#endif
     return ret;
 }
 
@@ -63,16 +67,18 @@ QSize TagListDelegate::sizeHint(const QStyleOptionViewItem &option, const QModel
 void TagListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
                             const QModelIndex &index) const{
 
+    // figure out how wide the line should be (8/11/13).
     QPalette palette;
     QRect rect=option.rect;
     QPoint start(rect.left(),rect.bottom());
-    QPoint end(rect.right(),start.y());
-    painter->setPen(QPen(palette.color(QPalette::Disabled, QPalette::Text),
-                          1, Qt::SolidLine, Qt::RoundCap));
+    QPoint end(rect.right(), start.y());
 
+    // draw a 50% opaque line using the current color scheme's "Mid" color.
+    painter->setPen(QPen(palette.color(QPalette::Disabled, QPalette::Mid),
+                          0.50, Qt::SolidLine, Qt::RoundCap));
     painter->drawLine(start,end);
 
-
+    // Paint each row item.
     QStyledItemDelegate::paint(painter, option, index);
 }
 
@@ -170,7 +176,7 @@ QString EditorTagManager::HarvestTags(){
 void EditorTagManager::RevertTags(){
 
     QFont normal_font;
-    normal_font.setBold(false);
+    normal_font.setWeight(QFont::Light);
 
     if(Buffer::showwarnings){
         QMessageBox m;
@@ -186,7 +192,7 @@ void EditorTagManager::RevertTags(){
                 QTreeWidgetItem *current=*it;
 
                 current->setFont(0, normal_font);
-                current->setBackgroundColor(0, plain_bg);
+                //current->setBackgroundColor(0, plain_bg);
                 current->setForeground(0, plain_fg);
                 current->setCheckState(0,Qt::Unchecked);
 
@@ -279,7 +285,7 @@ void EditorTagManager::PrimaryConfig(){
     const QPalette pal;
 
     const QBrush bg=pal.midlight(); // previously midlight
-    const QBrush fg=pal.buttonText();
+    const QBrush fg=pal.highlight();
 
     const QBrush p_bg=pal.base();
     const QBrush p_fg=pal.windowText();
@@ -390,7 +396,7 @@ void EditorTagManager::LoadTags(QString id){
     QStringList tags=ts.FetchTags(id);
 
     QFont bold_font;
-    bold_font.setBold(true);
+    bold_font.setWeight(QFont::Black);
 
     QTreeWidgetItemIterator it(ui->AvailableTags);
 
@@ -403,7 +409,7 @@ void EditorTagManager::LoadTags(QString id){
 
             current->setFont(0, bold_font);
             //current->setBackgroundColor(0, selected_bg);
-            //current->setForeground(0,selected_fg);
+            current->setForeground(0,selected_fg);
         }
 
         it++;
@@ -428,22 +434,24 @@ void EditorTagManager::on_RevertTags_clicked()
 void EditorTagManager::on_AvailableTags_itemClicked(QTreeWidgetItem *item)
 {
     QFont bold_font;
-    bold_font.setBold(true);
+    bold_font.setWeight(QFont::Black);
+
 
     QFont normal_font;
-    normal_font.setBold(false);
+    normal_font.setWeight(QFont::Light);
+
 
     if(Qt::Checked == item->checkState(0)){
         item->setCheckState(0, Qt::Unchecked);
         item->setFont(0, normal_font);
         //item->setBackgroundColor(0, plain_bg);
-        //item->setForeground(0, plain_fg);
+        item->setForeground(0, plain_fg);
     }
     else{
         item->setCheckState(0, Qt::Checked);
         item->setFont(0, bold_font);
         //item->setBackgroundColor(0, selected_bg);
-        //item->setForeground(0,selected_fg);
+        item->setForeground(0,selected_fg);
     }
 
     emit Sig_UnlockTaggerApplyButton();
@@ -455,7 +463,7 @@ void EditorTagManager::on_StripTags_clicked()
 {
 
     QFont normal_font;
-    normal_font.setBold(false);
+    normal_font.setWeight(QFont::Light);
 
     if(Buffer::showwarnings){
         QMessageBox m;
@@ -473,7 +481,7 @@ void EditorTagManager::on_StripTags_clicked()
 
                 current->setFont(0, normal_font);
                 //current->setBackgroundColor(0, plain_bg);
-                //current->setForeground(0, plain_fg);
+                current->setForeground(0, plain_fg);
                 current->setCheckState(0,Qt::Unchecked);
 
                 it++;
