@@ -63,6 +63,16 @@ QSize TagListDelegate::sizeHint(const QStyleOptionViewItem &option, const QModel
 void TagListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
                             const QModelIndex &index) const{
 
+    QPalette palette;
+    QRect rect=option.rect;
+    QPoint start(rect.left(),rect.bottom());
+    QPoint end(rect.right(),start.y());
+    painter->setPen(QPen(palette.color(QPalette::Disabled, QPalette::Text),
+                          1, Qt::SolidLine, Qt::RoundCap));
+
+    painter->drawLine(start,end);
+
+
     QStyledItemDelegate::paint(painter, option, index);
 }
 
@@ -194,6 +204,9 @@ void EditorTagManager::RevertTags(){
             }
 
             emit Sig_LockTaggerApplyButton();
+
+            // use TagListDelegate to draw lines between list items
+            ui->AvailableTags->setItemDelegate(new TagListDelegate(this));
         }
     }
 
@@ -260,8 +273,7 @@ void EditorTagManager::DefineTag(){
 // 6/10/13: Create toolbar and layout for this class.
 void EditorTagManager::PrimaryConfig(){
 
-    // use TagListDelegate to draw lines between list items
-    ui->AvailableTags->setItemDelegate(new TagListDelegate(this));
+
 
     // find and use system colors for selected/clear tags.
     const QPalette pal;
@@ -337,6 +349,9 @@ void EditorTagManager::PrimaryConfig(){
     }
 
     connect(ui->GrepBox, SIGNAL(returnPressed()), this, SLOT(query()));
+
+    // use TagListDelegate to draw lines between list items
+    ui->AvailableTags->setItemDelegate(new TagListDelegate(this));
 }
 
 // ###################################################################################################
@@ -387,8 +402,8 @@ void EditorTagManager::LoadTags(QString id){
             current->setCheckState(0,Qt::Checked);
 
             current->setFont(0, bold_font);
-            current->setBackgroundColor(0, selected_bg);
-            current->setForeground(0,selected_fg);
+            //current->setBackgroundColor(0, selected_bg);
+            //current->setForeground(0,selected_fg);
         }
 
         it++;
@@ -421,14 +436,14 @@ void EditorTagManager::on_AvailableTags_itemClicked(QTreeWidgetItem *item)
     if(Qt::Checked == item->checkState(0)){
         item->setCheckState(0, Qt::Unchecked);
         item->setFont(0, normal_font);
-        item->setBackgroundColor(0, plain_bg);
-        item->setForeground(0, plain_fg);
+        //item->setBackgroundColor(0, plain_bg);
+        //item->setForeground(0, plain_fg);
     }
     else{
         item->setCheckState(0, Qt::Checked);
         item->setFont(0, bold_font);
-        item->setBackgroundColor(0, selected_bg);
-        item->setForeground(0,selected_fg);
+        //item->setBackgroundColor(0, selected_bg);
+        //item->setForeground(0,selected_fg);
     }
 
     emit Sig_UnlockTaggerApplyButton();
@@ -457,12 +472,13 @@ void EditorTagManager::on_StripTags_clicked()
                 QTreeWidgetItem *current=*it;
 
                 current->setFont(0, normal_font);
-                current->setBackgroundColor(0, plain_bg);
-                current->setForeground(0, plain_fg);
+                //current->setBackgroundColor(0, plain_bg);
+                //current->setForeground(0, plain_fg);
                 current->setCheckState(0,Qt::Unchecked);
 
                 it++;
             }
+            ui->AvailableTags->repaint();
 
             emit Sig_UnlockTaggerApplyButton();
         }
@@ -476,15 +492,17 @@ void EditorTagManager::on_StripTags_clicked()
             QTreeWidgetItem *current=*it;
 
             current->setFont(0, normal_font);
-            current->setBackgroundColor(0, plain_bg);
+            //current->setBackgroundColor(0, plain_bg);
             current->setForeground(0, plain_fg);
             current->setCheckState(0,Qt::Unchecked);
 
             it++;
         }
 
-        emit Sig_UnlockTaggerApplyButton();
+
+     emit Sig_UnlockTaggerApplyButton();
     }
+
 }
 
 // ###################################################################################################
