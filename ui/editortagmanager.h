@@ -50,6 +50,7 @@ protected:
                const QModelIndex& index) const;
     ~TagListDelegate();
 
+
 };
 
 class EditorTagManager : public QWidget
@@ -98,6 +99,8 @@ private:
 
     QColor plain_bg;
     QColor plain_fg;
+
+    QColor adjustColor(QColor input);
 
 };
 

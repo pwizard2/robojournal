@@ -67,16 +67,23 @@ QSize TagListDelegate::sizeHint(const QStyleOptionViewItem &option, const QModel
 void TagListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
                             const QModelIndex &index) const{
 
-    // figure out how wide the line should be (8/11/13).
-    QPalette palette;
-    QRect rect=option.rect;
-    QPoint start(rect.left(),rect.bottom());
-    QPoint end(rect.right(), start.y());
 
-    // draw a 50% opaque line using the current color scheme's "Mid" color.
-    painter->setPen(QPen(palette.color(QPalette::Disabled, QPalette::Mid),
-                          0.50, Qt::SolidLine, Qt::RoundCap));
-    painter->drawLine(start,end);
+    // add separators between top-level nodes only (8/12/13). Use the data stored
+    // in the Qt::Displayrole 4 slot since the app doesn't use that role for anything.
+    if(index.data(4)=="ROOT-LEVEL"){
+
+        // figure out how wide the line should be (8/11/13).
+        QPalette palette;
+        QRect rect=option.rect;
+        QPoint start(rect.left(),rect.bottom());
+        QPoint end(rect.right(), start.y());
+
+        // draw a 50% opaque line using the current color scheme's "Mid" color.
+        painter->setPen(QPen(palette.color(QPalette::Disabled, QPalette::Mid),
+                             0.50, Qt::SolidLine, Qt::RoundCap));
+
+        painter->drawLine(start,end);
+    }
 
     // Paint each row item.
     QStyledItemDelegate::paint(painter, option, index);
@@ -103,6 +110,15 @@ bool EditorTagManager::standalone_tagger;
 EditorTagManager::~EditorTagManager()
 {
     delete ui;
+}
+
+// ###################################################################################################
+// Darken the input color and return it as a QColor value (8/13/13). This is used to help active (selected)
+// tags stand out in the tag list because the regular selected background color doesn't provide enough contrast.
+QColor EditorTagManager::adjustColor(QColor input){
+
+    QColor output=input.dark(145);
+    return output;
 }
 
 // ###################################################################################################
@@ -176,7 +192,7 @@ QString EditorTagManager::HarvestTags(){
 void EditorTagManager::RevertTags(){
 
     QFont normal_font;
-    normal_font.setWeight(QFont::Light);
+    normal_font.setWeight(QFont::Normal);
 
     if(Buffer::showwarnings){
         QMessageBox m;
@@ -291,7 +307,9 @@ void EditorTagManager::PrimaryConfig(){
     const QBrush p_fg=pal.windowText();
 
     selected_bg=bg.color();
-    selected_fg=fg.color();
+
+    selected_fg=adjustColor(fg.color());
+    //selected_fg=fg.color();
 
     plain_bg=p_bg.color();
     plain_fg=p_fg.color();
@@ -382,6 +400,13 @@ void EditorTagManager::CreateTagList(){
             next->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
             next->setCheckState(0, Qt::Unchecked);
 
+            // Set the correct marker on every top-level node. The delegate uses this data to determine which nodes
+            // (i.e top-level nodes) should have separators between them. Do not put separators between child nodes
+            // because the user needs to understand they belong to the parent (8/12/13).
+            if(!next->parent()){
+                // Store the top-level marker in the space for status-bar role text. We're not using that for anything anyway.
+                next->setData(0,4,"ROOT-LEVEL");
+            }
         }
     }
 }
@@ -438,21 +463,21 @@ void EditorTagManager::on_AvailableTags_itemClicked(QTreeWidgetItem *item)
 
 
     QFont normal_font;
-    normal_font.setWeight(QFont::Light);
+    normal_font.setWeight(QFont::Normal);
 
 
     if(Qt::Checked == item->checkState(0)){
         item->setCheckState(0, Qt::Unchecked);
         item->setFont(0, normal_font);
-        //item->setBackgroundColor(0, plain_bg);
+        //item->setBackground(0,QBrush(plain_bg));
         item->setForeground(0, plain_fg);
     }
     else{
         item->setCheckState(0, Qt::Checked);
         item->setFont(0, bold_font);
-        //item->setBackgroundColor(0, selected_bg);
+        //item->setBackground(0,QBrush(selected_bg));
         item->setForeground(0,selected_fg);
-    }
+    } 
 
     emit Sig_UnlockTaggerApplyButton();
 }
@@ -463,7 +488,7 @@ void EditorTagManager::on_StripTags_clicked()
 {
 
     QFont normal_font;
-    normal_font.setWeight(QFont::Light);
+    normal_font.setWeight(QFont::Normal);
 
     if(Buffer::showwarnings){
         QMessageBox m;
@@ -508,7 +533,7 @@ void EditorTagManager::on_StripTags_clicked()
         }
 
 
-     emit Sig_UnlockTaggerApplyButton();
+        emit Sig_UnlockTaggerApplyButton();
     }
 
 }
