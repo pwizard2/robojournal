@@ -68,22 +68,17 @@ void TagListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
                             const QModelIndex &index) const{
 
 
-    // add separators between top-level nodes only (8/12/13). Use the data stored
-    // in the Qt::Displayrole 4 slot since the app doesn't use that role for anything.
-    if(index.data(4)=="ROOT-LEVEL"){
+    // figure out how wide the line should be (8/11/13).
+    QPalette palette;
+    QRect rect=option.rect;
+    QPoint start(rect.left(),rect.bottom());
+    QPoint end(rect.right(), start.y());
 
-        // figure out how wide the line should be (8/11/13).
-        QPalette palette;
-        QRect rect=option.rect;
-        QPoint start(rect.left(),rect.bottom());
-        QPoint end(rect.right(), start.y());
+    // draw a 50% opaque line using the current color scheme's "Mid" color.
+    painter->setPen(QPen(palette.color(QPalette::Disabled, QPalette::Mid),
+                         0.50, Qt::SolidLine, Qt::RoundCap));
 
-        // draw a 50% opaque line using the current color scheme's "Mid" color.
-        painter->setPen(QPen(palette.color(QPalette::Disabled, QPalette::Mid),
-                             0.50, Qt::SolidLine, Qt::RoundCap));
-
-        painter->drawLine(start,end);
-    }
+    painter->drawLine(start,end);
 
     // Paint each row item.
     QStyledItemDelegate::paint(painter, option, index);
@@ -191,9 +186,6 @@ QString EditorTagManager::HarvestTags(){
 // is in Edit Mode (since new entries have no pre-existing data to revert to).
 void EditorTagManager::RevertTags(){
 
-    QFont normal_font;
-    normal_font.setWeight(QFont::Normal);
-
     if(Buffer::showwarnings){
         QMessageBox m;
         int choice=m.question(this,"RoboJournal","Do you really want to discard the changes you made to this entry\'s tags?",
@@ -207,8 +199,7 @@ void EditorTagManager::RevertTags(){
             while(*it){
                 QTreeWidgetItem *current=*it;
 
-                current->setFont(0, normal_font);
-                //current->setBackgroundColor(0, plain_bg);
+                current->setFont(0, nonselected);
                 current->setForeground(0, plain_fg);
                 current->setCheckState(0,Qt::Unchecked);
 
@@ -240,7 +231,7 @@ void EditorTagManager::RevertTags(){
         while(*it){
             QTreeWidgetItem *current=*it;
 
-            current->setFont(0, normal_font);
+            current->setFont(0, nonselected);
             current->setBackgroundColor(0, plain_bg);
             current->setForeground(0, plain_fg);
             current->setCheckState(0,Qt::Unchecked);
@@ -295,24 +286,29 @@ void EditorTagManager::DefineTag(){
 // 6/10/13: Create toolbar and layout for this class.
 void EditorTagManager::PrimaryConfig(){
 
-
-
-    // find and use system colors for selected/clear tags.
+    // Establish font colors for [un]selected items based on current OS Palette.
     const QPalette pal;
-
-    const QBrush bg=pal.midlight(); // previously midlight
+    const QBrush bg=pal.midlight();
     const QBrush fg=pal.highlight();
 
     const QBrush p_bg=pal.base();
     const QBrush p_fg=pal.windowText();
 
     selected_bg=bg.color();
-
     selected_fg=adjustColor(fg.color());
-    //selected_fg=fg.color();
 
     plain_bg=p_bg.color();
     plain_fg=p_fg.color();
+
+    // set font global qualities for selected tags.
+    selected.setWeight(QFont::Black);
+    //selected.setUnderline(true);
+    selected.setStyleStrategy(QFont::PreferAntialias);
+
+    // Do the same for non-selected tag font.
+    nonselected.setWeight(QFont::Normal);
+    //nonselected.setUnderline(false);
+    nonselected.setStyleStrategy(QFont::PreferAntialias);
 
     // Create toolbar.
     QToolBar *bar = new QToolBar(this);
@@ -420,9 +416,6 @@ void EditorTagManager::LoadTags(QString id){
     TaggingShared ts;
     QStringList tags=ts.FetchTags(id);
 
-    QFont bold_font;
-    bold_font.setWeight(QFont::Black);
-
     QTreeWidgetItemIterator it(ui->AvailableTags);
 
     while(*it){
@@ -432,7 +425,7 @@ void EditorTagManager::LoadTags(QString id){
         if(tags.contains(current->text(0))){
             current->setCheckState(0,Qt::Checked);
 
-            current->setFont(0, bold_font);
+            current->setFont(0, selected);
             //current->setBackgroundColor(0, selected_bg);
             current->setForeground(0,selected_fg);
         }
@@ -458,26 +451,16 @@ void EditorTagManager::on_RevertTags_clicked()
 // ###################################################################################################
 void EditorTagManager::on_AvailableTags_itemClicked(QTreeWidgetItem *item)
 {
-    QFont bold_font;
-    bold_font.setWeight(QFont::Black);
-
-
-    QFont normal_font;
-    normal_font.setWeight(QFont::Normal);
-
-
     if(Qt::Checked == item->checkState(0)){
         item->setCheckState(0, Qt::Unchecked);
-        item->setFont(0, normal_font);
-        //item->setBackground(0,QBrush(plain_bg));
+        item->setFont(0, nonselected);
         item->setForeground(0, plain_fg);
     }
     else{
         item->setCheckState(0, Qt::Checked);
-        item->setFont(0, bold_font);
-        //item->setBackground(0,QBrush(selected_bg));
+        item->setFont(0, selected);
         item->setForeground(0,selected_fg);
-    } 
+    }
 
     emit Sig_UnlockTaggerApplyButton();
 }
@@ -486,10 +469,6 @@ void EditorTagManager::on_AvailableTags_itemClicked(QTreeWidgetItem *item)
 // ###################################################################################################
 void EditorTagManager::on_StripTags_clicked()
 {
-
-    QFont normal_font;
-    normal_font.setWeight(QFont::Normal);
-
     if(Buffer::showwarnings){
         QMessageBox m;
 
@@ -504,7 +483,7 @@ void EditorTagManager::on_StripTags_clicked()
             while(*it){
                 QTreeWidgetItem *current=*it;
 
-                current->setFont(0, normal_font);
+                current->setFont(0, nonselected);
                 //current->setBackgroundColor(0, plain_bg);
                 current->setForeground(0, plain_fg);
                 current->setCheckState(0,Qt::Unchecked);
@@ -524,7 +503,7 @@ void EditorTagManager::on_StripTags_clicked()
         while(*it){
             QTreeWidgetItem *current=*it;
 
-            current->setFont(0, normal_font);
+            current->setFont(0, nonselected);
             //current->setBackgroundColor(0, plain_bg);
             current->setForeground(0, plain_fg);
             current->setCheckState(0,Qt::Unchecked);
@@ -548,13 +527,8 @@ void EditorTagManager::query(){
     QTreeWidgetItemIterator it(ui->AvailableTags);
 
     while(*it){
-
         QTreeWidgetItem *current=*it;
-
-        if(Qt::Checked == current->checkState(0)){
-            tags.append(current->text(0));
-        }
-
+        tags.append(current->text(0));
         it++;
     }
 

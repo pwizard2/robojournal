@@ -100,6 +100,9 @@ private:
     QColor plain_bg;
     QColor plain_fg;
 
+    QFont selected;
+    QFont nonselected;
+
     QColor adjustColor(QColor input);
 
 };
