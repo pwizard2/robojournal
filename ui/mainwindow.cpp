@@ -540,7 +540,7 @@ void MainWindow::GetTagList(){
     QStringList tag_list=ts.TagAggregator();
 
     QIcon tagicon(":/icons/tag_red.png");
-    for(int z=1; z < tag_list.size(); z++){
+    for(int z=0; z < tag_list.size(); z++){
         QString text=tag_list[z];
         ui->TagList->addItem(tagicon,text);
     }
