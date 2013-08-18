@@ -542,7 +542,10 @@ void MainWindow::GetTagList(){
     QIcon tagicon(":/icons/tag_red.png");
     for(int z=0; z < tag_list.size(); z++){
         QString text=tag_list[z];
-        ui->TagList->addItem(tagicon,text);
+
+        if(!text.isEmpty()){
+            ui->TagList->addItem(tagicon,text);
+        }
     }
 }
 

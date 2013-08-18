@@ -57,6 +57,12 @@ void FavoriteCore::init(){
     QFile db(favorite_db_path);
 
     if(db.exists()){
+
+        // initiate database connection. This connection is re-used for all favorites-related
+        // connectivity --Will Kraft (8/18/13).
+        QSqlDatabase base=QSqlDatabase::addDatabase("QSQLITE",con);
+        base.setDatabaseName(favorite_db_path);
+
         cout << "[OK]" << endl;
 
     }
@@ -70,9 +76,7 @@ void FavoriteCore::init(){
         cout << "[OK]" << endl;
     }
 
-    // initiate database connection
-    QSqlDatabase base=QSqlDatabase::addDatabase("QSQLITE",con);
-    base.setDatabaseName(favorite_db_path);
+
 }
 
 //###################################################################################################
@@ -106,23 +110,26 @@ void FavoriteCore::setFavorite(QString id, bool favorite){
 // if the database does not already exist. New for 0.5. -- Will Kraft, 7/18/13.
 void FavoriteCore::Setup_Favorites_Database(){
 
-    QSqlDatabase db=QSqlDatabase::database(con);
-
-    db.open();
+    // initiate database connection because it should not exist yet if/when this function is called (8/18/13).
+    // After this function is complete, the connection we set here is re-used for all favorites-related db
+    // transactions for the rest of the session.
+    QSqlDatabase base=QSqlDatabase::addDatabase("QSQLITE",con);
+    base.setDatabaseName(favorite_db_path);
+    base.open();
 
     QSqlQuery mysql_table_setup("CREATE TABLE mysql_favorites(id INTEGER PRIMARY KEY AUTOINCREMENT, "
                                 "database TEXT, host TEXT, user TEXT, favorite INTEGER, UNIQUE(database) "
-                                "ON CONFLICT IGNORE)",db);
+                                "ON CONFLICT IGNORE)",base);
 
     mysql_table_setup.exec();
 
     // Use the name "native_favorites" for SQLite table because "sqlite_favorites" is reserved for some reason.
     QSqlQuery sqlite_table_setup("CREATE TABLE native_favorites(id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                                 "database TEXT, favorite INTEGER, UNIQUE(database) ON CONFLICT IGNORE)",db);
+                                 "database TEXT, favorite INTEGER, UNIQUE(database) ON CONFLICT IGNORE)",base);
 
     sqlite_table_setup.exec();
 
-    db.close();
+    base.close();
 }
 
 //###################################################################################################
