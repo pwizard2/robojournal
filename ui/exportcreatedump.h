@@ -39,9 +39,20 @@ class ExportCreateDump : public QWidget
 public:
     explicit ExportCreateDump(QWidget *parent = 0);
     ~ExportCreateDump();
+    bool Create_SQL_Dump(QString filename, QString mysqldump_path, bool compress);
+    void HarvestData();
+
+    static QString export_path;
+    static QString mysqldump_exec;
+    static bool use_compress;
+
     
 private slots:
     void on_AllowCustomName_toggled(bool checked);
+
+    void on_FileBrowse_clicked();
+
+    void on_DumpBrowse_clicked();
 
 private:
     Ui::ExportCreateDump *ui;
@@ -52,6 +63,9 @@ private:
     QString mysqldump_path;
 
     bool gzip_available;
+
+    QString outputBrowse(QString current_dir);
+    QString dumpBrowse(QString current_exec);
 };
 
 #endif // EXPORTCREATEDUMP_H

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>349</width>
-    <height>403</height>
+    <height>396</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -132,7 +132,7 @@
       <item>
        <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>Path to mysqldump utility</string>
+         <string>Path to &lt;i&gt;mysqldump&lt;/i&gt; utility</string>
         </property>
        </widget>
       </item>

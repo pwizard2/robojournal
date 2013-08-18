@@ -979,4 +979,5 @@ void HTMLCore::Export_Loose_Journal_Entries(QString folder, bool use_html){
 
     QMessageBox ab;
     ab.information(NULL,"RoboJournal","All journal entries have been exported to <b>" + folder + "</b>.");
+    return;
 }
