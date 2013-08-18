@@ -2168,6 +2168,11 @@ void MainWindow::Disconnect(){
     // multiple sessions.
     Buffer::records.clear();
 
+    if(Buffer::backend=="MySQL"){
+        MySQLCore m;
+        m.Disconnect();
+    }
+
 }
 
 //################################################################################################

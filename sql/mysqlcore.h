@@ -96,6 +96,8 @@ private:
 
     QString old_username2;
     QString old_password2;
+
+    const QString con="@mysql";
 };
 
 #endif // MYSQLCORE_H
