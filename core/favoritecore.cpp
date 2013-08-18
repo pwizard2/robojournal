@@ -69,6 +69,10 @@ void FavoriteCore::init(){
 
         cout << "[OK]" << endl;
     }
+
+    // initiate database connection
+    QSqlDatabase base=QSqlDatabase::addDatabase("QSQLITE",con);
+    base.setDatabaseName(favorite_db_path);
 }
 
 //###################################################################################################
@@ -88,15 +92,13 @@ void FavoriteCore::setFavorite(QString id, bool favorite){
         break;
     }
 
-    favorite_db=QSqlDatabase::addDatabase("QSQLITE");
-    favorite_db.setDatabaseName(favorite_db_path);
+    QSqlDatabase db=QSqlDatabase::database(con);
+    db.open();
 
-    favorite_db.open();
-
-    QSqlQuery update(setFavorite);
+    QSqlQuery update(setFavorite, db);
     update.exec();
 
-    favorite_db.close();
+    db.close();
 }
 
 //###################################################################################################
@@ -104,24 +106,23 @@ void FavoriteCore::setFavorite(QString id, bool favorite){
 // if the database does not already exist. New for 0.5. -- Will Kraft, 7/18/13.
 void FavoriteCore::Setup_Favorites_Database(){
 
-    favorite_db=QSqlDatabase::addDatabase("QSQLITE");
-    favorite_db.setDatabaseName(favorite_db_path);
+    QSqlDatabase db=QSqlDatabase::database(con);
 
-    favorite_db.open();
+    db.open();
 
     QSqlQuery mysql_table_setup("CREATE TABLE mysql_favorites(id INTEGER PRIMARY KEY AUTOINCREMENT, "
                                 "database TEXT, host TEXT, user TEXT, favorite INTEGER, UNIQUE(database) "
-                                "ON CONFLICT IGNORE)");
+                                "ON CONFLICT IGNORE)",db);
 
     mysql_table_setup.exec();
 
     // Use the name "native_favorites" for SQLite table because "sqlite_favorites" is reserved for some reason.
     QSqlQuery sqlite_table_setup("CREATE TABLE native_favorites(id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                                 "database TEXT, favorite INTEGER, UNIQUE(database) ON CONFLICT IGNORE)");
+                                 "database TEXT, favorite INTEGER, UNIQUE(database) ON CONFLICT IGNORE)",db);
 
     sqlite_table_setup.exec();
 
-    favorite_db.close();
+    db.close();
 }
 
 //###################################################################################################
@@ -130,12 +131,11 @@ QList<QStringList> FavoriteCore::getKnownJournals(){
 
     QList <QStringList> known_journals;
 
-    favorite_db=QSqlDatabase::addDatabase("QSQLITE");
-    favorite_db.setDatabaseName(favorite_db_path);
+    QSqlDatabase db=QSqlDatabase::database(con);
 
-    favorite_db.open();
+    db.open();
 
-    QSqlQuery fetch("SELECT id, database, host, user, favorite FROM mysql_favorites");
+    QSqlQuery fetch("SELECT id, database, host, user, favorite FROM mysql_favorites",db);
     fetch.exec();
 
     while(fetch.next()){
@@ -159,7 +159,7 @@ QList<QStringList> FavoriteCore::getKnownJournals(){
         known_journals.append(nextitem);
     }
 
-    favorite_db.close();
+    db.close();
 
     return known_journals;
 }
@@ -169,11 +169,10 @@ QList<QStringList> FavoriteCore::getKnownJournals(){
 // Warning: Input variables should be trustworthy (no SQL injection potential).
 void FavoriteCore::Add_to_DB(QString database, QString user, QString host){
 
-    favorite_db=QSqlDatabase::addDatabase("QSQLITE");
-    favorite_db.setDatabaseName(favorite_db_path);
-    favorite_db.open();
+   QSqlDatabase db=QSqlDatabase::database(con);
+   db.open();
 
-    QSqlQuery row("INSERT INTO mysql_favorites(database,host,user,favorite) VALUES(?,?,?,?)");
+    QSqlQuery row("INSERT INTO mysql_favorites(database,host,user,favorite) VALUES(?,?,?,?)", db);
     row.bindValue(0, database);
     row.bindValue(1, host);
     row.bindValue(2, user);
@@ -190,11 +189,6 @@ void FavoriteCore::Add_to_DB(QString database, QString user, QString host){
 // Remove an entry from the SQLite favorites database. New for 0.5. --Will Kraft 7/18/13.
 void FavoriteCore::Remove_from_DB(QString id){
 
-
-
-    favorite_db=QSqlDatabase::addDatabase("QSQLITE");
-    favorite_db.setDatabaseName(favorite_db_path);
-
 }
 
 //###################################################################################################
@@ -204,11 +198,12 @@ QStringList FavoriteCore::GetFavorites(QString host){
 
     QStringList favorites;
 
-    favorite_db=QSqlDatabase::addDatabase("QSQLITE");
-    favorite_db.setDatabaseName(favorite_db_path);
-    favorite_db.open();
+    QSqlDatabase db=QSqlDatabase::database(con);
+    db.open();
 
-    QSqlQuery fetch("SELECT database FROM mysql_favorites WHERE favorite=1 and host='" + host +"'");
+    QString sql_query="SELECT database FROM mysql_favorites WHERE favorite=1 and host='" + host +"'";
+
+    QSqlQuery fetch(sql_query,db);
     fetch.exec();
 
     while(fetch.next()){
@@ -218,7 +213,7 @@ QStringList FavoriteCore::GetFavorites(QString host){
         favorites << nextitem;
     }
 
-    favorite_db.close();
+    db.close();
 
     return favorites;
 }
@@ -230,11 +225,10 @@ QStringList FavoriteCore::GetHosts(){
 
     QStringList hosts;
 
-    favorite_db=QSqlDatabase::addDatabase("QSQLITE");
-    favorite_db.setDatabaseName(favorite_db_path);
-    favorite_db.open();
+    QSqlDatabase db=QSqlDatabase::database(con);
+    db.open();
 
-    QSqlQuery fetch("SELECT host FROM mysql_favorites");
+    QSqlQuery fetch("SELECT host FROM mysql_favorites",db);
     fetch.exec();
 
     while(fetch.next()){

@@ -54,6 +54,7 @@ private:
 
     QString favorite_db_path;
     QSqlDatabase favorite_db;
+    const QString con="@fav";
 
 };
 
