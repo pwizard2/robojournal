@@ -36,6 +36,7 @@
 #include "core/buffer.h"
 #include <QList>
 
+
 //###################################################################################################
 FavoriteCore::FavoriteCore()
 {
@@ -59,8 +60,8 @@ void FavoriteCore::init(){
     if(db.exists()){
 
         // initiate database connection. This connection is re-used for all favorites-related
-        // connectivity --Will Kraft (8/18/13).
-        QSqlDatabase base=QSqlDatabase::addDatabase("QSQLITE",con);
+        // connectivity. Use "@favorites" as the global connection name.  --Will Kraft (8/18/13).
+        QSqlDatabase base=QSqlDatabase::addDatabase("QSQLITE","@favorites");
         base.setDatabaseName(favorite_db_path);
 
         cout << "[OK]" << endl;
@@ -96,7 +97,7 @@ void FavoriteCore::setFavorite(QString id, bool favorite){
         break;
     }
 
-    QSqlDatabase db=QSqlDatabase::database(con);
+    QSqlDatabase db=QSqlDatabase::database("@favorites");
     db.open();
 
     QSqlQuery update(setFavorite, db);
@@ -112,8 +113,9 @@ void FavoriteCore::Setup_Favorites_Database(){
 
     // initiate database connection because it should not exist yet if/when this function is called (8/18/13).
     // After this function is complete, the connection we set here is re-used for all favorites-related db
-    // transactions for the rest of the session.
-    QSqlDatabase base=QSqlDatabase::addDatabase("QSQLITE",con);
+    // transactions for the rest of the session.  Use "@favorites" as the global connection name.
+
+    QSqlDatabase base=QSqlDatabase::addDatabase("QSQLITE","@favorites");
     base.setDatabaseName(favorite_db_path);
     base.open();
 
@@ -138,7 +140,7 @@ QList<QStringList> FavoriteCore::getKnownJournals(){
 
     QList <QStringList> known_journals;
 
-    QSqlDatabase db=QSqlDatabase::database(con);
+    QSqlDatabase db=QSqlDatabase::database("@favorites");
 
     db.open();
 
@@ -176,7 +178,7 @@ QList<QStringList> FavoriteCore::getKnownJournals(){
 // Warning: Input variables should be trustworthy (no SQL injection potential).
 void FavoriteCore::Add_to_DB(QString database, QString user, QString host){
 
-   QSqlDatabase db=QSqlDatabase::database(con);
+   QSqlDatabase db=QSqlDatabase::database("@favorites");
    db.open();
 
     QSqlQuery row("INSERT INTO mysql_favorites(database,host,user,favorite) VALUES(?,?,?,?)", db);
@@ -205,7 +207,7 @@ QStringList FavoriteCore::GetFavorites(QString host){
 
     QStringList favorites;
 
-    QSqlDatabase db=QSqlDatabase::database(con);
+    QSqlDatabase db=QSqlDatabase::database("@favorites");
     db.open();
 
     QString sql_query="SELECT database FROM mysql_favorites WHERE favorite=1 and host='" + host +"'";
@@ -232,7 +234,7 @@ QStringList FavoriteCore::GetHosts(){
 
     QStringList hosts;
 
-    QSqlDatabase db=QSqlDatabase::database(con);
+    QSqlDatabase db=QSqlDatabase::database("@favorites");
     db.open();
 
     QSqlQuery fetch("SELECT host FROM mysql_favorites",db);
@@ -248,7 +250,7 @@ QStringList FavoriteCore::GetHosts(){
         }
     }
 
-    favorite_db.close();
+    db.close();
 
     return hosts;
 }

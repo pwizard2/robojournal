@@ -15,6 +15,12 @@
 
     You should have received a copy of the GNU General Public License
     along with RoboJournal.  If not, see <http://www.gnu.org/licenses/>.
+
+    UPDATE 8/18/13: Use "@mysql" as the global connection name for all regular
+    database transactions. Functions that require root access should use something
+    different (e.g. @create, @MASTER , etc.) to avoid breaking the current journal
+    connection.
+
   */
 
 
@@ -62,7 +68,7 @@ bool MySQLCore::GrantPermissions(bool create_account, QString database, QString 
 
     int db_port=port.toInt();
 
-    db = QSqlDatabase::addDatabase("QMYSQL",con);
+    db = QSqlDatabase::addDatabase("QMYSQL","@grant");
     db.setHostName(root_host);
     db.setPort(db_port);
     db.setUserName("root");
@@ -102,7 +108,7 @@ QList<QStringList> MySQLCore::NullSearch(){
 
     QList<QStringList> values;
 
-    QSqlDatabase db2=QSqlDatabase::database(con);
+    QSqlDatabase db2=QSqlDatabase::database("@mysql");
     db2.open();
 
     QSqlQuery q("SELECT id, title, day, month, year FROM entries WHERE tags=\"NULL\" ORDER BY id DESC",db2);
@@ -173,7 +179,7 @@ QList<QStringList> MySQLCore::NullSearch(){
 
 QStringList MySQLCore::Get_Entry_New(QString id){
 
-    QSqlDatabase db2=QSqlDatabase::database(con);
+    QSqlDatabase db2=QSqlDatabase::database("@mysql");
     db2.open();
     //db.open();
 
@@ -257,7 +263,7 @@ QList<QStringList> MySQLCore::SearchDatabase(QString searchterm, int index, QStr
 
     QList<QStringList> results;
 
-    QSqlDatabase db2=QSqlDatabase::database(con);
+    QSqlDatabase db2=QSqlDatabase::database("@mysql");
     db2.open();
    //db.open();
     QString query;
@@ -455,7 +461,7 @@ QList<QStringList> MySQLCore::DumpDatabase(bool asc){
 
     QList<QStringList> journal;
 
-    QSqlDatabase db2=QSqlDatabase::database(con);
+    QSqlDatabase db2=QSqlDatabase::database("@mysql");
     db2.open();
     //db.open();
     QString query;
@@ -526,7 +532,6 @@ QStringList MySQLCore::GetDatabaseList(QString hostname, QString port, QString u
         Buffer::database_name="information_schema";
     }
 
-    //QSqlDatabase db2;
     QSqlDatabase db2 = QSqlDatabase::addDatabase("QMYSQL","@MASTER");
     db2.setHostName(hostname);
     db2.setPort(socket);
@@ -637,7 +642,7 @@ bool MySQLCore::UpgradeJournal(QString root_pass){
 bool MySQLCore::SanityCheck(){
     using namespace std;
 
-    QSqlDatabase db2=QSqlDatabase::database(con);
+    QSqlDatabase db2=QSqlDatabase::database("@mysql");
     db2.open();
 
     QString query="DESCRIBE entries";
@@ -702,7 +707,7 @@ bool MySQLCore::Connect(){
     QString password=Buffer::password;
     int port=Buffer::databaseport;
 
-    QSqlDatabase db2 = QSqlDatabase::addDatabase("QMYSQL",con);
+    QSqlDatabase db2 = QSqlDatabase::addDatabase("QMYSQL","@mysql");
     db2.setHostName(host);
     db2.setPort(port);
     db2.setUserName(user);
@@ -740,7 +745,7 @@ void MySQLCore::Disconnect(){
     cout << "OUTPUT: Attempting to close MySQL connection...";
 
     QSqlDatabase db2;
-    db2.removeDatabase(con);
+    db2.removeDatabase("@mysql");
     db2.close();
 
     cout << "Done!" << endl;
@@ -752,7 +757,7 @@ void MySQLCore::Disconnect(){
 bool MySQLCore::Update(QString title, int month, int day, int year,  QString body, QString id, QString tags){
     using namespace std;
 
-    QSqlDatabase db2=QSqlDatabase::database(con);
+    QSqlDatabase db2=QSqlDatabase::database("@mysql");
     db2.open();
 
     QSqlQuery update("UPDATE entries set title=?, month=?, day=?, year=?, tags=?, body=? WHERE id=" + id,db2);
@@ -772,7 +777,7 @@ bool MySQLCore::Update(QString title, int month, int day, int year,  QString bod
 //################################################################################################
 bool MySQLCore::UpdateTags(QString tag_data, QString id){
 
-    QSqlDatabase db2=QSqlDatabase::database(con);
+    QSqlDatabase db2=QSqlDatabase::database("@mysql");
     db2.open();
 
     QSqlQuery tag("UPDATE entries SET tags=? WHERE id=" + id,db2);
@@ -788,7 +793,7 @@ bool MySQLCore::UpdateTags(QString tag_data, QString id){
 bool MySQLCore::AddEntry(){
     using namespace std;
 
-    QSqlDatabase db2=QSqlDatabase::database(con);
+    QSqlDatabase db2=QSqlDatabase::database("@mysql");
     db2.open();
 
     QString title=Editor::title;
@@ -837,7 +842,7 @@ bool MySQLCore::AddEntry(){
 //################################################################################################
 bool MySQLCore::DeleteEntry(QString id){
 
-    QSqlDatabase db2=QSqlDatabase::database(con);
+    QSqlDatabase db2=QSqlDatabase::database("@mysql");
     db2.open();
 
     QString query="DELETE FROM entries WHERE id=" + id;
@@ -852,7 +857,7 @@ bool MySQLCore::DeleteEntry(QString id){
 QString MySQLCore::TimeStamp(QString id){
     using namespace std;
 
-    QSqlDatabase db2=QSqlDatabase::database(con);
+    QSqlDatabase db2=QSqlDatabase::database("@mysql");
     db2.open();
 
     QString query="SELECT month,day,year FROM entries WHERE id=" + id;
@@ -930,7 +935,7 @@ QString MySQLCore::TimeStamp(QString id){
 QString MySQLCore::RetrieveEntry(QString id){
     using namespace std;
 
-    QSqlDatabase db2=QSqlDatabase::database(con);
+    QSqlDatabase db2=QSqlDatabase::database("@mysql");
     db2.open();
 
     QString query="SELECT body FROM entries WHERE id=" + id;
@@ -961,7 +966,7 @@ QString MySQLCore::RetrieveEntry(QString id){
 QList<QString> MySQLCore::RetrieveEntryFull(QString id){
     using namespace std;
 
-    QSqlDatabase db2=QSqlDatabase::database(con);
+    QSqlDatabase db2=QSqlDatabase::database("@mysql");
     db2.open();
 
     QString query="SELECT title, month, day, year, tags, body FROM entries WHERE id=" + id;
@@ -1000,7 +1005,7 @@ QList<QString> MySQLCore::RetrieveEntryFull(QString id){
 // Get the most recent entry from the db and return it as a QString
 QString MySQLCore::Recent(){
 
-    QSqlDatabase db2=QSqlDatabase::database(con);
+    QSqlDatabase db2=QSqlDatabase::database("@mysql");
     db2.open();
     //db.open();
     QString q="SELECT id,body FROM entries ORDER BY id DESC";
@@ -1025,7 +1030,7 @@ QString MySQLCore::Recent(){
 //################################################################################################
 QString MySQLCore::GetPrevious(){
 
-    QSqlDatabase db2=QSqlDatabase::database(con);
+    QSqlDatabase db2=QSqlDatabase::database("@mysql");
     db2.open();
 
     ID--;
@@ -1047,7 +1052,7 @@ QList<QString> MySQLCore::getYear(){
     using namespace std;
     QList <QString> YearList;
 
-    QSqlDatabase db2=QSqlDatabase::database(con);
+    QSqlDatabase db2=QSqlDatabase::database("@mysql");
     db2.open();
 
     QString query="SELECT year FROM entries ORDER BY id DESC";
@@ -1114,7 +1119,7 @@ QList<QString> MySQLCore::getMonth(QString nextyear){
     using namespace std;
     QList <QString> MonthList;
 
-    QSqlDatabase db2=QSqlDatabase::database(con);
+    QSqlDatabase db2=QSqlDatabase::database("@mysql");
     db2.open();
 
     QString query="SELECT month FROM entries WHERE year=" + nextyear +  " ORDER BY id DESC";
@@ -1145,7 +1150,7 @@ QList<QString> MySQLCore::getDay(QString itemmonth, QString nextyear){
     using namespace std;
     QList <QString> DayList;
 
-    QSqlDatabase db2=QSqlDatabase::database(con);
+    QSqlDatabase db2=QSqlDatabase::database("@mysql");
     db2.open();
 
     QString query="SELECT day FROM entries WHERE MONTH=" + itemmonth + " AND year=" + nextyear + " ORDER BY id DESC";
@@ -1175,7 +1180,7 @@ QList<QString> MySQLCore::getDay(QString itemmonth, QString nextyear){
 //################################################################################################
 QList<QString> MySQLCore::getEntries(QString itemday, QString itemmonth){
 
-    QSqlDatabase db2=QSqlDatabase::database(con);
+    QSqlDatabase db2=QSqlDatabase::database("@mysql");
     db2.open();
 
     QList <QString> EntryList;
@@ -1224,7 +1229,7 @@ QString MySQLCore::GetTimestamp(QString id){
 
     using namespace std;
 
-    QSqlDatabase db2=QSqlDatabase::database(con);
+    QSqlDatabase db2=QSqlDatabase::database("@mysql");
     db2.open();
 
     QString query="SELECT time FROM entries WHERE id=" + id;
@@ -1261,7 +1266,7 @@ QString MySQLCore::GetTimestamp(QString id){
 QString MySQLCore::GetTitle(QString id){
     using namespace std;
 
-    QSqlDatabase db2=QSqlDatabase::database(con);
+    QSqlDatabase db2=QSqlDatabase::database("@mysql");
     db2.open();
 
     QString query="SELECT title FROM entries WHERE id=" + id;
@@ -1286,7 +1291,7 @@ QString MySQLCore::GetTags(QString id){
     using namespace std;
 
 
-    QSqlDatabase db2=QSqlDatabase::database(con);
+    QSqlDatabase db2=QSqlDatabase::database("@mysql");
     db2.open();
 
     QSqlQuery q("SELECT tags FROM entries WHERE id=" + id,db2);
@@ -1308,7 +1313,7 @@ QList<QString> MySQLCore::TagSearch(){
     using namespace std;
     QList<QString> tags;
 
-    QSqlDatabase db2=QSqlDatabase::database(con);
+    QSqlDatabase db2=QSqlDatabase::database("@mysql");
     db2.open();
 
     QSqlQuery q("SELECT tags FROM entries",db2);
@@ -1336,7 +1341,7 @@ QList<QString> MySQLCore::Create_ID_List(int year_range){
     using namespace std;
     QList <QString> IDList;
 
-    QSqlDatabase db2=QSqlDatabase::database(con);
+    QSqlDatabase db2=QSqlDatabase::database("@mysql");
     db2.open();
 
 
@@ -1374,7 +1379,7 @@ QList<QString> MySQLCore::getEntriesMonth(QString month, QString year){
     using namespace std;
     QList <QString> EntryList;
 
-    QSqlDatabase db2=QSqlDatabase::database(con);
+    QSqlDatabase db2=QSqlDatabase::database("@mysql");
     db2.open();
 
     QString query="SELECT id,title,day FROM entries WHERE month=" +
@@ -1414,7 +1419,7 @@ QList<QString> MySQLCore::getEntriesMonth(QString month, QString year){
 bool MySQLCore::CreateDatabase(QString host,QString root_pass, QString db_name,
                                QString port, QString newuser, QString newuser_pass){
 
-    QSqlDatabase db2 = QSqlDatabase::addDatabase("QMYSQL", "new_connection");
+    QSqlDatabase db2 = QSqlDatabase::addDatabase("QMYSQL", "@create");
     using namespace std;
 
     // Bugfix 8/21/12: Save old login data in case login fails. That way other connections won't get broken after

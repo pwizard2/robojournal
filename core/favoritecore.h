@@ -54,9 +54,6 @@ private:
 
     QString favorite_db_path;
     QSqlDatabase favorite_db;
-
-    // This is the connection name used for all favorites-related database transactions (8/18/13).
-    const QString con="@favorites";
 };
 
 #endif // FAVORITECORE_H
