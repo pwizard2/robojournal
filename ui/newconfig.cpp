@@ -295,6 +295,8 @@ void Newconfig::on_Categories_currentItemChanged(QTreeWidgetItem *current)
 
 void Newconfig::UpdateData(){
 
+    setCursor(Qt::WaitCursor);
+
     // fetch new form data from each page
     g->GetChanges();
     j->GetChanges();
@@ -311,6 +313,8 @@ void Newconfig::UpdateData(){
     // update the settings
     SettingsManager sm;
     sm.UpdateConfig();
+
+    setCursor(Qt::ArrowCursor);
 }
 
 

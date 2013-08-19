@@ -107,6 +107,34 @@ void FavoriteCore::setFavorite(QString id, bool favorite){
 }
 
 //###################################################################################################
+// Set the favorite status of a database by database name instead of row id number. This was introduced
+// because the JournalCreator class needed an easy way for the user to set the new database as a favorite
+// without having to do it through preferences (8/18/13).
+void FavoriteCore::setFavoritebyName(QString name, bool favorite){
+
+    QString setFavorite;
+
+    switch(favorite){
+    case true:
+        setFavorite="UPDATE mysql_favorites SET favorite=1 WHERE database=?";
+        break;
+
+    case false:
+        setFavorite="UPDATE mysql_favorites SET favorite=0 WHERE database=?";
+        break;
+    }
+
+    QSqlDatabase db=QSqlDatabase::database("@favorites");
+    db.open();
+
+    QSqlQuery update(setFavorite, db);
+    update.bindValue(0,name);
+    update.exec();
+
+    db.close();
+}
+
+//###################################################################################################
 // Create the SQLite favorites database. This only should be used once during firstrun
 // if the database does not already exist. New for 0.5. -- Will Kraft, 7/18/13.
 void FavoriteCore::Setup_Favorites_Database(){

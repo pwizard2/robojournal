@@ -41,6 +41,7 @@ public:
 
     FavoriteCore();
     void setFavorite(QString id, bool favorite);
+    void setFavoritebyName(QString name, bool favorite);
     QList<QStringList> getKnownJournals();
     void Setup_Favorites_Database();
     void Add_to_DB(QString database, QString user, QString host);

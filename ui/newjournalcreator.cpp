@@ -188,11 +188,10 @@ bool NewJournalCreator::Create_MySQL_Database(){
     QMessageBox msg;
     if(success){
 
-        msg.information(this,"RoboJournal", "The journal <b>" + journal_name +
-                        "</b> has been successfully created on <b>" + hostname +
-                        "</b>. You may now access this journal with the password you set up for user <b>" +
-                        username + "</b>.<br><br>Click <b>Connect</b> on the main window to start working with "
-                        "your new journal.");
+        int choice=msg.question(this,"RoboJournal", "RoboJournal has successfully created a new journal called  <b>" +
+                                journal_name + "</b> on <b>" + hostname + "</b>.<br><br>Do you want to add <b>" +
+                                journal_name + "</b> to your list of favorites?", QMessageBox::Yes | QMessageBox::No,
+                                QMessageBox::Yes);
 
         // Post-setup: Create configuration file with new values if option is checked
         if(ui->SetAsDefault->isChecked()){
@@ -209,6 +208,11 @@ bool NewJournalCreator::Create_MySQL_Database(){
         // Add the new database to the list of known databases.
         FavoriteCore f;
         f.Add_to_DB(journal_name,username,hostname);
+
+        //Set the new journal as a favorite if the user indicated so in the choice question box (8/18/13).
+        if(choice==QMessageBox::Yes){
+           f.setFavoritebyName(journal_name,true);
+        }
 
         return true;
     }
