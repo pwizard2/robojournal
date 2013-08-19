@@ -43,7 +43,7 @@ QSqlDatabase MySQLCore::db;
 int MySQLCore::dialogX;
 int MySQLCore::dialogY;
 int MySQLCore::ID;
-QString MySQLCore::error_code;
+QString MySQLCore::error_code; // not really used
 
 QString MySQLCore::recordnum;
 
@@ -59,43 +59,46 @@ MySQLCore::MySQLCore()
 bool MySQLCore::GrantPermissions(bool create_account, QString database, QString user_host, QString username, QString port,
                                  QString root_host, QString user_password, QString root_password){
 
-    // Bugfix 8/21/12: Save old login data in case login fails. That way other connections won't get broken after
-    // exiting JournalSelector
-    old_username2=db.userName();
-    old_password2=db.password();
-
     bool success=true; //success should be true unless something goes wrong and changes it to false
-
     int db_port=port.toInt();
 
-    db = QSqlDatabase::addDatabase("QMYSQL","@grant");
-    db.setHostName(root_host);
-    db.setPort(db_port);
-    db.setUserName("root");
-    db.setPassword(root_password);
-    db.open();
+    QSqlDatabase db2 = QSqlDatabase::addDatabase("QMYSQL","@grant");
+    db2.setHostName(root_host);
+    db2.setPort(db_port);
+    db2.setUserName("root");
+    db2.setPassword(root_password);
+    db2.open();
+
+    // Bugfix 8/21/12: Save old login data in case login fails. That way other connections won't get broken after
+    // exiting JournalSelector
+    old_username2=db2.userName();
+    old_password2=db2.password();
 
     if(create_account){
         QSqlQuery q("CREATE USER \'" + username + "\'@\'" + user_host +
-                    "\' IDENTIFIED BY \'" + user_password + "\'",db);
+                    "\' IDENTIFIED BY \'" + user_password + "\'",db2);
         q.exec();
     }
 
     QSqlQuery q2("GRANT INSERT,DELETE,UPDATE,SELECT ON " + database + ".entries TO \'" +
-                 username + "\'@\'" + user_host + "\'",db);
+                 username + "\'@\'" + user_host + "\'",db2);
     success=q2.exec();
 
-    db.close();
+    db2.close();
 
     // if login fails, restore the old values before closing the database. That way, the connections in the rest of
     // the app won't get broken.
     if(!success){
-        db.setUserName(old_username2);
-        db.setPassword(old_password2);
+        db2.setUserName(old_username2);
+        db2.setPassword(old_password2);
         // clean up
         old_password2.clear();
         old_username2.clear();
     }
+
+    // Bugfix (8/19/13) Change db2's association so we can remove it without creating warnings.
+    db2 = QSqlDatabase();
+    db2.removeDatabase("@grant");
 
     return success;
 }
@@ -516,23 +519,18 @@ QList<QStringList> MySQLCore::DumpDatabase(bool asc){
 QStringList MySQLCore::GetDatabaseList(QString hostname, QString port, QString username, QString password, bool silentMode){
     using namespace std;
 
-    // Bugfix 8/8/12: Save old login data in case login fails. That way other connections won't get broken after
-    // exiting JournalSelector
-    old_username=db.userName();
-    old_password=db.password();
+    QSqlDatabase db2 = QSqlDatabase::addDatabase("QMYSQL","@MASTER");
 
     int socket=port.toInt();
-    //cout << "Data: " << hostname.toStdString() + ";" +username.toStdString() + ";" +
-    //password.toStdString(); + ";" + socket;
 
     // use information_schema database if Buffer::database_name is null.
     // that way, there will not be a segfault due to a a null variable.
-    // we don't want ot do anything with that database, just link to it.
+    // we don't want to do anything with that database, just link to it.
     if(Buffer::database_name.isEmpty()){
         Buffer::database_name="information_schema";
     }
 
-    QSqlDatabase db2 = QSqlDatabase::addDatabase("QMYSQL","@MASTER");
+
     db2.setHostName(hostname);
     db2.setPort(socket);
     db2.setUserName(username);
@@ -541,6 +539,10 @@ QStringList MySQLCore::GetDatabaseList(QString hostname, QString port, QString u
 
     QStringList journals;
 
+    // Bugfix 8/8/12: Save old login data in case login fails. That way other connections won't get broken after
+    // exiting JournalSelector
+    old_username=db2.userName();
+    old_password=db2.password();
 
     bool success=db2.open();
 
@@ -574,7 +576,7 @@ QStringList MySQLCore::GetDatabaseList(QString hostname, QString port, QString u
     else{
 
         // If there's no MySQL, display an error
-        if(!db.isDriverAvailable("QMYSQL")){
+        if(!db2.isDriverAvailable("QMYSQL")){
             success=false;
             cout << "OUTPUT: MySQL support was not found! MySQL functionality disabled." << endl;
             QMessageBox a;
@@ -582,7 +584,7 @@ QStringList MySQLCore::GetDatabaseList(QString hostname, QString port, QString u
                        "This problem occurs if the Qt environment used to compile RoboJournal was built without MySQL support.");
         }
 
-        if((db.isOpenError()) && (!silentMode)){
+        if((db2.isOpenError()) && (!silentMode)){
             QMessageBox m;
             QString reason;
 
@@ -610,6 +612,9 @@ QStringList MySQLCore::GetDatabaseList(QString hostname, QString port, QString u
     }
 
     db2.close();
+
+    // Bugfix (8/19/13) Change db2's association so we can remove it without creating warnings.
+    db2 = QSqlDatabase();
     db2.removeDatabase("@MASTER");
 
     return journals;
@@ -618,6 +623,7 @@ QStringList MySQLCore::GetDatabaseList(QString hostname, QString port, QString u
 //################################################################################################
 // upgrade journal to RoboJournal >0.1 compatible version by adding [time varchar(5)] column
 bool MySQLCore::UpgradeJournal(QString root_pass){
+
     QSqlDatabase db2 = QSqlDatabase::addDatabase("QMYSQL","@MASTER");
     db2.setHostName(Buffer::host);
     db2.setDatabaseName(Buffer::database_name);
@@ -630,6 +636,9 @@ bool MySQLCore::UpgradeJournal(QString root_pass){
     bool success=q.exec();
 
     db2.close();
+
+    // Bugfix (8/19/13) Change db2's association so we can remove it without creating warnings.
+    db2 = QSqlDatabase();
     db2.removeDatabase("@MASTER");
 
     return success;
@@ -1486,7 +1495,7 @@ bool MySQLCore::CreateDatabase(QString host,QString root_pass, QString db_name,
 
         QSqlQuery grant_rights(grant,db2);
 
-        grant_rights.exec();
+        grant_rights.exec();  
 
         db2.close();
     }
@@ -1535,6 +1544,9 @@ bool MySQLCore::CreateDatabase(QString host,QString root_pass, QString db_name,
         old_username.clear();
     }
 
+    // Bugfix (8/19/13) Change db2's association so we can remove it without creating warnings.
+    db2 = QSqlDatabase();
+    db2.removeDatabase("@create");
 
     return success;
 }

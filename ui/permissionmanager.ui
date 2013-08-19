@@ -136,7 +136,7 @@
       <item row="3" column="0" colspan="3">
        <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>Select database</string>
+         <string>Select database to modify</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -156,7 +156,7 @@
    <item>
     <widget class="QGroupBox" name="GrantSettings">
      <property name="title">
-      <string>Grant Settings</string>
+      <string>Grant Access Rights To</string>
      </property>
      <layout class="QFormLayout" name="formLayout">
       <property name="fieldGrowthPolicy">

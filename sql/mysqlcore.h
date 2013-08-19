@@ -15,6 +15,12 @@
 
     You should have received a copy of the GNU General Public License
     along with RoboJournal.  If not, see <http://www.gnu.org/licenses/>.
+
+    UPDATE 8/18/13: Use "@mysql" as the global connection name for all regular
+    database transactions. Functions that require root access should use something
+    different (e.g. @create, @MASTER , etc.) to avoid breaking the current journal
+    connection.
+
   */
 
 #ifndef MYSQLCORE_H
