@@ -41,8 +41,8 @@
  */
 
 SettingsManager::SettingsManager(){
-ok_param="[OK]";
-fail_param="[FAILED]";
+    ok_param="[OK]";
+    fail_param="[FAILED]";
 }
 
 //###################################################################################################
@@ -71,12 +71,12 @@ void SettingsManager::SaveNagPreferences(){
     QSettings settings(config_path,QSettings::IniFormat);
 
     settings.beginGroup("Behavior");
-      settings.setValue("show_untagged_reminder", Buffer::show_reminder_next_time);
+    settings.setValue("show_untagged_reminder", Buffer::show_reminder_next_time);
     settings.endGroup();
 
     // Save and reload config after making changes because this function is called during app runtime.
     settings.sync();
-    LoadConfig();
+    LoadConfig(false);
 
 }
 
@@ -121,7 +121,7 @@ void SettingsManager::SaveEditorSize(QSize geo){
 
     //settings.sync();
 
-   // LoadConfig();
+    // LoadConfig();
 }
 
 //###################################################################################################
@@ -289,10 +289,10 @@ void SettingsManager::NewConfig(QString host, QString db_name, QString port, QSt
     // Update for 0.5: never enable tooblar button text by default. This feature is actually
     // deprecated as of 6/21/13 because it wastes too much space.
     if((!Buffer::show_icon_labels) && (!Buffer::firstrun)){
-       settings.setValue("enable_toolbar_button_text", false);
+        settings.setValue("enable_toolbar_button_text", false);
     }
     else{
-       settings.setValue("enable_toolbar_button_text", false);
+        settings.setValue("enable_toolbar_button_text", false);
     }
 
     settings.setValue("autoload_recent_entry", true);
@@ -351,7 +351,7 @@ void SettingsManager::NewConfig(QString host, QString db_name, QString port, QSt
         settings.setValue("use_full_name", false);
     }
     else{
-       settings.setValue("use_full_name", true);
+        settings.setValue("use_full_name", true);
     }
 
     settings.endGroup();
@@ -368,13 +368,13 @@ void SettingsManager::NewConfig(QString host, QString db_name, QString port, QSt
     InstallDictionaries();
 
     // Firstrun is now finished, allow the program to load normally by reading new config.
-    LoadConfig();
+    LoadConfig(true);
 }
 
 
 //##################################################################################
 // Load the current raw config data from the robojournal.ini file and buffer it.
-void SettingsManager::LoadConfig(){
+void SettingsManager::LoadConfig(bool startup){
     using namespace std;
 
     bool reload=false;
@@ -383,11 +383,14 @@ void SettingsManager::LoadConfig(){
 
     // construct a file object where the config file is supposed to be.
     QFile config(config_path);
-    cout << "OUTPUT: Searching for config file.............................";
+
+    if(startup)
+        cout << "OUTPUT: Searching for config file.............................";
 
     // if config file exists, read its contents
     if(config.exists()){
 
+            if(startup)
         cout << ok_param << endl;
 
 #ifdef _WIN32
@@ -397,7 +400,8 @@ void SettingsManager::LoadConfig(){
 
         //cout << "OUTPUT: Config file found: "<< config_path.toStdString()  << endl;
         QSettings settings(config_path,QSettings::IniFormat);
-        cout << "OUTPUT: Buffering data from config file.......................";
+        if(startup)
+            cout << "OUTPUT: Buffering data from config file.......................";
 
         Buffer::toolbar_pos = settings.value("Behavior/toolbar_location").toInt();
         Buffer::allowroot = settings.value("Behavior/allow_root_login").toBool();
@@ -557,18 +561,22 @@ void SettingsManager::LoadConfig(){
         Buffer::mw_splitter_size=settings.value("Behavior/mw_splitter_position").toByteArray(); // added 6/21/13
 
         if(reload){
-            LoadConfig();
+            LoadConfig(false);
         }
 
-        cout << ok_param << endl;
+        if(startup){
+            cout << ok_param << endl;
 
-        cout << "OUTPUT: Stage 1 completed, proceeding to Stage 2." << endl;
+            cout << "OUTPUT: Stage 1 completed, proceeding to Stage 2." << endl;
+        }
     }
 
     // if config doesn't exist, rebuild it.
     else{
-        cout << fail_param << endl;
-        cout << "OUTPUT: Starting first run mode to replace missing configuration." << endl;
+        if(startup){
+            cout << fail_param << endl;
+            cout << "OUTPUT: Starting first run mode to replace missing configuration." << endl;
+        }
 
         // give the journal creator a way to know its the first run
         Buffer::firstrun=true;

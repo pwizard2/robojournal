@@ -1951,7 +1951,7 @@ void MainWindow::Connect(){
 
             // reload the config b/c we made changes. This prevents the preferences window from
             // relying on old data and getting out of sync with the real app configuration.
-            sm.LoadConfig();
+            sm.LoadConfig(false);
 
 
             // Bugfix 3/5/13: Refresh most recent entry (if autoload=true) just in case user added new tags to it
@@ -2185,7 +2185,7 @@ void MainWindow::Preferences(){
 
     if(c.MadeChanges){
         SettingsManager s;
-        s.LoadConfig();
+        s.LoadConfig(false);
 
         if((!ConnectionActive) && (ui->DisconnectButton->isEnabled())){
             CreateTree();

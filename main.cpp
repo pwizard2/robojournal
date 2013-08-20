@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
     FavoriteCore f;
     f.init();
 
-    j.LoadConfig();
+    j.LoadConfig(true);
 
 
 

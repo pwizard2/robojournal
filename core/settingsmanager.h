@@ -10,7 +10,7 @@ class SettingsManager
 public:
     SettingsManager();
 
-    void LoadConfig();
+    void LoadConfig(bool startup);
     void UpdateConfig();
     void NewConfig(QString host,QString db_name, QString port, QString newuser);
     QString FullName();
