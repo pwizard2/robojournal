@@ -28,6 +28,7 @@
 #include <QTreeWidgetItem>
 #include <QMessageBox>
 #include <QTreeWidgetItemIterator>
+#include <sql/mysqlcore.h>
 
 ConfigurationMySQL::ConfigurationMySQL(QWidget *parent) :
     QWidget(parent),
@@ -150,8 +151,31 @@ void ConfigurationMySQL::Show_Known_Journals(){
         ui->KnownJournals->resizeColumnToContents(0);
         ui->KnownJournals->resizeColumnToContents(1);
     }
-}
 
+
+    // Only do database maintenance if there is a password in the buffer since we need it to log in (8/19/13).
+    if(!Buffer::password.isEmpty()){
+
+        QString host=Buffer::host;
+
+        if(host.isEmpty())
+            host=Buffer::defaulthost;
+
+        MySQLCore my;
+        QStringList dynamic=my.GetDatabaseList(host,QString::number(Buffer::databaseport),Buffer::username,Buffer::password,true);
+
+        if(!dynamic.isEmpty()){
+
+            bool changed=f.Do_Maintenance(journals,dynamic);
+
+            //refresh the journal list if maintenance changes were made
+            if(changed){
+                ui->KnownJournals->clear();
+                Show_Known_Journals();
+            }
+        }
+    }
+}
 
 void ConfigurationMySQL::GetChanges(){
 
@@ -232,7 +256,6 @@ void ConfigurationMySQL::on_KnownJournals_itemDoubleClicked(QTreeWidgetItem *ite
             case QMessageBox::No: // do nothing
                 break;
             }
-
         }
         else{
             ui->Database->setText(new_choice);

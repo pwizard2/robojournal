@@ -206,8 +206,8 @@ QList<QStringList> FavoriteCore::getKnownJournals(){
 // Warning: Input variables should be trustworthy (no SQL injection potential).
 void FavoriteCore::Add_to_DB(QString database, QString user, QString host){
 
-   QSqlDatabase db=QSqlDatabase::database("@favorites");
-   db.open();
+    QSqlDatabase db=QSqlDatabase::database("@favorites");
+    db.open();
 
     QSqlQuery row("INSERT INTO mysql_favorites(database,host,user,favorite) VALUES(?,?,?,?)", db);
     row.bindValue(0, database);
@@ -224,7 +224,18 @@ void FavoriteCore::Add_to_DB(QString database, QString user, QString host){
 
 //###################################################################################################
 // Remove an entry from the SQLite favorites database. New for 0.5. --Will Kraft 7/18/13.
-void FavoriteCore::Remove_from_DB(QString id){
+void FavoriteCore::Remove_from_DB(QString name){
+
+    if(Buffer::backend=="MySQL"){
+        QSqlDatabase db=QSqlDatabase::database("@favorites");
+        db.open();
+
+        QSqlQuery drop("DELETE FROM mysql_favorites WHERE database=?", db);
+        drop.bindValue(0,name);
+        drop.exec();
+
+        db.close();
+    }
 
 }
 
@@ -288,10 +299,60 @@ QStringList FavoriteCore::GetHosts(){
 // in case a database got dropped or moved. After all ,it wouldn't do to have RoboJournal try to connect to a
 // "known" database that doesn't exist anymore. favorites_list refers to the current list of favorites from
 // favorites.db while dynamic_list is the list of databases generated from MySQL queries.
-// New for 0.5 --Will Kraft (7/24/13).
-void FavoriteCore::Do_Maintenance(QList<QStringList> favorites_list, QStringList dynamic_list){
+// New for 0.5 --Will Kraft (8/20/13).
+bool FavoriteCore::Do_Maintenance(QList<QStringList> favorites_list, QStringList dynamic_list){
+    using namespace std;
 
-    for(int i=0; i < dynamic_list.size(); i++){
+    // first, find out how many journals we still have and add them to the known_journals list.
+    QStringList known_journals;
 
+    for(int h=0; h < favorites_list.size(); h++){
+        QStringList next=favorites_list.at(h);
+        QString next_item=next.at(1);
+        known_journals.append(next_item);
+    }
+
+    known_journals.sort();
+    dynamic_list.sort();
+
+    // Compare the known journals list we just made with the dynamic list from the SQLite database. If the lists are
+    // the same, abort. If not, remove the entry that is not on the list from MySQL.
+
+    if(known_journals==dynamic_list){
+        cout << "OUTPUT: The list of known databases is still up-to-date. No further action is required right now." << endl;
+
+
+        //Scrap code for showing the contents of the two lists. Used for debugging, comment out in production builds.
+        /*
+         *cout << "\n\ndynamic_list items:" << endl;
+
+                for(int i=0; i<dynamic_list.count(); i++){
+                    cout << dynamic_list.at(i).toStdString() << endl;
+                }
+
+                cout << "\n\nknown_journals items:" << endl;
+
+                for(int i=0; i<known_journals.count(); i++){
+                    cout << known_journals.at(i).toStdString() << endl;
+                }
+        */
+
+        return false;
+    }
+    else{
+        cout << "OUTPUT: The list of known databases contains items that don't exist anymore. Starting maintenance mode." << endl;
+
+        for(int i=0; i<known_journals.size(); i++){
+
+            QString next=known_journals.at(i);
+            //cout << "Next item: " << next.toStdString() << endl;
+
+            if((!dynamic_list.contains(next)) && (Buffer::defaultdatabase != next)){
+                Remove_from_DB(next);
+                cout << "OUTPUT: Removed " << next.toStdString() << " from the known journals list." << endl;
+            }
+        }
+
+        return true;
     }
 }

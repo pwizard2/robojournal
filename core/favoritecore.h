@@ -49,7 +49,7 @@ public:
     void init();
     QStringList GetFavorites(QString host);
     QStringList GetHosts();
-    void Do_Maintenance(QList<QStringList> favorites_list, QStringList dynamic_list);
+    bool Do_Maintenance(QList<QStringList> favorites_list, QStringList dynamic_list);
 
 private:
 
