@@ -100,9 +100,9 @@ bool ExportCreateDump::Create_SQL_Dump(QString filename, QString mysqldump_path,
 {
     using namespace std;
 
-    QFile output(filename);
+    /*
+
     QFile gzip("/bin/gzip");
-    QFile mysqldump(mysqldump_path);
 
     //check for gzip one last time just in case
     if(!gzip.exists()){
@@ -115,69 +115,64 @@ bool ExportCreateDump::Create_SQL_Dump(QString filename, QString mysqldump_path,
     cout << "OUTPUT: Detected Windows operating system-- the dump file will NOT be compressed." << endl;
 #endif
 
-    // Stop the dump process if the mysqldump executable does not exist
+*/
+
+    QFile output(filename);
+    QFile mysqldump(mysqldump_path);
+
+    // Stop the dump process if the mysqldump executable does not exist (usually at /usr/bin/mysqldump on Unix/Linux)
     if(!mysqldump.exists()){
         QMessageBox m;
-        m.critical(this,"RoboJournal","The mysqldump executable was not found at the expected location (<b>" +
-                   mysqldump_path + "</b>.");
+        m.critical(this,"RoboJournal","RoboJournal could not find the <i>mysqldump</i> executable at the expected location (<b>" +
+                   mysqldump_path + "</b>).");
         cout << "OUTPUT: Aborting! mysqldump does not exist at " << mysqldump_path.toStdString() << endl;
         return false;
     }
 
+    // Ask before overwrite if a dump file with the same path+name already exists.
+    if(output.exists()){
+        QMessageBox b;
+        int choice=b.question(this,"RoboJournal","<b>" + filename + "</b> already exists. Do you want to replace it?",
+                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+
+        if(choice==QMessageBox::No)
+            return false;
+    }
+
     QString root_pass;
     QString database=Buffer::database_name;
+    bool clickedOk=false;
 
     while(root_pass.isEmpty()){
-        root_pass=QInputDialog::getText(this,"RoboJournal","Enter the MySQL root password for <b>"+ database +
-                                                              "@" + Buffer::host + "</b>:",QLineEdit::Password);
-
+        root_pass=QInputDialog::getText(this,"RoboJournal","Enter the MySQL root password for <b>"
+                                        + Buffer::host + "</b>:",QLineEdit::Password,"",&clickedOk);
+        if(!clickedOk)
+            return false;
     }
 
     // complete the dump
-    QProcess *dump=new QProcess(this);
-    QStringList args;
+    QProcess* dump=new QProcess();
+    dump->setStandardOutputFile(filename,QIODevice::ReadWrite);
 
+    QStringList args;
     args << "-u root ";
     args << "-p" + root_pass;
     args << " " + database;
 
     cout << "cmd: " << args.join("").toStdString() << endl;
 
-    dump->start(mysqldump_path, args, QIODevice::ReadWrite);
+    mysqldump_path = mysqldump_path +" "+args.join("");
+    cout << mysqldump_path.toStdString() << endl;
 
-    if(output.exists()){
-        QMessageBox m2;
-       int choice=m2.question(this,"RoboJournal","The output file <nobr><b>" + filename +
-                    "</b></nobr> already exists. Do you want to replace it?", QMessageBox::Yes | QMessageBox::No,
-                    QMessageBox::No);
+    dump->start(mysqldump_path, QIODevice::ReadWrite);
 
-       switch(choice){
+    QMessageBox n;
 
-       case QMessageBox::Yes:
 
-           dump->setStandardOutputFile(filename,QIODevice::WriteOnly);
+    n.information(this,"RoboJournal","The current contents of <b>" + database + "</b> have been backed up to <b>"
+                  + filename + "</b>.");
 
-           break;
-
-       case QMessageBox::No:
-           return false;
-           break;
-       }
-
-    }
-    else{
-            dump->setStandardOutputFile(filename,QIODevice::WriteOnly);
-    }
-
-    while(!dump->atEnd()){
-
-        cout << "OUTPUT: waiting for process to finish..." << endl;
-        if(dump->atEnd()){
-            break;
-            return true;
-        }
-
-    }
+    return true;
 }
 
 
@@ -218,13 +213,14 @@ void ExportCreateDump::PrimaryConfig(){
     ui->DumpPath->setText(mysqldump_path);
 
     // Set backup options depending on if the system has gzip installed.
-    if(gzip_available){
-        ui->AutoCompress->setChecked(gzip_available);
-    }
-    else{
-        ui->AutoCompress->setChecked(false);
-        ui->AutoCompress->setEnabled(false);
-    }
+    //    if(gzip_available){
+    //        ui->AutoCompress->setChecked(gzip_available);
+    //    }
+    //    else{
+    ui->AutoCompress->setChecked(false);
+    ui->AutoCompress->setVisible(false);
+    //ui->AutoCompress->setEnabled(false);
+    // }
 }
 
 //################################################################################################
