@@ -763,10 +763,17 @@ Editor::~Editor()
 //#############################################################################################################
 //get current date
 void Editor::SetDate(){
-    ui->EntryDate->setDate(QDate::currentDate());
 
+    // Set custom date if date override command line args are enabled.
+    if(Buffer::use_date_override){
+        ui->EntryDate->setDate(Buffer::override_date.date());
+    }
+    else{
+        ui->EntryDate->setDate(QDate::currentDate());
+    }
 }
 
+//#############################################################################################################
 // Automatically update window title with post title
 void Editor::setTitle(QString title){
     this->setWindowTitle(title + " - RoboJournal");

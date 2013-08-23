@@ -47,6 +47,40 @@ int main(int argc, char *argv[])
     cout << "=============================================="<< endl;
     cout << "OUTPUT: Running as process ID: "<<  a.applicationPid() << endl;
 
+    // Check for arguments. New for 0.5, 8/23/13.
+    QStringList args=a.arguments();
+
+    QRegExp date("--date-override=\\d{0,2}-\\d{0,2}-\\d{0,4}");
+
+    for(int i=0; i<args.length(); i++){
+        QString next_arg=args.at(i);
+
+        // Check to see if Robojournal should override the date for this session. FYI: This feature can be dangerous (8/23/13).
+        if(date.exactMatch(next_arg)){
+
+            Buffer::use_date_override=true;
+
+            QString date=next_arg.section("",17,next_arg.length());
+
+            QStringList d=date.split("-");
+            int month=d.at(0).toInt();
+            int day=d.at(1).toInt();
+            int year=d.at(2).toInt();
+            QTime time=QTime::currentTime();
+            QDate custom;
+            custom.setYMD(year,month,day);
+
+
+            Buffer::override_date.setDate(custom);
+            Buffer::override_date.setTime(time);
+
+            cout << "OUTPUT: Date override command accepted. Setting date to "
+                 << Buffer::override_date.toString("MM-dd-yyyy.").toStdString() << endl;
+        }
+    }
+
+
+
     // Load the config data into memory. SettingsManager replaces the old ConfigManager class on versions ≥ 0.4
     SettingsManager j;
 
@@ -62,20 +96,20 @@ int main(int argc, char *argv[])
 
     // This ifdef block came from Clementine 1.0.1 source.
 #ifdef Q_OS_LINUX
-  // Force RoboJournal's menu to be shown in the MainWindow and not in
-  // the Unity global menubar thing.  See:
-  // https://bugs.launchpad.net/unity/+bug/775278
-  setenv("QT_X11_NO_NATIVE_MENUBAR", "1", true);
+    // Force RoboJournal's menu to be shown in the MainWindow and not in
+    // the Unity global menubar thing.  See:
+    // https://bugs.launchpad.net/unity/+bug/775278
+    setenv("QT_X11_NO_NATIVE_MENUBAR", "1", true);
 #endif
 
-  // so did this one
+    // so did this one
 #ifndef Q_OS_DARWIN
-  // Gnome on Ubuntu has menu icons disabled by default.  I think that's a bad
-  // idea, and makes some menus in RoboJournal look confusing. This flag primarily
-  // affects the spell check icons in the context menu in the Editor class.
-  QCoreApplication::setAttribute(Qt::AA_DontShowIconsInMenus, false);
+    // Gnome on Ubuntu has menu icons disabled by default.  I think that's a bad
+    // idea, and makes some menus in RoboJournal look confusing. This flag primarily
+    // affects the spell check icons in the context menu in the Editor class.
+    QCoreApplication::setAttribute(Qt::AA_DontShowIconsInMenus, false);
 #else
-  QCoreApplication::setAttribute(Qt::AA_DontShowIconsInMenus, true);
+    QCoreApplication::setAttribute(Qt::AA_DontShowIconsInMenus, true);
 #endif
 
     // Show Main GUI

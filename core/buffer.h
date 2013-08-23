@@ -23,12 +23,13 @@
 #include <QtGui/QApplication>
 #include <QList>
 #include <QStringList>
+#include <QDateTime>
 
 class Buffer
 {
 public:
     Buffer();
-    void OutputBuffer();
+    //void OutputBuffer();
 
     static QString host;
     static QString database_name;
@@ -170,6 +171,9 @@ public:
     static QString sqlite_default;
     static QStringList sqlite_favorites;
     static QByteArray mw_splitter_size; // added 6/21/13
+
+    static bool use_date_override;
+    static QDateTime override_date;
 
 };
 

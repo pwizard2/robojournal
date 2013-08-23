@@ -145,6 +145,9 @@ QString Buffer::sqlite_default;
 bool Buffer::use_my_journals;
 QByteArray Buffer::mw_splitter_size;
 
+// date override flag (8/23/13).
+bool Buffer::use_date_override;
+QDateTime Buffer::override_date;
 
 
 Buffer::Buffer()
@@ -153,6 +156,8 @@ Buffer::Buffer()
 
 }
 
+/* deprecated
 void Buffer::OutputBuffer(){
 
 }
+*/

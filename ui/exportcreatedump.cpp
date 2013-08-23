@@ -159,20 +159,26 @@ bool ExportCreateDump::Create_SQL_Dump(QString filename, QString mysqldump_path,
     args << "-p" + root_pass;
     args << " " + database;
 
-    cout << "cmd: " << args.join("").toStdString() << endl;
+    //cout << "cmd: " << args.join("").toStdString() << endl;
 
     mysqldump_path = mysqldump_path +" "+args.join("");
-    cout << mysqldump_path.toStdString() << endl;
+    //cout << mysqldump_path.toStdString() << endl;
 
     dump->start(mysqldump_path, QIODevice::ReadWrite);
 
     QMessageBox n;
 
-
-    n.information(this,"RoboJournal","The current contents of <b>" + database + "</b> have been backed up to <b>"
-                  + filename + "</b>.");
-
-    return true;
+//    if(output.size()){
+//        n.critical(this,"RoboJournal","The backup operation was unsuccessful because the output file is empty. "
+//                   "Please verify that you entered the correct root password and try again.");
+//        output.deleteLater();
+//        return false;
+//    }
+//    else{
+        n.information(this,"RoboJournal","The current contents of <b>" + database + "</b> have been backed up to <b>"
+                      + filename + "</b>.");
+        return true;
+    //}
 }
 
 
