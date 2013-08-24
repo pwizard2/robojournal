@@ -1622,6 +1622,13 @@ void MainWindow::PrimaryConfig(){
     this->setWindowTitle("RoboJournal");
 
 
+    // new for 0.5: show notification if the date override is enabled (8/24/13)
+    if(Buffer::use_date_override){
+    QMessageBox m;
+    m.information(this,"RoboJournal","Date override is enabled; all new entries created during this session will artificially use "+
+                  Buffer::override_date.date().toString("MM-dd-yyyy") + " as their date of origin. <br><br><strong>Warning:</strong>"
+                  " To prevent data corruption, <u>never</u> use the override feature to insert an entry at a previous point in the timeline or at a future date.");
+    }
 }
 
 //################################################################################################
