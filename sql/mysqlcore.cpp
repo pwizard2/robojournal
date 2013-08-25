@@ -268,7 +268,7 @@ QList<QStringList> MySQLCore::SearchDatabase(QString searchterm, int index, QStr
 
     QSqlDatabase db2=QSqlDatabase::database("@mysql");
     db2.open();
-   //db.open();
+    //db.open();
     QString query;
 
 
@@ -737,12 +737,44 @@ bool MySQLCore::Connect(){
         cout << "SUCCESS!"<< endl;
         db2.close();
         return true;
-
-
     }
     else{
         cout << "FAILED!" << endl;
+
+        // Bugfix (8/25/13): Destroy the old connection and allow the user to reconnect.
         db2.close();
+
+
+        if(db2.isOpenError()){
+            QMessageBox m;
+
+            QString reason;
+
+            if((Buffer::host=="localhost") || (Buffer::host=="127.0.0.1")){
+                reason="Make sure you entered the correct username/password and try again.";
+            }
+            else{
+                reason="Are you allowed to access <b>" + Buffer::database_name +
+                        "</b> from this computer? If so, make sure you entered the correct username/password and try again.";
+            }
+
+            m.critical(NULL,"RoboJournal","RoboJournal could not connect to  <b>" +
+                       Buffer::database_name + "</b>@<b>" +
+                       Buffer::host + "</b>.<br><br>" + reason );
+        }
+
+        // check to make sure the MYSQL driver is installed, return error if false
+        // If you're using a static build of QT you're probably never going to see this error
+        if(!db2.isDriverAvailable("QMYSQL")){
+            QMessageBox j;
+            j.critical(NULL,"RoboJournal","The Qt MySQL driver is not available! The most likely cause "
+                       " for this problem is that Qt was not built correctly or is incomplete. RoboJournal"
+                       " will not be able to use MySQL databases until this problem is fixed.");
+        }
+
+        QSqlDatabase db2;
+        db2.removeDatabase("@mysql");
+
         return false;
     }
 }
@@ -1495,7 +1527,7 @@ bool MySQLCore::CreateDatabase(QString host,QString root_pass, QString db_name,
 
         QSqlQuery grant_rights(grant,db2);
 
-        grant_rights.exec();  
+        grant_rights.exec();
 
         db2.close();
     }
