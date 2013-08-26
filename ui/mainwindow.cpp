@@ -1921,12 +1921,12 @@ void MainWindow::Connect(){
     }
 
     // new for 0.5: show notification if the date override feature is enabled (8/24/13).
-    if(Buffer::use_date_override){
+    if((Buffer::use_date_override) && (is_connected)){
         QMessageBox m;
         m.information(this,"RoboJournal","Date override is enabled; all new entries created during this session will artificially use " +
                       Buffer::override_date.date().toString("MM-dd-yyyy") + " as their date of origin. <br><br><strong>Warning:</strong> "
-                      "To prevent data corruption, <u>never</u> use the override feature to insert a new entry between other entries at "
-                      "a previous point in the timeline or at a future date.");
+                      "To prevent database corruption, <u>never</u> use the date override feature to insert a new entry between other "
+                      "entries at a previous point in the timeline or at a future date.");
     }
 }
 

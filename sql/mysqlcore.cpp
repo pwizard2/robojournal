@@ -37,6 +37,7 @@
 #include <QTime>
 #include <QRegExp>
 #include "sql/sqlshield.h"
+#include <QApplication>
 
 
 QSqlDatabase MySQLCore::db;
@@ -707,6 +708,7 @@ bool MySQLCore::SanityCheck(){
 bool MySQLCore::Connect(){
 
     using namespace std;
+
     cout << "OUTPUT: Attempting MySQL database connection on \"" << Buffer::host.toStdString()
          << "\" as user \"" << Buffer::username.toStdString() << "\"...";
 
@@ -744,6 +746,7 @@ bool MySQLCore::Connect(){
         // Bugfix (8/25/13): Destroy the old connection and allow the user to reconnect.
         db2.close();
 
+        QWidget* mw=QApplication::activeWindow();
 
         if(db2.isOpenError()){
             QMessageBox m;
@@ -758,7 +761,7 @@ bool MySQLCore::Connect(){
                         "</b> from this computer? If so, make sure you entered the correct username/password and try again.";
             }
 
-            m.critical(NULL,"RoboJournal","RoboJournal could not connect to  <b>" +
+            m.critical(mw,"RoboJournal","RoboJournal could not connect to  <b>" +
                        Buffer::database_name + "</b>@<b>" +
                        Buffer::host + "</b>.<br><br>" + reason );
         }
@@ -767,9 +770,9 @@ bool MySQLCore::Connect(){
         // If you're using a static build of QT you're probably never going to see this error
         if(!db2.isDriverAvailable("QMYSQL")){
             QMessageBox j;
-            j.critical(NULL,"RoboJournal","The Qt MySQL driver is not available! The most likely cause "
-                       " for this problem is that Qt was not built correctly or is incomplete. RoboJournal"
-                       " will not be able to use MySQL databases until this problem is fixed.");
+            j.critical(mw,"RoboJournal","RoboJournal could not find the MySQL driver. This problem likely occurred"
+                       " because the Qt libraries on this computer were compiled incorrectly or are incomplete. RoboJournal"
+                       " cannot use MySQL databases until this issue is resolved.");
         }
 
         QSqlDatabase db2;

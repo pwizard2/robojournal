@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
         // Check to see if Robojournal should override the date for this session. FYI: This feature can be dangerous (8/23/13).
         if(date.exactMatch(next_arg)){
 
-            Buffer::use_date_override=true;
+
 
             QString date=next_arg.section("",17,next_arg.length());
 
@@ -70,16 +70,20 @@ int main(int argc, char *argv[])
             QDate custom;
             custom.setYMD(year,month,day);
 
+            if(custom.isValid()){
+                Buffer::use_date_override=true;
+                Buffer::override_date.setDate(custom);
+                Buffer::override_date.setTime(time);
 
-            Buffer::override_date.setDate(custom);
-            Buffer::override_date.setTime(time);
-
-            cout << "OUTPUT: Date override command accepted. Setting date to "
-                 << Buffer::override_date.toString("MM-dd-yyyy.").toStdString() << endl;
+                cout << "OUTPUT: Date override command accepted. Setting date to "
+                     << Buffer::override_date.toString("MM-dd-yyyy.").toStdString() << endl;
+            }
+            else{
+                cout << "OUTPUT: Date override command rejected due to invalid date value." << endl;
+                Buffer::use_date_override=false;
+            }
         }
     }
-
-
 
     // Load the config data into memory. SettingsManager replaces the old ConfigManager class on versions ≥ 0.4
     SettingsManager j;
