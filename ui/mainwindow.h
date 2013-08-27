@@ -48,6 +48,8 @@ public:
 
     QList<QString> IDList;
 
+    static QWidget* mw;
+
 
 private slots:
     void on_WriteButton_clicked();

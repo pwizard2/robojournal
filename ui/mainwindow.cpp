@@ -71,6 +71,9 @@
 #include "ui_newjournalcreator.h"
 #include "core/taggingshared.h"
 
+
+QWidget* MainWindow::mw;
+
 // 0.4.1: Consolidate the clear search results code into its own function since it needs to be called
 // more than once.
 //################################################################################################
@@ -1378,8 +1381,6 @@ void MainWindow::GetEntry(QString id, bool fromSearch){
 
             EntryExporter e;
             e.UpdateValues(entrytitle,datestamp,entry,timestamp);
-
-
         }
     }
 }
@@ -1388,15 +1389,13 @@ void MainWindow::GetEntry(QString id, bool fromSearch){
 // Function that sets up main window GUI when mainwindow is called at startup
 void MainWindow::PrimaryConfig(){
 
-
-
-    // Use a nice big png icon for linux/unix.. that little Windows ico file just doesn't cut it.
-    // This is really only noticable on KDE4/Unity environments. (and probably Mac if someone builds for that)
+    // New for 0.5 (8/27/13): create a static pointer to the current main window object. This is used elsewhere as a parent
+    // to center QMessageBoxes and other elements that don't have a GUI of their own relative to the main window.
+    mw=this->window();
 
     // 6/5/13: Will Kraft. (new for version 0.5): Use the big icon on Windows too. That little 16x16 icon looks like hell when
-    // stretched to fit the Win 7 taskbar. The shortcut icon usually compensates for that but not always; this way works for
-    // sure no matter what.
-
+    // stretched to fit the Win 7 taskbar and alt+tab list. The shortcut icon usually compensates for that but not always; this
+    // way works for sure no matter what.
     QIcon unixicon(":/icons/robojournal-icon-big.png");
     this->setWindowIcon(unixicon);
 
