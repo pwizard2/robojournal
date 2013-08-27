@@ -31,6 +31,7 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include "sql/sqlshield.h"
+#include "ui/mainwindow.h"
 
 //#########################################################################################################
 TaggingShared::TaggingShared(){
@@ -46,7 +47,7 @@ TaggingShared::TaggingShared(){
 QString TaggingShared::DefineTag(QStringList ExistingTags){
 
     QInputDialog d;
-    QString tag=d.getText(NULL, "RoboJournal", "Enter the new tag:", QLineEdit::Normal);
+    QString tag=d.getText(MainWindow::mw, "RoboJournal", "Enter the new tag:", QLineEdit::Normal);
 
     tag=tag.trimmed();
     tag=tag.simplified();
@@ -70,7 +71,7 @@ QString TaggingShared::DefineTag(QStringList ExistingTags){
             goodtag=false;
 
             // the list isn't called the Available tags list any more in 0.5.
-            m.critical(NULL,"RoboJournal","\"" + tag + "\" is already on the tags list.");
+            m.critical(MainWindow::mw,"RoboJournal","\"" + tag + "\" is already on the tags list.");
 
             tag.clear();
         }
@@ -83,7 +84,7 @@ QString TaggingShared::DefineTag(QStringList ExistingTags){
 
         if(banned.exactMatch(tag)){
             goodtag=false;
-            m.critical(NULL,"RoboJournal","You are not allowed to declare \"" + tag +
+            m.critical(MainWindow::mw,"RoboJournal","You are not allowed to declare \"" + tag +
                        "\" (or any other uppercase/lowercase variant of it) because it is a reserved keyword.");
             tag.clear();
         }
