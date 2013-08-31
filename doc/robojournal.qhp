@@ -1,19 +1,18 @@
  
  <QtHelpProject version="1.0">
-     <namespace>robojournal.0.4.1</namespace>
+     <namespace>robojournal</namespace>
      <virtualFolder>doc</virtualFolder>
-     <customFilter name="RoboJournal 0.4.1">
+     <customFilter name="RoboJournal">
          <filterAttribute>RoboJournal</filterAttribute>
-         <filterAttribute>0.4.1</filterAttribute>
      </customFilter>
      
      <filterSection>
      
          <filterAttribute>RoboJournal</filterAttribute>
-         <filterAttribute>0.4.1</filterAttribute>
+
          
          <toc>
-			 <section title="RoboJournal 0.4.1 Documentation" ref="index.html">
+			 <section title="RoboJournal Documentation" ref="index.html">
 				<section title="What is RoboJournal?" ref="index.html#what_is_robojournal"/>
 				<section title="Current Limitations" ref="index.html#limitations"/>
 				<section title="Table of Contents" ref="toc.html"/>

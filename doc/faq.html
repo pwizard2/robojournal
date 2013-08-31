@@ -16,6 +16,8 @@
 <img src="img/rj_doc_header.png" width="606" height="72"
 alt="RoboJournal Documentation" class="masthead"> 
 
+<p class="doc_version">for version 0.4.2</p>
+
 <div class="menu">
 <ul>
   <li onclick="javascript:history.go(-1)" class="backbutton">&lt; Back</li>
@@ -35,56 +37,54 @@ are asked with each new version of RoboJournal.</p>
 </h2>
 
 <p><em>Will Kraft's answer:</em><br>
-<br>
-As the "<a href="index.html#limitations">Current Limitations</a>" section
-explains, RoboJournal was not originally designed to be a high-security
-program. RoboJournal's purpose is to allow users to create and maintain an
-electronic diary or journal on a remote server. By its very design, RoboJournal
-is already more secure than a traditional handwritten diary (which offers no
-security at all since anyone can pick it up and read it). RoboJournal is not
-entirely insecure since the MySQL server requires a username and password for
-each login. Even so, you need to ask yourself how much protection your journal
-really requires. A basic login requirement is probably enough to thwart casual
-unauthorized access attempts unless the attacker has root-level access to your
-MySQL installation (in which case you have far greater problems than having
-your secrets exposed). </p>
+</p>
+
+<p><br>
+As the "<a href="../../robojournal/doc/index.html#limitations">Current
+Limitations</a>" section explains, RoboJournal was not originally designed to
+be a high-security program. RoboJournal's purpose is to allow users to create
+and maintain an electronic diary or journal on a remote server. By its very
+design, RoboJournal is already more secure than a traditional handwritten diary
+(which offers no security at all since anyone can pick it up and read it) since
+the MySQL server requires a username and password for each login. Even so, you
+need to ask yourself how much protection your journal really requires. A basic
+login requirement is probably enough to thwart casual unauthorized access
+attempts unless the attacker has root-level access to your MySQL installation
+(in which case you have far greater problems than having your secrets exposed).
+</p>
 
 <p>That said, there are plans in the works to harden RoboJournal against
-unauthorized access attempts even from the MySQL root account. In future
-versions, RoboJournal is going to support interaction with the GNU Privacy
-Guard public-key encryption program. This new functionality will secure your
-journal content by encrypting it with your public key. Once encrypted, your
-private key (and the password that goes with it) is the only thing that can
-decrypt the content. If someone were to read your encrypted journal without
-having the private key needed to decrypt it, all the intruder would see is
-ASCII-armored encrypted text. </p>
+unauthorized access attempts even from the MySQL root account. Starting in a
+future version (most likely 0.6), RoboJournal will support RSA and/or AES
+on-the-fly encryption for all journal content. <br>
+</p>
 
-<h2 id="spellcheck">Question: Why is spellcheck disabled on the Linux version of
-RoboJournal?<br>
+<h2 id="spellcheck">Question: Why is spell check disabled on the Linux version
+of RoboJournal 0.4.2?<br>
 </h2>
 
-<p><em>Will Kraft's answer</em> (updated on 5/6/13):<br>
+<p><em>Will Kraft's answer</em> (updated on 8/30/13):<br>
 <br>
-I had no choice but to issue a service patch that disables spellcheck (for the
+I had no choice but to issue a service patch that disables spell check (for the
 time being) on all instances of RoboJournal that have been compiled for any
 Linux-based operating system. The only other [unacceptable] option was to leave
 this serious problem completely unaddressed. </p>
 
 <p>This decision is due to the well-known crashing bug that has plagued
-RoboJournal ever since the spellcheck feature was introduced in version 0.4. I
+RoboJournal ever since the spell check feature was introduced in version 0.4. I
 have recently made progress on figuring out what is causing the bug but there
-is no way for me to fix it in a timely manner. I intend to replace the
-spellcheck system entirely before RoboJournal 0.5 is released (since that is
-what the fix requires) in order to resolve this bug once and for all. In the
+is no way for me to fix it in a timely manner. I intend to replace the spell
+check system entirely before RoboJournal 0.5 is released (since that is what
+the fix requires) in order to resolve this bug once and for all. In the
 meantime, this patch prevents a Linux-user's copy of RoboJournal from crashing
-merely because he or she enabled spellcheck at some point. This patch is
-<strong>temporary</strong>; I intend to restore full functionality as soon as
-possible.</p>
+merely because he or she enabled spell check at some point. This patch is
+<strong>temporary</strong>; I intend to restore full spell check functionality
+as soon as possible.</p>
 
 <p>The patch does <em>not</em> affect the Windows version of RoboJournal
 because that version has always been immune to this crashing bug. Therefore,
-all custom Windows binaries will continue to have fully-functional
-spellcheck.</p>
+all custom Windows binaries will continue to have fully-functional spell
+check.</p>
 
 <h2>Question: Why does the whitespace removal feature sometimes add lots of
 empty lines to a new entry?</h2>
@@ -105,13 +105,13 @@ The whitespace removal function should work correctly the second time. </p>
 
 <p><em>Will Kraft's answer:</em> <br>
 <br>
-I have actually been planning to release RoboJournal 0.4.1 on Mac OS X as soon
-as I can. The reason why I haven't done it for earlier versions is because I
-don't have a Mac of my own; under the circumstances there has been no way for
-me to build or actively maintain a Mac version. </p>
+I have actually been planning to release RoboJournal on Mac OS X as soon as I
+can. The reason why I haven't done it for earlier versions is because I don't
+have a Mac of my own; under the circumstances there has been no way for me to
+build or actively maintain a Mac version. </p>
 
 <p>Update (4/23/13): Unfortunately, my last plan for porting RoboJournal to OS
-X has recently failed; I'm now forced to wait for another volunteer to come
+X has recently failed. I'm now forced to wait for another volunteer to come
 along.</p>
 
 <h2>Question: RoboJournal has been useful to me. Is there anything I can do to

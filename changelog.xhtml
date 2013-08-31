@@ -100,6 +100,32 @@
 <div class="main">
 <h1>RoboJournal ChangeLog</h1>
 
+<div class="even">
+<h2>Version 0.4.2</h2>
+
+<p>Release Date: 7/5/13</p>
+
+<p>The following changes were made in this release:</p>
+<ol>
+  <li>Split documentation into a separate <em>robojournal-doc</em> package on
+    Debian-based Linux (including Ubuntu, Linux Mint, <em>et al</em>) because
+    including documentation in each architecture-specific package is redundant
+    when the documentation itself is platform-agnostic.</li>
+  <li><span class="added">Added</span> packaging support for Fedora Linux 
+    <ol>
+      <li>Removed Fedora build patch since it is no longer needed (6/1/13).</li>
+      <li><span class="added">Added</span> a <em>pkg</em> folder in the source
+        tree for the Fedora SPEC files.</li>
+    </ol>
+  </li>
+  <li>Temporarily disabled spellcheck on Linux-based systems to prevent a
+    common crashing bug from occurring.</li>
+  <li>Removed Fedora patch question/logic from Linux compile script
+  (6/1/13).</li>
+  <li>Removed caps-lock detection code from the DBLogin class (6/1/13).</li>
+</ol>
+</div>
+
 <div class="odd">
 <h2>Version 0.4.1</h2>
 
@@ -177,26 +203,6 @@
     program.</li>
   <li><span class="added">Added</span> comprehensive documentation for
     RoboJournal 0.4.1 (displayed with the included Qt Assistant program).</li>
-</ol>
-
-<h3>Post-Release Updates</h3>
-<ol>
-  <li>Split documentation into a separate <em>robojournal-doc</em> package on
-    Debian-based Linux (including Ubuntu, Linux Mint, <em>et al</em>) because
-    including documentation in each architecture-specific package is redundant
-    when the documentation itself is platform-agnostic.</li>
-  <li><span class="added">Added</span> packaging support for Fedora Linux 
-    <ol>
-      <li>(6/1/13) Removed Fedora build patch since it is no longer needed.</li>
-	 
-      <li><span class="added">Added</span> a <em>pkg</em> folder in the source
-        tree for the Fedora SPEC files.</li>
-	
-    </ol>
-  </li>
-  <li>Temporarily disabled spellcheck on Linux-based systems to prevent a common crashing bug from occurring.</li>
-  <li>(6/1/13) Removed Fedora patch question/logic from Linux compile script.</li>
-  <li>(6/1/13) Removed caps-lock detection code from the DBLogin class.</li>
 </ol>
 </div>
 

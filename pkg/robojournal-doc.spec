@@ -1,7 +1,7 @@
 Name:		robojournal-doc		
-Version:	0.4.1
+Version:	0.4.2
 Release:	1%{?dist}
-Summary:	Documentation Files for RoboJournal %{version}
+Summary:	Documentation files for RoboJournal %{version}
 
 Group:		Applications/Productivity
 License:	GPLv3+	
@@ -38,5 +38,5 @@ cp -p %{_builddir}/robojournal-%{version}/doc/robojournal.qch %{buildroot}%{_def
 
 
 %changelog
-* Tue May 14 2013 Will Kraft <pwizard@gmail.com> 0.4.1-1
+* Fri Jul 5 2013 Will Kraft <pwizard@gmail.com> 0.4.2-1
 - Initial release.
