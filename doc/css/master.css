@@ -137,6 +137,8 @@ p{
 	margin-bottom: 20px;
 }
 
+
+
 .list{
 	width: 95%;
 	border-left: solid 10px #e2e2e2;
@@ -440,4 +442,16 @@ p.copyright{
 
 .masthead{
 	margin-left: 20px;
+}
+
+.doc_version{
+	font-family: "Segoe UI", Candara, Freesans, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+	text-align: left;
+	margin-top: -30px;
+	margin-bottom: 0px;
+	margin-left: 100px;
+	position: absolute;
+	z-index: 1
 }

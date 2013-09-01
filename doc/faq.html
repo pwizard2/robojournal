@@ -16,6 +16,8 @@
 <img src="img/rj_doc_header.png" width="606" height="72"
 alt="RoboJournal Documentation" class="masthead"> 
 
+<p class="doc_version">for version 0.5</p>
+
 <div class="menu">
 <ul>
   <li onclick="javascript:history.go(-1)" class="backbutton">&lt; Back</li>
@@ -41,26 +43,20 @@ explains, RoboJournal was not originally designed to be a high-security
 program. RoboJournal's purpose is to allow users to create and maintain an
 electronic diary or journal on a remote server. By its very design, RoboJournal
 is already more secure than a traditional handwritten diary (which offers no
-security at all since anyone can pick it up and read it). RoboJournal is not
-entirely insecure since the MySQL server requires a username and password for
-each login. Even so, you need to ask yourself how much protection your journal
-really requires. A basic login requirement is probably enough to thwart casual
-unauthorized access attempts unless the attacker has root-level access to your
-MySQL installation (in which case you have far greater problems than having
-your secrets exposed). </p>
+security at all since anyone can pick it up and read it) since the MySQL server
+requires a username and password for each login. Even so, you need to ask
+yourself how much protection your journal really requires. A basic login
+requirement is probably enough to thwart casual unauthorized access attempts
+unless the attacker has root-level access to your MySQL installation (in which
+case you have far greater problems than having your secrets exposed). </p>
 
 <p>That said, there are plans in the works to harden RoboJournal against
-unauthorized access attempts even from the MySQL root account. In future
-versions, RoboJournal is going to support interaction with the GNU Privacy
-Guard public-key encryption program. This new functionality will secure your
-journal content by encrypting it with your public key. Once encrypted, your
-private key (and the password that goes with it) is the only thing that can
-decrypt the content. If someone were to read your encrypted journal without
-having the private key needed to decrypt it, all the intruder would see is
-ASCII-armored encrypted text. </p>
+unauthorized access attempts even from the MySQL root account. Starting in a
+future version (possibly 0.6), RoboJournal will support RSA (and possibly AES)
+on-the-fly encryption for all journal content. </p>
 
-<h2 id="spellcheck">Question: Why is spellcheck disabled on the Linux version of
-RoboJournal?<br>
+<h2 id="spellcheck">Question: Why is spellcheck disabled on the Linux version
+of RoboJournal?<br>
 </h2>
 
 <p><em>Will Kraft's answer</em> (updated on 5/6/13):<br>
