@@ -36,26 +36,12 @@ qmake-qt4 CONFIG+=package robojournal.pro
 make %{?_smp_mflags}
 
 %install
-
-# install files manually because the rpm build process fails when "make install" is used. 
-
-# create directory tree in buildroot:
-mkdir -p %{buildroot}%{_bindir}/
-mkdir -p %{buildroot}%{_datadir}/
-mkdir -p %{buildroot}%{_datadir}/applications/
-mkdir -p %{buildroot}%{_datadir}/icons/
-mkdir -p %{buildroot}%{_mandir}/man7
-
-# install the files where they need to go
-cp -p robojournal %{buildroot}%{_bindir}/
-cp -p robojournal64.png %{buildroot}%{_datadir}/icons/
+  make INSTALL_ROOT=%{buildroot} install
 
 # UPDATE 6/17/13: Use desktop-file-install to process .desktop file in accordance with Fedora requirements.
 desktop-file-install                                    \
 --dir=${RPM_BUILD_ROOT}%{_datadir}/applications         \
 %{_builddir}/%{buildsubdir}/menus/robojournal.desktop
-
-cp -p %{_builddir}/%{buildsubdir}/robojournal.7* %{buildroot}%{_mandir}/man7/
 
 %files
 
@@ -69,3 +55,28 @@ cp -p %{_builddir}/%{buildsubdir}/robojournal.7* %{buildroot}%{_mandir}/man7/
 * Fri Jul 5 2013 Will Kraft <pwizard@gmail.com> 0.4.2-1
 - Initial release.
 
+######################################################################################################################
+# RoboJournal Doc Package (9/2/13)
+
+%package -n robojournal-doc
+BuildArch: noarch
+Summary: Documentation files for RoboJournal
+Requires: qt-assistant, robojournal
+
+%description -n robojournal-doc
+Documentation (compiled help file and collection file) for RoboJournal %{version}.
+
+%build -n robojournal-doc
+
+qcollectiongenerator %{_builddir}/robojournal-%{version}/doc/robojournal.qhcp -o %{_builddir}/robojournal-%{version}/doc/robojournal.qhc
+
+%install -n robojournal-doc
+
+mkdir -p %{buildroot}%{_defaultdocdir}/
+mkdir -p %{buildroot}%{_defaultdocdir}/robojournal
+cp -p %{_builddir}/robojournal-%{version}/doc/robojournal.qhc %{buildroot}%{_defaultdocdir}/robojournal
+cp -p %{_builddir}/robojournal-%{version}/doc/robojournal.qch %{buildroot}%{_defaultdocdir}/robojournal
+
+%files -n robojournal-doc
+%{_defaultdocdir}/robojournal/robojournal.qhc
+%{_defaultdocdir}/robojournal/robojournal.qch

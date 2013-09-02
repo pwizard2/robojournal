@@ -1,0 +1,6 @@
+?package(robojournal):\
+	needs="X11"\
+	section="Applications/Office"\
+	title="RoboJournal"\
+	icon32x32="/usr/share/pixmaps/robojournal-icon.xpm"\
+	command="/usr/bin/robojournal"
