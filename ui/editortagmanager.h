@@ -65,10 +65,18 @@ public:
     static int tag_count;
     static bool standalone_tagger;
 
+public slots:
+
+    void Revert_Off();
+
+    void Revert_On();
+
 signals:
 
     void Sig_UnlockTaggerApplyButton();
     void Sig_LockTaggerApplyButton();
+    void Sig_Revert_Off();
+    void Sig_Revert_On();
     
 private slots:
 
@@ -81,6 +89,8 @@ private slots:
     void on_StripTags_clicked();
 
     void query();
+
+
 
 
 

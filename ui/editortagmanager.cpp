@@ -217,6 +217,7 @@ void EditorTagManager::RevertTags(){
             }
 
             emit Sig_LockTaggerApplyButton();
+            emit Sig_Revert_Off();
 
             // use TagListDelegate to draw lines between list items
             ui->AvailableTags->setItemDelegate(new TagListDelegate(this));
@@ -248,6 +249,7 @@ void EditorTagManager::RevertTags(){
         }
 
         emit Sig_LockTaggerApplyButton();
+        emit Sig_Revert_Off();
     }
 }
 
@@ -363,12 +365,13 @@ void EditorTagManager::PrimaryConfig(){
     bar->addSeparator();
     bar->addWidget(ui->RevertTags);
 
-    // Disable Revert Tags button if this is a new entry because a new item has no tags to revert to.
-    if((!Buffer::editmode) && (standalone_tagger)){
-        ui->RevertTags->setDisabled(true);
-    }
+    // Bugfix (9/1/13): Disable Revert Tags button to start with. Signals and Slots should control when it should be enabled.
+    ui->RevertTags->setDisabled(true);
+
 
     connect(ui->GrepBox, SIGNAL(returnPressed()), this, SLOT(query()));
+    connect(this, SIGNAL(Sig_Revert_Off()), this,SLOT(Revert_Off()));
+    connect(this, SIGNAL(Sig_Revert_On()), this,SLOT(Revert_On()));
 
     // use TagListDelegate to draw lines between list items
     ui->AvailableTags->setItemDelegate(new TagListDelegate(this));
@@ -463,6 +466,9 @@ void EditorTagManager::on_AvailableTags_itemClicked(QTreeWidgetItem *item)
     }
 
     emit Sig_UnlockTaggerApplyButton();
+
+    if((Buffer::editmode) || (standalone_tagger))
+        emit Sig_Revert_On();
 }
 
 
@@ -492,7 +498,13 @@ void EditorTagManager::on_StripTags_clicked()
             }
             ui->AvailableTags->repaint();
 
+            // Emit signals that unlock the apply Button (if this is encased in a Tagger object) and unlock the Revert Tags button.
+            // 9/1/2013
             emit Sig_UnlockTaggerApplyButton();
+
+            if((Buffer::editmode) || (standalone_tagger))
+                emit Sig_Revert_On();
+
         }
     }
     else{
@@ -511,8 +523,10 @@ void EditorTagManager::on_StripTags_clicked()
             it++;
         }
 
-
+        // Emit signals that unlock the apply Button (if this is encased in a Tagger object) and unlock the Revert Tags button.
+        // 9/1/2013
         emit Sig_UnlockTaggerApplyButton();
+        emit Sig_Revert_On();
     }
 
 }
@@ -541,4 +555,14 @@ void EditorTagManager::query(){
     else{
         // call to filter search function goes here eventually.
     }
+}
+
+// ###################################################################################################
+void EditorTagManager::Revert_Off(){
+    ui->RevertTags->setDisabled(true);
+}
+
+// ###################################################################################################
+void EditorTagManager::Revert_On(){
+    ui->RevertTags->setDisabled(false);
 }

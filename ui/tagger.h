@@ -59,6 +59,9 @@ private:
     bool no_tags;
     EditorTagManager *et;
 
+  signals:
+
+    void Lock_Revert();
 
 };
 

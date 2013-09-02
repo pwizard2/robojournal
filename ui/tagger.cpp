@@ -125,6 +125,7 @@ void Tagger::PrimaryConfig(){
     // Allow communication between Tagger container class and EditorTagManager child widget
     connect(et, SIGNAL(Sig_UnlockTaggerApplyButton()), this, SLOT(UnlockApply()));
     connect(et,SIGNAL(Sig_LockTaggerApplyButton()), this, SLOT(LockApply()));
+    connect(this, SIGNAL(Lock_Revert()), et, SLOT(Revert_Off()));
 
 }
 
@@ -171,5 +172,7 @@ void Tagger::on_buttonBox_clicked(QAbstractButton *button)
 
         TaggingShared ts;
         ts.SaveTags(tag_data,Tagger::id_num);
+
+        emit Lock_Revert();
     }
 }
