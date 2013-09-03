@@ -53,7 +53,7 @@ desktop-file-install                                    \
 ######################################################################################################################
 # RoboJournal Documentation Package SPEC (9/2/13)
 
-%package -n doc
+%package doc
 BuildArch: noarch
 Summary: Documentation files for RoboJournal
 Requires: qt-assistant, robojournal
