@@ -21,9 +21,12 @@ runs on Windows and Linux.
 
 %setup -q -n %{name}-%{version}
 
-
 # UPDATE 6/17/13: validate the desktop file.
 desktop-file-validate %{_builddir}/%{name}-%{version}/menus/robojournal.desktop
+
+# Patch robojournal.pro to remove install instructions for Debian menu items we obviously don't need on Fedora.
+# This is necessary b/c rpmbuild fails if we leave them in the makefile --Will Kraft (9/2/13).
+patch %{_builddir}/%{name}-%{version}/robojournal.pro < %{_builddir}/%{name}-%{version}/pkg/fedora-rpmbuild.patch
 
 %build
 
@@ -37,6 +40,12 @@ make %{?_smp_mflags}
 desktop-file-install                                    \
 --dir=${RPM_BUILD_ROOT}%{_datadir}/applications         \
 %{_builddir}/%{buildsubdir}/menus/robojournal.desktop
+
+# UPDATE 9/2/13: install documentation by hand. 
+mkdir ${RPM_BUILD_ROOT}%{_datadir}/doc
+mkdir ${RPM_BUILD_ROOT}%{_datadir}/doc/robojournal
+cp %{_builddir}/%{buildsubdir}/doc/robojournal.qhc ${RPM_BUILD_ROOT}%{_datadir}/doc/robojournal/robojournal.qhc
+cp %{_builddir}/%{buildsubdir}/doc/robojournal.qch ${RPM_BUILD_ROOT}%{_datadir}/doc/robojournal/robojournal.qch
 
 %files
 
