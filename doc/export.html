@@ -15,7 +15,9 @@
 <div class="content">
 <img src="img/rj_doc_header.png" width="606" height="72"
 alt="RoboJournal Documentation" class="masthead"> 
+
 <p class="doc_version">for version 0.5</p>
+
 <div class="menu">
 <ul>
   <li onclick="javascript:history.go(-1)" class="backbutton">&lt; Back</li>
@@ -37,6 +39,7 @@ alt="RoboJournal Documentation" class="masthead">
   </li>
   <li><a href="#Single">Exporting a Single Entry</a></li>
   <li><a href="#Multi">Exporting the Entire Journal</a></li>
+  <li>Creating a Backup of Your Journal with MySQLDump</li>
 </ol>
 
 <h2 id="Overview">Overview</h2>
@@ -78,10 +81,8 @@ displayed with the selected entry already pre-loaded.</span></p>
 
 <h2 id="Single">Exporting a Single Entry</h2>
 
-<p>Unless you have selected a different page, the Export Content window should
-already be configured to export the entry you previously selected immediately
-before clicking the <strong>Export Content</strong> toolbar button on the
-RoboJournal main window. <img alt="Figure 3"
+<p>The Export Content window should already be configured to export the entry
+you previously selected on the RoboJournal main window: <img alt="Figure 3"
 src="img/screens/export_single.png" width="576" height="453"
 class="screenshot"><span class="caption">Figure 3: The <strong>Export single
 entry</strong> page allows you to export the current (selected) entry from the
@@ -94,6 +95,14 @@ click the <strong>Export</strong> button (as indicated by the red oval in
 Figure 3) to complete the process using the current options. The current
 options determine the type and properties of the file produced by the next
 export operation.</p>
+
+<p>Exporting a single entry is designed to be extremely simple since most
+configuration requirements are preset in advance. Generally, you only need to
+click the <strong>Export</strong> button (shown in Figure 3) after selecting
+the entry you wish to export from the Chronological Entry List on the
+RoboJournal main window.</p>
+
+<h3>Single Export Options</h3>
 
 <p>The following table explains each option on the <strong>Export single
 entry</strong> page in greater detail:</p>
@@ -109,36 +118,171 @@ entry</strong> page in greater detail:</p>
     </tr>
     <tr>
       <td class="left">Export Location</td>
-      <td class="right"></td>
+      <td class="right">The <strong>Export Location</strong> field lists the
+        path to the folder where the output file will be saved.</td>
     </tr>
     <tr>
       <td class="left">Export Format</td>
-      <td class="right"></td>
+      <td class="right">The Export Format options determine which type of file
+        is created during the export operation. The <strong>HTML</strong>
+        option produces a HTML4-compliant document that is viewable in any web
+        browser. The <strong>Plain text</strong> option produces a text file
+        that is compatibe with any text editor (e.g. Vim, Notepad, Emacs,
+        etc.). 
+
+        <p>For best results, you should use HTML output because it preserves
+        all document formatting (bold, italic, etc. text) while plain text
+        output does not. As such, the option you should choose depends on your
+        requirements. </p>
+      </td>
     </tr>
     <tr>
       <td class="left">Include entry date in filename</td>
-      <td class="right"></td>
+      <td class="right">This option appends the current date, in <em>day of
+        week_mm-dd-yyyy</em> format, to the filename. For best results, you
+        should leave this option enabled each time you export an entry.</td>
     </tr>
     <tr>
       <td class="left">Include journal in filename</td>
-      <td class="right"></td>
+      <td class="right">If checked, this option inserts the journal name at the
+        beginning of the Filename field (i.e. <em>journal name</em>_entry
+        title_entry date). You should leave this option enabled for best
+        results because the resulting filename makes it easy to group exported
+        entries from the same journal together and it provides a way for you to
+        easily reconize which journal an entry came from.</td>
     </tr>
     <tr>
       <td class="left">Allow custom filename</td>
-      <td class="right"></td>
+      <td class="right">When checked, this option allows you to directly edit
+        the <strong>Filename</strong> field's contents. You should enable this
+        feature if it is necessary to assign a custom filename to an output
+        file.</td>
     </tr>
   </tbody>
 </table>
 
 <h2 id="Multi">Exporting the Entire Journal</h2>
 
-<p>As previously stated, RoboJournal allows you to export an entire journal at
-once. This is much faster and produces better results than the only other
-alternative method (manually exporting the journal one entry at a time) because
-it loops through the entire journal and appends each entry to a single file.
-</p>
+<p>In addition to exporting entries one at a time, RoboJournal also allows you
+to export an entire journal at once. This task can be done in two different
+ways. RoboJournal can merge each entry into a single large file (the "original"
+method featured since version 0.3). In version 0.5, RoboJournal introduces a
+new bulk export method where a journal can be exported as a set of discrete
+files. This new feature produces the same results as manually exporting the
+journal one entry at a time but is much faster and more efficient. Each entry
+is saved individually and is placed with the others in a predetermined
+destination folder bearing the name of the journal and the export date. </p>
 
-<h2>Backing Up the Database</h2>
+<p>The bulk export feature is accessed by the following procedure:</p>
+<ol class="list">
+  <li>On the RoboJournal main window, select an entry from the Chronological
+    Entry List and click the <strong>Export Content</strong> toolbar button (as
+    shown in Figure 1). It does not matter which entry you choose if you intend
+    to export the entire journal.</li>
+  <li>The Export Content window is displayed. Select the <strong>Export entire
+    journal</strong> option from the list on the left side of the window to
+    display the appropriate options:<img alt="Figure"
+    src="img/screens/export_multi.png" width="576" height="453"
+    class="screenshot"><span class="caption">Figure x:</span></li>
+  <li>Adjust the options in the Export Location, Export Format, and Export
+    Options groups if necessary. Each of these settings and their effects are
+    addressed in-depth in the following section. The default configuration
+    produces a single HTML-based file (with the journal name and the export
+    date in the filename) with all journal entries arranged in descending
+  order.</li>
+  <li>Click the <strong>Export</strong> button to complete the operation.</li>
+</ol>
+
+<h3>Bulk Export Options</h3>
+
+<p>The following table contains a full explanation of all options that can be
+applied to bulk export operations and the effects each option has on the output
+file(s):</p>
+
+<table border="0">
+  <col>
+  <col>
+  <tbody>
+    <tr>
+      <td class="left">Filename<sup>*</sup></td>
+      <td class="right">The <strong>Filename</strong> field determines what
+        name the entry content is saved under on your hard drive.</td>
+    </tr>
+    <tr>
+      <td class="left">Export location</td>
+      <td class="right">This field determines where the output file is stored.
+        If the <strong>Keep individual entries separate</strong> option is
+        enabled, the output files are stored in a custom folder (bearing the
+        journal name and the export date) within the directory specified in the
+        <strong>Export location</strong> field. </td>
+    </tr>
+    <tr>
+      <td class="left">Export Format</td>
+      <td class="right">The Export Format options determine which type of
+        file(s() are created during the export operation. The
+        <strong>HTML</strong> option produces HTML4-compliant document(s) that
+        are viewable in any web browser. The <strong>Plain text</strong> option
+        produces text file(s) that are compatibe with any text editor (e.g.
+        Vim, Notepad, Emacs, etc.). 
+
+        <p>For best results, you should use HTML output because it preserves
+        all document formatting (bold, italic, etc. text) while plain text
+        output does not. As such, the option you should choose depends on your
+        requirements.</p>
+      </td>
+    </tr>
+    <tr>
+      <td class="left">Include export date<sup>*</sup></td>
+      <td class="right">If enabled, this option causes the current export date
+        to be included in the filename (i.e. sample_journal_<span
+        style="color:#ff0000">09-03-2013</span>.html). This feature is useful
+        for archival purposes since it indicates what a journal contained on a
+        specific date. </td>
+    </tr>
+    <tr>
+      <td class="left">Keep individual entries separate</td>
+      <td class="right">If checked, this option causes RoboJournal to export
+        the current journal as a set of discrete files, with one entry being
+        contained in each file. Enabling this option disables many other
+        settings on the <strong>Export entire journal</strong> page that are
+        only relevant to the task of creating a single export file. 
+
+        <p>The output files from the export operation are saved in a custom
+        folder contained within the current <strong>Export location</strong>
+        directory. Each file is marked with the journal name, its position in
+        the series, and the entry title (i.e.
+        sample_journal_1_of_15_sample_entry.html). </p>
+
+        <p>Exporting the journal as a series of individual entries always sorts
+        the content in ascending order, with the oldest entry being the first
+        item in the set. </p>
+      </td>
+    </tr>
+    <tr>
+      <td class="left">Allow custom filename<sup>*</sup></td>
+      <td class="right">When selected, this option allows you to directly edit
+        the <strong>Filename</strong> field's contents. You should enable this
+        feature if it is necessary to assign a custom filename to an output
+        file.</td>
+    </tr>
+    <tr>
+      <td class="left">Sort in ascending/descending order<sup>*</sup></td>
+      <td class="right">These two options determine the order in which entries
+        are merged into the output file. Arranging entries in ascending order
+        causes the oldest entry to be appended first while descending order
+        arranges the latest entry first. RoboJournal chooses the descending
+        arrangement by default because it assumes the most recent entries are
+        the most important to the reader (and should therefore be listed
+        first). </td>
+    </tr>
+  </tbody>
+</table>
+
+<p class="caption">* These options are locked (and their current settings are
+ignored) while the <strong>Keep individual enteries separate</strong> option is
+enabled because the affected options are non-applicable to multiple files.</p>
+
+<h2>Creating a Backup of Your Journal with MySQLDump</h2>
 
 <div id="footer_container">
 

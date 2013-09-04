@@ -35,19 +35,36 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QInputDialog>
+#include "core/settingsmanager.h"
+
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 QString ExportCreateDump::export_path;
 QString ExportCreateDump::mysqldump_exec;
 bool ExportCreateDump::use_compress;
 
 //################################################################################################
-void ExportCreateDump::HarvestData(){
+bool ExportCreateDump::HarvestData(){
 
     QString filename=ui->OutputPath->text() + QDir::separator() + ui->DumpFileName->text();
 
     ExportCreateDump::export_path=filename;
+
+#ifdef _WIN32
+    if(ui->DumpPath->text().isEmpty()){
+
+        QString dump=dumpBrowse("");
+        ui->DumpPath->setText(dump);
+
+        return false;
+    }
+#endif
+
     ExportCreateDump::mysqldump_exec=ui->DumpPath->text();
     ExportCreateDump::use_compress=ui->AutoCompress->isChecked();
+    return true;
 }
 
 //################################################################################################
@@ -81,12 +98,28 @@ QString ExportCreateDump::outputBrowse(QString current_dir)
 //################################################################################################
 QString ExportCreateDump::dumpBrowse(QString current_exec)
 {
-    QString exec=QFileDialog::getOpenFileName(this,tr("Select \'mysqldump\' Executable"),current_exec);
+
+    QString exec;
+
+#ifdef _WIN32
+    exec=QFileDialog::getOpenFileName(this,tr("Select \'mysqldump\' Executable"),current_exec,"MySQLDump (mysqldump.exe)");
+#endif
+
+#ifdef unix
+        exec=QFileDialog::getOpenFileName(this,tr("Select \'mysqldump\' Executable"),current_exec);
+#endif
 
     if(exec.isEmpty()){
         return current_exec;
     }
     else{
+
+#ifdef _WIN32
+        exec=QDir::toNativeSeparators(exec);
+        SettingsManager m;
+        m.Save_Mysqldump_Path(exec);
+#endif
+
         return exec;
     }
 }
@@ -117,8 +150,12 @@ bool ExportCreateDump::Create_SQL_Dump(QString filename, QString mysqldump_path,
 
 */
 
+    filename=QDir::toNativeSeparators(filename);
+
     QFile output(filename);
     QFile mysqldump(mysqldump_path);
+
+
 
     // Stop the dump process if the mysqldump executable does not exist (usually at /usr/bin/mysqldump on Unix/Linux)
     if(!mysqldump.exists()){
@@ -195,7 +232,9 @@ void ExportCreateDump::PrimaryConfig(){
 #endif
 
 #ifdef _WIN32
-    mysqldump_path="unset";
+
+    mysqldump_path=Buffer::mysqldump_path_win;
+
     gzip_available=false;
 
 #endif
@@ -211,7 +250,41 @@ void ExportCreateDump::PrimaryConfig(){
     QString filename=setFilename();
     ui->DumpFileName->setText(filename);
 
-    ui->OutputPath->setText(QDir::homePath());
+    QString homepath=QDir::homePath();
+
+    // check for the presence of a ~/Documents folder on Unix. If we find one, use it.
+#ifdef unix
+
+    QString documents=homepath+"/Documents";
+    QDir docs(documents);
+
+    if(docs.exists()){
+        homepath=documents;
+    }
+
+#endif
+
+    // add special Windows pathname instructions for Documents folder. Get windows version b/c XP doesn't have a Documents folder.
+#ifdef _WIN32
+
+    DWORD dwVersion = GetVersion();
+    DWORD dwMajorVersion = (DWORD)(LOBYTE(LOWORD(dwVersion)));
+
+    homepath=homepath.replace("/","\\");
+
+    //Windows XP and older
+    if(dwMajorVersion < 6){
+        homepath=homepath+QDir::separator()+"My Documents";
+    }
+    // Windows Vista & newer
+    else{
+        homepath=homepath+QDir::separator()+"Documents";
+    }
+
+
+#endif
+
+    ui->OutputPath->setText(homepath);
 
     ui->AllowCustomName->setChecked(false);
     ui->DumpFileName->setReadOnly(true);

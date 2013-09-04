@@ -1,0 +1,32 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@ 
+
+DESTDIR=$(CURDIR)/debian/robojournal
+
+# Enable Hardening
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+override_dh_auto_configure:
+	qmake robojournal.pro
+
+override_dh_auto_install:
+	install -m755 -d $(DESTDIR)/usr/share/pixmaps
+	install -m755 -d $(DESTDIR)/usr/share/applications
+	install -m755 -d $(DESTDIR)/usr/bin
+	install -m755 robojournal $(DESTDIR)/usr/bin
+	install -m644 icons/robojournal-icon.xpm $(DESTDIR)/usr/share/pixmaps
+	install -m644 menus/robojournal.desktop $(DESTDIR)/usr/share/applications
+
+override_dh_installchangelogs:
+	
+	# convert the xhtml changelog to text
+	html2text -style pretty changelog.xhtml > changelog
+	
+	dh_installchangelogs
+
+override_dh_compress:
+
+	# bypass the robojournal help files compression
+	dh_compress -X.qhc -X.qch

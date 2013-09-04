@@ -45,6 +45,25 @@ SettingsManager::SettingsManager(){
     fail_param="[FAILED]";
 }
 
+
+//###################################################################################################
+// Save the current path ($path) to MySQLDump. This is used exclusively on Windows so RoboJournal can
+// remember where MySQLdump is. Unnecessary on linux b/c mysqldump is always stored in /usr/bin. --Will Kraft, (9/2/13).
+void SettingsManager::Save_Mysqldump_Path(QString path){
+
+    QString config_path=QDir::homePath()+ QDir::separator() + ".robojournal"+ QDir::separator() + "robojournal.ini";
+    QSettings settings(config_path,QSettings::IniFormat);
+
+    settings.beginGroup("Behavior");
+    settings.setValue("mysqldump_path_win",path);
+    settings.endGroup();
+
+    // Save and reload config after making changes because this function is called during app runtime.
+    settings.sync();
+    LoadConfig(false);
+}
+
+
 //###################################################################################################
 // Saves the current splitter position from the MainWindow. This allows someone to customize it once
 // and have it stay that way. This should only be called when the mainwindow closes.
@@ -559,6 +578,7 @@ void SettingsManager::LoadConfig(bool startup){
         Buffer::sqlite_default=settings.value("SQLite/sqlite_default").toString();
         Buffer::sqlite_favorites=settings.value("SQLite/sqlite_favorites").toStringList();
         Buffer::mw_splitter_size=settings.value("Behavior/mw_splitter_position").toByteArray(); // added 6/21/13
+        Buffer::mysqldump_path_win=settings.value("Behavior/mysqldump_path_win").toString(); // added 9/2/13
 
         if(reload){
             LoadConfig(false);

@@ -22,6 +22,7 @@ public:
     void SaveMainWindowSize(QByteArray geo);
     void SaveNagPreferences();
     void SaveSplitterPos(QByteArray value);
+    void Save_Mysqldump_Path(QString path);
 
 private:
     //extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;

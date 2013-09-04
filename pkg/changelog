@@ -1,0 +1,27 @@
+robojournal (0.4.2-1) experimental; urgency=low
+
+  * New Upstream Release
+
+robojournal (0.4.1-1) experimental; urgency=low
+
+  * New Upstream Release
+  * Add build-depends on libqtwebkit-dev
+  * Add new package robojournal-doc
+  * [785b5c4] Enable Hardening options and bump compat level to 9
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Thu, 18 Apr 2013 10:37:41 +0530
+
+robojournal (0.3-1) experimental; urgency=low
+
+  * [e315bd3] Imported Upstream version 0.3
+  * [5649968] Add Build Dependency on libx11-dev
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Thu, 13 Sep 2012 18:24:00 +0530
+
+robojournal (0.2.1-1) unstable; urgency=low
+
+  * Initial release (Closes: #671020)
+  * [f864e8e] add menu with proper xpm icon
+  * [238602a] Imported Upstream version 0.2.1
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Tue, 15 May 2012 18:53:20 +0530

@@ -21,41 +21,31 @@ runs on Windows and Linux.
 
 %setup -q -n %{name}-%{version}
 
-# Update 6/17/13: Patch the project file to prevent the documentation from being built. That should only
-# happen when building the robojournal-doc package.
-patch robojournal.pro < pkg/package-config.patch
-
 # UPDATE 6/17/13: validate the desktop file.
 desktop-file-validate %{_builddir}/%{name}-%{version}/menus/robojournal.desktop
 
-%build
+# Patch robojournal.pro to remove install instructions for Debian menu items we obviously don't need on Fedora.
+# This is necessary b/c rpmbuild fails if we leave them in the makefile --Will Kraft (9/2/13).
+patch %{_builddir}/%{name}-%{version}/robojournal.pro < %{_builddir}/%{name}-%{version}/pkg/fedora-rpmbuild.patch
 
-# 6/1/13: Removed Fedora build patch since it is no longer needed.
+%build
 
 qmake-qt4 CONFIG+=package robojournal.pro
 make %{?_smp_mflags}
 
 %install
-
-# install files manually because the rpm build process fails when "make install" is used. 
-
-# create directory tree in buildroot:
-mkdir -p %{buildroot}%{_bindir}/
-mkdir -p %{buildroot}%{_datadir}/
-mkdir -p %{buildroot}%{_datadir}/applications/
-mkdir -p %{buildroot}%{_datadir}/icons/
-mkdir -p %{buildroot}%{_mandir}/man7
-
-# install the files where they need to go
-cp -p robojournal %{buildroot}%{_bindir}/
-cp -p robojournal64.png %{buildroot}%{_datadir}/icons/
+  make INSTALL_ROOT=%{buildroot} install
 
 # UPDATE 6/17/13: Use desktop-file-install to process .desktop file in accordance with Fedora requirements.
 desktop-file-install                                    \
 --dir=${RPM_BUILD_ROOT}%{_datadir}/applications         \
 %{_builddir}/%{buildsubdir}/menus/robojournal.desktop
 
-cp -p %{_builddir}/%{buildsubdir}/robojournal.7* %{buildroot}%{_mandir}/man7/
+# UPDATE 9/2/13: install documentation by hand. 
+mkdir ${RPM_BUILD_ROOT}%{_datadir}/doc
+mkdir ${RPM_BUILD_ROOT}%{_datadir}/doc/robojournal
+cp %{_builddir}/%{buildsubdir}/doc/robojournal.qhc ${RPM_BUILD_ROOT}%{_datadir}/doc/robojournal/robojournal.qhc
+cp %{_builddir}/%{buildsubdir}/doc/robojournal.qch ${RPM_BUILD_ROOT}%{_datadir}/doc/robojournal/robojournal.qch
 
 %files
 
@@ -66,6 +56,20 @@ cp -p %{_builddir}/%{buildsubdir}/robojournal.7* %{buildroot}%{_mandir}/man7/
 
 %changelog
 
-* Thu Apr 25 2013 Will Kraft <pwizard@gmail.com> 0.4.1-1
+* Fri Jul 5 2013 Will Kraft <pwizard@gmail.com> 0.4.2-1
 - Initial release.
 
+######################################################################################################################
+# RoboJournal Documentation Package SPEC (9/2/13)
+
+%package doc
+BuildArch: noarch
+Summary: Documentation files for RoboJournal
+Requires: qt-assistant, robojournal
+
+%description doc
+Documentation (compiled help file and collection file) for RoboJournal %{version}.
+
+%files doc
+%{_defaultdocdir}/robojournal/robojournal.qhc
+%{_defaultdocdir}/robojournal/robojournal.qch

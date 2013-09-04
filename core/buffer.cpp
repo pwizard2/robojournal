@@ -149,6 +149,8 @@ QByteArray Buffer::mw_splitter_size;
 bool Buffer::use_date_override;
 QDateTime Buffer::override_date;
 
+// Hold stored mysqldump location for Windows builds only. Linux/Unix always uses /usr/bin/mysqldump so this is not necessary (9/2/13).
+QString Buffer::mysqldump_path_win;
 
 Buffer::Buffer()
 {

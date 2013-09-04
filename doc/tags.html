@@ -360,7 +360,7 @@ can undo this operation. The following procedure assumes the Manage Tags window
 is displayed or the Tag Management Pane is visible in the Editor:</p>
 <ol class="list">
   <li>Click the <strong>Strip Tags</strong> toolbar button (circled in Figure
-    x):<img alt="Figure 12" src="img/screens/strip_tags1.png"
+    12):<img alt="Figure 12" src="img/screens/strip_tags1.png"
     class="screenshot" height="397" width="333"><span class="caption">Figure
     12: The <span style="font-weight: bold;">Strip Tags </span>toolbar button
     </span></li>
@@ -369,7 +369,9 @@ is displayed or the Tag Management Pane is visible in the Editor:</p>
     <strong>No</strong> to abort.</li>
   <li>If you chose to continue the operation, all tags are now unchecked:<img
     alt="Figure" src="img/screens/strip_tags2.png" class="screenshot"
-    height="397" width="333"><span class="caption">Figure y</span> 
+    height="397" width="333"><span class="caption">Figure 13: The strip tags
+    operation removes all tags from the current entry. Clicking the
+    <strong>Apply</strong> button saves the changes.</span> 
     <p>Steps 4–5 are only applicable when you are using the standalone Manage
     Tags window. If you are completing this procedure through the Editor's Tag
     Management Pane, any changes to the tag data are not finalized until you
@@ -387,20 +389,20 @@ is displayed or the Tag Management Pane is visible in the Editor:</p>
 <h2 id="tag_reminder">Tag Reminder Window</h2>
 
 <p>RoboJournal takes additional measures (starting in version 0.4.1) to ensure
-that all entries in your journal are properly tagged since untagged entries are
-effectively invisible to tag searches and can only be found through pattern
+that all entries in your journal are properly tagged because untagged entries
+are invisible to tag searches and therefore can only be found through pattern
 matching. The Tag Reminder window is essentially a "nag screen" that asks you
 to tag existing entries at the start of each session. The purpose of this
 feature is to encourage you to use the tagging system; the notification is
 deliberately designed to be annoying in the hopes that you will soon get in the
-habit of tagging new entries immediately after you write them in order to keep
-the Tag Reminder window from being displayed at all. </p>
+habit of tagging new entries immediately after you write them in order to
+prevent the Tag Reminder window from being displayed at all. </p>
 
 <p>If RoboJournal finds any untagged entries, it adds them to a list and
 displays them on the Tag Reminder window immediately after login (the Tag
 Reminder window is <em>not</em> displayed if RoboJournal fails to find any
-untagged entries):<img alt="Figure 15" src="img/screens/tag_reminder.png"
-class="screenshot" height="396" width="476"><span class="caption">Figure 15:
+untagged entries):<img alt="Figure 14" src="img/screens/tag_reminder.png"
+class="screenshot" height="396" width="476"><span class="caption">Figure 14:
 The Tag Reminder window is shown only if RoboJournal detects untagged
 entries.</span></p>
 
@@ -411,32 +413,32 @@ that were tagged at some point and have subsequently had their tag data cleared
 because RoboJournal assumes you had a reason for clearing the previous tag
 data. This search covers all entries in the journal from newest to oldest and
 ignores the current entry range limitation. As such, you may be asked to tag
-old entries that are no longer visible because they are out of the entry range
-you specified in RoboJournal Preferences. </p>
+very old entries that are outside the visible entry range you specified in
+RoboJournal Preferences. </p>
 
 <p>You can click the <strong>Close</strong> button to postpone the tagging
 procedure. This hides the Tag Reminder window for the remainder of the session
 but it will be displayed again during the next login. You can
-<em>permanently</em> override the Tag Reminder window by unchecking the
+<em>permanently</em> suppress the Tag Reminder window by unchecking the
 <strong>Display this notification during the next login (if necessary)</strong>
 checkbox before clicking the <strong>Close</strong> button. This prevents the
-Tag Reminder window from being displayed again even if the journal still
-contains untagged entries at the next login (you can re-enable the Tag Reminder
+Tag Reminder window from being displayed ever again even if the journal still
+contains untagged entries. (you can also suppress or re-enable the Tag Reminder
 window through <a href="preferences.html#global_preferences">RoboJournal
 Preferences</a> at any time).</p>
 
 <p>Alternatively, you can select any entry from the list and click the
-<strong>Manage Tags</strong> button to apply tags to it (consult the "<a
-href="#Accessing">Accessing the Tagging Interface (Standalone)</a>" section).
-The <strong>Entry Title</strong> column in the list gives the title of an
-untagged entry while the value in the <strong>Date</strong> column provides a
-point of reference for the entry in question. After you tag each entry, the
-list automatically refreshes and the current count (<strong><em>x</em> entries
-need to be tagged</strong>.) indicator is reduced by one. The Tag Reminder
-window automatically closes once the count indicator reaches zero. Once
-cleared, the Tag Reminder window will not be displayed at the start of the next
-session (unless you introduce more untagged entries during the current
-session). </p>
+<strong>Manage Tags</strong> button to apply tags to it (consult Figure 2 in
+the "<a href="#Accessing">Accessing the Tagging Interface (Standalone)</a>"
+section for details). The <strong>Entry Title</strong> column in the list gives
+the title of an untagged entry while the value in the <strong>Date</strong>
+column provides a point of reference for the entry in question. After you tag
+each entry, the list automatically refreshes and the current count
+(<strong><em>x</em> entries need to be tagged</strong>.) indicator is reduced
+by one. The Tag Reminder window automatically closes after you have tagged
+every item on the list. Once cleared, the Tag Reminder window will not be
+displayed at the start of the next session (unless you introduce more untagged
+entries during the current session). </p>
 
 <div id="footer_container">
 

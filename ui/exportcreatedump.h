@@ -40,7 +40,7 @@ public:
     explicit ExportCreateDump(QWidget *parent = 0);
     ~ExportCreateDump();
     bool Create_SQL_Dump(QString filename, QString mysqldump_path, bool compress);
-    void HarvestData();
+    bool HarvestData();
 
     static QString export_path;
     static QString mysqldump_exec;
