@@ -54,11 +54,11 @@ int main(int argc, char *argv[])
 
     for(int i=0; i<args.length(); i++){
         QString next_arg=args.at(i);
+        next_arg=next_arg.replace("/","-");
+
 
         // Check to see if Robojournal should override the date for this session. FYI: This feature can be dangerous (8/23/13).
         if(date.exactMatch(next_arg)){
-
-
 
             QString date=next_arg.section("",17,next_arg.length());
 
