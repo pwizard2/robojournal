@@ -16,7 +16,9 @@
 <div class="content">
 <img src="img/rj_doc_header.png" alt="RoboJournal Documentation"
 class="masthead" height="72" width="606"> 
+
 <p class="doc_version">for version 0.5</p>
+
 <div class="menu">
 <ul>
   <li onclick="javascript:history.go(-1)" class="backbutton">&lt; Back</li>
@@ -64,7 +66,7 @@ displayed:</p>
 
 <p><img alt="RoboJournal Main Window in Default State"
 src="img/screens/mainwindow_default.png" class="screenshot" height="589"
-width="753"><span class="caption_wide">Figure 1: RoboJournal's main window in
+width="750"><span class="caption_wide">Figure 1: RoboJournal's main window in
 "Default State".</span></p>
 
 <p>The initial configuration of the main window (immediately after starting the
@@ -308,7 +310,7 @@ it far easier to keep track of and work with multiple databases.</p>
 <p>To initiate a new connection, click the Connect toolbar button (indicated by
 the red circle in Figure 3). The New Connection dialog is displayed:<br>
 <img alt="Figure 3" src="img/screens/login1.png" class="screenshot"
-height="590" width="753"><span class="caption_wide">Figure 3: New Connection
+height="590" width="752"><span class="caption_wide">Figure 3: New Connection
 Dialog (in MySQL mode).</span> </p>
 
 <p>The New Connection dialog in RoboJournal 0.5 and later consists of a tabbed
@@ -418,7 +420,7 @@ disconnecting first.</p>
 circle in Figure 5) to proceed:</p>
 
 <p><img alt="Figure 5" src="img/screens/mw_disconnect1.png" class="screenshot"
-height="589" width="753"><span class="caption">Figure 5: The
+height="589" width="750"><span class="caption">Figure 5: The
 <strong>Disconnect</strong> toolbar button immediately terminates the current
 connection.</span></p>
 
@@ -444,15 +446,19 @@ close to reaching it. Therefore, feel free to write as often as you want. </p>
   <li>Click the <strong>Write in Journal</strong> toolbar button on the
     RoboJournal main window.<img alt="Figure 6"
     src="img/screens/mw_new_entry.png" class="screenshot" height="589"
-    width="753"><span class="caption">Figure 6: Click the <strong>Write in
+    width="750"><span class="caption">Figure 6: Click the <strong>Write in
     Journal</strong> button (indicated in red).</span></li>
   <li>The Editor dialog is displayed:<img alt="Figure 6"
     src="img/screens/editor_new_entry.png" class="screenshot" height="518"
     width="656"><span class="caption">Figure 7: RoboJournal Editor dialog in
     Write (new entry) Mode.</span></li>
-  <li>Enter a title for this entry in the <strong>Entry Title</strong>
-  field.</li>
-  <li>Write the body text for this entry in the large text area. 
+  <li>Enter a title for this entry in the <strong>Entry Title</strong> field.
+    As you type, the Editor window title bar changes from "Untitled Entry" to
+    match whatever text the <strong>Entry Title</strong> field currently
+    contains.</li>
+  <li>Write the body text for this entry in the large text area. Paragraphs
+    should be separated by whitespace (one empty line). Indenting the first
+    line of each paragraph is optional. 
 
     <div class="FYI">
     <strong>FYI:</strong> The <strong>Character count</strong> and
@@ -463,17 +469,16 @@ close to reaching it. Therefore, feel free to write as often as you want. </p>
     characters must be removed before the entry can be saved).</div>
   </li>
   <li>When finished, click the <strong>Save this Entry</strong> button
-    (indicated by the circled toolbar icon in the following screenshot):<img
-    alt="Figure 8" src="img/screens/editor_new_entry2.png" class="screenshot"
-    height="518" width="656"><span class="caption">Figure 8: The <strong>Save
-    this Entry</strong> toolbar button (button labels have been disabled in
-    RoboJournal Preferences).</span></li>
+    (indicated by the circled toolbar icon in Figure 8):<img alt="Figure 8"
+    src="img/screens/editor_new_entry2.png" class="screenshot" height="518"
+    width="656"><span class="caption">Figure 8: The <strong>Save this
+    Entry</strong> toolbar button.</span></li>
   <li>RoboJournal displays a confirmation message ("<em>entry_title</em>" was
     successfully added to your journal) if the save was successful.</li>
   <li>The new entry is added to the Chronological Entry List. If desired, you
     can click on the new entry to display its contents in the Entry Output
     Pane:<img alt="Figure 9" src="img/screens/mw_new_entry_2.png"
-    class="screenshot" height="589" width="753"><span class="caption">Figure 9:
+    class="screenshot" height="589" width="750"><span class="caption">Figure 9:
     The new entry is displayed in the Chronological Entry List.</span></li>
 </ol>
 
@@ -495,7 +500,7 @@ been saved.</p>
   <li>Select the entry that is to be modified by clicking its node in the
     Chronological Entry List (as shown in the large red oval in Figure 10).
     <img alt="Figure 10" src="img/screens/mw_modify1.png" class="screenshot"
-    height="584" width="750"><span class="caption">Figure 10: Selecting the
+    height="589" width="750"><span class="caption">Figure 10: Selecting the
     entry to be modified.</span></li>
   <li>Click the <strong>Modify Entry</strong> toolbar button (indicated by the
     small red circle in Figure 10). You can visually distinguish the
@@ -525,7 +530,7 @@ been saved.</p>
   <li>If the save was successful, the updated entry is displayed in the Entry
     Output Pane on the RoboJournal main window. <span class="caption"><img
     alt="Figure 13" src="img/screens/mw_modify2.png" class="screenshot"
-    height="584" width="750">Figure 13: The updated entry is shown immediately
+    height="589" width="750">Figure 13: The updated entry is shown immediately
     after the edit process is completed.</span></li>
 </ol>
 
@@ -542,15 +547,15 @@ back up your journal on a regular basis for this reason alone.</p>
     Entry List (shown in the large oval area in Figure 14). </li>
   <li>Click the <strong>Delete Entry</strong> toolbar button (indicated by the
     small circle in Figure 14). <img alt="Figure 14"
-    src="img/screens/mw_delete1.png" class="screenshot" height="584"
+    src="img/screens/mw_delete1.png" class="screenshot" height="589"
     width="750"><span class="caption">Figure 14: Select the entry you wish to
     delete and click the <strong>Delete Entry</strong> button.</span></li>
   <li>A confirmation dialog is displayed as a safety measure. This dialog is
     your last opportunity to cancel the delete operation. Click the
     <strong>OK</strong> button to approve the delete operation or click the
     <strong>Cancel</strong> button to abort. <img alt="Figure 15"
-    src="img/screens/mw_delete2.png" class="screenshot" height="585"
-    width="750"><span class="caption">Figure 15: A confirmation dialog is
+    src="img/screens/mw_delete2.png" class="screenshot" height="589"
+    width="749"><span class="caption">Figure 15: A confirmation dialog is
     displayed if safety protocols are enabled. This is your last chance to
     abort. </span> 
 
@@ -566,7 +571,7 @@ back up your journal on a regular basis for this reason alone.</p>
   <li>You are returned to the main window regardless of your decision in the
     previous step. If you chose to continue with the delete operation, the
     previously-selected entry is gone: <img alt="Figure 16"
-    src="img/screens/mw_delete3.png" class="screenshot" height="584"
+    src="img/screens/mw_delete3.png" class="screenshot" height="589"
     width="750"><span class="caption">Figure 16: The entry you deleted is no
     longer displayed in the Chronological Entry List.</span></li>
 </ol>
@@ -580,7 +585,7 @@ to browse adjacent entries in the current journal if you wish to read it in a
 chronological fashion. This is accomplished by clicking the <strong>Previous
 Entry</strong> and <strong>Next Entry</strong> toolbar buttons on the
 RoboJournal main window:<img alt="Figure 17"
-src="img/screens/mw_navigation1.png" class="screenshot" height="585"
+src="img/screens/mw_navigation1.png" class="screenshot" height="589"
 width="750"><span class="caption">Figure 17: The <strong>Previous
 Entry</strong> and <strong>Next Entry</strong> buttons allow easy sequential
 browsing.</span></p>
@@ -598,10 +603,10 @@ because the latest entry is already being displayed). </p>
 <p>You can use the <strong>Latest Entry</strong> toolbar button (indicated by
 the red circle in Figure 18) to immediately jump to the most recent entry in
 the database:<img alt="Figure 18" src="img/screens/mw_navigation2.png"
-class="screenshot" height="585" width="750"><span class="caption">Figure 18:
-You can use the <strong>Latest Entry</strong> button to display the newest
-entry at any time. RoboJournal can also be configured to display the latest
-entry by default.</span></p>
+class="screenshot" height="589" width="750"><span class="caption">Figure 18:
+Clicking the <strong>Latest Entry</strong> button always displays the first
+(most recent) item in the Chronological Entry List. RoboJournal can also be
+configured to display the latest entry by default.</span></p>
 
 <h2 id="tag_entry">Tagging an Entry</h2>
 

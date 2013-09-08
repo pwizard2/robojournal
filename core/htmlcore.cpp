@@ -122,6 +122,9 @@ QString HTMLCore::Do_Post_Processing(QString rawtext, int wordcount){
         // replace 2 >= adjacent dashes with a clean mdash
         body=body.replace(QRegExp("\\s*-{2,}\\s*"),"&mdash;");
 
+        //recognize and process tab stops (new for 0.5). --Will Kraft, 9/8/13.
+        body=body.replace("\t","&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+
 
 
         //use En Dash for digits

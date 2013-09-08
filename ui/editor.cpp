@@ -601,6 +601,9 @@ void Editor::LoadEntry(QString entry){
         body=body.replace("&rsquo;","\'");
         body=body.replace(QRegExp("</?sup>"),"");
 
+        //0.5 bugfix (9/8/13) Convert nbsp back to tab stops.
+        body=body.replace(QRegExp("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"), "\t");
+
         ui->EntryTitle->setText(list.at(0));
 
         if(Buffer::use_spellcheck){
