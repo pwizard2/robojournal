@@ -391,8 +391,8 @@ p.footnote{
 	font-family: inherit;
 	font-size: 90%;
 	font-weight: normal;
-	width: 85%;
 	display: block;
+	margin-left: 20px;
 }
 
 #footer_container {
