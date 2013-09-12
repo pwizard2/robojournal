@@ -10,6 +10,6 @@
 # and robojournal.qhc) should be installed to /usr/share/doc/robojournal-[version] 
 # (i.e. /usr/share/doc/robojournal-0.4.1). 
 
-qcollectiongenerator doc/robojournal.qhcp -o doc/robojournal.qhc
+/usr/bin/qcollectiongenerator doc/robojournal.qhcp -o doc/robojournal.qhc
 chmod 644 doc/robojournal.qch
 chmod 644 doc/robojournal.qhc

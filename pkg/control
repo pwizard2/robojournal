@@ -3,7 +3,7 @@ Section: x11
 Priority: extra
 Maintainer: Debian KDE Extras Team <pkg-kde-extras@lists.alioth.debian.org>
 Uploaders: Ritesh Raj Sarraf <rrs@debian.org>
-Build-Depends: debhelper (>= 9.20120312), libqt4-dev (>= 4:4.7.0), libqtwebkit-dev, qt4-dev-tools, libx11-dev, html2text
+Build-Depends: debhelper (>= 9.20120312), libqt4-dev (>= 4:4.7.0), libqtwebkit-dev, qt4-dev-tools, libx11-dev, html2text, perl
 Standards-Version: 3.9.2
 Homepage: http://sourceforge.net/projects/robojournal
 Vcs-Git: git://git.debian.org/pkg-kde/kde-extras/robojournal.git

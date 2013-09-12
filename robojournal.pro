@@ -139,8 +139,8 @@ unix {
 
     # Tweak for development/debugging: (3/31/13)
     # It is sometimes necessary to temporarily comment out the QMAKE_POST_LINK (ln 146) while compiling
-    # in Qt Creator b/c it may complain about doc/compile_doc.sh being missing during each build.
-    QMAKE_POST_LINK += bash doc/compile_doc.sh
+    # in Qt Creator b/c it may complain about doc/compile_doc.pl being missing during each build.
+    QMAKE_POST_LINK += perl doc/compile_doc.pl
 
     # set the final destinations of all install files
     

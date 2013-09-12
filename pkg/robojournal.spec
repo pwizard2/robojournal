@@ -7,7 +7,7 @@ Group:              Applications/Productivity
 Source:             http://sourceforge.net/projects/robojournal/files/Source/%{name}-%{version}.tar.gz
 URL:                http://sourceforge.net/projects/robojournal
 
-BuildRequires:      qt-mysql, qt-devel, qt-webkit-devel, desktop-file-utils
+BuildRequires:      qt-mysql, qt-devel, qt-webkit-devel, desktop-file-utils, perl
 Requires:           qt, qt-mysql, qt-webkit
 
 %description
