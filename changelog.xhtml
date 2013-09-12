@@ -103,19 +103,26 @@
 <div class="even">
 <h2>Version 0.4.2</h2>
 
-<p>Release Date: 7/5/13</p>
+<p>Release Date: 9/13/13</p>
 
 <p>The following changes were made in this release:</p>
 <ol>
   <li>Split documentation into a separate <em>robojournal-doc</em> package on
     Debian-based Linux (including Ubuntu, Linux Mint, <em>et al</em>) because
     including documentation in each architecture-specific package is redundant
-    when the documentation itself is platform-agnostic.</li>
-  <li><span class="added">Added</span> packaging support for Fedora Linux 
+    when the documentation itself is platform-agnostic.
+    <ol>
+      <li>Fixed typos and minor corrections to documentation (9/2/13).</li>
+    </ol>
+  </li>
+  <li><span class="added">Added</span> "pkg" folder for Linux package mangement
+    files. 
     <ol>
       <li>Removed Fedora build patch since it is no longer needed (6/1/13).</li>
-      <li><span class="added">Added</span> a <em>pkg</em> folder in the source
-        tree for the Fedora SPEC files.</li>
+      <li><span class="added">Added</span> SPEC file for creating Fedora ≥18
+        packages.</li>
+      <li><span class="added">Added</span> control file and everything else
+        required to build Debian/Ubuntu packages (9/2/13).</li>
     </ol>
   </li>
   <li>Temporarily disabled spellcheck on Linux-based systems to prevent a
@@ -123,6 +130,13 @@
   <li>Removed Fedora patch question/logic from Linux compile script
   (6/1/13).</li>
   <li>Removed caps-lock detection code from the DBLogin class (6/1/13).</li>
+  <li><span class="bugfix">Bugfix:</span> Fixed "ugly 16x16 icon" bug on
+    Windows 7. This bug caused an overstretched icon to be used on the ALT+TAB
+    window list and similar places. Backported from RoboJournal 0.5 source
+    (9/11/13).</li>
+  <li><span class="bugfix">Bugfix:</span> RoboJournal no longer displays
+    redundant error messages if the documentation files are missing or
+    installed incorrectly (9/11/13).</li>
 </ol>
 </div>
 
