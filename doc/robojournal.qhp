@@ -9,8 +9,7 @@
      <filterSection>
      
          <filterAttribute>RoboJournal</filterAttribute>
-
-         
+        
          <toc>
 			 <section title="RoboJournal Documentation" ref="index.html">
 				<section title="What is RoboJournal?" ref="index.html#what_is_robojournal"/>

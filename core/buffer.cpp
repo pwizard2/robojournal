@@ -139,6 +139,9 @@ QString Buffer::reminder_choice;
 QString Buffer::reminder_title;
 bool Buffer::show_reminder_next_time;
 
+// new for 0.4.2
+QByteArray Buffer::mw_splitter_size; // former 0.5 code but backported on 9/13/13.
+
 Buffer::Buffer()
 {
 

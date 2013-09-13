@@ -41,6 +41,21 @@
 SettingsManager::SettingsManager(){}
 
 //###################################################################################################
+// Saves the current splitter position from the MainWindow. This allows someone to customize it once
+// and have it stay that way. This should only be called when the mainwindow closes.
+// New feature for 0.5-- Will Kraft,  6/21/13. Backported to 0.4.2 (9/13/13).
+
+void SettingsManager::SaveSplitterPos(QByteArray value){
+
+    QString config_path=QDir::homePath()+ QDir::separator() + ".robojournal"+ QDir::separator() + "robojournal.ini";
+    QSettings settings(config_path,QSettings::IniFormat);
+
+    settings.beginGroup("Behavior");
+    settings.setValue("mw_splitter_position", value);
+    settings.endGroup();
+}
+
+//###################################################################################################
 // Save the behavior if the user opts to disable the tagging nag screen. This function should NOT
 // be called from the preferences window!  New for 0.4.1; 2/26/13
 void SettingsManager::SaveNagPreferences(){
@@ -523,6 +538,9 @@ void SettingsManager::LoadConfig(){
         // 0.4.1 specific
         Buffer::name_in_titlebar=settings.value("Behavior/name_in_titlebar").toBool();
         Buffer::show_untagged_reminder=settings.value("Behavior/show_untagged_reminder").toBool();
+
+        // 0.4.2 ( backported to 0.4.2 on 9/13/13)
+        Buffer::mw_splitter_size=settings.value("Behavior/mw_splitter_position").toByteArray(); // added 6/21/13
 
         if(reload){
             LoadConfig();

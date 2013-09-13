@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <title>RoboJournal ChangeLog</title>
   <meta content="Will Kraft" name="author" />
@@ -137,7 +137,17 @@ Perl-based solution. If the documentation fails to build correctly on
 the first attempt, the new build script tries several different
 executables until it finds one that works. This fix is necessary
 because Qmake often tries to use Qt5 tools on systems that have both
-Qt4 and Qt5 installed. <br />
+Qt4 and Qt5 installed.
+  </li>
+    <li><span class="bugfix">Bugfix:</span> The vertical splitter bar on
+the MainWindow now remembers its position between program sessions. The
+splitter only reverts to its default 50/50 position if the saved
+position data is unavailable.
+  </li>
+    <li><span class="added">Added</span> description/explanation of new features to <i>RoboJournal Documentation</i>.
+    <ol>
+      <li><span class="bugfix">Bugfix:</span> Documentation version numbers are no longer hardcoded in the help project file and collection file.</li>
+    </ol>
   </li>
 </ol>
 </div>

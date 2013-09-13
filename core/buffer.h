@@ -165,6 +165,9 @@ public:
 
     static bool show_reminder_next_time; // save value of the checkbox on the Tag Reminder Window.
 
+    // new for 0.4.2
+    static QByteArray mw_splitter_size;
+
 };
 
 #endif // BUFFER_H

@@ -243,7 +243,7 @@ void Tagger::TagAggregator(){
     QIcon tagicon(":/icons/tag_red.png");
     int count=0;
 
-    for(int z=1; z < tag_list.size(); z++){
+    for(int z=0; z < tag_list.size(); z++){
         QString text=tag_list[z];
         ui->TagChooser->addItem(tagicon,text);
         count++;
