@@ -1927,8 +1927,13 @@ void MainWindow::Connect(){
         QString msg="Date override is enabled; all new entries created during this session will artificially use " +
                 Buffer::override_date.toString("MM-dd-yyyy") + " as their date of origin.";
 
+        if(Buffer::no_safety)
+            msg=msg + "<br><br><b>Warning:</b> Normal safety protocols are disabled. To prevent database corruption, <span style=\"text-decoration: "
+                    "underline\">never</span> use the date override to insert a new entry at a future date or prior to the most recent item in the timeline.";
+
+
         // Bugfix 9/12/13: Disable New Entries as safety protocol if adding them would corrupt the database.
-        if(Buffer::override_date < lastdate){
+        if((Buffer::override_date < lastdate) && (!Buffer::no_safety)){
             msg="RoboJournal's safety protocols prevent you from adding new entries "
                     "during this session because the date override value you specified (" + Buffer::override_date.toString("MM-dd-yyyy") +
                     ") predates the most recent entry in the timeline.<br><br>This restriction is necessary because adding new entries in the "
@@ -1939,7 +1944,7 @@ void MainWindow::Connect(){
         }
 
         // Bugfix 9/12/13: Prevent date override misuse (future dates) from corrupting the database.
-        if(Buffer::override_date > QDate::currentDate()){
+        if((Buffer::override_date > QDate::currentDate()) && (!Buffer::no_safety)){
             msg="RoboJournal's safety protocols prevent you from adding new entries "
                     "during this session because the date override value you specified (" + Buffer::override_date.toString("MM-dd-yyyy") +
                     ") is in the future.<br><br>This restriction is necessary because adding new entries in the "

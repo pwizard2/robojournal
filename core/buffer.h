@@ -175,6 +175,7 @@ public:
     static bool use_date_override;
     static QDate override_date;
     static QString mysqldump_path_win; // added 9/2/13.
+    static bool no_safety;
 
 };
 

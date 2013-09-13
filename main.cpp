@@ -53,8 +53,10 @@ int main(int argc, char *argv[])
     QRegExp date("--date-override=\\d{0,2}-\\d{0,2}-\\d{0,4}");
 
     for(int i=0; i<args.length(); i++){
+
         QString next_arg=args.at(i);
         next_arg=next_arg.replace("/","-");
+        next_arg=next_arg.simplified();
 
 
         // Check to see if Robojournal should override the date for this session. FYI: This feature can be dangerous (8/23/13).
@@ -81,6 +83,15 @@ int main(int argc, char *argv[])
                 cout << "OUTPUT: Date override command rejected due to invalid date value." << endl;
                 Buffer::use_date_override=false;
             }
+        }
+
+        // check to see if we should override safety protocols (--no-safety). Added 9/13/13.
+        if(next_arg=="--no-safety"){
+            Buffer::no_safety=true;
+            cout << "OUTPUT: Safety protocols are disabled. Exercise extreme caution." << endl;
+        }
+        else{
+            Buffer::no_safety=false;
         }
     }
 
