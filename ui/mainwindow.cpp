@@ -1583,7 +1583,7 @@ void MainWindow::PrimaryConfig(){
     //size, so we have to grow the right side by a huge amount to compensate. Strange, but it seems to work.
 
     // New for 0.5: Force the splitter size ONLY IF a stored value does not exist.
-    // Added 6/21/13.
+    // Added 6/21/13. Backported to 0.4.2 on 9/13/13.
     if(!Buffer::mw_splitter_size.isEmpty()){
         ui->splitter->restoreState(Buffer::mw_splitter_size);
     }
@@ -1593,7 +1593,6 @@ void MainWindow::PrimaryConfig(){
         size.append(splittersize); // was originally 225 but fixed values dont work very well
         ui->splitter->setSizes(size);
     }
-
 
     launched_editor=false;
     launched_config=false;

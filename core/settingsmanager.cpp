@@ -573,11 +573,13 @@ void SettingsManager::LoadConfig(bool startup){
         Buffer::name_in_titlebar=settings.value("Behavior/name_in_titlebar").toBool();
         Buffer::show_untagged_reminder=settings.value("Behavior/show_untagged_reminder").toBool();
 
+        // 0.4.2 ( backported to 0.4.2 on 9/13/13)
+        Buffer::mw_splitter_size=settings.value("Behavior/mw_splitter_position").toByteArray(); // added 6/21/13
+
         // 0.5 options (6/5/13)
         Buffer::use_my_journals=settings.value("SQLite/use_my_journals").toBool();
         Buffer::sqlite_default=settings.value("SQLite/sqlite_default").toString();
         Buffer::sqlite_favorites=settings.value("SQLite/sqlite_favorites").toStringList();
-        Buffer::mw_splitter_size=settings.value("Behavior/mw_splitter_position").toByteArray(); // added 6/21/13
         Buffer::mysqldump_path_win=settings.value("Behavior/mysqldump_path_win").toString(); // added 9/2/13
 
         if(reload){

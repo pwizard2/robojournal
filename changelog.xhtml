@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <title>RoboJournal ChangeLog</title>
   <meta content="Will Kraft" name="author" />
@@ -151,16 +151,11 @@ layout with so many new buttons (tooltips alone are sufficient for
 identification purposes) and it would be strange to have some of the
 buttons contain labels while others do not. Many buttons (bold, italic,
 etc.) use universal symbols, making labels unnecessary in such cases. </li>
-  <li><span class="bugfix">Bugfix:</span> The vertical splitter bar on
-the Mainwindow now remembers its position between program sessions. The
-splitter only reverts to its default 50/50 position if the saved
-position data is unavailable.
-    <ol>
+
       <li><span class="added">Added</span> an option to restore the
 default splitter position to the Mainwindow/Window drop-down menu. This
 option overrides the current saved position.</li>
-    </ol>
-  </li>
+
   <li>Updated the Journal Selector window with new features:
     <ol>
       <li><span class="added">Added</span> the Assign Permissions
@@ -174,6 +169,7 @@ button to allow the user to select a SQLite database from disk.</li>
 on Tagger, NewConfig, EntryExporter, and JournalSelector classes.</li>
   <li><span class="bugfix">Bugfix:</span> All MySQL transactions now
 use the same connection (9/11/13).</li>
+  <li><span class="added">Added</span> description/explanation of new features to <i>RoboJournal Documentation</i>.</li>
 </ol>
 </div>
 <div class="even">
@@ -218,7 +214,17 @@ Perl-based solution. If the documentation fails to build correctly on
 the first attempt, the new build script tries several different
 executables until it finds one that works. This fix is necessary
 because Qmake often tries to use Qt5 tools on systems that have both
-Qt4 and Qt5 installed. <br />
+Qt4 and Qt5 installed.
+  </li>
+      <li><span class="bugfix">Bugfix:</span> The vertical splitter bar on
+the MainWindow now remembers its position between program sessions. The
+splitter only reverts to its default 50/50 position if the saved
+position data is unavailable.
+  </li>
+      <li><span class="added">Added</span> description/explanation of new features to <i>RoboJournal Documentation</i>.
+    <ol>
+      <li><span class="bugfix">Bugfix:</span> Documentation version numbers are no longer hardcoded in the help project file and collection file.</li>
+    </ol>
   </li>
 </ol>
 </div>

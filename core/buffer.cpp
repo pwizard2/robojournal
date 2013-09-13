@@ -139,11 +139,13 @@ QString Buffer::reminder_choice;
 QString Buffer::reminder_title;
 bool Buffer::show_reminder_next_time;
 
+// new for 0.4.2
+QByteArray Buffer::mw_splitter_size; // former 0.5 code but backported on 9/13/13.
+
 // new for 0.5 (6/5/13)
 QStringList Buffer::sqlite_favorites;
 QString Buffer::sqlite_default;
 bool Buffer::use_my_journals;
-QByteArray Buffer::mw_splitter_size;
 
 // date override flag (8/23/13).
 bool Buffer::use_date_override;
