@@ -18,7 +18,6 @@
     along with RoboJournal.  If not, see <http://www.gnu.org/licenses/>.
   */
 
-
 #include "ui/mainwindow.h"
 #include "ui_mainwindow.h"
 #include "ui_editor.h"
@@ -409,7 +408,7 @@ void MainWindow::SearchDatabase(){
 
                     QStringList date=id.split("/");
 
-                    int month, day, year;
+                    int month=0, day=0, year=0;
 
                     switch(Buffer::date_format){
                     case 0: // European
@@ -1393,6 +1392,9 @@ void MainWindow::PrimaryConfig(){
     // to center QMessageBoxes and other elements that don't have a GUI of their own relative to the main window.
     mw=this->window();
 
+    // New for 0.5 (9/12/13): Remember if we have set the most recent entry date already if date override is enabled.
+    date_override_trigger_tripped=false;
+
     // 6/5/13: Will Kraft. (new for version 0.5): Use the big icon on Windows too. That little 16x16 icon looks like hell when
     // stretched to fit the Win 7 taskbar and alt+tab list. The shortcut icon usually compensates for that but not always; this
     // way works for sure no matter what.
@@ -1919,13 +1921,36 @@ void MainWindow::Connect(){
         }
     }
 
-    // new for 0.5: show notification if the date override feature is enabled (8/24/13).
+    // new for 0.5: show notification if the date override feature is enabled (8/24/13) and enact safety protocols if the feature is
+    // being misused and could result in database corruption (9/12/13).
     if((Buffer::use_date_override) && (is_connected)){
+        QString msg="Date override is enabled; all new entries created during this session will artificially use " +
+                Buffer::override_date.toString("MM-dd-yyyy") + " as their date of origin.";
+
+        // Bugfix 9/12/13: Disable New Entries as safety protocol if adding them would corrupt the database.
+        if(Buffer::override_date < lastdate){
+            msg="RoboJournal's safety protocols prevent you from adding new entries "
+                    "during this session because the date override value you specified (" + Buffer::override_date.toString("MM-dd-yyyy") +
+                    ") predates the most recent entry in the timeline.<br><br>This restriction is necessary because adding new entries in the "
+                    "wrong chronological order causes database corruption.";
+
+            ui->WriteButton->setDisabled(true);
+            ui->actionWrite->setDisabled(true);
+        }
+
+        // Bugfix 9/12/13: Prevent date override misuse (future dates) from corrupting the database.
+        if(Buffer::override_date > QDate::currentDate()){
+            msg="RoboJournal's safety protocols prevent you from adding new entries "
+                    "during this session because the date override value you specified (" + Buffer::override_date.toString("MM-dd-yyyy") +
+                    ") is in the future.<br><br>This restriction is necessary because adding new entries in the "
+                    "wrong chronological order causes database corruption.";
+
+            ui->WriteButton->setDisabled(true);
+            ui->actionWrite->setDisabled(true);
+        }
+
         QMessageBox m;
-        m.information(this,"RoboJournal","Date override is enabled; all new entries created during this session will artificially use " +
-                      Buffer::override_date.date().toString("MM-dd-yyyy") + " as their date of origin. <br><br><strong>Warning:</strong> "
-                      "To prevent database corruption, <u>never</u> use the date override feature to insert a new entry between other "
-                      "entries at a previous point in the timeline or at a future date.");
+        m.information(this,"RoboJournal",msg);
     }
 }
 
@@ -2138,6 +2163,11 @@ void MainWindow::Disconnect(){
         MySQLCore m;
         m.Disconnect();
     }
+
+    // Reset the date override trigger thingy that is used to get the date of the most recent entry
+    // for comparison to the date override value (9/12/13).
+    if(Buffer::datebox_override)
+        date_override_trigger_tripped=false;
 
 }
 
@@ -2520,8 +2550,6 @@ void MainWindow::CreateTree(){
 
                         QListIterator<QString> IteratorEntry(EntryList);
 
-
-
                         for(int e=0; e<EntryList.length(); e++){
                             QString entry=IteratorEntry.next();
                             QTreeWidgetItem *EntryItem = new QTreeWidgetItem(day);
@@ -2535,6 +2563,55 @@ void MainWindow::CreateTree(){
                             EntryItem->setText(1, item[1]);
                             EntryItem->setIcon(0,entryicon);
 
+                            // New for 0.5: Check to see if this is the most recent entry.
+                            if((e==0) && (Buffer::datebox_override) && (!date_override_trigger_tripped)){
+                                int month=0, day=0, year=0;
+
+                                year=EntryItem->parent()->parent()->text(0).toInt();
+                                day=itemday.toInt();
+
+                                if(longmonth=="January")
+                                    month=1;
+
+                                if(longmonth=="February")
+                                    month=2;
+
+                                if(longmonth=="March")
+                                    month=3;
+
+                                if(longmonth=="April")
+                                    month=4;
+
+                                if(longmonth=="May")
+                                    month=5;
+
+                                if(longmonth=="June")
+                                    month=6;
+
+                                if(longmonth=="July")
+                                    month=7;
+
+                                if(longmonth=="August")
+                                    month=8;
+
+                                if(longmonth=="September")
+                                    month=9;
+
+                                if(longmonth=="October")
+                                    month=10;
+
+                                if(longmonth=="November")
+                                    month=11;
+
+                                if(longmonth=="December")
+                                    month=12;
+
+                                QDate mostrecent;
+                                mostrecent.setDate(year,month,day);
+                                cout << mostrecent.toString("Recent date: mm/dd/yyyy").toStdString() << endl;
+                                date_override_trigger_tripped=true;
+                            }
+
                             // since we know there are entries at this point, NewJournal should be set to false.
                             NewJournal=false;
 
@@ -2542,7 +2619,6 @@ void MainWindow::CreateTree(){
                             EntryCount++; // auto-increment entry count
 
                             totalcount++; // update totalcount
-
                         }
 
                         //if EntryCount==0, we have a new journal. Show a message if this happens.
@@ -2696,6 +2772,55 @@ void MainWindow::CreateTree(){
                         EntryItem->setText(1,item[0]);
                         EntryItem->setIcon(0, entryicon);
 
+                        // New for 0.5: Check to see if this is the most recent entry (9/12/13).
+                        // If so, set the lastdate value with the value if date override is enabled.
+                        if((e==0) && (Buffer::datebox_override) && (!date_override_trigger_tripped)){
+                            int month=0, day=0, year=0;
+
+                            year=EntryItem->parent()->parent()->text(0).toInt();
+                            day=item[2].toInt();
+
+                            if(longmonth=="January")
+                                month=1;
+
+                            if(longmonth=="February")
+                                month=2;
+
+                            if(longmonth=="March")
+                                month=3;
+
+                            if(longmonth=="April")
+                                month=4;
+
+                            if(longmonth=="May")
+                                month=5;
+
+                            if(longmonth=="June")
+                                month=6;
+
+                            if(longmonth=="July")
+                                month=7;
+
+                            if(longmonth=="August")
+                                month=8;
+
+                            if(longmonth=="September")
+                                month=9;
+
+                            if(longmonth=="October")
+                                month=10;
+
+                            if(longmonth=="November")
+                                month=11;
+
+                            if(longmonth=="December")
+                                month=12;
+
+                            lastdate.setDate(year,month,day);
+                            //cout << " Recent date: " << lastdate.toString("M/dd/yyyy").toStdString() << endl;
+                            date_override_trigger_tripped=true;
+                        }
+
                         // since we know there are entries at this point, NewJournal should be set to false.
                         NewJournal=false;
 
@@ -2704,11 +2829,7 @@ void MainWindow::CreateTree(){
                         totalcount++; // update totalcount
                     }
 
-
-
                     EntryList.clear();
-
-
 
                     QString monthcount=QString::number(EntryCount);
 
@@ -2932,8 +3053,6 @@ void MainWindow::MostRecent(){
         QTreeWidgetItem *selected=ui->EntryList->currentItem();
         //EntryExporter e(this);
         EntryExporter::title=selected->text(0);
-
-
     }
 }
 //################################################################################################
@@ -3235,8 +3354,6 @@ void MainWindow::GetAdjacent(int direction){
                     ui->LastEntry->setEnabled(true);
                     ui->actionPrevious_Entry->setEnabled(true);
                 }
-
-
 
                 int position=IDList.indexOf(Record);
                 position++;

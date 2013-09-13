@@ -23,7 +23,7 @@
 #include <QtGui/QApplication>
 #include <QList>
 #include <QStringList>
-#include <QDateTime>
+#include <QDate>
 
 class Buffer
 {
@@ -173,7 +173,7 @@ public:
     static QByteArray mw_splitter_size; // added 6/21/13
 
     static bool use_date_override;
-    static QDateTime override_date;
+    static QDate override_date;
     static QString mysqldump_path_win; // added 9/2/13.
 
 };

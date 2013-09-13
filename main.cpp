@@ -66,14 +66,13 @@ int main(int argc, char *argv[])
             int month=d.at(0).toInt();
             int day=d.at(1).toInt();
             int year=d.at(2).toInt();
-            QTime time=QTime::currentTime();
+
             QDate custom;
             custom.setYMD(year,month,day);
 
             if(custom.isValid()){
                 Buffer::use_date_override=true;
-                Buffer::override_date.setDate(custom);
-                Buffer::override_date.setTime(time);
+                Buffer::override_date=custom;
 
                 cout << "OUTPUT: Date override command accepted. Setting date to "
                      << Buffer::override_date.toString("MM-dd-yyyy.").toStdString() << endl;

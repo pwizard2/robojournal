@@ -23,7 +23,7 @@
 #include <QMainWindow>
 #include <QTreeWidgetItem>
 #include <QCloseEvent>
-
+#include <QDate>
 
 namespace Ui {
     class MainWindow;
@@ -193,6 +193,9 @@ private:
     //bool keep track of whether we used the editor or not.
     bool launched_editor;
     bool launched_config;
+
+    QDate lastdate;
+    bool date_override_trigger_tripped;
 
 };
 

@@ -769,7 +769,7 @@ void Editor::SetDate(){
 
     // Set custom date if date override command line args are enabled.
     if(Buffer::use_date_override){
-        ui->EntryDate->setDate(Buffer::override_date.date());
+        ui->EntryDate->setDate(Buffer::override_date);
     }
     else{
         ui->EntryDate->setDate(QDate::currentDate());
@@ -785,9 +785,6 @@ void Editor::setTitle(QString title){
         this->setWindowTitle("Untitled Entry - RoboJournal");
     }
 }
-
-
-
 
 //#############################################################################################################
 void Editor::on_EntryTitle_textChanged(const QString &title)
