@@ -10,11 +10,12 @@ Vcs-Git: git://git.debian.org/pkg-kde/kde-extras/robojournal.git
 Vcs-Browser: http://git.debian.org/?p=pkg-kde/kde-extras/robojournal.git;a=summary
 
 Package: robojournal
+Version: 0:0.4.2-1
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, libqt4-sql-mysql
 Recommends: robojournal-doc
 Suggests: mysql-server
-Description: cross-platform journal/diary tool
+Description: Keep a journal/diary of day-to-day events in your life
  RoboJournal is a cross-platform journal/diary tool written in Qt/C++.
  It works in conjunction with MySQL to allow the user to create
  journal databases locally or on a remote server. RoboJournal emphasizes
@@ -23,16 +24,10 @@ Description: cross-platform journal/diary tool
  RoboJournal runs on Windows and Linux.
 
 Package: robojournal-doc
+Version: 0:0.4.2-1
 Architecture: all
 Depends: ${misc:Depends}
 Recommends: robojournal
 Section: doc
-Description: cross-platform journal/diary tool - documentation
- RoboJournal is a cross-platform journal/diary tool written in Qt/C++.
- It works in conjunction with MySQL to allow the user to create
- journal databases locally or on a remote server. RoboJournal emphasizes
- streamlined, practical design plus ease-of-use.
- .
- RoboJournal runs on Windows and Linux.
- .
- This package contains the compiled HTML documentation files for RoboJournal.
+Description: Documentation files for RoboJournal
+  This package contains the compiled HTML documentation files for RoboJournal.

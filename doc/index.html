@@ -9,12 +9,10 @@
   <link rel="stylesheet" type="text/css" href="css/master.css">
   <link rel="icon" type="image/png" href="img/rj_icon.png">
 </head>
-
 <body>
-
 <div class="content">
-<img src="img/rj_doc_header.png" width="606" height="72"
-alt="RoboJournal Documentation" class="masthead"> 
+<img src="img/rj_doc_header.png" alt="RoboJournal Documentation"
+ class="masthead" height="72" width="606">
 <p class="doc_version">for version 0.4.2</p>
 <div class="menu">
 <ul>
@@ -23,58 +21,69 @@ alt="RoboJournal Documentation" class="masthead">
   <li class="menuitem"><a href="faq.html">FAQ</a></li>
 </ul>
 </div>
-
 <div class="main_text">
 <h1>Welcome to RoboJournal</h1>
-
 <h2 id="what_is_robojournal">What is RoboJournal?</h2>
-
-<p>RoboJournal is a cross-platform, database-driven application that allows you
-to keep a journal/diary on your computer by means of an intuitive graphical
-user interface. RoboJournal is designed to run on a variety of operating
-systems, including Windows and practically any type of Linux. Support for Mac
-OS X is the early planning stages and will hopefully be implemented before the
-release of version 0.5. RoboJournal has this portability because it was
-developed with the Qt Framework, a cross-platform development toolkit that runs
-on nearly any computer system.</p>
-
-<p>Unlike similar computerized journal tools that store user entry data in a
-data file, RoboJournal stores all entry data "in the cloud" as a MySQL
-database. These journal databases may be accessed directly through the server
-machine, through another computer on the same LAN/WAN as the server, or even
-remotely via the Internet. For instance, you can run RoboJournal on your
-primary workstation while your journal database is stored on a server machine
-in the same building or even in another country. You may even store RoboJournal
-itself and your journal on the same computer and run RoboJournal in an entirely
+<p>RoboJournal is a cross-platform, database-driven application that
+allows you
+to keep a journal/diary on your computer by means of an intuitive
+graphical
+user interface. RoboJournal is designed to run on a variety of
+operating
+systems, including Windows and practically any type of Linux.</p>
+<p>Unlike similar computerized journal tools that store data as a file
+on your
+hard drive, RoboJournal stores all entry data "in the cloud" as a MySQL
+database. These journal databases can be accessed directly through the
+server
+machine, through another computer on the same LAN/WAN as the server, or
+even
+remotely via the Internet. For instance, you can run RoboJournal on
+your
+primary workstation while your journal database is stored on a server
+machine
+in the same building or even in another country. You can even store
+RoboJournal
+itself and your journal on the same computer and run RoboJournal in an
+entirely
 closed ecosystem.</p>
-
 <h2 id="limitations">Current Limitations</h2>
-
-<p>At the moment, RoboJournal is <strong><em>not</em></strong> designed as or
-intended to be a high-security program. Because of this, all journal data is
-stored in the database in an unencrypted state. RoboJournal currently offers
-some security; by means of account restrictions and a password, journals are
-protected from all other unauthorized users <em>except</em> the root-level
-database administrator (who has unconditional access to all MySQL databases
-stored on the server whether they were created by RoboJournal or not). This
-danger is minimal if you control the root account; if not, keep in mind that it
-is possible for your journal to be read by others. </p>
-
-<p>Support for on-the-fly encryption/decryption of journal content is planned
-for a later version. Once this new design feature has been implemented, all
-journal data will be permanently stored in an encrypted form and will be
-decrypted into a readable state only when necessary. Not even the root user
-will be able to unlock the journal content unless he or she has the correct
-password required for decryption.</p>
-
+<p>At the moment, RoboJournal is <strong>not</strong> intended to be a
+high-security program; all entry data in each journal database is
+stored in an
+unencrypted state. However, RoboJournal already offers some nominal
+security—by
+means
+of account restrictions and a password, journals are protected from all
+other
+unauthorized users <em>except</em> the root-level database
+administrator (who
+has unconditional access to all MySQL databases on the server whether
+they were
+created by RoboJournal or not). This danger is minimal if you control
+the root
+account. If not, keep in mind that it is possible for other people to
+read your journal. You can minimize this danger by storing your
+journal(s) on a private MySQL
+server
+that you control.</p>
+<p>Future versions of RoboJournal will fortify security by offering
+support for
+on-the-fly encryption and decryption of journal content. Under this
+planned
+security model, RoboJournal will store all data in an encrypted format
+and decrypt it into a readable state only when necessary. Once
+implemented,
+this encryption will protect journal content from even the root
+administrator (unless he or
+she has the additional password required to unlock it).</p>
 <h2>Help Topics</h2>
-
-<p>Most RoboJournal software features have been documented. Consult the <a
-href="toc.html">Table of Contents</a> for a complete list of topics.</p>
-
+<p>Most RoboJournal software features have been documented. Consult the
+<a href="toc.html">Table of Contents</a> for a complete list of topics.</p>
 <p class="copyright">Copyright © 2013 by Will Kraft. All parts of the
-RoboJournal documentation are available under the terms of the <a
-href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation License</a>.
+RoboJournal Documentation are subject to the terms of the <a
+ href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation
+License</a>.
 </p>
 </div>
 </div>

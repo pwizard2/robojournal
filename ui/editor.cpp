@@ -71,6 +71,10 @@ void Editor::PrimaryConfig(){
     bar->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
     bar->setLayoutDirection(Qt::LeftToRight);
     bar->setContextMenuPolicy(Qt::NoContextMenu);
+    
+    // set the lower toolbar icon size to 16x16.
+    QSize s(16,16);
+    bar->setIconSize(s);
 
     // Bind the Toolbar Buttons to QWidgetActions before adding them to the toolbar. This allows the toolbar overflow
     // menu to work where it would not if we had added the buttons to the toolbar directly (using QToolBar::addWidget).
@@ -158,6 +162,7 @@ void Editor::PrimaryConfig(){
     QToolBar *masterbar= new QToolBar(this);
     masterbar->setLayoutDirection(Qt::LeftToRight);
     masterbar->setContextMenuPolicy(Qt::PreventContextMenu);
+    masterbar->setIconSize(s);
 
 
     masterbar->addWidget(spacer1);
@@ -171,7 +176,7 @@ void Editor::PrimaryConfig(){
     masterbar->addWidget(spacer3);
 
     QVBoxLayout *layout=new QVBoxLayout(this);
-    layout->setContentsMargins(2,6,2,0);
+    layout->setContentsMargins(0,0,0,0);
     layout->setSpacing(1);
 
 
@@ -810,15 +815,12 @@ void Editor::SetDate(){
 
 // Automatically update window title with post title
 void Editor::setTitle(QString title){
-    this->setWindowTitle(title + " -- RoboJournal");
+    this->setWindowTitle(title + " - RoboJournal");
 
     if(title==NULL){
-        this->setWindowTitle("Untitled Entry -- RoboJournal");
+        this->setWindowTitle("Untitled Entry - RoboJournal");
     }
 }
-
-
-
 
 //#############################################################################################################
 void Editor::on_EntryTitle_textChanged(const QString &title)
