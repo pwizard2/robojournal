@@ -7,8 +7,8 @@ Group:              Applications/Productivity
 Source:             http://sourceforge.net/projects/robojournal/files/Source/%{name}-%{version}.tar.gz
 URL:                http://sourceforge.net/projects/robojournal
 
-BuildRequires:      qt-mysql, qt-devel, qt-webkit-devel, desktop-file-utils
-Requires:           qt, qt-mysql, qt-webkit
+BuildRequires:      qt-mysql%{?_isa} >= 1:4.7.4-1, qt-devel%{?_isa} >= 1:4.7.4-1, qtwebkit-devel%{?_isa} >= 2.2.2-8, desktop-file-utils, perl
+Requires:           qt%{?_isa} >= 1:4.7.4-1, qt-mysql%{?_isa} >= 1:4.7.4-1, qtwebkit%{?_isa} >= 2.2.2-8
 
 %description
 
@@ -56,7 +56,7 @@ cp %{_builddir}/%{buildsubdir}/doc/robojournal.qch ${RPM_BUILD_ROOT}%{_datadir}/
 
 %changelog
 
-* Fri Jul 5 2013 Will Kraft <pwizard@gmail.com> 0.4.2-1
+* Sat Sep 14 2013 Will Kraft <pwizard@gmail.com> 0.4.2-1
 - Initial release.
 
 ######################################################################################################################
