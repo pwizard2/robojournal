@@ -60,12 +60,12 @@ SOURCES += main.cpp\
         ui/editortagmanager.cpp \
         core/taggingshared.cpp \
         core/htmlcore.cpp \
-    ui/permissionmanager.cpp \
-    ui/outputpane.cpp \
-    core/favoritecore.cpp \
-    ui/exportsingle.cpp \
-    ui/exportmulti.cpp \
-    ui/exportcreatedump.cpp
+        ui/permissionmanager.cpp \
+        ui/outputpane.cpp \
+        core/favoritecore.cpp \
+        ui/exportsingle.cpp \
+        ui/exportmulti.cpp \
+        ui/exportcreatedump.cpp
 
 HEADERS  += ui/mainwindow.h \
 	core/buffer.h \
@@ -116,12 +116,12 @@ HEADERS  += ui/mainwindow.h \
         ui/editortagmanager.h \
         core/taggingshared.h \
         core/htmlcore.h \
-    ui/permissionmanager.h \
-    ui/outputpane.h \
-    core/favoritecore.h \
-    ui/exportsingle.h \
-    ui/exportmulti.h \
-    ui/exportcreatedump.h
+	ui/permissionmanager.h \
+	ui/outputpane.h \
+	core/favoritecore.h \
+	ui/exportsingle.h \
+	ui/exportmulti.h \
+	ui/exportcreatedump.h
 
 
 FORMS    += ui/mainwindow.ui \
@@ -148,11 +148,11 @@ FORMS    += ui/mainwindow.ui \
         ui/journalcreatorcoverpage.ui \
         ui/configurationsqlite.ui \
         ui/editortagmanager.ui \
-    ui/permissionmanager.ui \
-    ui/outputpane.ui \
-    ui/exportsingle.ui \
-    ui/exportmulti.ui \
-    ui/exportcreatedump.ui
+	ui/permissionmanager.ui \
+	ui/outputpane.ui \
+	ui/exportsingle.ui \
+	ui/exportmulti.ui \
+	ui/exportcreatedump.ui
 
 # Declaration of images and other to-be-embedded resources.
 RESOURCES  = images.qrc
@@ -162,7 +162,6 @@ RC_FILE = icon.rc
 
 # This block contains all Linux/Unix-specific build instructions.
 unix {
-    #CONFIG += qt release
 
     # The package block sets a different install path for package builds.
     package {
@@ -180,15 +179,17 @@ unix {
     # It is sometimes necessary to temporarily comment out the QMAKE_POST_LINK (ln 146) while compiling
     # in Qt Creator b/c it may complain about doc/compile_doc.pl being missing during each build.
 
-    #QMAKE_POST_LINK += perl doc/compile_doc.pl
+    QMAKE_POST_LINK += perl doc/compile_doc.pl
 
     # set the final destinations of all install files
     
     man.files = robojournal.7.gz
     man.path = /usr/share/man/man7
     
-    doc.path = /usr/share/doc/robojournal
-    doc.files = doc/robojournal.qhc doc/robojournal.qch
+    # Bugfix (9/21/13): Split the documentation install path because for some reason the documentation only
+    # installs 50% of the time if the qhc and qch components are listed together.
+    documentation.path = /usr/share/doc/robojournal
+    documentation.files = doc/robojournal.qch doc/robojournal.qhc
     
     shortcut.path = /usr/share/applications
     shortcut.files = menus/robojournal.desktop
@@ -202,8 +203,7 @@ unix {
     icon-deb.path = /usr/share/pixmaps
     icon-deb.files = menus/robojournal.xpm
 
-    INSTALLS += target shortcut icon shortcut-deb icon-deb doc man
-
+    INSTALLS += target shortcut icon shortcut-deb icon-deb documentation man
 }
 
 # This one controls Windows instructions for building with MinGW.

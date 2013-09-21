@@ -410,8 +410,11 @@ sample of that particular color.</td>
 </table>
 <h3 id="behavior">Behavior</h3>
 <p>The <strong>Behavior</strong> group contains general options that
-relate to
-journal behavior.</p>
+control journal behavior and affect how journal content is rendered.
+These options work on a global scope; the same settings govern every
+single journal RoboJournal comes into contact with instead of being
+limited to the journal that is currently open.<br>
+</p>
 <table border="0">
   <caption><br>
   </caption> <col> <col> <tbody>
@@ -476,18 +479,18 @@ functions
 perform necessary corrections and cleanup operations to body text as a
 means to
 improve appearance and fix common errors. In all instances,
-post-processing
-functionality looks for specific error patterns and then applies
+the post-processing
+functionality looks for specific patterns and then applies
 changes to all
-instances of these patterns it detects in the body text. </p>
+matching instances of those patterns it detects. </p>
 <p>Since these changes are only applied after an entry is saved,
-post-processing will <em>not</em> affect old entries that were made
+post-processing does <em>not</em> affect old entries that were made
 before the
 post-processing features were introduced or were made while
 post-processing
 features were disabled. Post-processing is applied once after an entry
 has been
-saved in order to improve efficiency. The only way to apply
+saved in order to improve efficiency. Therefore, the only way to apply
 post-processing to
 old entries is to open them in the editor and then save them again.</p>
 <table border="0">
@@ -535,7 +538,7 @@ and formalizes number notation (i.e. 12<sup>th</sup>, 101<sup>st</sup>).</td>
 causes the
 editor to use the same font/font size as the entry output pane in the
 main
-window. This improves consistency and helps you to preview how your
+window. This improves consistency and allows you to preview how your
 entry will
 look once it has been saved. This option is locked (as shown in the
 screenshot
@@ -552,9 +555,9 @@ enable spell check, you must first select a dictionary for it to use
 the "<a href="#select_dict">Selecting a Dictionary for the First Time</a>"
 section).</p>
 <div class="FYI">
-<strong>FYI:</strong> A recent service patch has completely disabled
-spell
-checking on all Linux-based builds of RoboJournal. Consult the "<a
+<strong>FYI:</strong> Spell
+checking is completely disabled on all Linux-based builds in
+RoboJournal 0.4.2 due to stability/crashing issues. Consult the "<a
  href="faq.html#spellcheck">Frequently Asked Questions</a>"
 documentation for
 details.</div>
@@ -899,13 +902,15 @@ can preview your changes by clicking the <strong>Preview Export
 Settings</strong> button. The Export Preview window is displayed:</p>
 <p><img alt="Export Preview Window" src="img/screens/export_preview.png"
  class="screenshot" height="529" width="613"><span class="caption_wide">Figure
-11: Export Preview dialog displaying sample text</span></p>
-<p>The Export Preview window allows you to "test" new settings before
+11: The Export Preview window provides a faithful representation of the
+current export settings. </span>The Export Preview window allows you
+to "test" new settings before
 saving
 them. The current settings of the Export Settings page are used to
 render a
 sample entry that contains a title, date/timestamp header, and several
-paragraphs of body text. The body text is an excerpt from the classic
+paragraphs of body text. This feature is designed to be as accurate as
+possible. The body text is an excerpt from the classic
 Latin
 <em>Lorem Ipsum</em> text used throughout the print industry since the
 1500s.
@@ -1022,10 +1027,10 @@ on regular user accounts for security purposes.</p>
 <div id="footer_right">
 <a href="shortcut_keys.html">Appendix A</a> »</div>
 </div>
-
 <p class="copyright">Copyright © 2013 by Will Kraft. All parts of the
 RoboJournal Documentation are subject to the terms of the <a
-href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation License</a>.
+ href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation
+License</a>.
 </p>
 </div>
 </div>
