@@ -194,28 +194,54 @@ void DBLogin::on_buttonBox_rejected()
 // triggers a slot that calls RefreshJournalList. New for 0.5. --Will Kraft (7/20/13).
 void DBLogin::PopulateComboBoxes(){
 
-    ui->DBHost->clear();
-    ui->WhichDB->clear();
-    QIcon h(":/icons/server.png");
     FavoriteCore f;
-    QStringList hosts=f.GetHosts();
 
-    if(hosts.isEmpty()){
-        ui->DBHost->addItem(h,Buffer::defaulthost);
-    }
-    else{
-        ui->DBHost->addItems(hosts);
+    // Original MySQL-specific code.
+    if(Buffer::backend=="MySQL"){
+        ui->DBHost->clear();
+        ui->WhichDB->clear();
+        QIcon h(":/icons/server.png");
 
-        for (int g=0; g< hosts.size(); g++){
-            ui->DBHost->setItemIcon(g,h);
+        QStringList hosts=f.GetHosts();
+
+        if(hosts.isEmpty()){
+            ui->DBHost->addItem(h,Buffer::defaulthost);
         }
+        else{
+            ui->DBHost->addItems(hosts);
 
-        // Select default host and DB by default.
-        for(int i=0; i < hosts.size(); i++){
+            for (int g=0; g< hosts.size(); g++){
+                ui->DBHost->setItemIcon(g,h);
+            }
 
-            if(hosts.at(i)==Buffer::defaulthost){
-                ui->DBHost->setCurrentIndex(i);
-                break;
+            // Select default host and DB by default.
+            for(int i=0; i < hosts.size(); i++){
+
+                if(hosts.at(i)==Buffer::defaulthost){
+                    ui->DBHost->setCurrentIndex(i);
+                    break;
+                }
+            }
+        }
+    }
+
+    // SQLite code added 9/21/13.
+    if(Buffer::backend=="SQLite"){
+
+        QIcon db(":/icons/database.png");
+        QStringList databases=f.GetSQLiteFavorites();
+
+        for(int i=0; i<databases.size(); i++){
+
+            QString item_name=databases.at(i);
+            QListWidgetItem *item=new QListWidgetItem(ui->SQLiteJournals);
+            item->setText(item_name);
+            item->setIcon(db);
+
+            if(item_name==Buffer::sqlite_default){
+                ui->SQLiteJournals->setCurrentItem(item);
+                QIcon gold_db(":/icons/database-gold.png");
+                item->setIcon(gold_db);
             }
         }
     }

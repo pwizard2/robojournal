@@ -444,3 +444,30 @@ void FavoriteCore::SQLite_setFavoritebyName(QString name, bool favorite){
 
     db.close();
 }
+
+//###################################################################################################
+// Get the current list of favorites and return it as a QStringList that should be used to populate
+// the "Database" combobox on the DBLogin class. New for 0.5. --Will Kraft (7/20/13).
+QStringList FavoriteCore::GetSQLiteFavorites(){
+
+    QStringList favorites;
+
+    QSqlDatabase db=QSqlDatabase::database("@favorites");
+    db.open();
+
+    QString sql_query="SELECT database FROM native_favorites WHERE favorite=1";
+
+    QSqlQuery fetch(sql_query,db);
+    fetch.exec();
+
+    while(fetch.next()){
+        QVariant v0=fetch.value(0);
+        QString nextitem=v0.toString();
+
+        favorites << nextitem;
+    }
+
+    db.close();
+
+    return favorites;
+}

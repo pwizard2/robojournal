@@ -55,6 +55,7 @@ public:
     void SQLite_Add_to_DB(QString database, bool is_favorite);
     QList<QStringList> SQLite_getKnownJournals();
     void SQLite_setFavoritebyName(QString name, bool favorite);
+    QStringList GetSQLiteFavorites();
 
 private:
 

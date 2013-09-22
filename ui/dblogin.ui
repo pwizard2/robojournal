@@ -164,12 +164,15 @@
        <item>
         <widget class="QLabel" name="label_5">
          <property name="text">
-          <string>Select the database you want to use:</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the database you want to use and click the &lt;span style=&quot; font-weight:600;&quot;&gt;Connect&lt;/span&gt; button to continue.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QListWidget" name="listWidget"/>
+        <widget class="QListWidget" name="SQLiteJournals"/>
        </item>
       </layout>
      </widget>
