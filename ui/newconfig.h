@@ -137,12 +137,6 @@ private slots:
     void on_buttonBox_accepted();
     void resizeEvent(QResizeEvent *);
 
-
-
-
-
-
-
 private:
     Ui::Newconfig *ui;
 

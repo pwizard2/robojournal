@@ -51,10 +51,16 @@ public:
     QStringList GetHosts();
     bool Do_Maintenance(QList<QStringList> favorites_list, QStringList dynamic_list);
 
+    //Sqlite-related functions
+    void SQLite_Add_to_DB(QString database, bool is_favorite);
+    QList<QStringList> SQLite_getKnownJournals();
+    void SQLite_setFavoritebyName(QString name, bool favorite);
+
 private:
 
     QString favorite_db_path;
     QSqlDatabase favorite_db;
+
 };
 
 #endif // FAVORITECORE_H

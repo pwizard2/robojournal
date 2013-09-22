@@ -356,3 +356,91 @@ bool FavoriteCore::Do_Maintenance(QList<QStringList> favorites_list, QStringList
         return true;
     }
 }
+
+//###################################################################################################
+// Add an entry to the SQLite favorites database in SQLite mode. New for 0.5. --Will Kraft 9/21/13.
+// Warning: Input variables should be trustworthy (no SQL injection potential).
+void FavoriteCore::SQLite_Add_to_DB(QString database, bool favorite){
+
+    int fav_value=0;
+
+    if(favorite)
+        fav_value=1;
+
+    // Shorten the pathname to the user's home directory to unix symbol "~". This helps to prevent
+    // horizontal scrolling in the QListItemWidgets that show the sqlite journals.
+    database=database.replace(QDir::homePath(),"~");
+
+    QSqlDatabase db=QSqlDatabase::database("@favorites");
+    db.open();
+
+    QSqlQuery row("INSERT INTO native_favorites(database,favorite) VALUES(?,?)", db);
+    row.bindValue(0, database);
+    row.bindValue(1, fav_value);
+
+    row.exec();
+    favorite_db.close();
+}
+
+//###################################################################################################
+// Return a QStringList of the favorites for the SQLite journals. New for 0.5, --Will Kraft 9/21/13.
+QList<QStringList> FavoriteCore::SQLite_getKnownJournals(){
+
+    QList <QStringList> known_journals;
+
+    QSqlDatabase db=QSqlDatabase::database("@favorites");
+
+    db.open();
+
+    QSqlQuery fetch("SELECT id, database, favorite FROM native_favorites",db);
+    fetch.exec();
+
+    while(fetch.next()){
+
+        QStringList nextitem;
+
+        QVariant v0=fetch.value(0);
+        QVariant v1=fetch.value(1);
+        QVariant v2=fetch.value(2);
+
+        QString id=v0.toString();
+        QString database=v1.toString();
+        QString favorite=v2.toString();
+
+        nextitem << id << database << favorite;
+
+        known_journals.append(nextitem);
+    }
+
+    db.close();
+
+    return known_journals;
+}
+
+//###################################################################################################
+// Set the favorite status of a database by database name instead of row id number. This was introduced
+// because the JournalCreator class needed an easy way for the user to set the new database as a favorite
+// without having to do it through preferences (8/18/13). Adapted for SQLite favorites (9/21/13).
+void FavoriteCore::SQLite_setFavoritebyName(QString name, bool favorite){
+
+    QString setFavorite;
+
+    switch(favorite){
+    case true:
+        setFavorite="UPDATE native_favorites SET favorite=1 WHERE database=?";
+        break;
+
+    case false:
+        setFavorite="UPDATE native_favorites SET favorite=0 WHERE database=?";
+        break;
+    }
+
+    QSqlDatabase db=QSqlDatabase::database("@favorites");
+    db.open();
+
+    QSqlQuery update(setFavorite, db);
+    update.bindValue(0,name);
+    update.exec();
+
+    db.close();
+}

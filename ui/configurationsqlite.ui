@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>349</width>
-    <height>346</height>
+    <width>385</width>
+    <height>384</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,25 +21,9 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QCheckBox" name="UseMyJournals">
-        <property name="text">
-         <string>Use &quot;&amp;My Journals&quot; folder as default save location</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QGroupBox" name="groupBox_2">
-     <property name="title">
-      <string>Favorite Journals</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
-      <item>
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>Default SQLite Journal</string>
+         <string>Default journal:</string>
         </property>
        </widget>
       </item>
@@ -61,71 +45,52 @@
         <property name="sizeHint" stdset="0">
          <size>
           <width>20</width>
-          <height>13</height>
+          <height>5</height>
          </size>
         </property>
        </spacer>
       </item>
       <item>
-       <widget class="QListWidget" name="Favorites">
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>100</height>
-         </size>
+       <widget class="QCheckBox" name="UseMyJournals">
+        <property name="text">
+         <string>Use &quot;&amp;My Journals&quot; folder as default save location</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>Favorite Journals</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The following list contains all known SQLite journals associated with you (&amp;quot;~&amp;quot; refers to your home folder):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>28</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QPushButton" name="AddFavorite">
-          <property name="text">
-           <string>&amp;Add Favorite</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="RemoveFavorite">
-          <property name="text">
-           <string>&amp;Remove Favorite</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="SetasDefault">
-          <property name="text">
-           <string>Set as &amp;Default</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>28</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
+       <widget class="QListWidget" name="Favorites">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>150</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>150</height>
+         </size>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

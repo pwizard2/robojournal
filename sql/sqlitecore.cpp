@@ -22,22 +22,22 @@
 #include "core/buffer.h"
 #include <iostream>
 #include <QtSql/QSqlDatabase>
-
+#include <QSqlQuery>
+#include <QFile>
 
 SQLiteCore::SQLiteCore(){}
 
 QSqlDatabase SQLiteCore::db;
 
+//################################################################################################
 bool SQLiteCore::Connect(){
     using namespace std;
     cout << "OUTPUT: Attempting SQLite (failsafe) database connection on \"" << Buffer::host.toStdString()
          << "\" as user \"" << Buffer::username.toStdString() << "\"...";
 
-    db=QSqlDatabase::addDatabase("QSQLITE");
+    QSqlDatabase db2=QSqlDatabase::addDatabase("QSQLITE");
 
-    QString host=Buffer::host;
-
-    bool success=db.open();
+    bool success=db2.open();
 
 
     if(success){
@@ -71,16 +71,27 @@ bool SQLiteCore::RemoveEntry(){
 
 }
 
+//################################################################################################
 // Create a new database file. Unlike MySQL, simply attempting to open a null file causes it to be created.
 bool SQLiteCore::CreateDB(QString dbname){
     using namespace std;
     cout << "OUTPUT: Attempting to create database " << dbname.toStdString() << endl;
 
-    db.addDatabase("QSQLITE");
-    db.setDatabaseName(dbname);
-    bool success=db.open();
+    QSqlDatabase db2= QSqlDatabase::addDatabase("QSQLITE","@lite");
+    db2.setDatabaseName(dbname);
+    db2.open();
 
-    return success;
+    QSqlQuery create_entries("CREATE TABLE entries(id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                             "title TEXT, month TEXT, day TEXT, year TEXT, tags TEXT, "
+                             "body TEXT, time TEXT)", db2);
+
+    create_entries.exec();
+
+    db2.close();
+
+    // if the process worked, the file should exist.
+    QFile database(dbname);
+    return database.exists();
 }
 
 

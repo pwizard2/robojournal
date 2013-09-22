@@ -165,7 +165,7 @@ unix {
 
     # The package block sets a different install path for package builds.
     package {
-	message(Creating a package-friendly build for Debian and other Linux distros...)
+        message(Creating a package-friendly build...)
 	target.path = /usr/bin
 	
     }
@@ -179,15 +179,13 @@ unix {
     # It is sometimes necessary to temporarily comment out the QMAKE_POST_LINK (ln 146) while compiling
     # in Qt Creator b/c it may complain about doc/compile_doc.pl being missing during each build.
 
-    QMAKE_POST_LINK += perl doc/compile_doc.pl
+    #QMAKE_POST_LINK += perl doc/compile_doc.pl
 
     # set the final destinations of all install files
     
     man.files = robojournal.7.gz
     man.path = /usr/share/man/man7
     
-    # Bugfix (9/21/13): Split the documentation install path because for some reason the documentation only
-    # installs 50% of the time if the qhc and qch components are listed together.
     documentation.path = /usr/share/doc/robojournal
     documentation.files = doc/robojournal.qch doc/robojournal.qhc
     

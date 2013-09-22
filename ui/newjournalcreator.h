@@ -55,6 +55,7 @@ public:
 
     static QString sqlite_journal_name;
     static QString sqlite_journal_path;
+    static bool sqlite_is_favorite;
 
 
 signals:

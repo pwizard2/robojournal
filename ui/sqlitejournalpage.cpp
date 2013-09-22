@@ -29,6 +29,7 @@
 #include "core/buffer.h"
 #include "ui/newjournalcreator.h"
 
+//################################################################################################
 SQLiteJournalPage::SQLiteJournalPage(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SQLiteJournalPage)
@@ -37,11 +38,13 @@ SQLiteJournalPage::SQLiteJournalPage(QWidget *parent) :
     PrimaryConfig();
 }
 
+//################################################################################################
 SQLiteJournalPage::~SQLiteJournalPage()
 {
     delete ui;
 }
 
+//################################################################################################
 void SQLiteJournalPage::PrimaryConfig(){
 
     QString filename;
@@ -67,11 +70,12 @@ void SQLiteJournalPage::PrimaryConfig(){
     }
 }
 
-
+//################################################################################################
 // (6/6/13) Get data, validate/repair it, and return it to NewJournalCreator class.
 bool SQLiteJournalPage::HarvestData(){
     using namespace std;
 
+    NewJournalCreator::sqlite_is_favorite=ui->AddToFavorites->isChecked();
     NewJournalCreator::sqlite_journal_path=ui->DatabaseLocation->text();
 
     QRegExp test("[a-z|A-Z|0-9|_]*.db");
@@ -117,6 +121,7 @@ bool SQLiteJournalPage::HarvestData(){
     }
 }
 
+//################################################################################################
 void SQLiteJournalPage::Browse(QString startpath){
 
     QString folder=QFileDialog::getExistingDirectory(this,"Select Directory",startpath,QFileDialog::ShowDirsOnly);
@@ -127,10 +132,9 @@ void SQLiteJournalPage::Browse(QString startpath){
     else{
         ui->DatabaseLocation->setText(startpath);
     }
-
-
 }
 
+//################################################################################################
 // (6/3/13) Validation function for filename
 bool SQLiteJournalPage::FilenameValid(QString filename){
 
@@ -146,6 +150,7 @@ bool SQLiteJournalPage::FilenameValid(QString filename){
     return true;
 }
 
+//################################################################################################
 // (6/5/13) Create the "My Journals" folder in users home dir if it does not already exist
 void SQLiteJournalPage::Create_My_Journals_Folder(){
 
@@ -161,6 +166,7 @@ void SQLiteJournalPage::Create_My_Journals_Folder(){
     }
 }
 
+//################################################################################################
 // (6/3/13) Process raw filename
 void SQLiteJournalPage::ProcessFilename(QString filename, bool valid){
 
@@ -203,7 +209,7 @@ void SQLiteJournalPage::ProcessFilename(QString filename, bool valid){
     }
 }
 
-
+//################################################################################################
 void SQLiteJournalPage::on_DatabaseName_textChanged(const QString &arg1)
 {
     QString filename=arg1;
@@ -217,11 +223,13 @@ void SQLiteJournalPage::on_DatabaseName_textChanged(const QString &arg1)
     ProcessFilename(filename,valid);
 }
 
+//################################################################################################
 void SQLiteJournalPage::ClearForm(){
     ui->DatabaseName->clear();
     PrimaryConfig();
 }
 
+//################################################################################################
 void SQLiteJournalPage::on_BrowseButton_clicked()
 {
     QString startpath=ui->DatabaseLocation->text();

@@ -516,7 +516,6 @@ QList<QStringList> MySQLCore::DumpDatabase(bool asc){
 }
 
 //################################################################################################
-
 // Get list of databases for JournalSelector class
 QStringList MySQLCore::GetDatabaseList(QString hostname, QString port, QString username, QString password, bool silentMode){
     using namespace std;

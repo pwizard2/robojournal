@@ -53,7 +53,7 @@ QString NewJournalCreator::root_password;
 // SQLite data
 QString NewJournalCreator::sqlite_journal_name;
 QString NewJournalCreator::sqlite_journal_path;
-
+bool NewJournalCreator::sqlite_is_favorite;
 
 NewJournalCreator::NewJournalCreator(QWidget *parent) :
     QDialog(parent),
@@ -153,7 +153,8 @@ bool NewJournalCreator::Create_SQLite_Database(){
     if(database.exists()){
         QMessageBox j;
         int choice=j.question(this,"RoboJournal","SQLite database <b>" + path + "</b> already exists. "
-                              "Do you want to replace it? <br><br>Note: This action cannot be undone!",
+                              "Do you want to replace it? <br><br><b>Warning:</b> If you choose to replace the "
+                              "database, the current contents will be overwritten. This action cannot be undone!",
                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
 
         switch(choice){
@@ -167,11 +168,28 @@ bool NewJournalCreator::Create_SQLite_Database(){
         }
     }
 
-    bool success=false;
+    bool success;
 
     if(proceed){
         SQLiteCore sqlite;
         success=sqlite.CreateDB(path);
+    }
+    else{
+        return false;
+    }
+
+    QMessageBox m;
+    FavoriteCore f;
+
+    if(success){
+
+        int choice2=m.information(this,"RoboJournal","The new journal was successfully created at <b>" + path + "</b>.");
+
+        f.SQLite_Add_to_DB(path,sqlite_is_favorite);
+
+    }
+    else{
+        m.critical(this,"RoboJournal","Journal creation attempt failed.");
     }
 
     return success;
@@ -211,7 +229,7 @@ bool NewJournalCreator::Create_MySQL_Database(){
 
         //Set the new journal as a favorite if the user indicated so in the choice question box (8/18/13).
         if(choice==QMessageBox::Yes){
-           f.setFavoritebyName(journal_name,true);
+            f.setFavoritebyName(journal_name,true);
         }
 
         return true;
@@ -328,14 +346,6 @@ void NewJournalCreator::accept(){
         // Close the form
         if(successful2){
             close();
-        }
-        else{
-
-            QString path=sqlite_journal_path + QDir::separator() + sqlite_journal_name;
-            path=QDir::toNativeSeparators(path);
-
-            QMessageBox b;
-            b.critical(this,"RoboJournal","<b>" +  path + "</b> could not be created due to an unknown error.");
         }
     }
 }
