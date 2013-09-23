@@ -30,17 +30,28 @@ class="masthead" height="72" width="606">
 <h1>Exporting Journal Entries</h1>
 
 <h2 id="Sections">Sections</h2>
-<ol class="toc">
-  <li><a href="#Overview">Overview</a> 
-    <ol>
-      <li><a href="#Formats">Export Formats</a></li>
-      <li><a href="#Anatomy">Export Options and Settings</a></li>
+
+<div class="toc">
+<ol>
+  <li><a href="#Overview">Overview</a></li>
+  <li><a href="#Single">Exporting a Single Entry</a> 
+    <ol class="toc">
+      <li><a href="#L131">Single Export Options</a></li>
     </ol>
   </li>
-  <li><a href="#Single">Exporting a Single Entry</a></li>
-  <li><a href="#Multi">Exporting the Entire Journal</a></li>
-  <li>Creating a Backup of Your Journal with MySQLDump</li>
+  <li><a href="#Multi">Exporting the Entire Journal</a> 
+    <ol>
+      <li><a href="#L253">Bulk Export Options</a></li>
+    </ol>
+  </li>
+  <li><a href="#L370">Creating a Backup of Your Journal with MySQLDump</a> 
+    <ol>
+      <li><a href="#L419">Backup Options<br>
+        </a></li>
+    </ol>
+  </li>
 </ol>
+</div>
 
 <h2 id="Overview">Overview</h2>
 
@@ -81,12 +92,12 @@ displayed with the selected entry already pre-loaded.</span></p>
 
 <h2 id="Single">Exporting a Single Entry</h2>
 
-<p>The Export Content window should already be configured to export the entry
-you previously selected on the RoboJournal main window: <img alt="Figure 3"
-src="img/screens/export_single.png" class="screenshot" height="453"
-width="576"><span class="caption">Figure 3: The <strong>Export single
-entry</strong> page allows you to export the current (selected) entry from the
-main window.</span></p>
+<p>Once invoked, the Export Content window is already configured to export the
+entry you previously selected on the RoboJournal main window: <img
+alt="Figure 3" src="img/screens/export_single.png" class="screenshot"
+height="453" width="576"><span class="caption">Figure 3: The <strong>Export
+single entry</strong> page allows you to export the current (selected) entry
+from the main window.</span></p>
 
 <p>If you need to change any of the settings (including file type or export
 destination), you must do so before beginning the export operation. Unlike
@@ -102,7 +113,7 @@ click the <strong>Export</strong> button (shown in Figure 3) after selecting
 the entry you wish to export from the Chronological Entry List on the
 RoboJournal main window.</p>
 
-<h3>Single Export Options</h3>
+<h3 id="L131">Single Export Options</h3>
 
 <p>The following table explains each option on the <strong>Export single
 entry</strong> page in greater detail:</p>
@@ -179,13 +190,15 @@ destination folder bearing the name of the journal and the export date. </p>
 <ol class="list">
   <li>On the RoboJournal main window, select an entry from the Chronological
     Entry List and click the <strong>Export Content</strong> toolbar button (as
-    shown in Figure 1). It does not matter which entry you choose if you intend
-    to export the entire journal.</li>
+    shown in Figure 1) to display the Export Content window. It does not matter
+    which entry you choose if you intend to export the entire journal.</li>
   <li>The Export Content window is displayed. Select the <strong>Export entire
-    journal</strong> option from the list on the left side of the window to
-    display the appropriate options:<img alt="Figure"
+    journal</strong> list item on the left side of the Export Content window to
+    display the appropriate options:<img alt="Figure 4"
     src="img/screens/export_multi.png" class="screenshot" height="453"
-    width="576"><span class="caption">Figure x:</span></li>
+    width="576"><span class="caption">Figure 4: The "Export entire journal"
+    page allows you to output the contents of an entire journal in one simple
+    process.</span></li>
   <li>Adjust the options in the Export Location, Export Format, and Export
     Options groups if necessary. Each of these settings and their effects are
     addressed in-depth in the following section. The default configuration
@@ -195,7 +208,7 @@ destination folder bearing the name of the journal and the export date. </p>
   <li>Click the <strong>Export</strong> button to complete the operation.</li>
 </ol>
 
-<h3>Bulk Export Options</h3>
+<h3 id="L253">Bulk Export Options</h3>
 
 <p>The following table contains a full explanation of all options that can be
 applied to bulk export operations and the effects each option has on the output
@@ -246,72 +259,76 @@ file(s):</p>
     <tr>
       <td class="left">Keep individual entries separate</td>
       <td class="right">If checked, this option causes RoboJournal to export
-        the current journal as a set of discrete files, with one entry being
-        contained in each file. Enabling this option disables many other
-        settings on the <strong>Export entire journal</strong> page that are
-        only relevant to the task of creating a single export file. 
+        the current journal as a set of discrete files, with one entry per
+        file. Enabling this option disables many other settings on the
+        <strong>Export entire journal</strong> page that are only relevant to
+        the task of creating a single large export file. 
 
         <p>The output files from the export operation are saved in a custom
         folder contained within the current <strong>Export location</strong>
-        directory. Each file is marked with the journal name, its position in
-        the series, and the entry title (i.e.
+        directory. RoboJournal automatically creates the export folder during
+        the procedure so there is no need to manually create it in advance.
+        Each file in the folder is marked with the journal name, its position
+        in the series, and the entry title (i.e.
         sample_journal_1_of_15_sample_entry.html). </p>
 
         <p>Exporting the journal as a series of individual entries always sorts
-        the content in ascending order, with the oldest entry being the first
-        item in the set. </p>
+        the content in ascending chronological order, with the oldest entry
+        being the first item in the set. </p>
       </td>
     </tr>
     <tr>
       <td class="left">Allow custom filename<sup>*</sup></td>
       <td class="right">When selected, this option allows you to directly edit
         the <strong>Filename</strong> field's contents. You should enable this
-        feature if it is necessary to assign a custom filename to an output
-        file.</td>
+        feature if the situation requires you to assign a custom filename to
+        the output file.</td>
     </tr>
     <tr>
       <td class="left">Sort in ascending/descending order<sup>*</sup></td>
-      <td class="right">These two options determine the order in which entries
-        are merged into the output file. Arranging entries in ascending order
-        causes the oldest entry to be appended first while descending order
-        arranges the latest entry first. RoboJournal chooses the descending
-        arrangement by default because it assumes the most recent entries are
-        the most important to the reader (and should therefore be listed
-        first). </td>
+      <td class="right">These two options determine the chronological order in
+        which entries are merged into the output file. Arranging entries in
+        ascending order causes the oldest entry to be listed first while
+        descending order places the latest entry first in the sequence.
+        RoboJournal chooses the descending arrangement by default because it
+        assumes the most recent entries are the most important to the reader
+        (and should therefore be listed first). </td>
     </tr>
   </tbody>
 </table>
 
-<p class="footnote">* These options are locked (and their current settings are
-ignored) while the <strong>Keep individual enteries separate</strong> option is
-enabled because the affected options are non-applicable to multiple files.</p>
+<p class="footnote">* RoboJournal locks these options (and ignores their
+current settings) while the <strong>Keep individual enteries separate</strong>
+option is enabled because the affected options are non-applicable to multiple
+files.</p>
 
-<h2>Creating a Backup of Your Journal with MySQLDump</h2>
+<h2 id="L370">Creating a Backup of Your Journal with MySQLDump</h2>
 
 <p>RoboJournal 0.5 introduces a new feature that allows you to easily create a
 backup of the current active journal. Backing up a journal is useful because it
 allows you to "freeze" the current condition of your journal at a specific
-moment in time. Once created, this backup can be used to restore your journal
-just as it was when the backup was created. For best results, you should create
-backups on a regular basis and store them in safe place in case the working
-copy of the database becomes corrupt or is lost due to equipment failure.</p>
+moment in time. You can then use this backup at a later time to restore or
+revert your journal to the state it was in when the backup was created. For
+best results, you should create backups on a regular basis and store them in a
+safe place in case the working copy of the database becomes corrupt or is lost
+due to equipment failure.</p>
 
 <p>RoboJournal uses a utility called MySQLDump to create the backups (MySQLDump
-is distributed along with MySQL). In the past, this task required you to invoke
-MySQLDump manually via the command line but RoboJournal is now capable of
-directly interfacing with MySQLDump through an easy-to-use graphical user
-interface. At the moment, RoboJournal offers no direct way to restore databases
-from backups but that feature is planned for future versions.</p>
+is usually distributed along with MySQL). In the past, this task required you
+to invoke MySQLDump manually via the command line but RoboJournal is now
+capable of directly interfacing with MySQLDump through an easy-to-use graphical
+user interface. At the moment, RoboJournal offers no direct way to restore
+databases from backups but that feature is planned for future versions.</p>
 
-<p>You cabn export your journals with the following procedure:</p>
+<p>You can export your journals by completing the following procedure:</p>
 <ol class="list">
   <li>On the RoboJournal main window, select an entry from the Chronological
     Entry List and click the <strong>Export Content</strong> toolbar button (as
-    shown in Figure 1). It does not matter which entry you choose if you intend
-    to create a backup file. The Export Content window is displayed. </li>
-  <li>Click the <strong>Backup database</strong> option to display the
-    backup-related options (as shown in Figure 5): <img
-    style="width: 576px; height: 453px;" class="screenshot" alt="Figure x"
+    shown in Figure 1) to display the Export Content window. For this
+    procedure, it does not matter which entry you choose from the list. </li>
+  <li>Click the <strong>Backup database</strong> list item on the left side of
+    the Export Content window to display the backup-related options (Figure 5):
+    <img style="width: 576px; height: 453px;" class="screenshot" alt="Figure x"
     title="Figure x" src="img/screens/export_dump.png"><span
     class="caption">Figure 5: Export content -- Backup features.</span></li>
   <li>Make all necessary changes. The default settings produce a .sql file
@@ -333,7 +350,7 @@ from backups but that feature is planned for future versions.</p>
   </li>
 </ol>
 
-<h3>Backup Options<br>
+<h3 id="L419">Backup Options<br>
 </h3>
 
 <p>The following table contains a full explanation of all options that can be
@@ -376,10 +393,10 @@ file:</p>
         executable on your computer. Click the <strong>Browse</strong> button
         to the right of this field to manually locate MySQLDump. While running
         on Windows, RoboJournal restricts the file browser to mysqldump.exe but
-        there are no such restrictions on Linux/Unix because executables on
-        those operating systems have no extensions. Once you have located the
+        there are no such restrictions on Linux/Unix because executables have
+        no extensions on those operating systems. Once you have located the
         MySQLDump executable with the file browser, RoboJournal saves the
-        selected pathname for future use.<br>
+        selected pathname so you will not need to browse for it again.<br>
       </td>
     </tr>
   </tbody>

@@ -201,7 +201,7 @@ bool ExportCreateDump::Create_SQL_Dump(QString filename, QString mysqldump_path,
 #endif
 
     // Windows requires the command to be structured differently (9/23/13). The executable needs to be enclosed within quotation
-    // marks to keep the cmd line from breaking it up.
+    // marks to keep Windows from breaking it up.
 #ifdef _WIN32
     QStringList args;
     args << "-uroot ";

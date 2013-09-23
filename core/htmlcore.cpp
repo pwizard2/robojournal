@@ -39,6 +39,7 @@
 #include <QTextStream>
 #include <QMessageBox>
 #include <iostream>
+#include "ui/mainwindow.h"
 
 HTMLCore::HTMLCore()
 {
@@ -506,7 +507,7 @@ void HTMLCore::Do_Export(QString path, QString id, bool use_html)
     file.close();
 
     QMessageBox b;
-    b.information(NULL,"RoboJournal", "<b>" + path + "</b> was successfully exported.");
+    b.information(MainWindow::mw,"RoboJournal", "<b>" + path + "</b> was successfully exported.");
 }
 
 
@@ -746,7 +747,7 @@ void HTMLCore::Export_Multi(QString path, bool use_html, bool sort_asc){
         }
 
         QMessageBox b;
-        b.information(NULL,"RoboJournal", "<nobr><b>" + path + "</b><br> was successfully exported.");
+        b.information(MainWindow::mw,"RoboJournal", "<nobr><b>" + path + "</b><br> was successfully exported.");
         return;
     }
 }
@@ -785,7 +786,7 @@ void HTMLCore::Export_Loose_Journal_Entries(QString folder, bool use_html){
         QString filenameTitle="_" + entry_title;
         filenameTitle=filenameTitle.toLower();
         filenameTitle=filenameTitle.trimmed();
-        filenameTitle=filenameTitle.replace(QRegExp("(\\,)+|(\\()+|(\\))+|(\\[)+|(\\])+|(\\{)+|(\\})+|(#)+|(%)+"),"");
+        filenameTitle=filenameTitle.replace(QRegExp("(\\,)+|(\\()+|(\\))+|(\\[)+|(\\])+|(\\{)+|(\\})+|(#)+|(%)+|(:)+"),"");
         filenameTitle=filenameTitle.replace(QRegExp("\\s"),"_");
         filenameTitle=filenameTitle.replace("/","_");
 
@@ -981,6 +982,6 @@ void HTMLCore::Export_Loose_Journal_Entries(QString folder, bool use_html){
     }
 
     QMessageBox ab;
-    ab.information(NULL,"RoboJournal","All journal entries have been exported to <b>" + folder + "</b>.");
+    ab.information(MainWindow::mw,"RoboJournal","All journal entries have been exported to <b>" + folder + "</b>.");
     return;
 }
