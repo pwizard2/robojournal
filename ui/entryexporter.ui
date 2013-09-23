@@ -17,16 +17,7 @@
    <property name="spacing">
     <number>6</number>
    </property>
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
+   <property name="margin">
     <number>0</number>
    </property>
    <item>
@@ -51,7 +42,7 @@
      </property>
      <item>
       <property name="text">
-       <string>Export single entry</string>
+       <string>Export Single Entry</string>
       </property>
       <property name="icon">
        <iconset resource="../images.qrc">
@@ -60,7 +51,7 @@
      </item>
      <item>
       <property name="text">
-       <string>Export entire journal</string>
+       <string>Export Entire Journal</string>
       </property>
       <property name="icon">
        <iconset resource="../images.qrc">
@@ -69,11 +60,11 @@
      </item>
      <item>
       <property name="text">
-       <string>Backup database</string>
+       <string>Backup MySQL Journal</string>
       </property>
       <property name="icon">
        <iconset resource="../images.qrc">
-        <normaloff>:/icons/database.png</normaloff>:/icons/database.png</iconset>
+        <normaloff>:/icons/mysql_icon2.png</normaloff>:/icons/mysql_icon2.png</iconset>
       </property>
      </item>
     </widget>
@@ -97,7 +88,7 @@
           <x>0</x>
           <y>0</y>
           <width>401</width>
-          <height>419</height>
+          <height>423</height>
          </rect>
         </property>
        </widget>

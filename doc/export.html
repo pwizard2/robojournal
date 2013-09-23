@@ -95,9 +95,9 @@ displayed with the selected entry already pre-loaded.</span></p>
 <p>Once invoked, the Export Content window is already configured to export the
 entry you previously selected on the RoboJournal main window: <img
 alt="Figure 3" src="img/screens/export_single.png" class="screenshot"
-height="453" width="576"><span class="caption">Figure 3: The <strong>Export
-single entry</strong> page allows you to export the current (selected) entry
-from the main window.</span></p>
+height="453" width="576"><span class="caption">Figure 3: The "Export Single
+Entry" page allows you to export the current (selected) entry from the main
+window.</span></p>
 
 <p>If you need to change any of the settings (including file type or export
 destination), you must do so before beginning the export operation. Unlike
@@ -115,8 +115,8 @@ RoboJournal main window.</p>
 
 <h3 id="L131">Single Export Options</h3>
 
-<p>The following table explains each option on the <strong>Export single
-entry</strong> page in greater detail:</p>
+<p>The following table explains each option on the Export Single Entry page in
+greater detail:</p>
 
 <table border="0">
   <col>
@@ -140,7 +140,7 @@ entry</strong> page in greater detail:</p>
         is created during the export operation. The <strong>HTML</strong>
         option produces a HTML4-compliant document that is viewable in any web
         browser. The <strong>Plain text</strong> option produces a text file
-        that is compatibe with any text editor (e.g. Vim, Notepad, Emacs,
+        that is compatible with any text editor (e.g. Vim, Notepad, Emacs,
         etc.). 
 
         <p>For best results, you should use HTML output because it preserves
@@ -162,7 +162,7 @@ entry</strong> page in greater detail:</p>
         title_entry date). You should leave this option enabled for best
         results because the resulting filename makes it easy to group exported
         entries from the same journal together and it provides a way for you to
-        easily reconize which journal an entry came from.</td>
+        easily recognize which journal an entry came from.</td>
     </tr>
     <tr>
       <td class="left">Allow custom filename</td>
@@ -192,11 +192,11 @@ destination folder bearing the name of the journal and the export date. </p>
     Entry List and click the <strong>Export Content</strong> toolbar button (as
     shown in Figure 1) to display the Export Content window. It does not matter
     which entry you choose if you intend to export the entire journal.</li>
-  <li>The Export Content window is displayed. Select the <strong>Export entire
-    journal</strong> list item on the left side of the Export Content window to
+  <li>The Export Content window is displayed. Select the <strong>Export Entire
+    Journal</strong> list item on the left side of the Export Content window to
     display the appropriate options:<img alt="Figure 4"
     src="img/screens/export_multi.png" class="screenshot" height="453"
-    width="576"><span class="caption">Figure 4: The "Export entire journal"
+    width="576"><span class="caption">Figure 4: The "Export Entire Journal"
     page allows you to output the contents of an entire journal in one simple
     process.</span></li>
   <li>Adjust the options in the Export Location, Export Format, and Export
@@ -239,7 +239,7 @@ file(s):</p>
         file(s() are created during the export operation. The
         <strong>HTML</strong> option produces HTML4-compliant document(s) that
         are viewable in any web browser. The <strong>Plain text</strong> option
-        produces text file(s) that are compatibe with any text editor (e.g.
+        produces text file(s) that are compatible with any text editor (e.g.
         Vim, Notepad, Emacs, etc.). 
 
         <p>For best results, you should use HTML output because it preserves
@@ -298,7 +298,7 @@ file(s):</p>
 </table>
 
 <p class="footnote">* RoboJournal locks these options (and ignores their
-current settings) while the <strong>Keep individual enteries separate</strong>
+current settings) while the <strong>Keep individual entries separate</strong>
 option is enabled because the affected options are non-applicable to multiple
 files.</p>
 
@@ -326,24 +326,30 @@ databases from backups but that feature is planned for future versions.</p>
     Entry List and click the <strong>Export Content</strong> toolbar button (as
     shown in Figure 1) to display the Export Content window. For this
     procedure, it does not matter which entry you choose from the list. </li>
-  <li>Click the <strong>Backup database</strong> list item on the left side of
-    the Export Content window to display the backup-related options (Figure 5):
-    <img style="width: 576px; height: 453px;" class="screenshot" alt="Figure x"
-    title="Figure x" src="img/screens/export_dump.png"><span
-    class="caption">Figure 5: Export content -- Backup features.</span></li>
+  <li>Click the <strong>Backup MySQL Journal</strong> list item on the left
+    side of the Export Content window to display the backup-related options
+    (Figure 5): <img style="width: 576px; height: 453px;" class="screenshot"
+    alt="Figure x" title="Figure x" src="img/screens/export_dump.png"><span
+    class="caption">Figure 5: The "Backup MySQL Journal" page provides an
+    easy-to-use interface for MySQLDump.</span></li>
   <li>Make all necessary changes. The default settings produce a .sql file
     bearing the journal name and the export date (i.e.
     sample_journal_09-04-2013)  that is saved in your home folder's Documents
-    sub-directory.</li>
-  <li>Click the <strong>Export</strong> button to begin the operation: (figure
-    6 goes here)<br>
-  </li>
+    sub-directory ("My Documents" on Windows XP and older). </li>
+  <li>Click the <strong>Export</strong> button to begin the operation: <img
+    alt="Figure 6" src="img/screens/export_dump2.png" width="576" height="453"
+    class="screenshot"><span class="caption">Figure 6: Click the
+    <strong>Export</strong> button when ready.</span></li>
   <li>Enter the root password for MySQL when prompted and click the
-    <strong>OK</strong> button to continue: RoboJournal requires root access
-    for MySQLDump operations because it is necessary to lock the database
-    tables (a function that is normally restricted to the root account)  in
-    order to prevent potential edit collisions, which are attempts by two or
-    more users to modify the database simulataneously. <br>
+    <strong>OK</strong> button to continue:<img alt="Figure 7"
+    src="img/screens/export_dump3.png" width="266" height="128"
+    class="screenshot"><span class="caption">Figure 7: Enter the current MySQL
+    server's root password to continue.</span> RoboJournal requires root-level
+    access for MySQLDump operations because it must lock the current journal's
+    tables (a function that is normally restricted to the root account) before
+    it can complete the dump operation. This prevents the possibility of edit
+    collisions, which are attempts by two or more users to modify the same
+    database simultaneously. <br>
   </li>
   <li>The Export Content window closes itself once the operation is
     complete.<br>
