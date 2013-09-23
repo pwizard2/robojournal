@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>385</width>
-    <height>384</height>
+    <height>362</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -69,7 +69,7 @@
       <item>
        <widget class="QLabel" name="label_5">
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The following list contains all known SQLite journals associated with you (&amp;quot;~&amp;quot; refers to your home folder):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;p&gt;The following list contains all known SQLite journals that are associated with you (&amp;quot;~&amp;quot; refers to your home folder):&lt;/p&gt;</string>
         </property>
         <property name="wordWrap">
          <bool>true</bool>

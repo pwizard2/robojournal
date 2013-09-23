@@ -134,12 +134,12 @@ void ConfigurationMySQL::Show_Known_Journals(){
             new_item->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
 
             switch(row.at(4).toInt()){
-            case 0:
-                new_item->setCheckState(0, Qt::Unchecked);
+                case 0:
+                    new_item->setCheckState(0, Qt::Unchecked);
                 break;
 
-            case 1:
-                new_item->setCheckState(0, Qt::Checked);
+                case 1:
+                    new_item->setCheckState(0, Qt::Checked);
                 break;
             }
 
@@ -234,26 +234,27 @@ void ConfigurationMySQL::on_KnownJournals_itemDoubleClicked(QTreeWidgetItem *ite
 {
     QString new_choice=item->text(0);
     QString new_host=item->text(1);
+    QMessageBox m;
 
     if(new_choice != Buffer::defaultdatabase){
         if(Buffer::showwarnings){
 
-            QMessageBox m;
+
             int choice=m.question(this,"RoboJournal","Do you want to replace the current default journal with <b>"
-                                  + new_choice +"</b>?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+                                  + new_choice + "@" + new_host +"</b>?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
 
             switch(choice){
 
-            case QMessageBox::Yes:
-                ui->Database->setText(new_choice);
-                ui->DefaultHost->setText(new_host);
+                case QMessageBox::Yes:
+                    ui->Database->setText(new_choice);
+                    ui->DefaultHost->setText(new_host);
 
-                demoteDatabase(default_db);
-                ApplyDefaultProperties(item);
+                    demoteDatabase(default_db);
+                    ApplyDefaultProperties(item);
 
                 break;
 
-            case QMessageBox::No: // do nothing
+                case QMessageBox::No: // do nothing
                 break;
             }
         }
@@ -263,5 +264,8 @@ void ConfigurationMySQL::on_KnownJournals_itemDoubleClicked(QTreeWidgetItem *ite
             ApplyDefaultProperties(item);
 
         }
+    }
+    else{
+        m.critical(this,"RoboJournal","<b>" + new_choice + "@" + new_host + "</b> is already the default MySQL journal.");
     }
 }

@@ -35,6 +35,7 @@
 #include <iostream>
 #include "core/buffer.h"
 #include <QList>
+#include <QDir>
 
 
 //###################################################################################################
@@ -367,9 +368,11 @@ void FavoriteCore::SQLite_Add_to_DB(QString database, bool favorite){
     if(favorite)
         fav_value=1;
 
+#ifdef unix
     // Shorten the pathname to the user's home directory to unix symbol "~". This helps to prevent
     // horizontal scrolling in the QListItemWidgets that show the sqlite journals.
     database=database.replace(QDir::homePath(),"~");
+#endif
 
     QSqlDatabase db=QSqlDatabase::database("@favorites");
     db.open();

@@ -4,8 +4,9 @@
 #include "core/buffer.h"
 #include "core/favoritecore.h"
 #include <QMessageBox>
+#include <QDir>
 
-
+//###################################################################################################
 ConfigurationSQLite::ConfigurationSQLite(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ConfigurationSQLite)
@@ -15,11 +16,13 @@ ConfigurationSQLite::ConfigurationSQLite(QWidget *parent) :
     Show_Known_Journals();
 }
 
+//###################################################################################################
 ConfigurationSQLite::~ConfigurationSQLite()
 {
     delete ui;
 }
 
+//###################################################################################################
 void ConfigurationSQLite::GetChanges(){
 
     Newconfig::new_use_my_journals=ui->UseMyJournals->isChecked();
@@ -28,6 +31,7 @@ void ConfigurationSQLite::GetChanges(){
     Harvest_Favorite_Databases();
 }
 
+//###################################################################################################
 void ConfigurationSQLite::PopulateForm(){
 
     ui->UseMyJournals->setChecked(Buffer::use_my_journals);
@@ -37,7 +41,6 @@ void ConfigurationSQLite::PopulateForm(){
     }
     else{
         ui->DefaultJournal->setText(Buffer::sqlite_default);
-
     }
 
     for(int a=0; a < Buffer::sqlite_favorites.size(); a++){
@@ -45,8 +48,14 @@ void ConfigurationSQLite::PopulateForm(){
         item->setText(Buffer::sqlite_favorites.at(a));
         ui->Favorites->addItem(item);
     }
+
+    // On windows, omit the part about the ~ home directory.
+#ifdef _WIN32:
+    ui->label_5->setText("<p>The following list contains all known SQLite journals that are associated with you:</p>");
+    #endif
 }
 
+//###################################################################################################
 // Get the list of known SQLite journals. New for 0.5. --Will Kraft, 9/21/13.
 void ConfigurationSQLite::Show_Known_Journals(){
 
@@ -61,6 +70,8 @@ void ConfigurationSQLite::Show_Known_Journals(){
         QStringList nextitem=journals.at(i);
 
         item->setText(nextitem.at(1));
+        item->setToolTip("<p>Double-click this item to set <b>" + nextitem.at(1)+
+                         "</b> as the default SQLite journal. Check this item's box to select it as a favorite.</p>");
         item->setIcon(db);
         item->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
 
@@ -79,17 +90,26 @@ void ConfigurationSQLite::Show_Known_Journals(){
             ApplyDefaultProperties(item);
             default_db=item;
         }
+
+        // If there is only one SQLite journal, automatically set it as default.
+        if(journals.size()==1){
+            ApplyDefaultProperties(item);
+            default_db=item;
+            ui->DefaultJournal->setText(nextitem.at(1));
+        }
     }
 }
 
+//###################################################################################################
 void ConfigurationSQLite::on_Favorites_itemDoubleClicked(QListWidgetItem *item)
 {
     QString new_choice=item->text();
+    QMessageBox m;
 
-    if(new_choice != Buffer::defaultdatabase){
+    if(new_choice != Buffer::sqlite_default){
         if(Buffer::showwarnings){
 
-            QMessageBox m;
+
             int choice=m.question(this,"RoboJournal","Do you want to replace the current default journal with <b>"
                                   + new_choice +"</b>?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
 
@@ -104,8 +124,12 @@ void ConfigurationSQLite::on_Favorites_itemDoubleClicked(QListWidgetItem *item)
             }
         }
     }
+    else{
+        m.critical(this,"RoboJournal","<b>" + new_choice + "</b> is already the default SQLite journal.");
+    }
 }
 
+//###################################################################################################
 // Apply special properties to the default database QtreeWidgetItem by bolding the text
 // and giving it a gold database icon. Also, make sure it is checked.
 // New for 0.5. --Will Kraft 7/19/13.
@@ -126,6 +150,7 @@ void ConfigurationSQLite::ApplyDefaultProperties(QListWidgetItem *item){
     Buffer::sqlite_default=item->text();
 }
 
+//###################################################################################################
 // Demote the old default database whenever a new one is chosen from the list.
 // New for 0.5. --Will Kraft (7/20/13)
 void ConfigurationSQLite::demoteDatabase(QListWidgetItem *item){

@@ -106,7 +106,7 @@ QString ExportCreateDump::dumpBrowse(QString current_exec)
 #endif
 
 #ifdef unix
-        exec=QFileDialog::getOpenFileName(this,tr("Select \'mysqldump\' Executable"),current_exec);
+    exec=QFileDialog::getOpenFileName(this,tr("Select \'mysqldump\' Executable"),current_exec);
 #endif
 
     if(exec.isEmpty()){
@@ -191,30 +191,43 @@ bool ExportCreateDump::Create_SQL_Dump(QString filename, QString mysqldump_path,
     QProcess* dump=new QProcess();
     dump->setStandardOutputFile(filename,QIODevice::ReadWrite);
 
+#ifdef unix
     QStringList args;
     args << "-u root ";
     args << "-p" + root_pass;
     args << " " + database;
 
-    //cout << "cmd: " << args.join("").toStdString() << endl;
+    mysqldump_path = mysqldump_path + " " + args.join("");
+#endif
 
-    mysqldump_path = mysqldump_path +" "+args.join("");
+    // Windows requires the command to be structured differently (9/23/13). The executable needs to be enclosed within quotation
+    // marks to keep the cmd line from breaking it up.
+#ifdef _WIN32
+    QStringList args;
+    args << "-uroot ";
+    args << "-p" + root_pass;
+    args << " " + database;
+
+    mysqldump_path = + "\"" + mysqldump_path+ "\" " + args.join("");
+#endif
+
+    //cout << "cmd: " << args.join("").toStdString() << endl;
     //cout << mysqldump_path.toStdString() << endl;
 
     dump->start(mysqldump_path, QIODevice::ReadWrite);
 
     QMessageBox n;
 
-//    if(output.size()){
-//        n.critical(this,"RoboJournal","The backup operation was unsuccessful because the output file is empty. "
-//                   "Please verify that you entered the correct root password and try again.");
-//        output.deleteLater();
-//        return false;
-//    }
-//    else{
-        n.information(this,"RoboJournal","The current contents of <b>" + database + "</b> have been backed up to <b>"
-                      + filename + "</b>.");
-        return true;
+    //    if(output.size()){
+    //        n.critical(this,"RoboJournal","The backup operation was unsuccessful because the output file is empty. "
+    //                   "Please verify that you entered the correct root password and try again.");
+    //        output.deleteLater();
+    //        return false;
+    //    }
+    //    else{
+    n.information(this,"RoboJournal","The current contents of <b>" + database + "</b> have been backed up to <b>"
+                  + filename + "</b>.");
+    return true;
     //}
 }
 
@@ -309,16 +322,16 @@ QString ExportCreateDump::setFilename(){
     QDateTime t=QDateTime::currentDateTime();
     QString datestamp;
     switch(Buffer::date_format){
-    case 0:
-        datestamp=t.toString("dd-MM-yyyy");
+        case 0:
+            datestamp=t.toString("dd-MM-yyyy");
         break;
 
-    case 1:
-        datestamp=t.toString("MM-dd-yyyy");
+        case 1:
+            datestamp=t.toString("MM-dd-yyyy");
         break;
 
-    case 2:
-        datestamp=t.toString("yyyy-MM-dd");
+        case 2:
+            datestamp=t.toString("yyyy-MM-dd");
         break;
     }
 
