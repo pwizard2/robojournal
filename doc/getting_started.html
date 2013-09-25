@@ -112,7 +112,7 @@ created. </p>
 <h2 id="create">Creating a New Journal Database</h2>
 <p>The Journal Creator has been completely redesigned for RoboJournal
 0.5. It
-now consists of a highly modular "paged" design much like that of the
+now consists of a highly modular "paged" design, similar to the
 RoboJournal Preferences window that was introduced in RoboJournal 0.4.
 The
 Journal Creator can be directly accessed during first-run or by
@@ -165,27 +165,24 @@ MySQL Journal page is displayed:<img alt="Figure 4"
  width="593"><span class="caption">Figure 4: The Journal Creator
 populates several fields automatically based on your operating system
 settings.</span></li>
-  <li>Change the values of the <strong>Journal name</strong> and <strong>Username</strong>
-fields if desired. RoboJournal automatically suggests default values
-based on your system-level username (which you log in as on Windows or
-Linux) to keep things consistent but some users may wish to change the
-default values to something else.</li>
+  <li>RoboJournal automatically populates the <strong>Journal name</strong> and <strong>Username</strong>
+fields with default values based on your system-level username (which you log in under on Windows or
+Linux). The default values are designed to be adequate for most users but you can change them to something else if necessary.</li>
   <li>Make up a password at least seven characters in length to go with
-your new username and enter it into the <strong>Password</strong> and <strong>Repeat</strong>
-fields. You must type your password twice to eliminate the possibility
-of typing mistakes. Once both password fields match, the <strong>OK</strong>
-button is unlocked and the Journal Creator assigns a strength rating to
+your new username and enter it into the <strong>Password</strong> <em>and</em> <strong>Repeat</strong>
+fields. You should manually type your password into both fields to eliminate the possibility
+of typing mistakes instead of copy-and-pasting. RoboJournal unlocks the <strong>OK</strong>
+button once both password fields match.<br><br>Once both password fields match, the Journal Creator assigns a strength rating to
 your password based on certain criteria. The strength ratings range
-from 0% (extremely weak) to 100% (extremely strong). In most
-situations, a strength rating of at least 75% means your password is
+from 0% (extremely weak) to 100% (extremely secure). Generally, a strength rating of at least 75% means your password is
 strong enough to resist most attempts to crack it. <img alt="Figure 5"
  src="img/screens/new_jc3.png" class="screenshot" height="515"
  width="593"><span class="caption">Figure 5: The <strong>Password
 strength</strong> meter provides a visual indicator of password quality
 and resilience.</span>
     <div class="FYI"> <strong>FYI:</strong> Password strength is
-calculated according to length and diversity. A strong ( &gt;50%)
-password contains a randomized mixture of glyphs (upper and lowercase
+calculated according to length and diversity. A strong (&gt;50%)
+password contains a random mixture of glyphs (upper and lowercase
 letters, integers, and symbols) and no dictionary words. RoboJournal
 adds points to the score for long passwords and the inclusion of all
 glyph varieties but docks points for adjacent glyphs of the same type
@@ -204,16 +201,17 @@ and "3306" for <strong>Port</strong>).</li>
   <li>Enter the <strong>Root password</strong> for the server you
 specified in the <strong>Hostname</strong> field. </li>
   <li>Click the <strong>OK</strong> button on the Journal Creator
-window. If your password strength is less than 50% and confirmation
-dialogs <a href="preferences.html#global_preferences">are enabled</a>,
-RoboJournal issues a warning and requires you to verify your decision
-to use a weak password. After you click <b>OK</b>, RoboJournal
+window. Once you have done so, RoboJournal
 attempts to create the new journal with the parameters you specified: <img
  alt="Figure 6" src="img/screens/new_jc4.png" class="screenshot"
- height="515" width="593"><span class="caption">Figure 6: The MySQL
-Page completely
-filled out.</span></li>
-  <li>If the journal is successfully created, RoboJournal asks you if
+ height="515" width="593"><span class="caption">Figure 6: The MySQL page with all fields completely filled in.</span>
+<div class="FYI"><strong>FYI:</strong> If your password's strength is less than 50% and confirmation
+dialogs <a href="preferences.html#global_preferences">are enabled</a>,
+RoboJournal issues a warning and requires you to verify your decision
+to use a weak password.</div>
+
+</li>
+  <li>If the journal was successfully created, RoboJournal asks you if
 you want to add the new journal to your
 list of <a href="preferences.html#favorite_journals">favorites.</a> If
 you select <b>Yes</b>, the journal is added at this time. RoboJournal
@@ -381,13 +379,13 @@ account, make up a password and enter it into the <strong>Password</strong>
 field now.</li>
   <li>Enter the correct hostname for your user account into the <strong>User
 host</strong> field (if necessary). Leaving the field blank causes
-RoboJournal to use the placeholder value ("localhost"). The User host
+RoboJournal to use the placeholder value ("localhost"). The <strong>User host</strong>
 value is only important if you intend to access your journal from a
 remote location. If this is the case, enter the hostname of the remote
-terminal into the field. For instance, you should enter "192.168.2.4"
+terminal into the <strong>User host</strong> field. For instance, you should enter "192.168.2.4"
 into the field if your journal database is stored on 192.168.2.3 and
-you wish to access it from the computer at 192.168.2.4. Enter "%" into
-the <strong>User host</strong> field if you wish to be able to access
+you wish to access it from the computer at 192.168.2.4. Type "%" in
+the <strong>User host</strong> field if you need to be able to access
 the database from <em>any</em> host (not recommended).</li>
   <li>Click the <strong>OK</strong> button to continue.<img
  alt="Figure 10:" src="img/screens/assign_permissions4.png"
@@ -401,7 +399,13 @@ with your user account. From now on, it should be included in your list
 of
 databases that is displayed whenever you log in with your account
 credentials
-on the Journal Selector window. The <strong>Create user account if it
+on the Journal Selector window. The database you just associated with 
+your user account will be added to your <a href="preferences.html#favorite_journals">
+list of known databases</a> the next time you log in or search for 
+databases with the Journal Selector tool.</p>
+
+
+<p>The <strong>Create user account if it
 does not
 exist</strong> checkbox instructs RoboJournal to create a new user
 account for

@@ -25,7 +25,6 @@
 
 #include <QWidget>
 
-
 namespace Ui {
 class MySQLJournalPage;
 }
@@ -59,16 +58,11 @@ private slots:
 
     void on_Username_editingFinished();
 
-
-
-
 private:
     Ui::MySQLJournalPage *ui;
     void PrimaryConfig();
     void PasswordsMatch();
     int PasswordStrength(QString passwd);
-
-
 };
 
 #endif // MYSQLJOURNALPAGE_H

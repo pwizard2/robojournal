@@ -46,7 +46,7 @@ buttons are fully visible for demonstration purposes. </div>
   <li><a href="#new_entry">Writing a New Entry</a></li>
   <li><a href="#modify_entry">Modifying an Existing Entry</a></li>
   <li><a href="#delete_entry">Deleting an Entry</a></li>
-  <li><a href="#navigate">Navigating the Chronological Entry List</a></li>
+  <li><a href="#navigate">Navigating the Timeline</a></li>
   <li><a href="#tag_entry">Tagging an Entry</a></li>
   <li><a href="#export_entry">Exporting an Entry</a></li>
   <li><a href="#search_entry">Searching for an Entry</a></li>
@@ -89,9 +89,8 @@ RoboJournal to restart).<br>
 <h2 id="anatomy">Main Window Anatomy</h2>
 <p>On a superficial level, RoboJournal's main window consists of two
 large
-areas bifurcated by a movable splitter object. The Chronological Entry
-List
-(Item 12 in Figure 2) is always located on the left side of the
+areas bifurcated by a movable splitter object. The Timeline 
+(Item 12 in Figure 2), previously known as the Chronological Entry List, is always located on the left side of the
 splitter while
 the Entry Output Pane (Item 18) is always on the right. The rest of the
 window
@@ -127,7 +126,7 @@ permanently change the toolbar orientation is by selecting a different
 default
 position in <a href="preferences.html#global_preferences">RoboJournal
 Preferences</a>. </p>
-<p>The splitter object separates the Chronological Entry List from the
+<p>The splitter object separates the Timeline from the
 Entry
 Output Pane and determines how much window space is allocated to each.
 By
@@ -136,8 +135,7 @@ half on
 the vertical axis, regardless of window size. If desired, you can drag
 the
 splitter bar left or right to shrink or grow the sizes of the
-Chronological
-Entry List and the Entry Output Pane. Moving the splitter all the way
+Timeline and the Entry Output Pane. Moving the splitter all the way
 left or
 all the way right collapses the object on that side, rendering it
 invisible.
@@ -181,31 +179,31 @@ Establishes a connection to a journal database. </td>
       <td class="left_slim">3.</td>
       <td class="right_fat"><strong>Latest</strong> toolbar button —
 Causes RoboJournal to jump to the most recent entry in the
-Chronological Entry List.</td>
+Timeline.</td>
     </tr>
     <tr>
       <td class="left_slim">4.</td>
       <td class="right_fat"><strong>Previous Entry</strong> toolbar
 button — Displays the entry immediately before the currently-selected
-item in the Chronological Entry List (if possible).</td>
+item in the Timeline (if possible).</td>
     </tr>
     <tr>
       <td class="left_slim">5.</td>
       <td class="right_fat"><strong>Next Entry</strong> toolbar button
 — Displays the entry immediately after the currently-selected item in
-the Chronological Entry List (if possible).</td>
+the Timeline (if possible).</td>
     </tr>
     <tr>
       <td class="left_slim">6.</td>
       <td class="right_fat"><strong>Manage Tags</strong> toolbar button
 — Launches the Manage Tags dialog (affecting the currently-selected
-entry in the Chronological Entry List).</td>
+entry in the Timeline).</td>
     </tr>
     <tr>
       <td class="left_slim">7.</td>
       <td class="right_fat"><strong>Export Content</strong> toolbar
 button — Displays the Entry Exporter dialog (affecting the
-currently-selected entry in the Chronological Entry List).</td>
+currently-selected entry in the Timeline).</td>
     </tr>
     <tr>
       <td class="left_slim">8.</td>
@@ -216,13 +214,12 @@ button — Launches the Editor dialog in "Write" (new entry) mode.</td>
       <td class="left_slim">9.</td>
       <td class="right_fat"><strong>Modify Entry</strong> toolbar
 button — Launches the Editor dialog in "Edit" mode (affecting the
-currently-selected entry in the Chronological Entry List).</td>
+currently-selected entry in the Timeline).</td>
     </tr>
     <tr>
       <td class="left_slim">10.</td>
       <td class="right_fat"><strong>Delete Entry</strong> toolbar
-button— Deletes the currently-selected entry in the Chronological Entry
-List.</td>
+button— Deletes the currently-selected entry in the Timeline.</td>
     </tr>
     <tr>
       <td class="left_slim">11.</td>
@@ -231,16 +228,16 @@ toolbar button — Displays the RoboJournal Preferences dialog.</td>
     </tr>
     <tr>
       <td class="left_slim">12.</td>
-      <td class="right_fat"><strong>Chronological Entry List</strong> —
+      <td class="right_fat"><strong>Timeline</strong> —
 Displays entries (in the current range) from the current journal in
 chronological order from newest to oldest using a hierarchical tree
 format. Entries are usually grouped by the year and month in which they
-were created. </td>
+were created.<br><br><strong>FYI:</strong> This item was known as the Chronological Entry List in previous versions of RoboJournal.</td>
     </tr>
     <tr>
       <td class="left_slim">13.</td>
       <td class="right_fat"><strong>Entries</strong> tab — Clicking
-this tab causes RoboJournal to display the Chronological Entry List on
+this tab causes RoboJournal to display the Timeline on
 the left side of the main window splitter.</td>
     </tr>
     <tr>
@@ -253,7 +250,7 @@ located).</td>
     <tr>
       <td class="left_slim">15.</td>
       <td class="right_fat"><strong>Search</strong> tab — Displays the
-search interface in the place of the Chronological Entry List on the
+search interface in the place of the Timeline on the
 left side of the main window splitter.</td>
     </tr>
     <tr>
@@ -282,7 +279,7 @@ years.</p>
       <td class="left_slim">18.</td>
       <td class="right_fat"><strong>Entry Output Pane</strong> — This
 large area is used to display the currently-selected entry in the
-Chronological Entry List or in the search results. RoboJournal is able
+Timeline or in the search results. RoboJournal is able
 to store separate entries for the <strong>Entries</strong> and <strong>Search</strong>
 tabs simultaneously but each tab may only display one entry at a time
 in the Output Pane.</td>
@@ -479,7 +476,7 @@ connection.</span></p>
 <h2 id="new_entry">Writing a New Entry</h2>
 <p>You can write a new entry at any time once RoboJournal is in
 Connected Mode.
-Each entry is represented by a node in the Chronological Entry List.
+Each entry is represented by a node in the Timeline.
 Unlike
 day, month, or year-level nodes, entry-level nodes are marked with an
 icon and
@@ -534,12 +531,12 @@ can be saved).</div>
 Entry</strong> toolbar button.</span></li>
   <li>RoboJournal displays a confirmation message ("<em>entry_title</em>"
 was successfully added to your journal) if the save was successful.</li>
-  <li>The new entry is added to the Chronological Entry List. If
+  <li>The new entry is added to the Timeline. If
 desired, you can click on the new entry to display its contents in the
 Entry Output Pane:<img alt="Figure 9"
  src="img/screens/mw_new_entry_2.png" class="screenshot" height="589"
  width="750"><span class="caption">Figure 9: The new entry is displayed
-in the Chronological Entry List.</span></li>
+in the Timeline.</span></li>
 </ol>
 <h2 id="modify_entry">Modifying an Existing Entry</h2>
 <p>The Editor dialog allows you to modify existing entries after they
@@ -562,7 +559,7 @@ been saved.</p>
 <p>The following procedure allows you to change an existing entry:</p>
 <ol class="list">
   <li>Select the entry that is to be modified by clicking its node in
-the Chronological Entry List (as shown in the large red oval in Figure
+the Timeline (as shown in the large red oval in Figure
 10). <img alt="Figure 10" src="img/screens/mw_modify1.png"
  class="screenshot" height="589" width="750"><span class="caption">Figure
 10: Selecting the entry to be modified.</span></li>
@@ -613,7 +610,7 @@ should
 back up your journal on a regular basis for this reason alone.</p>
 <ol class="list">
   <li>Select the entry to be deleted by clicking its node in the
-Chronological Entry List (shown in the large oval area in Figure 14). </li>
+Timeline (shown in the large oval area in Figure 14). </li>
   <li>Click the <strong>Delete Entry</strong> toolbar button
 (indicated by the small circle in Figure 14). <img alt="Figure 14"
  src="img/screens/mw_delete1.png" class="screenshot" height="589"
@@ -641,9 +638,9 @@ in the previous step. If you chose to continue with the delete
 operation, the previously-selected entry is gone: <img alt="Figure 16"
  src="img/screens/mw_delete3.png" class="screenshot" height="589"
  width="750"><span class="caption">Figure 16: The entry you deleted is
-no longer displayed in the Chronological Entry List.</span></li>
+no longer displayed in the Timeline.</span></li>
 </ol>
-<h2 id="navigate">Navigating the Chronological Entry List</h2>
+<h2 id="navigate">Navigating the Timeline</h2>
 <p>All entries in the current journal are displayed in ascending
 chronological
 order; the newest entry is always the first on the list while the
@@ -663,7 +660,7 @@ browsing.</span></p>
 <p>Clicking the <strong>Next Entry</strong> or the <strong>Previous
 Entry</strong> toolbar button increments or decrements the current
 entry by one
-record. The focused (selected) entry in the Chronological Entry List
+record. The focused (selected) entry in the Timeline
 automatically jumps to the appropriate adjacent record whenever the
 entry is
 changed this way. If there is no record available before or after the
@@ -684,7 +681,7 @@ the database:<img alt="Figure 18" src="img/screens/mw_navigation2.png"
 18:
 Clicking the <strong>Latest Entry</strong> button always displays the
 first
-(most recent) item in the Chronological Entry List. RoboJournal can
+(most recent) item in the Timeline. RoboJournal can
 also be
 configured to display the latest entry by default.</span></p>
 <h2 id="tag_entry">Tagging an Entry</h2>

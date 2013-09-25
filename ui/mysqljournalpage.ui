@@ -22,6 +22,46 @@
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <layout class="QGridLayout" name="gridLayout">
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>Repeat</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>Password</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLineEdit" name="Password1">
+          <property name="contextMenuPolicy">
+           <enum>Qt::PreventContextMenu</enum>
+          </property>
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter a strong password at least seven characters long into this text box. A strong password consists of a randomized series of integers, upper/lowercase letters, and symbols found on most keyboards.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="echoMode">
+           <enum>QLineEdit::Password</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="JournalName">
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter the name you wish to use for the journal database. RoboJournal automatically enters a combination of your system username and &amp;quot;_journal&amp;quot; but you may use anything else instead.  RoboJournal automatically ensures that all names are completely lowercase and replaces all spaces  with underscore characters ( _ ).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
         <item row="0" column="0">
          <widget class="QLabel" name="label">
           <property name="text">
@@ -32,10 +72,16 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QLineEdit" name="JournalName">
+        <item row="3" column="1">
+         <widget class="QLineEdit" name="Password2">
+          <property name="contextMenuPolicy">
+           <enum>Qt::PreventContextMenu</enum>
+          </property>
           <property name="toolTip">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter the name you wish to use for the journal database. RoboJournal automatically enters a combination of your system username and &amp;quot;_journal&amp;quot; but you may use anything else instead.  RoboJournal automatically ensures that all names are completely lowercase and replaces all spaces  with underscore characters ( _ ).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;To eliminate the possibility of typing mistakes, re-enter the contents of the &lt;span style=&quot; font-weight:600;&quot;&gt;Password&lt;/span&gt; field into this text box. The &lt;span style=&quot; font-weight:600;&quot;&gt;OK&lt;/span&gt; button is unlocked once both fields match.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="echoMode">
+           <enum>QLineEdit::Password</enum>
           </property>
          </widget>
         </item>
@@ -53,46 +99,6 @@
          <widget class="QLineEdit" name="Username">
           <property name="toolTip">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter a username that you wish to use to connect to the journal. RoboJournal automatically suggests your system-level username for this purpose but you may use anything else (except &amp;quot;root&amp;quot;) instead. This username is automatically associated with the new journal. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_4">
-          <property name="text">
-           <string>Password</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QLineEdit" name="Password1">
-          <property name="toolTip">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter a strong password at least seven characters long into this text box. A strong password consists of a randomized series of integers, upper/lowercase letters, and symbols found on most keyboards.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-          <property name="echoMode">
-           <enum>QLineEdit::Password</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label_5">
-          <property name="text">
-           <string>Repeat</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QLineEdit" name="Password2">
-          <property name="toolTip">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;To eliminate the possibility of typing mistakes, re-enter the contents of the &lt;span style=&quot; font-weight:600;&quot;&gt;Password&lt;/span&gt; field into this text box. The &lt;span style=&quot; font-weight:600;&quot;&gt;OK&lt;/span&gt; button is unlocked once both fields match.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-          <property name="echoMode">
-           <enum>QLineEdit::Password</enum>
           </property>
          </widget>
         </item>
