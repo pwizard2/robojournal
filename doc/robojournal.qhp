@@ -29,17 +29,27 @@
 				 
 				 <section title="Getting Started With RoboJournal" ref="getting_started.html">
 					<section title="First-Run Overview" ref="getting_started.html#firstrun"/>
-					<section title="Creating a New Journal Database" ref="getting_started.html#create"/>
-					<section title="Assigning Permissions to a Database" ref="getting_started.html#permissions">
-						<section title="MySQL Procedure" ref="getting_started.html#mysql_procedure"/>
+					<section title="Creating a New Journal Database" ref="getting_started.html#create">
+						<section title="Creating a SQLite-based Journal" ref="getting_started.html#sqlite_journal"/>
+						<section title="Creating a MySQL-based Journal" ref="getting_started.html#mysql_journal"/>
 					</section>
-					<section title="Connecting to an Existing Journal Database" ref="getting_started.html#connect"/>
+					<section title="Assigning Permissions to a Database" ref="getting_started.html#permissions">
+						<section title="Assign Permissions Extension" ref="getting_started.html#assign_permissions"/>
+						<section title="MySQL Manual Procedure (deprecated)" ref="getting_started.html#mysql_procedure"/>
+					</section>
+					<section title="Connecting to an Existing Journal Database" ref="getting_started.html#connect">
+						<section title="Selecting a MySQL Journal" ref="getting_started.html#js_mysql"/>
+					</section>
 				 </section>
 				 
 				 <section title="RoboJournal Fundamentals" ref="fundamentals.html">
 					<section title="Default State" ref="fundamentals.html#default"/>
 					<section title="Main Window Anatomy" ref="fundamentals.html#anatomy"/>
-					<section title="Making a Connection" ref="fundamentals.html#connect"/>
+					<section title="Making a Connection" ref="fundamentals.html#connect">
+						<section title="Initiating a MySQL Connection" ref="fundamentals.html#mysql_init"/>
+						<section title="Initiating a SQLite Connection" ref="fundamentals.html#sqlite_init"/>
+						<section title="Connected Mode" ref="fundamentals.html#connected_mode"/>
+					</section>
 					<section title="Disconnecting" ref="fundamentals.html#disconnect"/>
 					<section title="Writing a New Entry" ref="fundamentals.html#new_entry"/>
 					<section title="Modifying an Existing Entry" ref="fundamentals.html#modify_entry"/>
@@ -52,21 +62,29 @@
 				 <section title="Working With Tags" ref="tags.html">
 					<section title="Tagging Overview" ref="tags.html#Tagging">
 						<section title="Best Practices" ref="tags.html#Best"/>
-						<section title="Accessing the Tagging Interface" ref="tags.html#Accessing"/>
+						<section title="Accessing the Tagging Interface (Standalone)" ref="tags.html#Accessing"/>
+						<section title="Accessing the Tagging Interface (From the Editor)" ref="tags.html#L180"/>
 					</section>
 					<section title="Declaring a New Tag" ref="tags.html#Declaring"/>
-					<section title="Assigning a Tag to an Entry" ref="tags.html#Assigning"/>
-					<section title="Removing a Tag From an Entry" ref="tags.html#Removing"/>
+					<section title="Applying or Removing Tags" ref="tags.html#Assigning"/>
+					<section title="Other Tag-Related Features" ref="tags.html#L306">
+						<section title="Revert Tags" ref="tags.html#L310"/>
+						<section title="Strip Tags" ref="tags.html#L396"/>
+					</section>
 					<section title="Tag Reminder Window" ref="tags.html#tag_reminder"/>
 				 </section>
 				 
 				 <section title="Exporting Journal Entries" ref="export.html">
-					<section title="Overview" ref="export.html#Overview">
-						<section title="Export Formats" ref="export.html#Formats" />
-						<section title="Export Options and Settings" ref="export.html#Anatomy" />
+					<section title="Overview" ref="export.html#Overview"/>
+					<section title="Exporting a Single Entry" ref="export.html#Single">
+						<section title="Single Export Options" ref="export.html#L131"/>
 					</section>
-					<section title="Exporting a Single Entry" ref="export.html#Single" />
-					<section title="Exporting the Entire Journal" ref="export.html#Multi" />
+					<section title="Exporting the Entire Journal" ref="export.html#Multi">
+						<section title="Bulk Export Options" ref="export.html#L253"/>
+					</section>
+					<section title="Creating a Backup of Your Journal with MySQLDump" ref="export.html#L370">
+						<section title="Backup Options" ref="export.html#L419"/>
+					</section>
 				 </section>
 				 
 				 <section title="Using the Search Function" ref="search.html">
@@ -118,12 +136,26 @@
 						<section title="Fonts and Units" ref="preferences.html#fonts_and_units" />
 						<section title="Export Preview" ref="preferences.html#export_preview" />
 					</section>
-					<section title="MySQL Settings Page" ref="preferences.html#mysql_settings_page" />
+					<section title="MySQL Settings Page" ref="preferences.html#mysql_settings_page">
+						<section title="Default Account" ref="preferences.html#default_account"/>
+						<section title="Favorite Journals" ref="preferences.html#favorite_journals"/>
+						<section title="Security" ref="preferences.html#security"/>
+					</section>
 				 </section>
 				 <section title="Frequently Asked Questions" ref="faq.html" />
-				 <section title="Appendix: Table of Shortcut Key Combinations" ref="shortcut_keys.html" />
+				 <section title="Appendix A: Table of Shortcut Key Combinations" ref="shortcut_keys.html" />
+				 <section title="Appendix B: RoboJournal Program Arguments" ref="arguments.html">
+					<section title="Overview" ref="arguments.html#L1810"/>
+					<section title="Date Override" ref="arguments.html#L1584">
+						<section title="Proper Syntax" ref="arguments.html#L1609"/>
+						<section title="Enabling Date Override on Windows" ref="arguments.html#L1622"/>
+						<section title="Enabling Date Override on Unix/Linux" ref="arguments.html#L1653"/>
+					</section>
+					<section title="Disable Safety Protocols" ref="arguments.html#L1062">
+						<section title="Proper Syntax" ref="arguments.html#L1079"/>
+					</section>
+				 </section>
 			 </section>
-             
          </toc>
          
          <keywords>

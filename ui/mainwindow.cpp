@@ -1014,8 +1014,8 @@ void MainWindow::Decorate_GUI(){
 }
 
 //################################################################################################
-// New for 0.4.1 (3/26/13): This displays the help file by launching Qt Assistant as a QProcess. Qt Assistant
-// is stored in different places depending on operating system; thiscode looks for it in the most
+// New for 0.4.1 (3/26/13): This displays the documentation by launching Qt Assistant as a QProcess. Qt Assistant
+// is stored in different places depending on operating system; this code looks for it in the most
 // likely places. Invoking robojournal.qhc causes Qt Assistant to override its default settings by showing ONLY
 // the RoboJournal documentation.
 void MainWindow::ShowHelp(){
@@ -1070,9 +1070,9 @@ void MainWindow::ShowHelp(){
 
         if((collection_file.exists()) && (documentation_file.exists())){
 
-
             QProcess *p=new QProcess();
             QStringList args;
+
 #ifdef _WIN32
             args << "-collectionFile" << "robojournal.qhc"
                  << "-enableRemoteControl";
@@ -1082,18 +1082,14 @@ void MainWindow::ShowHelp(){
             args << "-collectionFile" << collection_path
                  << "-enableRemoteControl";
 #endif
-
             // Spawn the Assistant process with the OS-specific path-to-binary and args.
-            p->start(assistant, args);
+            QString exec=assistant + " " + args.join(" ");
+            p->start(exec, QIODevice::ReadWrite);
 
             // Instruct Qt Assistant to completely expand the TOC immediately after launch. This saves
-            // the user lots of pointless clicking but the expand instruction doesn't always work properly.
-            // Addendum 3/31/13: Hide the Index tab b/c that part isn't finished yet (and probably
-            // won't be for some time).
+            // the user lots of pointless clicking.
             QByteArray input;
-            input.append("expandToc -1;");
-            input.append("hide index\n");
-
+            input.append("expandToc -1\n");
             p->write(input);
 
             if (!p->waitForStarted()){
@@ -1608,7 +1604,7 @@ void MainWindow::PrimaryConfig(){
     //new for RoboJournal 0.4.1:
 
     //set tooltips for mainwindow tabs. This way is less messy than doing it in the ui files.
-    ui->tabWidget->setTabToolTip(0,"Display the Chronological Entry List.");
+    ui->tabWidget->setTabToolTip(0,"Display the Timeline.");
     ui->tabWidget->setTabToolTip(1,"Search for entries containing specific patterns or tags. "
                                  "<span style=\"color: red\">(requires active connection)</span>");
 
@@ -1935,7 +1931,7 @@ void MainWindow::Connect(){
         if((Buffer::override_date < lastdate) && (!Buffer::no_safety)){
             msg="RoboJournal's safety protocols prevent you from adding new entries "
                     "during this session because the date override value you specified (" + Buffer::override_date.toString("MM-dd-yyyy") +
-                    ") predates the most recent entry in the timeline.<br><br>This restriction is necessary because adding new entries in the "
+                    ") predates the most recent entry in the Timeline.<br><br>This restriction is necessary because adding new entries in the "
                     "wrong chronological order causes database corruption.";
 
             ui->WriteButton->setDisabled(true);
