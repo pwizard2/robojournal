@@ -8,7 +8,6 @@ Source:             http://sourceforge.net/projects/robojournal/files/Source/%{n
 URL:                http://sourceforge.net/projects/robojournal
 
 BuildRequires:      qt-mysql, qt-devel, qtwebkit-devel, desktop-file-utils, perl
-Requires:           qt%{?_isa} >= 1:4.7.4-1, qt-mysql%{?_isa} >= 1:4.7.4-1, qtwebkit%{?_isa} >= 2.2.2-8
 
 %description
 
@@ -32,8 +31,7 @@ Documentation (compiled help file and collection file) for RoboJournal %{version
 %{_docdir}/robojournal/robojournal.qhc
 %{_docdir}/robojournal/robojournal.qch
 
-%dir
-%{_docdir}/robojournal/
+%dir %{_docdir}/robojournal/
 
 ######################################################################################################################
 
@@ -41,14 +39,10 @@ Documentation (compiled help file and collection file) for RoboJournal %{version
 
 %setup -q 
 
-# Patch robojournal.pro to remove install instructions for Debian menu items we obviously don't need on Fedora.
-# This is necessary b/c rpmbuild fails if we leave them in the makefile --Will Kraft (9/2/13).
-patch %{_builddir}/%{name}-%{version}/robojournal.pro < %{_builddir}/%{name}-%{version}/pkg/fedora-rpmbuild.patch
-
 %build
 
 # Using the QMake macro requires Fedora >= 18 (all Qt packages on f18 *must* be up-to-date). If you have to package on an
-# older system, comment out line #56 and un-comment line #55.
+# older system, un-comment line #49 and comment out line #50.
 #qmake-qt4 CONFIG+=package robojournal.pro 
 %{qmake_qt4} CONFIG+=package robojournal.pro
 
@@ -56,18 +50,24 @@ make %{?_smp_mflags}
 
 %install
 
+# Install the app to the rpm build directory.
 make INSTALL_ROOT=$RPM_BUILD_ROOT install
 
 # Install desktop file.
 desktop-file-install                                    \
 --dir=${RPM_BUILD_ROOT}%{_datadir}/applications         \
-%{_builddir}/%{buildsubdir}/menus/robojournal.desktop
+menus/robojournal.desktop
 
-# UPDATE 9/2/13: install documentation by hand.
+# Install documentation by hand (9/2/13).
 mkdir $RPM_BUILD_ROOT%{_docdir}
 mkdir $RPM_BUILD_ROOT%{_docdir}/robojournal
 cp doc/robojournal.qhc $RPM_BUILD_ROOT%{_docdir}/robojournal/robojournal.qhc
 cp doc/robojournal.qch $RPM_BUILD_ROOT%{_docdir}/robojournal/robojournal.qch
+
+# Delete Debian menu entry and xpm icon file because they are completely unnecessary on Fedora. This is an easier,
+# more reliable solution than using a patch to keep these items from being installed in the first place. (9/30/13).
+rm -f ${RPM_BUILD_ROOT}%{_datadir}/menu/robojournal
+rm -f ${RPM_BUILD_ROOT}%{_datadir}/pixmaps/robojournal.xpm
 
 %files
 
@@ -79,5 +79,5 @@ cp doc/robojournal.qch $RPM_BUILD_ROOT%{_docdir}/robojournal/robojournal.qch
 
 %changelog
 
-* Thu Sep 27 2013 Will Kraft <pwizard@gmail.com> 0.4.2-1
+* Mon Sep 30 2013 Will Kraft <pwizard@gmail.com> 0.4.2-1
 - Initial release.
