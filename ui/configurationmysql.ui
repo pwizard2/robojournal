@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>329</width>
-    <height>482</height>
+    <height>483</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -140,7 +140,7 @@
          <bool>true</bool>
         </property>
         <attribute name="headerVisible">
-         <bool>true</bool>
+         <bool>false</bool>
         </attribute>
         <attribute name="headerShowSortIndicator" stdset="0">
          <bool>true</bool>
@@ -158,6 +158,11 @@
         <column>
          <property name="text">
           <string>id</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Range</string>
          </property>
         </column>
        </widget>

@@ -105,7 +105,14 @@ void ConfigurationMySQL::Show_Known_Journals(){
     ui->KnownJournals->setHeaderHidden(false);
     ui->KnownJournals->resizeColumnToContents(0);
     ui->KnownJournals->resizeColumnToContents(1);
+    ui->KnownJournals->resizeColumnToContents(3);
+
     ui->KnownJournals->setColumnHidden(2,true);
+
+    // Hide range column for now. Independent range infrastructure is in place for this release but I'm going to wait until
+    // 0.6 to implement it because it would be too many new features at once. --Will Kraft (10/2/13).
+    ui->KnownJournals->setColumnHidden(3,true);
+
     ui->KnownJournals->sortByColumn(0, Qt::AscendingOrder);
     ui->KnownJournals->setRootIsDecorated(0);
 
@@ -127,6 +134,7 @@ void ConfigurationMySQL::Show_Known_Journals(){
             new_item->setText(0,row.at(1));
             new_item->setText(1,row.at(2));
             new_item->setText(2,row.at(0));
+            new_item->setText(3,row.at(5));
 
             new_item->setToolTip(0,"Check this item to select it as a favorite.");
             new_item->setToolTip(1,"Check this item to select it as a favorite.");

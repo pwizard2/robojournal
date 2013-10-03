@@ -148,15 +148,18 @@ void FavoriteCore::Setup_Favorites_Database(){
     base.setDatabaseName(favorite_db_path);
     base.open();
 
+    // Update 10/2/13: Add a column to that table that allows each database to set its own range limit.
+
     QSqlQuery mysql_table_setup("CREATE TABLE mysql_favorites(id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                                "database TEXT, host TEXT, user TEXT, favorite INTEGER, UNIQUE(database) "
-                                "ON CONFLICT IGNORE)",base);
+                                "database TEXT, host TEXT, user TEXT, favorite INTEGER, range INTEGER, "
+                                "UNIQUE(database) ON CONFLICT IGNORE)",base);
 
     mysql_table_setup.exec();
 
     // Use the name "native_favorites" for SQLite table because "sqlite_favorites" is reserved for some reason.
     QSqlQuery sqlite_table_setup("CREATE TABLE native_favorites(id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                                 "database TEXT, favorite INTEGER, UNIQUE(database) ON CONFLICT IGNORE)",base);
+                                 "database TEXT, favorite INTEGER, range INTEGER, UNIQUE(database) ON CONFLICT "
+                                 "IGNORE)",base);
 
     sqlite_table_setup.exec();
 
@@ -173,7 +176,7 @@ QList<QStringList> FavoriteCore::getKnownJournals(){
 
     db.open();
 
-    QSqlQuery fetch("SELECT id, database, host, user, favorite FROM mysql_favorites",db);
+    QSqlQuery fetch("SELECT id, database, host, user, favorite, range FROM mysql_favorites",db);
     fetch.exec();
 
     while(fetch.next()){
@@ -185,6 +188,7 @@ QList<QStringList> FavoriteCore::getKnownJournals(){
         QVariant v2=fetch.value(2);
         QVariant v3=fetch.value(3);
         QVariant v4=fetch.value(4);
+        QVariant v5=fetch.value(5);
 
         QString id=v0.toString();
         QString database=v1.toString();
@@ -192,7 +196,12 @@ QList<QStringList> FavoriteCore::getKnownJournals(){
         QString user=v3.toString();
         QString favorite=v4.toString();
 
-        nextitem << id << database << host << user << favorite;
+        // Hidden independent entry range value for version 0.6. This feature will eventually allow
+        // the user to set a different entry range for each journal instead of being limited to a single global
+        // value like it is now -- Will Kraft (10/2/13).
+        QString range=v5.toString();
+
+        nextitem << id << database << host << user << favorite << range;
 
         known_journals.append(nextitem);
     }
@@ -210,14 +219,23 @@ void FavoriteCore::Add_to_DB(QString database, QString user, QString host){
     QSqlDatabase db=QSqlDatabase::database("@favorites");
     db.open();
 
-    QSqlQuery row("INSERT INTO mysql_favorites(database,host,user,favorite) VALUES(?,?,?,?)", db);
+    QSqlQuery row("INSERT INTO mysql_favorites(database,host,user,favorite,range) VALUES(?,?,?,?,?)", db);
     row.bindValue(0, database);
     row.bindValue(1, host);
     row.bindValue(2, user);
 
-    // Favorite should be set to false by default. Use int because SQLite doesn't support true booleans.
-    row.bindValue(3, 0);
+    // Favorite should be set to false by default (unless the item is the default db). Use int because SQLite
+    // doesn't support true booleans.
+    int favorite=0;
 
+    // Bugfix (10/2/13): Make sure the default database is marked as a favorite from the very beginning.
+    if(database==Buffer::defaultdatabase)
+        favorite=1;
+
+    row.bindValue(3, favorite);
+
+    // Use the global entry range as the original value (10/2/13).
+    row.bindValue(4,Buffer::entryrange);
 
     row.exec();
     favorite_db.close();
@@ -297,7 +315,7 @@ QStringList FavoriteCore::GetHosts(){
 
 //###################################################################################################
 // Do maintenance to see if any databases need to be removed from the favorites list. This is used to clean up
-// in case a database got dropped or moved. After all ,it wouldn't do to have RoboJournal try to connect to a
+// in case a database got dropped or moved. After all, it wouldn't do to have RoboJournal try to connect to a
 // "known" database that doesn't exist anymore. favorites_list refers to the current list of favorites from
 // favorites.db while dynamic_list is the list of databases generated from MySQL queries.
 // New for 0.5 --Will Kraft (8/20/13).
@@ -309,8 +327,16 @@ bool FavoriteCore::Do_Maintenance(QList<QStringList> favorites_list, QStringList
 
     for(int h=0; h < favorites_list.size(); h++){
         QStringList next=favorites_list.at(h);
-        QString next_item=next.at(1);
-        known_journals.append(next_item);
+
+        // Bugfix 10/3/13: Restrict the known_journals list to items on the default host (usually localhost/127.0.0.1) only.
+        // This keeps the maintenance function from incorrectly deleting items from other hosts b/c they don't appear on
+        // the journal list from localhost. I intend to improve this function later to check multiple hosts but this serves
+        // as a band-aid solution for now --Will Kraft.
+        QString nexthost=next.at(2);
+        if(nexthost==Buffer::defaulthost){
+            QString next_item=next.at(1);
+            known_journals.append(next_item);
+        }
     }
 
     known_journals.sort();
@@ -320,22 +346,21 @@ bool FavoriteCore::Do_Maintenance(QList<QStringList> favorites_list, QStringList
     // the same, abort. If not, remove the entry that is not on the list from MySQL.
 
     if(known_journals==dynamic_list){
-        cout << "OUTPUT: The list of known databases is still up-to-date. No further action is required right now." << endl;
+        cout << "OUTPUT: The list of known MySQL/MariaDB databases is still up-to-date. No further action is required right now." << endl;
 
-
-        //Scrap code for showing the contents of the two lists. Used for debugging, comment out in production builds.
         /*
-         *cout << "\n\ndynamic_list items:" << endl;
+        //Scrap code for showing the contents of the two lists. Used for debugging, comment out in production builds.
+        cout << "\n\ndynamic_list items:" << endl;
 
-                for(int i=0; i<dynamic_list.count(); i++){
-                    cout << dynamic_list.at(i).toStdString() << endl;
-                }
+        for(int i=0; i<dynamic_list.count(); i++){
+            cout << dynamic_list.at(i).toStdString() << endl;
+        }
 
-                cout << "\n\nknown_journals items:" << endl;
+        cout << "\n\nknown_journals items:" << endl;
 
-                for(int i=0; i<known_journals.count(); i++){
-                    cout << known_journals.at(i).toStdString() << endl;
-                }
+        for(int i=0; i<known_journals.count(); i++){
+            cout << known_journals.at(i).toStdString() << endl;
+        }
         */
 
         return false;
@@ -346,8 +371,9 @@ bool FavoriteCore::Do_Maintenance(QList<QStringList> favorites_list, QStringList
         for(int i=0; i<known_journals.size(); i++){
 
             QString next=known_journals.at(i);
-            //cout << "Next item: " << next.toStdString() << endl;
 
+            // Delete an item that appears in the known_journals list but is NOT currently in the dynamic list from MySQL.
+            // It's safe to assume those items no longer exist if the
             if((!dynamic_list.contains(next)) && (Buffer::defaultdatabase != next)){
                 Remove_from_DB(next);
                 cout << "OUTPUT: Removed " << next.toStdString() << " from the known journals list." << endl;
@@ -377,9 +403,12 @@ void FavoriteCore::SQLite_Add_to_DB(QString database, bool favorite){
     QSqlDatabase db=QSqlDatabase::database("@favorites");
     db.open();
 
-    QSqlQuery row("INSERT INTO native_favorites(database,favorite) VALUES(?,?)", db);
+    QSqlQuery row("INSERT INTO native_favorites(database,favorite,range) VALUES(?,?,?)", db);
     row.bindValue(0, database);
     row.bindValue(1, fav_value);
+
+    // Use the global entry range as the original value (10/2/13).
+    row.bindValue(2,Buffer::entryrange);
 
     row.exec();
     favorite_db.close();
@@ -395,7 +424,7 @@ QList<QStringList> FavoriteCore::SQLite_getKnownJournals(){
 
     db.open();
 
-    QSqlQuery fetch("SELECT id, database, favorite FROM native_favorites",db);
+    QSqlQuery fetch("SELECT id, database, favorite, range FROM native_favorites",db);
     fetch.exec();
 
     while(fetch.next()){
@@ -405,12 +434,18 @@ QList<QStringList> FavoriteCore::SQLite_getKnownJournals(){
         QVariant v0=fetch.value(0);
         QVariant v1=fetch.value(1);
         QVariant v2=fetch.value(2);
+        QVariant v3=fetch.value(3);
 
         QString id=v0.toString();
         QString database=v1.toString();
         QString favorite=v2.toString();
 
-        nextitem << id << database << favorite;
+        // Hidden independent entry range value for version 0.6. This feature will eventually allow
+        // the user to set a different entry range for each journal instead of being limited to a single global
+        // value like it is now -- Will Kraft (10/2/13).
+        QString range=v3.toString();
+
+        nextitem << id << database << favorite << range;
 
         known_journals.append(nextitem);
     }
