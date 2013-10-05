@@ -509,3 +509,96 @@ QStringList FavoriteCore::GetSQLiteFavorites(){
 
     return favorites;
 }
+
+//###################################################################################################
+// Scan the contents of the My Journals folder and add all databases if they aren't in the favorite db already.
+// This feature prevents the user from having to use the Journal Selector to add the databases again.
+// --Will Kraft (10/5/13).
+void FavoriteCore::Auto_Populate_SQLite_Favorites(){
+    using namespace std;
+
+    if(Buffer::use_my_journals){
+
+        QString homepath=QDir::homePath() + QDir::separator() + "Documents" + QDir::separator() + "My Journals";
+        QDir favorite_dir(homepath);
+
+        // Set exclusion filters for the file list (files only, no "." and ".." items, and no symlinks).
+        favorite_dir.setFilter(QDir::Files|QDir::NoDotAndDotDot|QDir::NoSymLinks);
+        QStringList fileList=favorite_dir.entryList();
+
+        for(int i=0; i < fileList.size(); i++){
+            QString next_file=fileList.at(i);
+
+#ifdef unix
+            // Shorten the pathname to the user's home directory to unix symbol "~". This helps to prevent
+            // horizontal scrolling in the QListItemWidgets that show the sqlite journals.
+            homepath=homepath.replace(QDir::homePath(),"~");
+#endif
+            next_file=homepath + QDir::separator() + next_file;
+            next_file=QDir::toNativeSeparators(next_file);
+
+            // The database already has measures to prevent duplicate entries so there is no reason to
+            // see if an entry already exists before adding it.
+            if(next_file==Buffer::sqlite_default){
+                SQLite_Add_to_DB(next_file,1);
+            }
+            else{
+                SQLite_Add_to_DB(next_file,0);
+
+                // Used for debugging, comment out this line in production builds.
+                //cout << "Added " << next_file.toStdString() << endl;
+            }
+        }
+    }
+}
+
+//###################################################################################################
+// Remove specified QString "database" from the list of known SQLite databases. --Will Kraft (10/5/13).
+void FavoriteCore::Remove_SQLite_Favorite(QString database){
+
+    QSqlDatabase db=QSqlDatabase::database("@favorites");
+    db.open();
+
+    QString sql_query="DELETE FROM native_favorites WHERE database=?";
+
+    QSqlQuery remove(sql_query,db);
+    remove.bindValue(0,database);
+    remove.exec();
+
+    db.close();
+}
+
+//###################################################################################################
+// Scan the contents of the favorites db and verify that each file listed there actually exists. If a file
+// does not exist anymore, remove it from the database --Will Kraft (10/5/13).
+void FavoriteCore::Do_Maintenance_SQLite(){
+    using namespace std;
+
+    QStringList favorites=GetSQLiteFavorites();
+
+    for(int i=0; i < favorites.size(); i++){
+
+        QString next_file=favorites.at(i);
+
+#ifdef unix
+        // Replace shorthand ~ to home path on Linux systems. This prevents the app from removing journals that
+        // still exist because Qt doesn't recognize the home abbreviation symbol.
+        next_file=next_file.replace("~",QDir::homePath());
+#endif
+
+        QFile current(next_file);
+
+        if(!current.exists()){
+
+#ifdef unix
+            // Shorten the pathname to the user's home directory to unix symbol "~". This helps to prevent
+            // horizontal scrolling in the QListItemWidgets that show the sqlite journals.
+            next_file=next_file.replace(QDir::homePath(),"~");
+#endif
+            Remove_SQLite_Favorite(next_file);
+
+            cout << "OUTPUT: Removing " << next_file.toStdString() <<
+                    " from the list of known journals because that file no longer exists." << endl;
+        }
+    }
+}

@@ -56,6 +56,9 @@ public:
     QList<QStringList> SQLite_getKnownJournals();
     void SQLite_setFavoritebyName(QString name, bool favorite);
     QStringList GetSQLiteFavorites();
+    void Auto_Populate_SQLite_Favorites();
+    void Do_Maintenance_SQLite();
+    void Remove_SQLite_Favorite(QString database);
 
 private:
 

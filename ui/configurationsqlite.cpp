@@ -13,6 +13,16 @@ ConfigurationSQLite::ConfigurationSQLite(QWidget *parent) :
 {
     ui->setupUi(this);
     PopulateForm();
+
+    FavoriteCore f;
+
+    // Check for new SQLite journals in the "My Journals folder (10/5/13).
+    f.Auto_Populate_SQLite_Favorites();
+
+    // Remove any items that no longer exist from the database (10/5/13).
+    f.Do_Maintenance_SQLite();
+
+    // Populate the UI with the list of known journals after all maintenance procedures are done.
     Show_Known_Journals();
 }
 
