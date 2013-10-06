@@ -1,7 +1,6 @@
 /*
     This file is part of RoboJournal.
     Copyright (c) 2013 by Will Kraft <pwizard@gmail.com>.
-    MADE IN USA
 
     RoboJournal is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -43,10 +42,151 @@
 
 QString ExportCreateDump::export_path;
 QString ExportCreateDump::mysqldump_exec;
-bool ExportCreateDump::use_compress;
+
+//################################################################################################
+// Derived from SQLiteJournalPage::HarvestData(). This function is used to make any necessary
+// syntax changes to the Output filename (*.sql) before passing it along to MySQLDump (10/6/13).
+bool ExportCreateDump::Verify_Output_FileName(){
+    using namespace std;
+
+    QRegExp test("[a-z|A-Z|0-9|_|-]*.sql");
+
+    if(test.exactMatch(ui->DumpFileName->text())){
+        return true;
+    }
+    else{
+        QMessageBox m;
+        m.information(this,"RoboJournal","The <b>Output filename</b> is currently invalid. RoboJournal will attempt to fix it for you.");
+
+        // Attempt to fix the filename automatically
+        QString filename=ui->DumpFileName->text();
+
+        // Give 3 tries to fix the filename before returning false
+        for(int i=0; i<3; i++){
+            filename=filename.simplified();
+            filename=filename.replace(" ","_");
+            QRegExp bad_extension(".sql.+");
+
+            if(filename.contains(bad_extension)){
+                filename=filename.remove(bad_extension);
+                filename=filename.append(".sql");
+            }
+
+            ui->DumpFileName->setText(filename);
+
+            if(test.exactMatch(filename)){
+                cout << "OUTPUT: Fixed errors in file name: " << filename.toStdString() << endl;
+                break;
+                return true;
+            }
+        }
+
+        if(!test.exactMatch(filename)){
+            m.critical(this,"RoboJournal","The <b>Output filename</b> is still invalid. Please fix the filename manually (it "
+                       "must end with \".sql\" and contain no spaces).");
+            return false;
+        }
+    }
+}
+
+//################################################################################################
+// (6/3/13) Process raw filename. This function was originally part of SqliteJournalPage
+// but was retrofitted for ExportCreateDump class on 10/6/13. -- Will Kraft
+void ExportCreateDump::ProcessFilename(QString filename, bool valid){
+
+    int length=filename.length()-4;
+
+    QRegExp extension(".sql");
+
+    // save possible regexp for filename: [a-zA-Z0-9_]*.db
+
+    if((!filename.contains(extension)) && (!filename.isEmpty())  && (valid)){
+
+        filename.append(".sql");
+
+        if(length != 0){
+            filename=filename.toLower();
+            ui->DumpFileName->setText(filename);
+            ui->DumpFileName->setCursorPosition(ui->DumpFileName->text().size()-4);
+
+            if(filename.length()-4==0){
+                ui->DumpFileName->clear();
+            }
+
+            if(filename.count(extension) > 1){
+                filename.truncate(filename.length()-4);
+                ui->DumpFileName->setText(filename);
+                ui->DumpFileName->setCursorPosition(ui->DumpFileName->text().size()-4);
+            }
+        }
+        else{
+            ui->DumpFileName->clear();
+        }
+    }
+}
+
+//################################################################################################
+// (6/3/13) Validation function for filename. This function was originally part of SqliteJournalPage
+// but was retrofitted for ExportCreateDump class on 10/6/13. -- Will Kraft
+bool ExportCreateDump::FilenameValid(QString filename){
+
+    if(filename.isEmpty()){
+        return false;
+    }
+
+    QRegExp spaces("\\s+");
+    if(spaces.exactMatch(filename)){
+        return false;
+    }
+
+    return true;
+}
+
+//################################################################################################
+// Check to see if the output file is valid. This was oeriginally supposed to check file size but that
+// is completely unreliable for some reason. For now, just display a generic output message. --Will Kraft (10/6/13).
+void ExportCreateDump::Validate_Dump_File(QString database, QString filename){
+    using namespace std;
+
+    QFile dump(filename);
+
+    if(dump.open(QFile::ReadOnly| QIODevice::Text)){
+
+        QMessageBox n;
+
+        //Use a general alert message for the time being instead of checking output file size. I originally used QFile::size
+        // for this task but found it to be unreliable because it ALWAYS returns zero even if the file contains data. This may
+        // be a bug in Qt.  --Will Kraft (10/6/13).
+
+        n.information(this,"RoboJournal","RoboJournal attempted to export the current contents of <b>" + database +
+                      "</b> to disk.<br><br>The operation succeeded if the output file size is larger than 0 KiB.");
+        cout << "File size: " << dump.size() << " bytes. " << endl;
+
+        /*
+        if(dump.size() > 0){
+
+            n.information(this,"RoboJournal","The current contents of <b>" + database + "</b> have been backed up to <b>"
+                          + filename + "</b>.");
+
+        }
+        else{
+            n.critical(this,"RoboJournal","The backup operation was unsuccessful because the output file is empty. "
+                       "Please verify that you entered the correct root password and try again.");
+        }
+        */
+
+        dump.close();
+    }
+}
 
 //################################################################################################
 bool ExportCreateDump::HarvestData(){
+
+    // Abort if the Output filename is bad (i.e. if it fails a regexp test). This prevents filenames with spaces
+    // or forbidden characters from being created (10/6/13).
+    bool good_filename=Verify_Output_FileName();
+    if(!good_filename)
+        return false;
 
     QString filename=ui->OutputPath->text() + QDir::separator() + ui->DumpFileName->text();
 
@@ -63,7 +203,7 @@ bool ExportCreateDump::HarvestData(){
 #endif
 
     ExportCreateDump::mysqldump_exec=ui->DumpPath->text();
-    ExportCreateDump::use_compress=ui->AutoCompress->isChecked();
+
     return true;
 }
 
@@ -129,26 +269,9 @@ QString ExportCreateDump::dumpBrowse(QString current_exec)
 // basically, loop the EntryExporter form back on itself. $filename refers to the complete absolute path of the output
 // file while $mysqldump_path should contain the full absolute path to mysqldump. $compress tells us
 // whether gzip should be used. --Will Kraft, (8/14/13).
-bool ExportCreateDump::Create_SQL_Dump(QString filename, QString mysqldump_path, bool compress)
+bool ExportCreateDump::Create_SQL_Dump(QString filename, QString mysqldump_path)
 {
     using namespace std;
-
-    /*
-
-    QFile gzip("/bin/gzip");
-
-    //check for gzip one last time just in case
-    if(!gzip.exists()){
-        cout << "OUTPUT: Warning-- /bin/gzip is not available. The dump file will NOT be compressed!" << endl;
-        compress=false;
-    }
-
-#ifdef _WIN32
-    compress=false;
-    cout << "OUTPUT: Detected Windows operating system-- the dump file will NOT be compressed." << endl;
-#endif
-
-*/
 
     filename=QDir::toNativeSeparators(filename);
 
@@ -165,6 +288,8 @@ bool ExportCreateDump::Create_SQL_Dump(QString filename, QString mysqldump_path,
         cout << "OUTPUT: Aborting! mysqldump does not exist at " << mysqldump_path.toStdString() << endl;
         return false;
     }
+
+
 
     // Ask before overwrite if a dump file with the same path+name already exists.
     if(output.exists()){
@@ -216,19 +341,10 @@ bool ExportCreateDump::Create_SQL_Dump(QString filename, QString mysqldump_path,
 
     dump->start(mysqldump_path, QIODevice::ReadWrite);
 
-    QMessageBox n;
+    Validate_Dump_File(database,filename);
 
-    //    if(output.size()){
-    //        n.critical(this,"RoboJournal","The backup operation was unsuccessful because the output file is empty. "
-    //                   "Please verify that you entered the correct root password and try again.");
-    //        output.deleteLater();
-    //        return false;
-    //    }
-    //    else{
-    n.information(this,"RoboJournal","The current contents of <b>" + database + "</b> have been backed up to <b>"
-                  + filename + "</b>.");
     return true;
-    //}
+
 }
 
 
@@ -303,16 +419,6 @@ void ExportCreateDump::PrimaryConfig(){
     ui->DumpFileName->setReadOnly(true);
 
     ui->DumpPath->setText(mysqldump_path);
-
-    // Set backup options depending on if the system has gzip installed.
-    //    if(gzip_available){
-    //        ui->AutoCompress->setChecked(gzip_available);
-    //    }
-    //    else{
-    ui->AutoCompress->setChecked(false);
-    ui->AutoCompress->setVisible(false);
-    //ui->AutoCompress->setEnabled(false);
-    // }
 }
 
 //################################################################################################
@@ -322,16 +428,16 @@ QString ExportCreateDump::setFilename(){
     QDateTime t=QDateTime::currentDateTime();
     QString datestamp;
     switch(Buffer::date_format){
-        case 0:
-            datestamp=t.toString("dd-MM-yyyy");
+    case 0:
+        datestamp=t.toString("dd-MM-yyyy");
         break;
 
-        case 1:
-            datestamp=t.toString("MM-dd-yyyy");
+    case 1:
+        datestamp=t.toString("MM-dd-yyyy");
         break;
 
-        case 2:
-            datestamp=t.toString("yyyy-MM-dd");
+    case 2:
+        datestamp=t.toString("yyyy-MM-dd");
         break;
     }
 
@@ -349,6 +455,9 @@ void ExportCreateDump::on_AllowCustomName_toggled(bool checked)
     else{
         ui->DumpFileName->setReadOnly(true);
         ui->DumpFileName->clearFocus();
+        ui->DumpFileName->clear();
+        // Reset original filename (10/6/13).
+        ui->DumpFileName->setText(setFilename());
     }
 }
 
@@ -367,3 +476,19 @@ void ExportCreateDump::on_DumpBrowse_clicked()
     QString dump=dumpBrowse(ui->DumpPath->text());
     ui->DumpPath->setText(dump);
 }
+
+//################################################################################################
+// slot that makes sure that a custom filename always has a .sql extension (10/6/13).
+void ExportCreateDump::on_DumpFileName_textChanged(const QString &arg1)
+{
+    if(ui->AllowCustomName->isChecked()){
+        QString filename=arg1;
+        filename=filename.trimmed();
+        filename=filename.toLower();
+
+        bool valid=FilenameValid(filename);
+        ProcessFilename(filename,valid);
+    }
+}
+
+//################################################################################################

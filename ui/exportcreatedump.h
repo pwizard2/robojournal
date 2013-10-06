@@ -1,7 +1,6 @@
 /*
     This file is part of RoboJournal.
     Copyright (c) 2013 by Will Kraft <pwizard@gmail.com>.
-    MADE IN USA
 
     RoboJournal is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -39,13 +38,11 @@ class ExportCreateDump : public QWidget
 public:
     explicit ExportCreateDump(QWidget *parent = 0);
     ~ExportCreateDump();
-    bool Create_SQL_Dump(QString filename, QString mysqldump_path, bool compress);
+    bool Create_SQL_Dump(QString filename, QString mysqldump_path);
     bool HarvestData();
 
     static QString export_path;
     static QString mysqldump_exec;
-    static bool use_compress;
-
     
 private slots:
     void on_AllowCustomName_toggled(bool checked);
@@ -54,6 +51,8 @@ private slots:
 
     void on_DumpBrowse_clicked();
 
+    void on_DumpFileName_textChanged(const QString &arg1);
+
 private:
     Ui::ExportCreateDump *ui;
     void PrimaryConfig();
@@ -61,11 +60,15 @@ private:
 
     QString gzip_path;
     QString mysqldump_path;
-
+    void Validate_Dump_File(QString database, QString filename);
     bool gzip_available;
 
     QString outputBrowse(QString current_dir);
     QString dumpBrowse(QString current_exec);
+
+    bool FilenameValid(QString filename);
+    bool Verify_Output_FileName();
+    void ProcessFilename(QString filename, bool valid);
 };
 
 #endif // EXPORTCREATEDUMP_H

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>349</width>
-    <height>396</height>
+    <height>381</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -161,20 +161,9 @@
         </item>
        </layout>
       </item>
-      <item>
-       <widget class="QCheckBox" name="AutoCompress">
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;(GNU/Linux only)&lt;/span&gt; If checked, RoboJournal uses the common &lt;span style=&quot; font-style:italic;&quot;&gt;gzip&lt;/span&gt; utility to package the SQL backup into a .gz archive. Once compressed, the backup is saved in the output location as &lt;span style=&quot; font-style:italic;&quot;&gt;[filename].sql.gz&lt;/span&gt;. Compression often reduces file size by at least 50%.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="text">
-         <string>Compress the backup to save &amp;disk space</string>
-        </property>
-       </widget>
-      </item>
      </layout>
      <zorder>label_2</zorder>
      <zorder></zorder>
-     <zorder>AutoCompress</zorder>
     </widget>
    </item>
    <item>

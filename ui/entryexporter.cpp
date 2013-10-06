@@ -288,7 +288,6 @@ bool EntryExporter::Validate(){
         }
     }
 
-
     // This is the new MySQL dump feature, so no real validation is needed.
     if(current_page==2){
         this->setCursor(Qt::WaitCursor);
@@ -297,13 +296,16 @@ bool EntryExporter::Validate(){
         bool success=false;
 
         if(getsettings)
-        success=dump->Create_SQL_Dump(ExportCreateDump::export_path,ExportCreateDump::mysqldump_exec,ExportCreateDump::use_compress);
+            success=dump->Create_SQL_Dump(ExportCreateDump::export_path,ExportCreateDump::mysqldump_exec);
 
         this->setCursor(Qt::ArrowCursor);
         return success;
     }
-}
 
+    else{
+        return false;
+    }
+}
 
 
 //################################################################################################
