@@ -56,7 +56,7 @@ bool ExportCreateDump::Verify_Output_FileName(){
     }
     else{
         QMessageBox m;
-        m.information(this,"RoboJournal","The <b>Output filename</b> is currently invalid. RoboJournal will attempt to fix it for you.");
+        m.information(this,"RoboJournal","The <b>Output filename</b> you specified is invalid. RoboJournal will attempt to fix it for you.");
 
         // Attempt to fix the filename automatically
         QString filename=ui->DumpFileName->text();
@@ -87,6 +87,8 @@ bool ExportCreateDump::Verify_Output_FileName(){
             return false;
         }
     }
+
+    return false;
 }
 
 //################################################################################################
@@ -140,43 +142,6 @@ bool ExportCreateDump::FilenameValid(QString filename){
     }
 
     return true;
-}
-
-//################################################################################################
-// Check to see if the output file is valid. This was oeriginally supposed to check file size but that
-// is completely unreliable for some reason. For now, just display a generic output message. --Will Kraft (10/6/13).
-void ExportCreateDump::Validate_Dump_File(QString database, QString filename){
-    using namespace std;
-
-    QFile dump(filename);
-
-    if(dump.open(QFile::ReadOnly| QIODevice::Text)){
-
-        QMessageBox n;
-
-        //Use a general alert message for the time being instead of checking output file size. I originally used QFile::size
-        // for this task but found it to be unreliable because it ALWAYS returns zero even if the file contains data. This may
-        // be a bug in Qt.  --Will Kraft (10/6/13).
-
-        n.information(this,"RoboJournal","RoboJournal attempted to export the current contents of <b>" + database +
-                      "</b> to disk.<br><br>The operation succeeded if the output file size is larger than 0 KiB.");
-        cout << "File size: " << dump.size() << " bytes. " << endl;
-
-        /*
-        if(dump.size() > 0){
-
-            n.information(this,"RoboJournal","The current contents of <b>" + database + "</b> have been backed up to <b>"
-                          + filename + "</b>.");
-
-        }
-        else{
-            n.critical(this,"RoboJournal","The backup operation was unsuccessful because the output file is empty. "
-                       "Please verify that you entered the correct root password and try again.");
-        }
-        */
-
-        dump.close();
-    }
 }
 
 //################################################################################################
@@ -278,8 +243,6 @@ bool ExportCreateDump::Create_SQL_Dump(QString filename, QString mysqldump_path)
     QFile output(filename);
     QFile mysqldump(mysqldump_path);
 
-
-
     // Stop the dump process if the mysqldump executable does not exist (usually at /usr/bin/mysqldump on Unix/Linux)
     if(!mysqldump.exists()){
         QMessageBox m;
@@ -288,8 +251,6 @@ bool ExportCreateDump::Create_SQL_Dump(QString filename, QString mysqldump_path)
         cout << "OUTPUT: Aborting! mysqldump does not exist at " << mysqldump_path.toStdString() << endl;
         return false;
     }
-
-
 
     // Ask before overwrite if a dump file with the same path+name already exists.
     if(output.exists()){
@@ -312,8 +273,7 @@ bool ExportCreateDump::Create_SQL_Dump(QString filename, QString mysqldump_path)
             return false;
     }
 
-    // complete the dump
-    QProcess* dump=new QProcess();
+    // Set dump parameters-- have the process write to the file located at $filename.
     dump->setStandardOutputFile(filename,QIODevice::ReadWrite);
 
 #ifdef unix
@@ -325,8 +285,8 @@ bool ExportCreateDump::Create_SQL_Dump(QString filename, QString mysqldump_path)
     mysqldump_path = mysqldump_path + " " + args.join("");
 #endif
 
-    // Windows requires the command to be structured differently (9/23/13). The executable needs to be enclosed within quotation
-    // marks to keep Windows from breaking it up.
+    // Windows requires the command to be structured differently (9/23/13). The absolute path to mysqldump.exe must be
+    // enclosed within quotation marks to keep Windows from breaking up the string (thereby causing the command to fail).
 #ifdef _WIN32
     QStringList args;
     args << "-uroot ";
@@ -336,21 +296,27 @@ bool ExportCreateDump::Create_SQL_Dump(QString filename, QString mysqldump_path)
     mysqldump_path = + "\"" + mysqldump_path+ "\" " + args.join("");
 #endif
 
-    //cout << "cmd: " << args.join("").toStdString() << endl;
-    //cout << mysqldump_path.toStdString() << endl;
-
+    // Run the dump operation and wait for it to finish. We need to force the app to wait or the finished()
+    // signal never gets triggered, causing the window to close without displaying any output (10/9/13).
     dump->start(mysqldump_path, QIODevice::ReadWrite);
+    dump->waitForFinished();
 
-    Validate_Dump_File(database,filename);
+    // Prevent the window from closing if the current dump operation fails (10/9/13).
+    if(output.size()==0)
+        return false;
 
+    // Close the Export Content window only if the backup operation succeeded (10/9/13).
     return true;
-
 }
-
 
 //################################################################################################
 
 void ExportCreateDump::PrimaryConfig(){
+
+    // Declare dump as a global QProcess because we need to assign slots to it; CheckOutputFile needs
+    // to run when the process is finished. --Will Kraft (10/9/13).
+    dump=new QProcess();
+    connect(dump, SIGNAL(finished(int)), this, SLOT(CheckOutputFile()));
 
     // OS-specific blocks that set variables depending on what the system has available.
 #ifdef unix
@@ -450,6 +416,7 @@ void ExportCreateDump::on_AllowCustomName_toggled(bool checked)
 {
     if(checked){
         ui->DumpFileName->setReadOnly(false);
+        ui->DumpFileName->clear();
         ui->DumpFileName->setFocus();
     }
     else{
@@ -462,7 +429,6 @@ void ExportCreateDump::on_AllowCustomName_toggled(bool checked)
 }
 
 //################################################################################################
-
 void ExportCreateDump::on_FileBrowse_clicked()
 {
     QString path=outputBrowse(ui->OutputPath->text());
@@ -470,7 +436,6 @@ void ExportCreateDump::on_FileBrowse_clicked()
 }
 
 //################################################################################################
-
 void ExportCreateDump::on_DumpBrowse_clicked()
 {
     QString dump=dumpBrowse(ui->DumpPath->text());
@@ -492,3 +457,20 @@ void ExportCreateDump::on_DumpFileName_textChanged(const QString &arg1)
 }
 
 //################################################################################################
+// This slot is used to see if the output operation was successful by checking the output file size.
+// This MUST be triggered only after the QProcess terminates or QFile::Size() will always return 0.
+// --Will Kraft (10/9/13).
+void ExportCreateDump::CheckOutputFile(){
+
+    QMessageBox n;
+    QFile output(export_path);
+
+    if(output.size() > 0){
+        n.information(this,"RoboJournal","RoboJournal has successfully backed up the current contents of <b>" +
+                      Buffer::database_name + "</b>.");
+    }
+    else{
+        n.critical(this,"RoboJournal","The backup operation failed. Make sure you entered the correct "
+                   "MySQL/MariaDB root password and try again.");
+    }
+}

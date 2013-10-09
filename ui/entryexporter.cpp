@@ -118,8 +118,7 @@ void EntryExporter::PrimaryConfig(){
     }
 
     // Ensure the first page is visible when window opens.
-    stack->setCurrentIndex(0);
-
+    stack->setCurrentIndex(0);   
 
 }
 

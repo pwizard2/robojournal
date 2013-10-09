@@ -26,6 +26,7 @@
 #define EXPORTCREATEDUMP_H
 
 #include <QWidget>
+#include <QProcess>
 
 namespace Ui {
 class ExportCreateDump;
@@ -53,6 +54,8 @@ private slots:
 
     void on_DumpFileName_textChanged(const QString &arg1);
 
+    void CheckOutputFile();
+
 private:
     Ui::ExportCreateDump *ui;
     void PrimaryConfig();
@@ -60,7 +63,6 @@ private:
 
     QString gzip_path;
     QString mysqldump_path;
-    void Validate_Dump_File(QString database, QString filename);
     bool gzip_available;
 
     QString outputBrowse(QString current_dir);
@@ -69,6 +71,8 @@ private:
     bool FilenameValid(QString filename);
     bool Verify_Output_FileName();
     void ProcessFilename(QString filename, bool valid);
+
+    QProcess* dump;
 };
 
 #endif // EXPORTCREATEDUMP_H
