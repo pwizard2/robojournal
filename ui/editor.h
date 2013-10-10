@@ -113,9 +113,6 @@ private slots:
 
     void on_bold_toggled(bool checked);
 
-
-
-
 private:
     Ui::Editor *ui;
 

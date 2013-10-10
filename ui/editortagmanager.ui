@@ -111,9 +111,9 @@
   <widget class="QLineEdit" name="GrepBox">
    <property name="geometry">
     <rect>
-     <x>82</x>
+     <x>102</x>
      <y>10</y>
-     <width>121</width>
+     <width>101</width>
      <height>25</height>
     </rect>
    </property>
@@ -133,6 +133,26 @@
    <property name="icon">
     <iconset resource="../images.qrc">
      <normaloff>:/icons/clear-text.png</normaloff>:/icons/clear-text.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="AutoTagButton">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>10</y>
+     <width>26</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Apply Auto-Tagging</string>
+   </property>
+   <property name="text">
+    <string>Apply Auto-Tagging</string>
+   </property>
+   <property name="icon">
+    <iconset resource="../images.qrc">
+     <normaloff>:/icons/task--plus.png</normaloff>:/icons/task--plus.png</iconset>
    </property>
   </widget>
  </widget>

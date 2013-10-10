@@ -90,9 +90,7 @@ private slots:
 
     void query();
 
-
-
-
+    void on_AutoTagButton_clicked();
 
 private:
     Ui::EditorTagManager *ui;
@@ -101,6 +99,7 @@ private:
     void DefineTag();
     void RevertTags();
     void EasyDeclareTag(QString input);
+    void AutoTag(QString id);
 
     bool no_tags;
 

@@ -1117,3 +1117,5 @@ void Editor::on_bold_toggled(bool checked)
         }
     }
 }
+
+

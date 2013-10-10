@@ -46,6 +46,7 @@
 #include <QColor>
 #include <QStyledItemDelegate>
 #include <QPainter>
+#include "sql/mysqlcore.h"
 
 TagListDelegate::TagListDelegate(QObject *parent)
     : QStyledItemDelegate(parent){
@@ -331,11 +332,13 @@ void EditorTagManager::PrimaryConfig(){
         ui->NewTag->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         ui->StripTags->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         ui->RevertTags->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->AutoTagButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     }
 
     // Populate toolbar with loose UI elements.
     bar->addWidget(ui->NewTag);
     bar->addWidget(ui->StripTags);
+    bar->addWidget(ui->AutoTagButton);
     bar->addSeparator();
     bar->addWidget(ui->GrepBox);
     bar->addWidget(ui->ClearButton);
@@ -368,13 +371,15 @@ void EditorTagManager::PrimaryConfig(){
     // Bugfix (9/1/13): Disable Revert Tags button to start with. Signals and Slots should control when it should be enabled.
     ui->RevertTags->setDisabled(true);
 
-
     connect(ui->GrepBox, SIGNAL(returnPressed()), this, SLOT(query()));
     connect(this, SIGNAL(Sig_Revert_Off()), this,SLOT(Revert_Off()));
     connect(this, SIGNAL(Sig_Revert_On()), this,SLOT(Revert_On()));
 
-    // use TagListDelegate to draw lines between list items
+    // use TagListDelegate to draw lines between list items.
     ui->AvailableTags->setItemDelegate(new TagListDelegate(this));
+
+    if((Buffer::editmode) && (EditorTagManager::standalone_tagger))
+        ui->AutoTagButton->setDisabled(true);
 }
 
 // ###################################################################################################
@@ -565,4 +570,126 @@ void EditorTagManager::Revert_Off(){
 // ###################################################################################################
 void EditorTagManager::Revert_On(){
     ui->RevertTags->setDisabled(false);
+}
+
+// ###################################################################################################
+// This function uses regular expressions to check the body text for words that match existing tags
+// and checks all matching tags it finds. This saves the user the trouble of having to go through the
+// list by hand. New for 0.5, --Will Kraft (10/10/13).
+void EditorTagManager::AutoTag(QString id){
+
+    //Clear all current tags
+    // purge all current checked items...
+    QTreeWidgetItemIterator it(ui->AvailableTags);
+
+    while(*it){
+        QTreeWidgetItem *current=*it;
+
+        current->setFont(0, nonselected);
+        //current->setBackgroundColor(0, plain_bg);
+        current->setForeground(0, plain_fg);
+        current->setCheckState(0,Qt::Unchecked);
+
+        it++;
+    }
+
+
+    // First, get the list of tags to check
+    TaggingShared ts;
+    QStringList available_tags=ts.TagAggregator();
+
+    // Next, get the body text for the current entry. Editor::body should hold it if the entry is open
+    // in the Editor, otherwise pull it directly from the database.
+    QString body=Editor::body;
+
+    if(Editor::body.isEmpty()){
+
+        // Pull data from a MySQL/MariaDB database
+        if(Buffer::backend=="MySQL"){
+
+            MySQLCore m;
+            QList<QString> list=m.RetrieveEntryFull(id);
+
+            body=list.at(5);
+
+            // Replace post-processing features with plain text to make the entry easy to edit. This will be a temporary
+            // work-around until Rich Text is fully supported. It would not do to have people see &mdash; and wonder what it is.
+            // The special characters will be restored anyway once the user saves the entry.
+            body=body.replace("&ldquo;","\"");
+            body=body.replace("&rdquo;","\"");
+            body=body.replace("&mdash;","--");
+            body=body.replace("&ndash;","-");
+            body=body.replace("&hellip;","...");
+            body=body.replace("&rsquo;","\'");
+            body=body.replace(QRegExp("</?sup>"),"");
+
+            //0.5 bugfix (9/8/13) Convert nbsp back to tab stops.
+            body=body.replace(QRegExp("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"), "\t");
+        }
+    }
+
+    // QStringList "matches" holds all matching tags in the body text.
+    QStringList matches;
+
+    // Loop through the list of available tags and look for all occurences of a word.
+    for(int i=0; i<available_tags.size(); i++){
+
+        QString next_item=available_tags.at(i);
+
+        if(body.contains(next_item,Qt::CaseInsensitive))
+            matches << next_item;
+    }
+
+    // Automatically check all matching items in the Available Tags list.
+    for(int j=0; j < matches.size(); j++){
+
+        QString next_match=matches.at(j);
+
+        QTreeWidgetItemIterator it2(ui->AvailableTags);
+        while(*it2){
+
+            QTreeWidgetItem *current=*it2;
+
+            if(current->text(0)==next_match){
+                current->setCheckState(0,Qt::Checked);
+                current->setFont(0, selected);
+                current->setForeground(0,selected_fg);
+            }
+
+            it2++;
+        }
+    }
+
+    QMessageBox m;
+    if(matches.isEmpty()){
+        m.critical(this,"RoboJournal","RoboJournal could not find any matching tags to apply.");
+    }
+    else{
+        m.information(this,"RoboJournal","RoboJournal scanned the entry and automatically applied "
+                      + QString::number(matches.size()) + " tag(s).");
+    }
+}
+
+// ###################################################################################################
+void EditorTagManager::on_AutoTagButton_clicked()
+{
+    if((!Buffer::editmode) && (!EditorTagManager::standalone_tagger)){
+        // Eventually add code to process an unsaved entry but for now just return to prevent a segfault (10/10/13).
+        std::cout << "OUTPUT: Unsaved entries don't support auto-tagging yet!" << std::endl;
+        return;
+    }
+    else{
+
+        if(EditorTagManager::standalone_tagger){
+            emit Sig_UnlockTaggerApplyButton();
+
+            AutoTag(Tagger::id_num);
+        }
+        else{
+            AutoTag(Buffer::editentry);
+        }
+
+        // Sig_LockTaggerApplyButton();
+        emit Sig_Revert_On();
+    }
 }
