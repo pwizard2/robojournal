@@ -377,9 +377,6 @@ void EditorTagManager::PrimaryConfig(){
 
     // use TagListDelegate to draw lines between list items.
     ui->AvailableTags->setItemDelegate(new TagListDelegate(this));
-
-    if((Buffer::editmode) && (EditorTagManager::standalone_tagger))
-        ui->AutoTagButton->setDisabled(true);
 }
 
 // ###################################################################################################
@@ -578,22 +575,6 @@ void EditorTagManager::Revert_On(){
 // list by hand. New for 0.5, --Will Kraft (10/10/13).
 void EditorTagManager::AutoTag(QString id){
 
-    //Clear all current tags
-    // purge all current checked items...
-    QTreeWidgetItemIterator it(ui->AvailableTags);
-
-    while(*it){
-        QTreeWidgetItem *current=*it;
-
-        current->setFont(0, nonselected);
-        //current->setBackgroundColor(0, plain_bg);
-        current->setForeground(0, plain_fg);
-        current->setCheckState(0,Qt::Unchecked);
-
-        it++;
-    }
-
-
     // First, get the list of tags to check
     TaggingShared ts;
     QStringList available_tags=ts.TagAggregator();
@@ -640,6 +621,27 @@ void EditorTagManager::AutoTag(QString id){
             matches << next_item;
     }
 
+    QMessageBox m;
+
+    if(matches.isEmpty()){
+        m.critical(this,"RoboJournal","RoboJournal could not find any matching tags to apply.");
+        emit Sig_LockTaggerApplyButton();
+        return;
+    }
+
+    // purge all current checked items...
+    QTreeWidgetItemIterator it(ui->AvailableTags);
+    while(*it){
+        QTreeWidgetItem *current=*it;
+
+        current->setFont(0, nonselected);
+        //current->setBackgroundColor(0, plain_bg);
+        current->setForeground(0, plain_fg);
+        current->setCheckState(0,Qt::Unchecked);
+
+        it++;
+    }
+
     // Automatically check all matching items in the Available Tags list.
     for(int j=0; j < matches.size(); j++){
 
@@ -647,7 +649,6 @@ void EditorTagManager::AutoTag(QString id){
 
         QTreeWidgetItemIterator it2(ui->AvailableTags);
         while(*it2){
-
             QTreeWidgetItem *current=*it2;
 
             if(current->text(0)==next_match){
@@ -660,14 +661,9 @@ void EditorTagManager::AutoTag(QString id){
         }
     }
 
-    QMessageBox m;
-    if(matches.isEmpty()){
-        m.critical(this,"RoboJournal","RoboJournal could not find any matching tags to apply.");
-    }
-    else{
         m.information(this,"RoboJournal","RoboJournal scanned the entry and automatically applied "
                       + QString::number(matches.size()) + " tag(s).");
-    }
+
 }
 
 // ###################################################################################################
