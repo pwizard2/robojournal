@@ -62,49 +62,61 @@ Since the journal databases are abstract entities, it is normally
 difficult to
 extract data from them unless you dump the entire database to disk as a
 file
-(the most common backup method). Fortunately, RoboJournal's Entry
-Exporter tool
-provides a way to directly extract journal content (in part or in
-whole) from
-its database in a form that can be easily backed up or copied.</p>
-<p>RoboJournal's entry exporter has been dramatically expanded and
-re-designed
-in version 0.5 (and later). The new design features a page-based
+(the most common backup method). Fortunately, RoboJournal
+provides a way to directly extract journal content in a form that can
+be easily backed up or copied.</p>
+<p>To begin, select
+the entry you wish to export (or any entry, if you wish to export the
+entire
+journal) and click the <span style="font-weight: bold;">Export Entry</span>
+toolbar button.<img alt="Figure 1" src="img/screens/mw_export1.png"
+ class="screenshot" height="584" width="750"><span class="caption">Figure
+1: Select an entry (indicated
+by the
+large oval) and click the <strong>Export Content</strong> toolbar
+button to
+display the Export Content dialog.</span></p>
+<p>This action displays the Export Content window:</p>
+<p><img alt="Figure 1" src="img/screens/mw_export2.png"
+ class="screenshot" height="591" width="751"><span class="caption">Figure
+2: The Export Content window
+is
+displayed with the selected entry already pre-loaded.</span></p>
+<p>RoboJournal's export functionality has been dramatically improved
+in version 0.5. The new design features a page-based
 interface,
 much like the new <a href="getting_started.html#create">Journal Creator</a>
 and
 the new <a href="preferences.html">Preferences</a> window introduced
 in version
-0.4. Unlike the old entry exporter (which separated functionality by
+0.4. The Export Content window offers a menu with three items on the
+left side of its interface with its remaining space devoted to options
+related to the currently-selected item. Unlike the old entry exporter
+(which separated functionality by
 use of a
 tabbed widget in a way that could potentially be confusing) the new
 design
 separates functionality by page; each page is dedicated to a a specific
 type of
-export operation. The Export Content window always displays the <strong>Export
-single entry</strong> page by default. </p>
-<p>The entry exporter is invoked the same was as in previous versions.
-Select
-the entry you wish to export (or any entry, if you wish to export the
-entire
-journal) and click the Export Entry toolbar button:<img alt="Figure 1"
- src="img/screens/mw_export1.png" class="screenshot" height="584"
- width="750"><span class="caption">Figure 1: Select an entry (indicated
-by the
-large oval) and click the <strong>Export Content</strong> toolbar
-button to
-display the Export Content dialog.</span></p>
-<p>The Export Content window is displayed:<img alt="Figure 1"
- src="img/screens/mw_export2.png" class="screenshot" height="591"
- width="751"><span class="caption">Figure 2: The Export Content window
-is
-displayed with the selected entry already pre-loaded.</span></p>
+export function. <br>
+</p>
+<p>The Export Content window always displays the <strong>Export
+single entry</strong> page by default. You can switch to a different
+page at any time by clicking a different item on the list. When you
+click the <span style="font-weight: bold;">Export</span> button,
+RoboJournal applies actions that are relevant to the current page only
+(all settings on inactive pages are ignored).&nbsp; The following
+sections describe the various pages (and their functions) in greater
+detail. <br>
+</p>
 <h2 id="Single">Exporting a Single Entry</h2>
-<p>Once invoked, the Export Content window is already configured to
+<p>When initially opened, the Export Content window is automatically
+configured to
 export the
-entry you previously selected on the RoboJournal main window: <img
- alt="Figure 3" src="img/screens/export_single.png" class="screenshot"
- height="453" width="576"><span class="caption">Figure 3: The "Export
+entry you previously selected from the Timeline on the RoboJournal main
+window: <img alt="Figure 3" src="img/screens/export_single.png"
+ class="screenshot" height="453" width="576"><span class="caption">Figure
+3: The "Export
 Single
 Entry" page allows you to export the current (selected) entry from the
 main
@@ -112,24 +124,18 @@ window.</span></p>
 <p>If you need to change any of the settings (including file type or
 export
 destination), you must do so before beginning the export operation.
-Unlike
-other procedures, further user input is completely optional; you only
-need to
-click the <strong>Export</strong> button (as indicated by the red oval
-in
-Figure 3) to complete the process using the current options. The
-current
-options determine the type and properties of the file produced by the
-next
-export operation.</p>
-<p>Exporting a single entry is designed to be extremely simple since
+Exporting a single entry is designed to be extremely simple since
 most
-configuration requirements are preset in advance. Generally, you only
+configuration requirements are pre-set in advance. The available
+options control the output file properties.<br>
+</p>
+<p>Generally, you only
 need to
 click the <strong>Export</strong> button (shown in Figure 3) after
 selecting
 the entry you wish to export from the Timeline on the
-RoboJournal main window.</p>
+RoboJournal main window. The Export Content window provides output and
+automatically closes once its task is finished.</p>
 <h3 id="L131">Single Export Options</h3>
 <p>The following table explains each option on the Export Single Entry
 page in
@@ -139,7 +145,11 @@ greater detail:</p>
     <tr>
       <td class="left">Filename</td>
       <td class="right">The <strong>Filename</strong> field determines
-what name the entry content is saved under on your hard drive.</td>
+what name the entry content is saved under on your hard drive. This
+field is read-only by default and cannot be edited directly unless the <span
+ style="font-weight: bold;">Allow custom filename</span> option is
+enabled.<br>
+      </td>
     </tr>
     <tr>
       <td class="left">Export Location</td>
@@ -199,18 +209,19 @@ new bulk export method where a journal can be exported as a set of
 discrete
 files. This new feature produces the same results as manually exporting
 the
-journal one entry at a time but is much faster and more efficient. Each
+entire journal one entry at a time but is much more efficient and
+convenient. Under this new method, each
 entry
 is saved individually and is placed with the others in a predetermined
 destination folder bearing the name of the journal and the export date.
 </p>
-<p>The bulk export feature is accessed by the following procedure:</p>
+<p>You can access the bulk-export function through the following
+procedure:</p>
 <ol class="list">
   <li>On the RoboJournal main window, select an entry from the
-Chronological Entry List and click the <strong>Export Content</strong>
+Timeline and click the <strong>Export Content</strong>
 toolbar button (as shown in Figure 1) to display the Export Content
-window. It does not matter which entry you choose if you intend to
-export the entire journal.</li>
+window. It does not matter which entry you choose to begin this process.</li>
   <li>The Export Content window is displayed. Select the <strong>Export
 Entire Journal</strong> list item on the left side of the Export
 Content window to display the appropriate options:<img alt="Figure 4"
@@ -220,12 +231,15 @@ Journal" page allows you to output the contents of an entire journal in
 one simple process.</span></li>
   <li>Adjust the options in the Export Location, Export Format, and
 Export Options groups if necessary. Each of these settings and their
-effects are addressed in-depth in the following section. The default
+effects are addressed in-depth in the Bulk Export Options section. The
+default
 configuration produces a single HTML-based file (with the journal name
 and the export date in the filename) with all journal entries arranged
 in descending order.</li>
-  <li>Click the <strong>Export</strong> button to complete the
-operation.</li>
+  <li>Click the <strong>Export</strong> button to continue. The Export
+Content window provides output and automatically closes once its task
+is finished.<br>
+  </li>
 </ol>
 <h3 id="L253">Bulk Export Options</h3>
 <p>The following table contains a full explanation of all options that
@@ -286,7 +300,7 @@ Each file in the folder is marked with the journal name, its position
 in the series, and the entry title (i.e.
 sample_journal_1_of_15_sample_entry.html). </p>
       <p>Exporting the journal as a series of individual entries always
-sorts the content in ascending chronological order, with the oldest
+arranges the content in ascending chronological order, with the oldest
 entry being the first item in the set. </p>
       </td>
     </tr>
@@ -375,7 +389,7 @@ root account) before it can complete the dump operation.&nbsp;This
 prevents the possibility of edit collisions, which are attempts by two
 or more users to modify the same database simultaneously. <br>
   </li>
-  <li>The Export Content window closes itself once the operation is
+  <li>The Export Content window closes itself once its task is
 complete.<br>
   </li>
 </ol>
@@ -391,7 +405,8 @@ file:</p>
     <tr>
       <td class="left">Output filename<br>
       </td>
-      <td class="right">The Output filename field determines what name
+      <td class="right">The <strong>Output filename</strong> field
+determines the name
 the entry content is saved under on your hard drive. This file always
 has a <em>.sql</em> extension.<br>
       </td>
@@ -401,13 +416,22 @@ has a <em>.sql</em> extension.<br>
       </td>
       <td class="right">If checked, RoboJournal allows you to choose
 your own filename by directly editing the contents of the <strong>Output
-filename</strong> field (which are otherwise read-only). When you click
-the <strong>Export</strong> button, RoboJournal automatically appends
-the correct extension if the current filename does not end with <i>.sql</i>.<br>
+filename</strong> field (which are otherwise read-only). Despite the
+freedom this feature offers, RoboJournal strictly enforces certain
+guidelines:<br>
       <br>
-When this field is unchecked, RoboJournal strictly enforces a [journal
-name]_[export date].sql naming convention (i.e.
-"sample_journal_09-23-2013").<br>
+When you click
+the <strong>Export</strong> button, RoboJournal corrects any errors it
+detects in the filename, including replacing spaces with underscore
+("_") characters and removing forbidden characters like [semi]colons,
+slashes, etc. As you edit the text in the field, RoboJournal constantly
+ensures the filename you have chosen ends with an appropriate <i>.sql</i>
+extension at all times.<br>
+      <br>
+When the Allow <strong>custom filename field</strong> is unchecked,
+RoboJournal utilizes a <i>[journal
+name]_[export date].sql</i> naming convention (i.e.
+sample_journal_09-23-2013) for all output files. <br>
       </td>
     </tr>
     <tr>
@@ -424,10 +448,12 @@ this field to select a different folder.<br>
       </td>
       <td class="right">This field lists the absolute path to the
 MySQLDump executable on your computer. Click the <strong>Browse</strong>
-button to the right of this field to manually locate MySQLDump. While
+button to the right of this field to manually locate MySQLDump. <br>
+      <br>
+While
 running on Windows, RoboJournal restricts the file browser to
 mysqldump.exe but there are no such restrictions on Linux/Unix because
-executables have no extensions on those operating systems. Once you
+executables have no extension on those operating systems. Once you
 have located the MySQLDump executable with the file browser,
 RoboJournal saves the selected pathname so you will not need to browse
 for it again.<br>
