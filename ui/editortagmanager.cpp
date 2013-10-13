@@ -617,14 +617,14 @@ void EditorTagManager::AutoTag(QString id){
 
         QString next_item=available_tags.at(i);
 
-        if(body.contains(next_item,Qt::CaseInsensitive))
+        if((body.contains(next_item,Qt::CaseInsensitive)) && !next_item.isEmpty())
             matches << next_item;
     }
 
     QMessageBox m;
 
     if(matches.isEmpty()){
-        m.critical(this,"RoboJournal","RoboJournal could not find any matching tags to apply.");
+        m.critical(this,"RoboJournal","RoboJournal could not find any appropriate tags to apply.");
         emit Sig_LockTaggerApplyButton();
         return;
     }
