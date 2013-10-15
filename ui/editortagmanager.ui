@@ -25,26 +25,6 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QToolButton" name="RevertTags">
-   <property name="geometry">
-    <rect>
-     <x>240</x>
-     <y>10</y>
-     <width>22</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Revert tag changes&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
-   <property name="text">
-    <string>...</string>
-   </property>
-   <property name="icon">
-    <iconset resource="../images.qrc">
-     <normaloff>:/icons/arrow_rotate_clockwise.png</normaloff>:/icons/arrow_rotate_clockwise.png</iconset>
-   </property>
-  </widget>
   <widget class="QTreeWidget" name="AvailableTags">
    <property name="geometry">
     <rect>
@@ -73,17 +53,17 @@
     <rect>
      <x>42</x>
      <y>10</y>
-     <width>161</width>
+     <width>181</width>
      <height>25</height>
     </rect>
    </property>
   </widget>
-  <widget class="QToolButton" name="ClearButton">
+  <widget class="QToolButton" name="FilterButton">
    <property name="geometry">
     <rect>
-     <x>210</x>
+     <x>235</x>
      <y>10</y>
-     <width>26</width>
+     <width>41</width>
      <height>23</height>
     </rect>
    </property>
@@ -92,7 +72,13 @@
    </property>
    <property name="icon">
     <iconset resource="../images.qrc">
-     <normaloff>:/icons/clear-text.png</normaloff>:/icons/clear-text.png</iconset>
+     <normaloff>:/icons/funnel.png</normaloff>:/icons/funnel.png</iconset>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="popupMode">
+    <enum>QToolButton::MenuButtonPopup</enum>
    </property>
   </widget>
   <widget class="QToolButton" name="TagActions">

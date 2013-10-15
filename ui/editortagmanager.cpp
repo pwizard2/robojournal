@@ -291,31 +291,52 @@ void EditorTagManager::PrimaryConfig(){
 
 
     //Set up Tag Actions Menu (10/14/13).
-    QMenu *tag_actions=new QMenu();
+    QMenu* tag_actions=new QMenu();
 
-    QAction *defineAction = new QAction("Declare new tag", this);
+    QAction* defineAction = new QAction("Declare new tag", this);
     QIcon declare(":/icons/tag--pencil.png");
     defineAction->setIcon(declare);
     defineAction->setIconVisibleInMenu(true);
 
-    QAction *stripAction = new QAction("Strip all tags", this);
+    QAction* stripAction = new QAction("Strip all tags", this);
     QIcon strip(":/icons/tag--minus.png");
     stripAction->setIcon(strip);
     stripAction->setIconVisibleInMenu(true);
 
-    QAction *autoAction = new QAction("Auto-tag entry (experimental)", this);
+    QAction* autoAction = new QAction("Auto-tag entry (experimental)", this);
     QIcon autotag(":/icons/task--plus.png");
     autoAction->setIcon(autotag);
     autoAction->setIconVisibleInMenu(true);
 
+    revertAction= new QAction("Revert Tags",this);
+    QIcon rev(":/icons/arrow_rotate_clockwise.png");
+    revertAction->setIcon(rev);
+    revertAction->setIconVisibleInMenu(true);
+
     connect(defineAction, SIGNAL(triggered()), this, SLOT(newtag_slot()));
     connect(stripAction, SIGNAL(triggered()), this, SLOT(striptags_slot()));
     connect(autoAction, SIGNAL(triggered()), this, SLOT(autotag_slot()));
+    connect(revertAction, SIGNAL(triggered()), this, SLOT(revert_slot()));
 
     tag_actions->addAction(defineAction);
+    tag_actions->addSeparator();
     tag_actions->addAction(stripAction);
     tag_actions->addAction(autoAction);
+    tag_actions->addSeparator();
+    tag_actions->addAction(revertAction);
+
     ui->TagActions->setMenu(tag_actions);
+
+    // Create filter/clear menu (10/14/13).
+    QMenu* filterMenu=new QMenu();
+
+    QAction* clearAction = new QAction("Clear Search", this);
+    QIcon clear(":/icons/clear-text.png");
+    clearAction->setIcon(clear);
+    clearAction->setIconVisibleInMenu(true);
+
+    filterMenu->addAction(clearAction);
+    ui->FilterButton->setMenu(filterMenu);
 
     // Establish font colors for [un]selected items based on current OS Palette.
     const QPalette pal;
@@ -355,9 +376,10 @@ void EditorTagManager::PrimaryConfig(){
 
     // Populate toolbar with loose UI elements.
     bar->addWidget(ui->TagActions);
-    bar->addSeparator();
     bar->addWidget(ui->GrepBox);
-    bar->addWidget(ui->ClearButton);
+
+    // Merge filter and clear button (10/14/13).
+    bar->addWidget(ui->FilterButton);
 
     //tighten up toolbar spacing for 0.5 (7/15/13).
     const QSize barSize(16,16);
@@ -376,16 +398,8 @@ void EditorTagManager::PrimaryConfig(){
     // Get list of tags
     CreateTagList();
 
-    // Add the fat spacer and the RevertTags button now because the layout has been applied
-    // by this point. This means the spacer should stretch to fit the layout (docking the button on the right).
-    //    QWidget* fat_spacer = new QWidget();
-    //    fat_spacer->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
-    //    bar->addWidget(fat_spacer);
-    bar->addSeparator();
-    bar->addWidget(ui->RevertTags);
-
     // Bugfix (9/1/13): Disable Revert Tags button to start with. Signals and Slots should control when it should be enabled.
-    ui->RevertTags->setDisabled(true);
+    revertAction->setDisabled(true);
 
     connect(ui->GrepBox, SIGNAL(returnPressed()), this, SLOT(query()));
     connect(this, SIGNAL(Sig_Revert_Off()), this,SLOT(Revert_Off()));
@@ -464,7 +478,7 @@ void EditorTagManager::newtag_slot()
 
 // ###################################################################################################
 
-void EditorTagManager::on_RevertTags_clicked()
+void EditorTagManager::revert_slot()
 {
     RevertTags();
 }
@@ -577,12 +591,12 @@ void EditorTagManager::query(){
 
 // ###################################################################################################
 void EditorTagManager::Revert_Off(){
-    ui->RevertTags->setDisabled(true);
+    revertAction->setDisabled(true);
 }
 
 // ###################################################################################################
 void EditorTagManager::Revert_On(){
-    ui->RevertTags->setDisabled(false);
+    revertAction->setDisabled(false);
 }
 
 // ###################################################################################################
@@ -677,9 +691,8 @@ void EditorTagManager::AutoTag(QString id){
         }
     }
 
-        m.information(this,"RoboJournal","RoboJournal scanned the entry and automatically applied "
-                      + QString::number(matches.size()) + " tag(s).");
-
+    m.information(this,"RoboJournal","RoboJournal scanned the entry and automatically applied "
+                  + QString::number(matches.size()) + " tag(s).");
 }
 
 // ###################################################################################################

@@ -82,7 +82,7 @@ private slots:
 
     void newtag_slot();
 
-    void on_RevertTags_clicked();
+    void revert_slot();
 
     void on_AvailableTags_itemClicked(QTreeWidgetItem *item);
 
@@ -113,6 +113,9 @@ private:
     QFont nonselected;
 
     QColor adjustColor(QColor input);
+
+    // Change the revert button to a QMenu item (10/14/13).
+    QAction* revertAction;
 
 };
 
