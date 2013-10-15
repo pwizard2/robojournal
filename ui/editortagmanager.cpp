@@ -289,6 +289,34 @@ void EditorTagManager::DefineTag(){
 // 6/10/13: Create toolbar and layout for this class.
 void EditorTagManager::PrimaryConfig(){
 
+
+    //Set up Tag Actions Menu (10/14/13).
+    QMenu *tag_actions=new QMenu();
+
+    QAction *defineAction = new QAction("Declare new tag", this);
+    QIcon declare(":/icons/tag--pencil.png");
+    defineAction->setIcon(declare);
+    defineAction->setIconVisibleInMenu(true);
+
+    QAction *stripAction = new QAction("Strip all tags", this);
+    QIcon strip(":/icons/tag--minus.png");
+    stripAction->setIcon(strip);
+    stripAction->setIconVisibleInMenu(true);
+
+    QAction *autoAction = new QAction("Auto-tag entry (experimental)", this);
+    QIcon autotag(":/icons/task--plus.png");
+    autoAction->setIcon(autotag);
+    autoAction->setIconVisibleInMenu(true);
+
+    connect(defineAction, SIGNAL(triggered()), this, SLOT(newtag_slot()));
+    connect(stripAction, SIGNAL(triggered()), this, SLOT(striptags_slot()));
+    connect(autoAction, SIGNAL(triggered()), this, SLOT(autotag_slot()));
+
+    tag_actions->addAction(defineAction);
+    tag_actions->addAction(stripAction);
+    tag_actions->addAction(autoAction);
+    ui->TagActions->setMenu(tag_actions);
+
     // Establish font colors for [un]selected items based on current OS Palette.
     const QPalette pal;
     const QBrush bg=pal.midlight();
@@ -325,20 +353,8 @@ void EditorTagManager::PrimaryConfig(){
     const QFont grepFont("Sans",9);
     ui->GrepBox->setFont(grepFont);
 
-    if(Buffer::show_icon_labels){
-        ui->NewTag->setText("Define Tag");
-        ui->RevertTags->setText("Revert Tags");
-
-        ui->NewTag->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-        ui->StripTags->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-        ui->RevertTags->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-        ui->AutoTagButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    }
-
     // Populate toolbar with loose UI elements.
-    bar->addWidget(ui->NewTag);
-    bar->addWidget(ui->StripTags);
-    bar->addWidget(ui->AutoTagButton);
+    bar->addWidget(ui->TagActions);
     bar->addSeparator();
     bar->addWidget(ui->GrepBox);
     bar->addWidget(ui->ClearButton);
@@ -441,7 +457,7 @@ void EditorTagManager::LoadTags(QString id){
 
 // ###################################################################################################
 
-void EditorTagManager::on_NewTag_clicked()
+void EditorTagManager::newtag_slot()
 {
     DefineTag();
 }
@@ -475,7 +491,7 @@ void EditorTagManager::on_AvailableTags_itemClicked(QTreeWidgetItem *item)
 
 
 // ###################################################################################################
-void EditorTagManager::on_StripTags_clicked()
+void EditorTagManager::striptags_slot()
 {
     if(Buffer::showwarnings){
         QMessageBox m;
@@ -667,7 +683,7 @@ void EditorTagManager::AutoTag(QString id){
 }
 
 // ###################################################################################################
-void EditorTagManager::on_AutoTagButton_clicked()
+void EditorTagManager::autotag_slot()
 {
     if((!Buffer::editmode) && (!EditorTagManager::standalone_tagger)){
         // Eventually add code to process an unsaved entry but for now just return to prevent a segfault (10/10/13).

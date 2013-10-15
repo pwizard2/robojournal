@@ -80,17 +80,17 @@ signals:
     
 private slots:
 
-    void on_NewTag_clicked();
+    void newtag_slot();
 
     void on_RevertTags_clicked();
 
     void on_AvailableTags_itemClicked(QTreeWidgetItem *item);
 
-    void on_StripTags_clicked();
+    void striptags_slot();
 
     void query();
 
-    void on_AutoTagButton_clicked();
+    void autotag_slot();
 
 private:
     Ui::EditorTagManager *ui;
