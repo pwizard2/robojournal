@@ -1,8 +1,6 @@
 /*
     This file is part of RoboJournal.
     Copyright (c) 2012 by Will Kraft <pwizard@gmail.com>.
-    MADE IN USA
-
 
     RoboJournal is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -248,8 +246,8 @@ void ConfigurationMySQL::on_KnownJournals_itemDoubleClicked(QTreeWidgetItem *ite
         if(Buffer::showwarnings){
 
 
-            int choice=m.question(this,"RoboJournal","Do you want to replace the current default journal with <b>"
-                                  + new_choice + "@" + new_host +"</b>?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+            int choice=m.question(this,"RoboJournal","Do you want to set <b>" + new_choice + "@" + new_host +
+                                  "</b> as the new default MySQL journal?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
 
             switch(choice){
 

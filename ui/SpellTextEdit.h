@@ -1,7 +1,7 @@
 /*
     This file is part of RoboJournal.
     Copyright (c) 2013 by Will Kraft <pwizard@gmail.com>.
-    MADE IN USA
+    
 
     Will Kraft (11/27/12): This code was originally Jan Sundermeyer's work
     (sunderme@web.de). I made some minor changes and adapted it for

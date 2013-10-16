@@ -1,7 +1,6 @@
 /*
     This file is part of RoboJournal.
     Copyright (c) 2013 by Will Kraft <pwizard@gmail.com>.
-    MADE IN USA
 
     RoboJournal is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -335,6 +334,8 @@ void EditorTagManager::PrimaryConfig(){
     clearAction->setIcon(clear);
     clearAction->setIconVisibleInMenu(true);
 
+    connect(clearAction, SIGNAL(triggered()), this, SLOT(clear_slot()));
+
     filterMenu->addAction(clearAction);
     ui->FilterButton->setMenu(filterMenu);
 
@@ -361,6 +362,12 @@ void EditorTagManager::PrimaryConfig(){
     nonselected.setWeight(QFont::Normal);
     //nonselected.setUnderline(false);
     nonselected.setStyleStrategy(QFont::PreferAntialias);
+
+    // Show text label for Actions Menu if button text labels are enabled (10/16/13).
+    if(Buffer::show_icon_labels){
+        ui->TagActions->setText("Tag Menu");
+        ui->TagActions->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    }
 
     // Create toolbar.
     QToolBar *bar = new QToolBar(this);
@@ -490,11 +497,19 @@ void EditorTagManager::on_AvailableTags_itemClicked(QTreeWidgetItem *item)
         item->setCheckState(0, Qt::Unchecked);
         item->setFont(0, nonselected);
         item->setForeground(0, plain_fg);
+
+        // remove the item from the list of active tags (10/16/13).
+        active_tags.removeAll(item->text(0));
+
     }
     else{
         item->setCheckState(0, Qt::Checked);
         item->setFont(0, selected);
         item->setForeground(0,selected_fg);
+
+        // Add the item to the list of active tags (10/16/13).
+        if(!active_tags.contains(item->text(0)))
+            active_tags << item->text(0);
     }
 
     emit Sig_UnlockTaggerApplyButton();
@@ -717,4 +732,135 @@ void EditorTagManager::autotag_slot()
         // Sig_LockTaggerApplyButton();
         emit Sig_Revert_On();
     }
+}
+
+// ###################################################################################################
+// Clear the current filter pattern. --Will Kraft (10/16/13).
+void EditorTagManager::clear_slot(){
+    ui->GrepBox->clear();
+}
+
+// ###################################################################################################
+// Return a stringlist of tags that contain (REGEXP) the provided "filter" string. This function is called
+// from the filter_results_slot() slot whenever the filter textbox is changed --Will Kraft (10/16/13).
+QStringList EditorTagManager::Get_Tags_By_Filter(QString filter){
+
+    QStringList filtered_tags;
+
+    TaggingShared ts;
+    QStringList tags=ts.TagAggregator();
+
+    if(tags.isEmpty()){
+        return filtered_tags;
+    }
+
+    for(int i=0; i < tags.size(); i++){
+        QString next=tags.at(i);
+
+        if(next.contains(filter,Qt::CaseInsensitive))
+            filtered_tags << next;
+    }
+
+    return filtered_tags;
+}
+
+// ###################################################################################################
+// Rebuild the Available Tags list by displaying items that match QString arg1 --Will Kraft (10/16/13).
+void EditorTagManager::on_GrepBox_textEdited(const QString &arg1)
+{
+    if(arg1.isEmpty()){
+        ui->FilterButton->setChecked(false);
+    }
+    else{
+        //Toggle the filter button to on
+        ui->FilterButton->setChecked(true);
+
+        // Save current selected tags
+        QTreeWidgetItemIterator it(ui->AvailableTags);
+
+        while(*it){
+
+            QTreeWidgetItem *current=*it;
+            QString current_item_text=current->text(0);
+
+            if((Qt::Checked == current->checkState(0)) && (!active_tags.contains(current_item_text)))
+                active_tags << current->text(0);
+
+            it++;
+        }
+
+        QStringList filtered_tags=Get_Tags_By_Filter(arg1);
+
+        ui->AvailableTags->clear();
+
+        //Rebuild the Available Tags list ot include only the filtered items.
+        QIcon tagicon(":/icons/tag_red.png");
+        ui->AvailableTags->setRootIsDecorated(0);
+
+        // Bugfix for 0.5: fix bug that causes the first tag in the list to be omitted.
+        // int z used to start at 1 for some reason but it's fixed now. --Will Kraft (7/23/13).
+        for(int i=0; i < filtered_tags.size(); i++){
+
+            if(!filtered_tags.at(i).isEmpty()){
+                QTreeWidgetItem *next=new QTreeWidgetItem(ui->AvailableTags);
+                next->setText(0,filtered_tags.at(i));
+                next->setIcon(0,tagicon);
+                next->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
+
+                // Select tags that should be selected
+                if(active_tags.contains(filtered_tags.at(i))){
+                    next->setCheckState(0, Qt::Checked);
+                    next->setFont(0, selected);
+                    next->setForeground(0,selected_fg);
+                }
+                else{
+                    next->setCheckState(0, Qt::Unchecked);
+                }
+
+
+                // Set the correct marker on every top-level node. The delegate uses this data to determine which nodes
+                // (i.e top-level nodes) should have separators between them. Do not put separators between child nodes
+                // because the user needs to understand they belong to the parent (8/12/13).
+                if(!next->parent()){
+                    // Store the top-level marker in the space for status-bar role text. We're not using that for anything anyway.
+                    next->setData(0,4,"ROOT-LEVEL");
+                }
+            }
+        }
+    }
+}
+
+// ###################################################################################################
+void EditorTagManager::on_FilterButton_toggled(bool checked)
+{
+    if(checked){
+        ui->GrepBox->setFocus();
+    }
+    else{
+        // Restore full tag list
+        ui->AvailableTags->clear();
+        CreateTagList();
+
+        QTreeWidgetItemIterator it(ui->AvailableTags);
+
+        while(*it){
+            QTreeWidgetItem *current=*it;
+
+            if(active_tags.contains(current->text(0))){
+                current->setCheckState(0,Qt::Checked);
+                current->setFont(0, selected);
+                current->setForeground(0,selected_fg);
+            }
+            it++;
+        }
+
+        ui->GrepBox->clear();
+    }
+}
+
+// ###################################################################################################
+// This function should be called before saving the current list of tags from another class (like Tagger or Editor).
+// This disables filtering in order to prevent a partial list of tags from being saved. --Will Kraft (10/16/13).
+void EditorTagManager::disable_filtering(){
+    ui->FilterButton->setChecked(false);
 }

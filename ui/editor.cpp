@@ -1,7 +1,7 @@
 /*
     This file is part of RoboJournal.
     Copyright (c) 2012 by Will Kraft <pwizard@gmail.com>.
-    MADE IN USA
+    
 
     RoboJournal is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -665,6 +665,7 @@ bool Editor::UpdateEntry(){
     int year=post_date.year();
 
     // Get the tags from the EditorTagManager. New for 0.5, 6/29/13.
+    et->disable_filtering(); //disable tag filtering first (10/16/13).
     QString taglist=et->HarvestTags();
 
     MySQLCore m;
@@ -1117,5 +1118,3 @@ void Editor::on_bold_toggled(bool checked)
         }
     }
 }
-
-

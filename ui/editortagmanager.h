@@ -1,7 +1,6 @@
 /*
     This file is part of RoboJournal.
     Copyright (c) 2013 by Will Kraft <pwizard@gmail.com>.
-    MADE IN USA
 
     RoboJournal is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -65,6 +64,8 @@ public:
     static int tag_count;
     static bool standalone_tagger;
 
+    void disable_filtering();
+
 public slots:
 
     void Revert_Off();
@@ -92,6 +93,12 @@ private slots:
 
     void autotag_slot();
 
+    void on_GrepBox_textEdited(const QString &arg1);
+
+    void on_FilterButton_toggled(bool checked);
+
+    void clear_slot();
+
 private:
     Ui::EditorTagManager *ui;
     void PrimaryConfig();
@@ -100,6 +107,8 @@ private:
     void RevertTags();
     void EasyDeclareTag(QString input);
     void AutoTag(QString id);
+
+    QStringList Get_Tags_By_Filter(QString filter);
 
     bool no_tags;
 
@@ -117,6 +126,8 @@ private:
     // Change the revert button to a QMenu item (10/14/13).
     QAction* revertAction;
 
+    QStringList active_tags;
+    QStringList tag_list;
 };
 
 #endif // EDITORTAGMANAGER_H

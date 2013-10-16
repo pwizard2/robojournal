@@ -1,7 +1,7 @@
 /*
     This file is part of RoboJournal.
     Copyright (c) 2012 by Will Kraft <pwizard@gmail.com>.
-    MADE IN USA
+    
 
     RoboJournal is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -156,6 +156,8 @@ void Tagger::on_buttonBox_clicked(QAbstractButton *button)
 {
     using namespace std;
     if(button==ui->buttonBox->button(QDialogButtonBox::Apply)){
+
+        et->disable_filtering(); //disable tag filtering first (10/16/13).
         QString tag_data=et->HarvestTags();
 
         // unlock OK button
