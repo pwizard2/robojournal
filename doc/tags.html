@@ -63,26 +63,29 @@ system</a>, it is far easier to use the built-in tagging system to keep related
 entries together.</p>
 
 <p>RoboJournal's tagging system is designed to work with the currently-selected
-entry in the Timeline or the entry that is currently open in
-the Editor. As such, using the tagging system requires an active database
-connection. All tag-related functionality is locked while RoboJournal is in
-Default State due to there being no point of reference. </p>
+entry in the Timeline or the entry that is currently open in the Editor. As
+such, using the tagging system requires an active database connection. All
+tag-related functionality is locked while RoboJournal is in Default State due
+to there being no point of reference. </p>
 
 <p>In version 0.5 and later, RoboJournal's tagging system has been completely
 redesigned to be much more straightforward and intuitive. The new interface is
 intended to streamline the task of applying or removing tags from entries;
 instead of adding tags one at a time from a drop-down list (as was the case in
 older versions) the new system makes adding tags to entries as simple as
-checking items from a list of all available tags. </p>
+checking items from a list of all available tags. Furthermore, most tag-related
+functions have been consolidated into drop-down toolbar menus:</p>
+
+<p>[picture of menus goes here]</p>
 
 <p>In addition to the standalone Manage Tags window, the tagging system has
-been integrated into the Editor as the Tag Management Pane. The Tag Management
-Pane conveniently allows you to tag new entries as you write them. The Manage
-Tags window and the Tag Management Pane can only work with one entry at a time.
-Since RoboJournal equally distributes tagging functionality through the classic
-Manage Tags window and the Editor itself (to the point of literally using the
-same interface for both), it does not matter which method you use to tag your
-entries since both ways produce identical results.</p>
+also been integrated into the Editor as the Tag Management Pane. The Tag
+Management Pane conveniently allows you to tag new entries as you write them.
+The Manage Tags window and the Tag Management Pane can only work with one entry
+at a time. Since RoboJournal equally distributes tagging functionality through
+the classic Manage Tags window and the Editor itself (to the point of literally
+using the same interface for both), it does not matter which method you use to
+tag your entries since both ways produce identical results.</p>
 
 <h3 id="Best">Best Practices</h3>
 
@@ -136,8 +139,8 @@ standalone Manage Tags window can also be invoked from the Tag Reminder window
 details). </p>
 <ol class="list">
   <li>Click to select the entry you wish to tag (indicated by the large oval in
-    Figure 1) from the Timeline on the RoboJournal main window.
-    <img alt="Figure 1" src="img/screens/mw_tag1.png" class="screenshot"
+    Figure 1) from the Timeline on the RoboJournal main window. <img
+    alt="Figure 1" src="img/screens/mw_tag1.png" class="screenshot"
     height="589" width="750"><span class="caption_wide">Figure 1: Select the
     entry you wish to tag and click the <strong>Manage Tags</strong> toolbar
     button. </span><span class="caption"><img alt="Figure 2"
@@ -150,7 +153,7 @@ details). </p>
     Tags</strong> button (Figure 2) after selecting an entry from the Tag
     Reminder window. In either instance, the Manage Tags window is
     displayed:<img alt="Figure 3" src="img/screens/mw_tag2.png"
-    class="screenshot" height="589" width="751"><span class="caption">Figure 3:
+    class="screenshot" height="589" width="750"><span class="caption">Figure 3:
     The Manage Tags window is always superimposed over the main
   window.</span></li>
   <li>Make all necessary changes (consult <a href="#Assigning">"Applying and
@@ -181,26 +184,28 @@ entries to accumulate in your journal.</p>
 a new entry or modify an existing one:</p>
 <ol class="list">
   <li>Click the <strong>Manage Tags</strong> toolbar button (indicated by the
-    red circle in Figure 4) in the Editor window. Alternatively, click and drag
-    the Tag Management Pane splitter to the left (RoboJournal exerts a small
-    degree of resistance to prevent accidental expansion or collapse). The pane
-    is allowed to expand once you have dragged far enough to the left to
-    overcome resistance: <img alt="Figure 4" src="img/screens/editor_tag1.png"
-    class="screenshot" height="536" width="672"><span class="caption">Figure 4:
-    You can expand the Tag Management Pane by clicking the circled
-    <strong>Manage Tags</strong> toolbar button <em>or</em> by dragging the Tag
-    Management Pane splitter (shown in red) to the left.</span></li>
+    red circle in Figure 4) in the Editor window. Alternatively, you can click
+    and drag the Tag Management Pane splitter to the left (RoboJournal exerts a
+    small degree of resistance to prevent accidental expansion or collapse) to
+    expand it. RoboJournal allows the pane to expand once you have dragged the
+    splitter far enough to the left to overcome resistance: <img alt="Figure 4"
+    src="img/screens/editor_tag1.png" class="screenshot" height="574"
+    width="688"><span class="caption">Figure 4: You can expand the Tag
+    Management Pane by clicking the circled <strong>Manage Tags</strong>
+    toolbar button <em>or</em> by dragging the Tag Management Pane splitter
+    (shown in red) to the left.</span></li>
   <li>Once triggered, the Tag Management Pane expands itself and allows you to
     access the tag data (if any) for the current entry:<img alt="Figure 5"
-    src="img/screens/editor_tag2.png" class="screenshot" height="536"
-    width="672"><span class="caption">Figure 5: RoboJournal allows you to apply
+    src="img/screens/editor_tag2.png" class="screenshot" height="574"
+    width="688"><span class="caption">Figure 5: RoboJournal allows you to apply
     tags to an entry before you save changes to it.</span></li>
   <li>Make all necessary changes (consult <a href="#Assigning">"Applying and
     Removing Tags"</a> for details). </li>
   <li>(Optional) Collapse the Tag Management Pane by toggling the
     <strong>Manage Tags</strong> toolbar button or by dragging the splitter
-    back to the far right of the Editor window. The pane collapses itself once
-    you have dragged the splitter far enough to overcome resistance.</li>
+    back to the far right of the Editor window. Under the second method, the
+    pane collapses itself once you have dragged the splitter far enough to
+    overcome its resistance.</li>
 </ol>
 
 <p>The Tag Management Pane always limits itself to a maximum width no matter
@@ -210,8 +215,8 @@ Preferences.</p>
 
 <p>Unlike the standalone tag management window, the Editor's Tag Management
 Pane does not require you to manually commit changes to an entry's tag data.
-The current tags are automatically saved or updated when you post a new entry
-or save changes to an existing one.</p>
+RoboJournal automatically saves/updates the current entry's tags when you post
+a new entry or save changes to an existing one.</p>
 
 <h2 id="Declaring">Declaring a New Tag</h2>
 
