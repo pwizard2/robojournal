@@ -57,6 +57,9 @@
      <height>25</height>
     </rect>
    </property>
+   <property name="placeholderText">
+    <string>Filter Tags</string>
+   </property>
   </widget>
   <widget class="QToolButton" name="FilterButton">
    <property name="geometry">

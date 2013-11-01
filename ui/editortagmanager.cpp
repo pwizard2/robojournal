@@ -279,7 +279,13 @@ void EditorTagManager::DefineTag(){
         defined->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
         defined->setCheckState(0, Qt::Unchecked);
 
+        // Insert new tag at the top of the list....
         ui->AvailableTags->insertTopLevelItem(0, defined);
+
+        // ...and select it automatically (11/1/13).
+        defined->setCheckState(0, Qt::Checked);
+        defined->setFont(0, selected);
+        defined->setForeground(0,selected_fg);
     }
 }
 

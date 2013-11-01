@@ -30,7 +30,9 @@ class="masthead" height="72" width="606">
 <h1>Working With Tags</h1>
 
 <h2 id="Sections">Sections</h2>
-<ol class="toc">
+
+<div class="toc">
+<ol>
   <li><a href="#Tagging">Tagging Overview</a> 
     <ol>
       <li><a href="#Best">Best Practices</a></li>
@@ -40,16 +42,20 @@ class="masthead" height="72" width="606">
       Editor)</a></li>
     </ol>
   </li>
+  <li><a href="#L7841">The <strong>Tag Menu</strong> and <strong>Toggle
+    Filtering</strong> Menu</a></li>
   <li><a href="#Declaring">Declaring a New Tag</a></li>
   <li><a href="#Assigning">Applying or Removing Tags</a></li>
   <li><a href="#L306">Other Tag-Related Features</a> 
     <ol>
       <li><a href="#L310">Revert Tags</a></li>
       <li><a href="#L396">Strip Tags</a></li>
+      <li><a href="#L1619">Filtering Tags</a></li>
     </ol>
   </li>
   <li><a href="#tag_reminder">Tag Reminder Window</a></li>
 </ol>
+</div>
 
 <h2 id="Tagging">Tagging Overview</h2>
 
@@ -67,16 +73,6 @@ entry in the Timeline or the entry that is currently open in the Editor. As
 such, using the tagging system requires an active database connection. All
 tag-related functionality is locked while RoboJournal is in Default State due
 to there being no point of reference. </p>
-
-<p>In version 0.5 and later, RoboJournal's tagging system has been completely
-redesigned to be much more straightforward and intuitive. The new interface is
-intended to streamline the task of applying or removing tags from entries;
-instead of adding tags one at a time from a drop-down list (as was the case in
-older versions) the new system makes adding tags to entries as simple as
-checking items from a list of all available tags. Furthermore, most tag-related
-functions have been consolidated into drop-down toolbar menus:</p>
-
-<p>[picture of menus goes here]</p>
 
 <p>In addition to the standalone Manage Tags window, the tagging system has
 also been integrated into the Editor as the Tag Management Pane. The Tag
@@ -218,6 +214,68 @@ Pane does not require you to manually commit changes to an entry's tag data.
 RoboJournal automatically saves/updates the current entry's tags when you post
 a new entry or save changes to an existing one.</p>
 
+<h2 id="L7841">The <strong>Tag Menu</strong> and <strong>Toggle
+Filtering</strong> Menu</h2>
+
+<p>In version 0.5 and later, RoboJournal's tagging system has been completely
+redesigned to be much more straightforward and intuitive. The new interface is
+intended to streamline the task of applying or removing tags from entries;
+instead of adding tags one at a time from a drop-down list (as was the case in
+older versions) the new system makes adding tags to entries as simple as
+checking items from a list of all available tags. </p>
+
+<p>The original tag interface design with its individual buttons was
+impractical for integration into the Editor window. Instead, RoboJournal 0.5
+(and later) utilizes a menu-based system to prevent user interface
+overcrowding, especially when <a
+href="preferences.html#global_preferences">toolbar button labels</a> are
+enabled. Under this new design, most tag-related functionality is contained
+within the tag menu. You can access the tag menu at any time by clicking the
+<strong>Tag Menu</strong> toolbar button:<img alt="Figure 6"
+src="img/screens/tag_menu.png" width="333" height="397"
+class="screenshot"><span class="caption">Figure 6: The Tag Menu toolbar button
+displays a drop-down list containing most of RoboJournal's tag-related
+functionality.</span></p>
+
+<p>The following table addresses each item on the tag menu:</p>
+
+<table border="0">
+  <col>
+  <col>
+  <tbody>
+    <tr>
+      <td class="left"><a href="#Declaring">Declare new tag</a></td>
+      <td class="right">This option allows you to add a new tag to the
+        Available Tags list.</td>
+    </tr>
+    <tr>
+      <td class="left"><a href="#L396">Strip all tags</a></td>
+      <td class="right">This feature purges all tag data from the current
+      entry.</td>
+    </tr>
+    <tr>
+      <td class="left">Auto-tag entry (experimental)</td>
+      <td class="right">Auto-tagging is an experimental feature that causes
+        RoboJournal to assign tags based on the contents of the current entry's
+        body text.</td>
+    </tr>
+    <tr>
+      <td class="left"><a href="#L310">Revert Tags</a></td>
+      <td class="right">This feature reverts all tag changes you have made.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The <a href="#L1619">Toggle Filtering</a> menu is displayed by clicking the
+down arrow immediately to the right of the <strong>Toggle Filtering</strong>
+button (Figure 7). The menu only contains the <strong>Clear Tags</strong> list
+item, which erases the current search pattern in the <strong>Filter
+Tags</strong> field.<img alt="Figure 7"
+src="img/screens/toggle_filtering_menu.png" width="333" height="397"
+class="screenshot"><span class="caption_wide">Figure 7: The Toggle Filtering
+menu contains items specifically related to tag filtering.</span></p>
+
 <h2 id="Declaring">Declaring a New Tag</h2>
 
 <p>Journals are deliberately created with no pre-existing tag data. RoboJournal
@@ -244,23 +302,24 @@ window and the Editor's Tag Management Pane (the screenshots show the Manage
 Tags window for the sake of simplicity)</p>
 <ol class="list">
   <li>Click the <strong>Define Tag</strong> button on the Manage Tags
-    window.<img alt="Figure 6" src="img/screens/define_tag1.png"
+    window.<img alt="Figure 8" src="img/screens/define_tag1.png"
     class="screenshot" height="397" width="333"><span
-    class="caption_wide">Figure 5: The <strong>Define Tag</strong> toolbar
+    class="caption_wide">Figure 8: The <strong>Define Tag</strong> toolbar
     button launches a text prompt that allows you to define a new
   tag.</span></li>
-  <li>The <strong>Enter the new tag:</strong> dialog is displayed. Enter the
-    new tag into the text box:<img alt="Figure 6"
+  <li>RoboJournal displays the <strong>Enter the new tag:</strong> dialog.
+    Enter the new tag into the text box:<img alt="Figure 9"
     src="img/screens/define_tag2.png" class="screenshot" height="396"
-    width="333"><span class="caption_wide">Figure 6: Enter the new tag into the
+    width="333"><span class="caption_wide">Figure 9: Enter the new tag into the
     provided text box.</span></li>
   <li>Click the <strong>OK</strong> button in the <strong>Enter the new
     tag:</strong> dialog to continue (or click the <strong>Cancel</strong>
     button to abort).</li>
-  <li>The new tag is added to the very top of the list and can now be used.<img
-    alt="Figure 7" src="img/screens/define_tag3.png" class="screenshot"
-    height="397" width="333"><span class="caption">Figure 7: Newly-defined tags
-    are inserted at the top of the list and are marked with a green plus-sign
+  <li>RoboJournal adds the new tag to the very top of the Available Tags list
+    and automatically selects it:<img alt="Figure 10"
+    src="img/screens/define_tag3.png" class="screenshot" height="397"
+    width="333"><span class="caption">Figure 10: Newly-defined tags are
+    inserted at the top of the list and are marked with a green plus-sign
     indicator.</span></li>
 </ol>
 
@@ -284,16 +343,16 @@ readability. </p>
 
 <p>To apply a tag to an entry, click once on the corresponding list item (the
 box to the left of the tag name checks itself automatically):<img
-alt="Figure 8" src="img/screens/apply_tag.png" class="screenshot-noshadow"
-height="291" width="698"><span class="caption">Figure 8: Clicking an inactive
+alt="Figure 11" src="img/screens/apply_tag.png" class="screenshot-noshadow"
+height="291" width="698"><span class="caption">Figure 11: Clicking an inactive
 tag in the list applies that tag to the current entry.</span></p>
 
 <p>Each time the Manage Tags window or the Editor is displayed, RoboJournal
 automatically marks all active tags so you will know which ones are already in
 use. To remove a tag from an entry, simply click the appropriate list item once
-(the checkbox clears itself automatically):<img alt="Figure 9"
+(the checkbox clears itself automatically):<img alt="Figure 12"
 src="img/screens/remove_tag.png" class="screenshot-noshadow" height="291"
-width="698"><span class="caption">Figure 9: Clicking an active tag (shown by
+width="698"><span class="caption">Figure 12: Clicking an active tag (shown by
 the red circle) removes that tag from the current entry.</span></p>
 
 <div class="FYI">
@@ -327,35 +386,31 @@ data no longer exists.</p>
 <p>The following procedure assumes the Manage Tags window is already displayed
 or the Tag Management Pane is visible in the Editor:</p>
 <ol class="list">
-  <li>Make one or more changes to the tag data to unlock the <strong>Revert
-    Tags</strong> toolbar button (shown in Figure x).<img
-    style="width: 333px; height: 397px;" alt="Figure 10"
+  <li>The <strong>Revert Tags</strong> menu item is locked by default. Making
+    one or more changes to the current entry's tag data establishes a history,
+    which causes the <strong>Revert Tags</strong> menu item to unlock. </li>
+  <li>After you have established a history, click the <strong>Tag Menu</strong>
+    to display the tag operations menu: <img
+    style="width: 333px; height: 397px;" alt="Figure 13"
     src="img/screens/revert_tags1.png" class="screenshot"><span
-    class="caption">Figure 10: The <span style="font-weight: bold;">Revert
+    class="caption">Figure 13: The <span style="font-weight: bold;">Revert
     Tags</span> button unlocks itself after you have made at least one change
     to an entry's tag data. </span></li>
-  <li>Click the <strong>Revert Tags</strong> button. RoboJournal asks you to
-    confirm your decision to discard all changes you made to the tag data.</li>
-  <li>Click the <strong>Yes</strong> button to continue or click
-    <strong>No</strong> to abort.</li>
-  <li>If you chose to continue, RoboJournal restores the saved tags for the
-    selected entry:<img alt="Figure 11" src="img/screens/revert_tags2.png"
-    class="screenshot" height="397" width="333"><span class="caption">Figure
-    11: Each revert tags operation restores the previous condition of an
-    entry's tag data. </span> 
-    <p>Steps 5–6 are only applicable when you are using the standalone Manage
-    Tags window. If you are completing this procedure through the Editor's Tag
-    Management Pane, any changes to the tag data are not finalized until you
-    save the current entry (closing the Editor without saving rejects all tag
-    changes as well).</p>
+  <li>Click the <strong>Revert Tags</strong> menu item (shown in Figure 13).
   </li>
-  <li>The <strong>Apply</strong> button unlocks itself once you have made
-    changes to the tag data. To finalize the decision, click
-    <strong>Apply</strong>. If you wish to undo the changes, click
-    <strong>Cancel</strong> or use the Revert Tags feature.</li>
-  <li>Clicking <strong>Apply</strong> unlocks the <strong>OK</strong> button.
-    Click <strong>OK</strong> to close the Manage Tags window.</li>
+  <li>RoboJournal asks you to confirm your decision to discard all changes you
+    made to the tag data. Click the <strong>Yes</strong> button to continue or
+    click <strong>No</strong> to abort.</li>
+  <li>If you chose to continue, RoboJournal restores the saved tags for the
+    selected entry:<img alt="Figure 14" src="img/screens/revert_tags2.png"
+    class="screenshot" height="397" width="333"><span class="caption">Figure
+    14: In this example, "tips" is no longer selected after you have reverted
+    the entry's tags (compare with Figure 13).</span> </li>
 </ol>
+
+<p>RoboJournal only allows you to click the <strong>Cancel</strong> button
+(exiting the Manage Tags window without saving) because there are no changes in
+the history to apply after reverting the tags back to their original state.</p>
 
 <h3 id="L396">Strip Tags</h3>
 
@@ -365,17 +420,19 @@ Tags</a> feature can undo this operation. The following procedure assumes the
 Manage Tags window is displayed or the Tag Management Pane is visible in the
 Editor:</p>
 <ol class="list">
-  <li>Click the <strong>Strip Tags</strong> toolbar button (circled in Figure
-    12):<img alt="Figure 12" src="img/screens/strip_tags1.png"
-    class="screenshot" height="397" width="333"><span class="caption">Figure
-    12: The <span style="font-weight: bold;">Strip Tags </span>toolbar button
+  <li>Click the <strong>Tag Menu</strong> toolbar button to display the list of
+    tag operations. Once the list is visible, click the <strong>Strip all
+    tags</strong> list item (circled in Figure 15):<img alt="Figure 15"
+    src="img/screens/strip_tags1.png" class="screenshot" height="397"
+    width="333"><span class="caption">Figure 15: Accessing the <span
+    style="font-weight: bold;">Strip Tags </span>menu item on the Tag Menu.
     </span></li>
   <li>RoboJournal asks you to confirm your decision to strip all tags from the
     entry. Click the <strong>Yes</strong> button to proceed or click
     <strong>No</strong> to abort.</li>
   <li>If you chose to continue the operation, all tags are now unchecked:<img
-    alt="Figure" src="img/screens/strip_tags2.png" class="screenshot"
-    height="397" width="333"><span class="caption">Figure 13: The strip tags
+    alt="Figure 16" src="img/screens/strip_tags2.png" class="screenshot"
+    height="397" width="333"><span class="caption">Figure 16: The strip tags
     operation removes all tags from the current entry. Clicking the
     <strong>Apply</strong> button saves the changes.<br>
     If you are accessing the tags from the Editor, saving the current entry is
@@ -394,6 +451,54 @@ Editor:</p>
     Click <strong>OK</strong> to close the Manage Tags window.</li>
 </ol>
 
+<h3 id="L1619">Filtering Tags</h3>
+
+<p>Your journal is likely to accumulate a large number of tags over time. Since
+RoboJournal normally displays all available tags in the Available Tags list,
+finding a particular tag can prove difficult even though RoboJournal always
+sorts your journal's tags in alphabetical order. RoboJournal 0.5 (and later)
+addresses this problem by allowing you to filter the tags list to display only
+the tags that match certain criteria. </p>
+
+<p>The filtering system works by scanning the Available Tags list for tags that
+contain a user-defined string. This scan is care-insensitive and matches all
+tags that contain the specified pattern. Each time a matching tag is found,
+RoboJournal appends it to a list. Once all the tags have been scanned,
+RoboJournal displays the list of matching tags instead of the full Available
+Tags list. This feature allows you to find the desired tag(s) much more quickly
+because the list of matches is usually much shorter than the full list of
+tags.</p>
+
+<p>The following procedure assumes the Manage Tags window is displayed or the
+Tag Management Pane is visible in the Editor:</p>
+<ol class="list">
+  <li>Click the <strong>Filter Tags</strong> field (indicated in Figure 14) to
+    transfer focus to it:<img alt="Figure 17"
+    src="img/screens/filter_tags1.png" width="333" height="397"
+    class="screenshot"><span class="caption">Figure 17: When empty and
+    unfocused, the <strong>Filter Tags</strong> field displays "Filter Tags" as
+    placeholder text.</span></li>
+  <li>Once a cursor appears in the field, enter the text you wish to use as a
+    filter. As you enter text, RoboJournal automatically updates the contents
+    of the Available Tags field:<img alt="Figure 18"
+    src="img/screens/filter_tags2.png" width="333" height="397"
+    class="screenshot"><span class="caption_wide">Figure 18: Once you have set
+    a filter, RoboJournal only displays the tags that match.<br>
+    For instance, the Available Tags list in Figure 15 displays tags that
+    contain at least one occurrence of "ta".</span></li>
+  <li>(Optional) Click to select the tags you wish to use from the filtered
+    list. </li>
+  <li>(Optional) Un-toggle the <strong>Toggle Filtering</strong> button (by
+    clicking on it) to display the full Available Tags list again:<img
+    alt="Figure 19" src="img/screens/filter_tags3.png" width="333" height="397"
+    class="screenshot"><span class="caption">Figure 19: Un-selecting the
+    <strong>Toggle Filtering</strong> button clears the <strong>Filter
+    Tags</strong> field and causes RoboJournal to display the full tag list
+    again. </span></li>
+</ol>
+
+<p></p>
+
 <h2 id="tag_reminder">Tag Reminder Window</h2>
 
 <p>RoboJournal takes additional measures (starting in version 0.4.1) to ensure
@@ -409,8 +514,8 @@ prevent the Tag Reminder window from being displayed at all. </p>
 <p>If RoboJournal finds any untagged entries, it adds them to a list and
 displays them on the Tag Reminder window immediately after login (the Tag
 Reminder window is <em>not</em> displayed if RoboJournal fails to find any
-untagged entries):<img alt="Figure 14" src="img/screens/tag_reminder.png"
-class="screenshot" height="396" width="476"><span class="caption">Figure 14:
+untagged entries):<img alt="Figure 20" src="img/screens/tag_reminder.png"
+class="screenshot" height="396" width="476"><span class="caption">Figure 20:
 The Tag Reminder window is shown only if RoboJournal detects untagged
 entries.</span></p>
 
