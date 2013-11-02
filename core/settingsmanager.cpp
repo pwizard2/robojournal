@@ -327,7 +327,7 @@ void SettingsManager::NewConfig(QString host, QString db_name, QString port, QSt
     // Bugfix: Keep dictionary and AFF blank in new configurations.
     settings.setValue("spellcheck_dictionary", "");
     settings.setValue("spellcheck_dictionary_aff", "");
-
+    settings.setValue("system_dictionaries",false);
     settings.setValue("misc_processing",true);
     settings.setValue("name_in_titlebar", true);
     settings.setValue("show_untagged_reminder", true);
@@ -478,6 +478,7 @@ void SettingsManager::LoadConfig(bool startup){
         Buffer::use_spellcheck = settings.value("Behavior/use_spellcheck").toBool();
         Buffer::current_dictionary= settings.value("Behavior/spellcheck_dictionary").toString();
         Buffer::current_dictionary_aff = settings.value("Behavior/spellcheck_dictionary_aff").toString();
+        Buffer::system_dic=settings.value("Behavior/system_dictionaries").toBool();
 
         int font_value=settings.value("Appearance/font_size").toInt();
 
@@ -665,6 +666,7 @@ void SettingsManager::UpdateConfig(){
     settings.setValue("misc_processing",Newconfig::new_use_misc_processing);
     settings.setValue("name_in_titlebar", Newconfig::new_name_in_titlebar);
     settings.setValue("show_untagged_reminder", Newconfig::new_show_untagged_reminder);
+    settings.setValue("system_dictionaries", Newconfig::new_system_dic);
     settings.endGroup();
 
     settings.beginGroup("Appearance");

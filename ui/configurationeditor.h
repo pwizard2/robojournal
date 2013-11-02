@@ -39,10 +39,12 @@ private:
     void PopulateForm();
     QString aff_file;
     QString Find_AFF_File(QString dict);
+    QStringList Scan_For_System_Dictionaries();
 
 private slots:
-        void on_BrowseButton_clicked();
-        void on_UseSpellCheck_clicked(bool checked);
+    void on_BrowseButton_clicked();
+    void on_UseSpellCheck_clicked(bool checked);
+    void on_SystemLevelDic_toggled(bool checked);
 
 };
 

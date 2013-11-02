@@ -138,6 +138,7 @@ bool Newconfig::new_show_untagged_reminder;
 bool Newconfig::new_use_my_journals;
 QStringList Newconfig::new_sqlite_favorites;
 QString Newconfig::new_sqlite_default;
+bool Newconfig::new_system_dic;
 
 //##################################################################################
 // This function sets up the form (creates categories for list, etc.)
@@ -322,3 +323,5 @@ void Newconfig::on_buttonBox_accepted()
 {
     UpdateData();
 }
+
+

@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>353</width>
-    <height>422</height>
+    <height>452</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_4">
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
@@ -87,7 +87,7 @@
      <property name="title">
       <string>Spell Check</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_4">
+     <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QCheckBox" name="UseSpellCheck">
         <property name="toolTip">
@@ -114,6 +114,16 @@ p, li { white-space: pre-wrap; }
        </widget>
       </item>
       <item>
+       <widget class="QCheckBox" name="SystemLevelDic">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;(GNU/Linux only)&lt;/span&gt; If checked, this option causes RoboJournal to scan your computer for system-level dictionaries instead of defaulting to its own built-in US English dictionary.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="text">
+         <string>Use system-level &amp;dictionaries</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -124,7 +134,7 @@ p, li { white-space: pre-wrap; }
         <property name="sizeHint" stdset="0">
          <size>
           <width>20</width>
-          <height>6</height>
+          <height>10</height>
          </size>
         </property>
        </spacer>
@@ -137,16 +147,12 @@ p, li { white-space: pre-wrap; }
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
+       <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0">
+        <property name="spacing">
+         <number>0</number>
+        </property>
         <item>
-         <widget class="QLineEdit" name="Dictionary">
-          <property name="frame">
-           <bool>true</bool>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
+         <widget class="QComboBox" name="Dictionary"/>
         </item>
         <item>
          <widget class="QPushButton" name="BrowseButton">

@@ -27,6 +27,7 @@
 #include <QDir>
 #include <QMessageBox>
 
+//#############################################################################################################
 ConfigurationEditor::ConfigurationEditor(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ConfigurationEditor)
@@ -42,31 +43,67 @@ ConfigurationEditor::ConfigurationEditor(QWidget *parent) :
     // the overwhelming problems I've had with it. I hope to have this fixed for good by 0.5 once
     // I've stripped out the entire spellchecker and replaced it with something better.
 
-#ifdef __gnu_linux__
-    ui->UseSpellCheck->setChecked(false);
-    ui->ShowSpellingErrors->setChecked(false);
-    ui->Dictionary->clear();
+    //#ifdef __gnu_linux__
+    //    ui->UseSpellCheck->setChecked(false);
+    //    ui->ShowSpellingErrors->setChecked(false);
+    //    ui->Dictionary->clear();
 
-    ui->UseSpellCheck->setEnabled(false);
-    ui->BrowseButton->setEnabled(false);
-    ui->ShowSpellingErrors->setEnabled(false);
-    ui->Dictionary->setEnabled(false);
+    //    ui->UseSpellCheck->setEnabled(false);
+    //    ui->BrowseButton->setEnabled(false);
+    //    ui->ShowSpellingErrors->setEnabled(false);
+    //    ui->Dictionary->setEnabled(false);
 
-    ui->UseSpellCheck->setToolTip("<p>This feature is temporarily unavailable on Linux-based operating systems.</p>");
-    ui->ShowSpellingErrors->setToolTip("<p>This feature is temporarily unavailable on Linux-based operating systems.</p>");
-    ui->Dictionary->setToolTip("<p>This feature is temporarily unavailable on Linux-based operating systems.</p>");
-    ui->BrowseButton->setToolTip("<p>This feature is temporarily unavailable on Linux-based operating systems.</p>");
+    //    ui->UseSpellCheck->setToolTip("<p>This feature is temporarily unavailable on Linux-based operating systems.</p>");
+    //    ui->ShowSpellingErrors->setToolTip("<p>This feature is temporarily unavailable on Linux-based operating systems.</p>");
+    //    ui->Dictionary->setToolTip("<p>This feature is temporarily unavailable on Linux-based operating systems.</p>");
+    //    ui->BrowseButton->setToolTip("<p>This feature is temporarily unavailable on Linux-based operating systems.</p>");
 
-#endif
+    //#endif
 
 }
 
+//#############################################################################################################
 ConfigurationEditor::~ConfigurationEditor()
 {
     delete ui;
 }
-//#############################################################################################################
 
+//#############################################################################################################
+// Linux-specific function that scans the computer for system-level dictionaries. It looks in the usual places
+// like /usr/share/hunspell et. al. and adds each dictionary it finds in there to a Stringlist.
+// This function is meant ot address an issue Ritesh told me about, where RoboJournal should depend
+// on system-level resources instead of using its own --Will Kraft (11/1/13).
+
+QStringList ConfigurationEditor::Scan_For_System_Dictionaries(){
+
+    QStringList dictionaries;
+    QStringList locations;
+
+    QStringList filters;
+    filters << "*.dic";
+
+    locations << "/usr/share/hunspell";
+    //    locations << "/usr/share/myspell/dicts/";
+    //    locations << "/usr/share/hyphen/";
+
+    for(int i=0; i < locations.size(); i++){
+        QString path=locations.at(i);
+        QDir dir(path);
+        dir.setNameFilters(filters);
+
+        if(dir.exists()){
+            QStringList batch=dir.entryList(QDir::Files | QDir::NoDotAndDotDot).replaceInStrings(QRegExp("^"),
+                                                                                                 dir.absolutePath()+QDir::separator());
+
+            dictionaries.append(batch);
+        }
+    }
+
+    return dictionaries;
+}
+
+
+//#############################################################################################################
 void ConfigurationEditor::PopulateForm(){
     ui->TrimWhiteSpace->setChecked(Buffer::trim_whitespace);
     ui->ForceHyphens->setChecked(Buffer::use_html_hyphens);
@@ -89,7 +126,21 @@ void ConfigurationEditor::PopulateForm(){
         ui->ShowSpellingErrors->setDisabled(false);
         ui->Dictionary->setDisabled(false);
         ui->ShowSpellingErrors->setChecked(Buffer::show_spell_errors_by_default);
-        ui->Dictionary->setText(Buffer::current_dictionary);
+        ui->SystemLevelDic->setDisabled(false);
+
+        if(Buffer::system_dic){
+            ui->SystemLevelDic->setChecked(true);
+
+            for(int i=0; i<ui->Dictionary->count(); i++){
+                if(ui->Dictionary->itemText(i)==Buffer::current_dictionary){
+                    ui->Dictionary->setCurrentIndex(i);
+                    break;
+                }
+            }
+        }
+        else{
+            ui->Dictionary->addItem(Buffer::current_dictionary);
+        }
     }
     else{
         ui->UseSpellCheck->setChecked(false);
@@ -97,6 +148,8 @@ void ConfigurationEditor::PopulateForm(){
         ui->ShowSpellingErrors->setChecked(false);
         ui->BrowseButton->setDisabled(true);
         ui->Dictionary->setDisabled(true);
+        ui->SystemLevelDic->setChecked(false);
+        ui->SystemLevelDic->setDisabled(true);
         ui->Dictionary->clear();
     }
 }
@@ -109,8 +162,9 @@ void ConfigurationEditor::GetChanges(){
     Newconfig::new_use_custom_theme_editor=ui->CustomThemeEditor->isChecked();
     Newconfig::new_use_spellcheck=ui->UseSpellCheck->isChecked();
     Newconfig::new_show_spell_errors_by_default=ui->ShowSpellingErrors->isChecked();
-    Newconfig::new_current_dictionary=ui->Dictionary->text();
+    Newconfig::new_current_dictionary=ui->Dictionary->currentText();
     Newconfig::new_use_misc_processing=ui->MiscFormatting->isChecked();
+    Newconfig::new_system_dic=ui->SystemLevelDic->isChecked();
 
     // Preserve current AFF value if the user didn't make changes this session
     if(!aff_file.isEmpty()){
@@ -138,7 +192,10 @@ void ConfigurationEditor::on_BrowseButton_clicked()
     }
 
     if(!new_Dict.isEmpty()){
-        ui->Dictionary->setText(new_Dict);
+
+        ui->Dictionary->clear();
+        ui->Dictionary->addItem(new_Dict);
+
     }
     else{
         ui->UseSpellCheck->setChecked(false);
@@ -179,7 +236,8 @@ QString  ConfigurationEditor::Find_AFF_File(QString dict){
     else{
         QMessageBox m;
         int h=m.critical(this,"RoboJournal","RoboJournal couldn't find the AFF file for "
-                         "<b>" + dict + "</b> in the expected location. Do you want to find this file manually?",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+                         "<b>" + dict + "</b> in the expected location. Do you want to find this file manually?",
+                         QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
 
         switch(h){
         case QMessageBox::Yes:
@@ -203,20 +261,38 @@ void ConfigurationEditor::on_UseSpellCheck_clicked(bool checked)
         ui->Dictionary->setDisabled(false);
         ui->ShowSpellingErrors->setDisabled(false);
         ui->ShowSpellingErrors->setChecked(true);
+        ui->SystemLevelDic->setDisabled(false);
 
-        if(Buffer::current_dictionary.isEmpty()){
-            ui->BrowseButton->click();
-        }
-        else{
-            ui->Dictionary->setText(Buffer::current_dictionary);
-        }
+        // Set up system-level dictionaries by default --Will Kraft (11/1/13).
+        ui->SystemLevelDic->click();
+
+//        if(Buffer::current_dictionary.isEmpty()){
+//            ui->BrowseButton->click();
+//        }
+//        else{
+//            //ui->Dictionary->setText(Buffer::current_dictionary);
+//        }
     }
     else{
         ui->BrowseButton->setDisabled(true);
         ui->Dictionary->setDisabled(true);
         ui->ShowSpellingErrors->setDisabled(true);
         ui->ShowSpellingErrors->setChecked(false);
+        ui->SystemLevelDic->setChecked(false);
+        ui->SystemLevelDic->setDisabled(true);
         ui->Dictionary->clear();
     }
 }
 
+void ConfigurationEditor::on_SystemLevelDic_toggled(bool checked){
+    if(checked){
+        ui->Dictionary->clear();
+        QStringList dic=Scan_For_System_Dictionaries();
+        ui->Dictionary->addItems(dic);
+        ui->BrowseButton->setDisabled(true);
+    }
+    else{
+        ui->BrowseButton->setDisabled(false);
+        ui->Dictionary->clear();
+    }
+}

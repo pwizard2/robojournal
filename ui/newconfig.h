@@ -129,6 +129,7 @@ public:
     static bool new_use_my_journals;
     static QString new_sqlite_default;
     static QStringList new_sqlite_favorites;
+    static bool new_system_dic;
 
 private slots:
 
@@ -136,6 +137,8 @@ private slots:
     void on_Categories_currentItemChanged(QTreeWidgetItem *current);
     void on_buttonBox_accepted();
     void resizeEvent(QResizeEvent *);
+
+
 
 private:
     Ui::Newconfig *ui;

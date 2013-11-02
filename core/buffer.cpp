@@ -154,6 +154,8 @@ QDate Buffer::override_date;
 //safety protocol override (9/13/13).
 bool Buffer::no_safety;
 
+// keep track of whether we're using system-level dictionaries (11/1/13).
+bool Buffer::system_dic;
 
 // Hold stored mysqldump location for Windows builds only. Linux/Unix always uses /usr/bin/mysqldump so this is not necessary (9/2/13).
 QString Buffer::mysqldump_path_win;
