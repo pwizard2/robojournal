@@ -87,7 +87,7 @@ QStringList CustomWords::Load_Words(){
     if (custom_words.open(QIODevice::ReadOnly)){
 
         QTextStream scan(&custom_words);
-        while (!scan.atEnd() )
+        while (!scan.atEnd())
         {
             QString line = scan.readLine();
             words << line;
