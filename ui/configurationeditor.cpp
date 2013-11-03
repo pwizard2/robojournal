@@ -26,6 +26,7 @@
 #include <iostream>
 #include <QDir>
 #include <QMessageBox>
+#include "ui/customwords.h"
 
 //#############################################################################################################
 ConfigurationEditor::ConfigurationEditor(QWidget *parent) :
@@ -82,6 +83,7 @@ QStringList ConfigurationEditor::Scan_For_System_Dictionaries(){
     QStringList filters;
     filters << "*.dic";
 
+    // Add most likely install locations for dictionaries to the list.
     locations << "/usr/share/hunspell";
     //    locations << "/usr/share/myspell/dicts/";
     //    locations << "/usr/share/hyphen/";
@@ -97,6 +99,12 @@ QStringList ConfigurationEditor::Scan_For_System_Dictionaries(){
 
             dictionaries.append(batch);
         }
+    }
+
+    if(dictionaries.isEmpty()){
+        QMessageBox m;
+        m.critical(this,"RoboJournal","RoboJournal could not find any system-level dictionaries on your computer. To solve this problem,"
+                   " you should install some Hunspell-compatible dictionaries with your distro's package management software.");
     }
 
     return dictionaries;
@@ -124,9 +132,12 @@ void ConfigurationEditor::PopulateForm(){
         ui->UseSpellCheck->setChecked(true);
         ui->BrowseButton->setDisabled(false);
         ui->ShowSpellingErrors->setDisabled(false);
+        ui->ManageUDWords->setDisabled(false);
         ui->Dictionary->setDisabled(false);
         ui->ShowSpellingErrors->setChecked(Buffer::show_spell_errors_by_default);
         ui->SystemLevelDic->setDisabled(false);
+
+
 
         if(Buffer::system_dic){
             ui->SystemLevelDic->setChecked(true);
@@ -150,8 +161,15 @@ void ConfigurationEditor::PopulateForm(){
         ui->Dictionary->setDisabled(true);
         ui->SystemLevelDic->setChecked(false);
         ui->SystemLevelDic->setDisabled(true);
+        ui->ManageUDWords->setDisabled(true);
         ui->Dictionary->clear();
     }
+
+#ifdef _WIN32
+    // Disable system-level dictionaries on Windows because Windows doesn't have any system-level hunspell dictionaries by default.
+    ui->SystemLevelDic->setDisabled(true);
+    ui->SystemLevelDic->setChecked(false);
+#endif
 }
 
 //#############################################################################################################
@@ -185,24 +203,23 @@ void ConfigurationEditor::on_BrowseButton_clicked()
 
     QString new_Dict=fileName;
 
-
-    //Find AFF file and save it.
     if(!new_Dict.isEmpty()){
+
         aff_file=Find_AFF_File(new_Dict);
-    }
+        bool itemAlreadyExists=false;
 
-    if(!new_Dict.isEmpty()){
+        for(int i=0; i < ui->Dictionary->count(); i++){
 
-        ui->Dictionary->clear();
-        ui->Dictionary->addItem(new_Dict);
+            QString row=ui->Dictionary->itemText(i);
 
-    }
-    else{
-        ui->UseSpellCheck->setChecked(false);
-        ui->ShowSpellingErrors->setChecked(false);
-        ui->BrowseButton->setEnabled(false);
-        ui->ShowSpellingErrors->setEnabled(false);
-        ui->Dictionary->setEnabled(false);
+            if(row==new_Dict){
+                itemAlreadyExists=true;
+                break;
+            }
+        }
+
+        if(!itemAlreadyExists)
+            ui->Dictionary->addItem(new_Dict);
     }
 }
 
@@ -240,12 +257,12 @@ QString  ConfigurationEditor::Find_AFF_File(QString dict){
                          QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
 
         switch(h){
-        case QMessageBox::Yes:
-            aff_file= QFileDialog::getOpenFileName(this, tr("Select Aff File"),dict_name, tr("Aff Files (*.aff)"));
+            case QMessageBox::Yes:
+                aff_file= QFileDialog::getOpenFileName(this, tr("Select Aff File"),dict_name, tr("Aff Files (*.aff)"));
             break;
 
-        case QMessageBox::No:
-            // do nothing
+            case QMessageBox::No:
+                // do nothing
             break;
         }
     }
@@ -262,16 +279,27 @@ void ConfigurationEditor::on_UseSpellCheck_clicked(bool checked)
         ui->ShowSpellingErrors->setDisabled(false);
         ui->ShowSpellingErrors->setChecked(true);
         ui->SystemLevelDic->setDisabled(false);
+        ui->ManageUDWords->setDisabled(false);
 
-        // Set up system-level dictionaries by default --Will Kraft (11/1/13).
+#ifdef __gnu_linux__
+        // Have RoboJournal use system-level dictionaries by default if we are running on Linux --Will Kraft (11/1/13).
         ui->SystemLevelDic->click();
+#endif
 
-//        if(Buffer::current_dictionary.isEmpty()){
-//            ui->BrowseButton->click();
-//        }
-//        else{
-//            //ui->Dictionary->setText(Buffer::current_dictionary);
-//        }
+#ifdef _WIN32
+        // Disable system-level dictionaries on Windows because Windows doesn't have any system-level Hunspell dictionaries by default.
+        ui->SystemLevelDic->setDisabled(true);
+        ui->SystemLevelDic->setChecked(false);
+
+#endif
+
+        // Add the default en_US dictionary to the list by default so users won't have to browse for it --Will Kraft (11/3/13).
+        QFile default_en(QDir::homePath()+ QDir::separator() + ".robojournal"+ QDir::separator() + "en_US.dic");
+
+        if(default_en.exists()){
+            ui->Dictionary->addItem(default_en.fileName());
+        }
+
     }
     else{
         ui->BrowseButton->setDisabled(true);
@@ -281,9 +309,11 @@ void ConfigurationEditor::on_UseSpellCheck_clicked(bool checked)
         ui->SystemLevelDic->setChecked(false);
         ui->SystemLevelDic->setDisabled(true);
         ui->Dictionary->clear();
+        ui->ManageUDWords->setDisabled(true);
     }
 }
 
+//#############################################################################################################
 void ConfigurationEditor::on_SystemLevelDic_toggled(bool checked){
     if(checked){
         ui->Dictionary->clear();
@@ -295,4 +325,12 @@ void ConfigurationEditor::on_SystemLevelDic_toggled(bool checked){
         ui->BrowseButton->setDisabled(false);
         ui->Dictionary->clear();
     }
+}
+
+//#############################################################################################################
+// Launch custom words window (11/3/13).
+void ConfigurationEditor::on_ManageUDWords_clicked()
+{
+    CustomWords w(this);
+    w.exec();
 }

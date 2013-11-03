@@ -339,7 +339,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click to see a sample document rendered with the current settings. All font/size changes are temporary until you click the &lt;span style=&quot; font-weight:600;&quot;&gt;OK&lt;/span&gt; button below.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="text">
-        <string>Preview Export Settings</string>
+        <string>Preview export settings</string>
        </property>
        <property name="icon">
         <iconset resource="../images.qrc">

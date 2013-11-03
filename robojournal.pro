@@ -65,7 +65,8 @@ SOURCES += main.cpp\
         core/favoritecore.cpp \
         ui/exportsingle.cpp \
         ui/exportmulti.cpp \
-        ui/exportcreatedump.cpp
+        ui/exportcreatedump.cpp \
+    ui/customwords.cpp
 
 HEADERS  += ui/mainwindow.h \
 	core/buffer.h \
@@ -121,7 +122,8 @@ HEADERS  += ui/mainwindow.h \
 	core/favoritecore.h \
 	ui/exportsingle.h \
 	ui/exportmulti.h \
-	ui/exportcreatedump.h
+	ui/exportcreatedump.h \
+    ui/customwords.h
 
 
 FORMS    += ui/mainwindow.ui \
@@ -152,7 +154,8 @@ FORMS    += ui/mainwindow.ui \
 	ui/outputpane.ui \
 	ui/exportsingle.ui \
 	ui/exportmulti.ui \
-	ui/exportcreatedump.ui
+	ui/exportcreatedump.ui \
+    ui/customwords.ui
 
 # Declaration of images and other to-be-embedded resources.
 RESOURCES  = images.qrc
@@ -209,6 +212,9 @@ win32{
     CONFIG += qt release
     message(Creating 32-bit Windows release build...)
 }
+
+
+
 
 
 
