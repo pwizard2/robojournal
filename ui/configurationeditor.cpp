@@ -324,6 +324,13 @@ void ConfigurationEditor::on_SystemLevelDic_toggled(bool checked){
     else{
         ui->BrowseButton->setDisabled(false);
         ui->Dictionary->clear();
+
+        // Add the default en_US dictionary to the list by default so users won't have to browse for it --Will Kraft (11/3/13).
+        QFile default_en(QDir::homePath()+ QDir::separator() + ".robojournal"+ QDir::separator() + "en_US.dic");
+
+        if(default_en.exists()){
+            ui->Dictionary->addItem(default_en.fileName());
+        }
     }
 }
 

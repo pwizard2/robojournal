@@ -39,6 +39,8 @@ public:
 private:
     Ui::CustomWords *ui;
     void PrimaryConfig();
+    QStringList Load_Words();
+    QString file_path;
 };
 
 #endif // CUSTOMWORDS_H

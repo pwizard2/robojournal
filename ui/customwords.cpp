@@ -23,6 +23,10 @@
 
 #include "customwords.h"
 #include "ui_customwords.h"
+#include <QFile>
+#include <QMessageBox>
+#include <QDir>
+#include <QTextStream>
 
 CustomWords::CustomWords(QWidget *parent) :
     QDialog(parent),
@@ -37,9 +41,12 @@ CustomWords::~CustomWords()
 {
     delete ui;
 }
+
 //###################################################################################################
 // Window primary config and setup (11/3/13).
 void CustomWords::PrimaryConfig(){
+
+    file_path=QDir::homePath() + QDir::separator() + ".robojournal" + QDir::separator() + "user_defined_words.txt";
 
     // hide question mark button in title bar when running on Windows
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -53,4 +60,39 @@ void CustomWords::PrimaryConfig(){
     ui->buttonBox->setContentsMargins(9,0,9,9);
 
     setWindowTitle("Manage User-Defined Words");
+
+    ui->WordList->setAlternatingRowColors(true);
+
+    // Get the list of words and load them into the form.
+    QStringList words=Load_Words();
+
+    if(words.isEmpty()){
+        QMessageBox m;
+        m.information(this,"RoboJournal","You have not defined any custom dictionary words yet.");
+        ui->DeleteWord->setDisabled(true);
+        ui->Modify->setDisabled(true);
+    }
+
+    ui->WordList->addItems(words);
+}
+
+//###################################################################################################
+// Get the list of words from the user-defined word list file and return them as a QStringList (11/3/13).
+QStringList CustomWords::Load_Words(){
+
+    QStringList words;
+
+    QFile custom_words(file_path);
+
+    if (custom_words.open(QIODevice::ReadOnly)){
+
+        QTextStream scan(&custom_words);
+        while (!scan.atEnd() )
+        {
+            QString line = scan.readLine();
+            words << line;
+        }
+        custom_words.close();
+    }
+    return words;
 }

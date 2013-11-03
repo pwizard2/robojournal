@@ -33,14 +33,21 @@
        <item>
         <widget class="QPushButton" name="AddWord">
          <property name="text">
-          <string>Add Word</string>
+          <string>&amp;Add Word</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="DeleteWord">
          <property name="text">
-          <string>Delete Word</string>
+          <string>&amp;Delete Word</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="Modify">
+         <property name="text">
+          <string>&amp;Modify</string>
          </property>
         </widget>
        </item>
