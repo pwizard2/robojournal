@@ -70,7 +70,16 @@ void CustomWords::Add_Word(){
         return;
     }
     else{
+
         QMessageBox m;
+
+        QStringList existing=Load_Words();
+
+        if(existing.contains(new_word,Qt::CaseInsensitive)){
+            m.critical(this,"RoboJournal","Your custom dictionary already contains \""+ new_word + "\".");
+            return;
+        }
+
         int choice=m.question(this,"RoboJournal","Do you really want to add \"" + new_word
                               + "\" to your dictionary?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
         switch(choice){
@@ -87,13 +96,6 @@ void CustomWords::Add_Word(){
         // We have to replace the whole file because Qt doesn't offer a way to stick a single line in the middle
         // of a file.
         if(proceed){
-
-            QStringList existing=Load_Words();
-
-            if(existing.contains(new_word)){
-                m.critical(this,"RoboJournal","Your custom dictionary already contains \""+ new_word + "\".");
-                return;
-            }
 
             existing.append(new_word);
             existing.sort();
