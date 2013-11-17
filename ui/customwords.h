@@ -40,6 +40,10 @@ public:
 private slots:
     void on_AddWord_clicked();
 
+    void on_DeleteWord_clicked();
+
+    void on_Modify_clicked();
+
 private:
     Ui::CustomWords *ui;
     void PrimaryConfig();
@@ -49,6 +53,7 @@ private:
     void Delete_Word(QString selected);
     void Modify_Word(QString selected);
     void RefreshWordList();
+    bool RewriteDictionary(QStringList wordlist);
 
 };
 

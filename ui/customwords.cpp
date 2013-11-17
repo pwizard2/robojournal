@@ -41,7 +41,43 @@ CustomWords::CustomWords(QWidget *parent) :
 }
 
 //###################################################################################################
-// Refresh the word list by reloading the dictionary --Will Kraft (11/17/13).
+// Replace current list of custom words with a new version and return the result  of the update
+// operation --Will Kraft (11/17/13).
+bool CustomWords::RewriteDictionary(QStringList wordlist){
+
+    using namespace std;
+    QTemporaryFile scratch;
+
+    if (scratch.open()){
+
+        QTextStream out(&scratch);
+
+        for(int i=0; i < wordlist.size(); i++){
+            QString next=wordlist.at(i) + "\n";
+            out << next;
+        }
+        scratch.close();
+    }
+
+    // overwrite the old dictionary file. Delete old file first so the copy function works.
+    QFile old(file_path);
+    old.remove();
+
+    bool overwrite=scratch.copy(old.fileName());
+
+    if(overwrite){
+        cout << "OUTPUT: Successfully updated user dictionary" << endl;
+    }
+    else{
+        QMessageBox n;
+        n.critical(this, "RoboJournal","RoboJournal could not update your custom dictionary.");
+    }
+
+    return overwrite;
+}
+
+//###################################################################################################
+// Refresh the GUI word list by reloading the dictionary --Will Kraft (11/17/13).
 void CustomWords::RefreshWordList(){
 
     ui->WordList->clear();
@@ -55,15 +91,12 @@ void CustomWords::RefreshWordList(){
     }
 }
 
-
 //###################################################################################################
 // Add a new word to the user dictionary (11/17/13).
 void CustomWords::Add_Word(){
     using namespace std;
-
-    QTemporaryFile scratch;
-
     bool proceed=false;
+
     QString new_word=QInputDialog::getText(this,"RoboJournal","Enter the new word:",QLineEdit::Normal);
 
     if(new_word.isEmpty()){
@@ -100,31 +133,7 @@ void CustomWords::Add_Word(){
             existing.append(new_word);
             existing.sort();
 
-            if (scratch.open()){
-
-                QTextStream out(&scratch);
-
-                for(int i=0; i < existing.size(); i++){
-                    QString next=existing.at(i) + "\n";
-                    out << next;
-                }
-
-                scratch.close();
-            }
-
-            // overwrite the old dictionary file. Delete old file first so the copy function works.
-            QFile old(file_path);
-            old.remove();
-
-            bool overwrite=scratch.copy(old.fileName());
-
-            if(overwrite){
-                cout << "OUTPUT: Successfully updated user dictionary" << endl;
-            }
-            else{
-                QMessageBox n;
-                n.critical(this, "RoboJournal","RoboJournal could not update your custom dictionary.");
-            }
+            RewriteDictionary(existing);
 
             RefreshWordList();
             return;
@@ -136,12 +145,67 @@ void CustomWords::Add_Word(){
 // Remove the "selected" word from the user dictionary (11/17/13).
 void CustomWords::Delete_Word(QString selected){
 
+    bool proceed=false;
+    QMessageBox m;
+
+    int choice=m.question(this,"RoboJournal","Do you really want to delete \"" + selected
+                          + "\" from your dictionary?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+    switch(choice){
+    case QMessageBox::Yes:
+        proceed=true;
+        break;
+
+    case QMessageBox::No:
+        return;
+        break;
+    }
+
+    if(proceed){
+
+        QStringList words=Load_Words();
+        words.removeAll(selected);
+
+        RewriteDictionary(words);
+        RefreshWordList();
+        return;
+    }
 }
 
 //###################################################################################################
 // Change the "selected" word in the user dictionary to something else (11/17/13).
 void CustomWords::Modify_Word(QString selected){
 
+    bool proceed=false;
+
+    QString new_word=QInputDialog::getText(this,"RoboJournal","Make your changes to the following word:",
+                                           QLineEdit::Normal, selected);
+    QMessageBox m;
+
+    if(new_word.isEmpty())
+        return;
+
+    int choice=m.question(this,"RoboJournal","Do you really want to change \"" + selected
+                          + "\" to \"" + new_word + "\"?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+    switch(choice){
+    case QMessageBox::Yes:
+        proceed=true;
+        break;
+
+    case QMessageBox::No:
+        return;
+        break;
+    }
+
+    if(proceed){
+        QStringList words=Load_Words();
+        words.removeAll(selected);
+        words.append(new_word);
+        words.sort();
+
+        RewriteDictionary(words);
+        RefreshWordList();
+        return;
+    }
 }
 
 //###################################################################################################
@@ -213,4 +277,22 @@ QStringList CustomWords::Load_Words(){
 void CustomWords::on_AddWord_clicked()
 {
     Add_Word();
+}
+
+//###################################################################################################
+void CustomWords::on_DeleteWord_clicked()
+{
+    QString word=ui->WordList->currentItem()->text();
+
+    if(!word.isEmpty())
+        Delete_Word(word);
+}
+
+//###################################################################################################
+void CustomWords::on_Modify_clicked()
+{
+    QString word=ui->WordList->currentItem()->text();
+
+    if(!word.isEmpty())
+        Modify_Word(word);
 }
