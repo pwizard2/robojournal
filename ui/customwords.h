@@ -23,6 +23,7 @@
 #define CUSTOMWORDS_H
 
 #include <QDialog>
+#include <QTemporaryFile>
 
 namespace Ui {
     class CustomWords;
@@ -36,11 +37,19 @@ public:
     explicit CustomWords(QWidget *parent = 0);
     ~CustomWords();
 
+private slots:
+    void on_AddWord_clicked();
+
 private:
     Ui::CustomWords *ui;
     void PrimaryConfig();
     QStringList Load_Words();
     QString file_path;
+    void Add_Word();
+    void Delete_Word(QString selected);
+    void Modify_Word(QString selected);
+    void RefreshWordList();
+
 };
 
 #endif // CUSTOMWORDS_H

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>353</width>
-    <height>452</height>
+    <height>485</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -206,6 +206,9 @@ p, li { white-space: pre-wrap; }
         </item>
         <item>
          <widget class="QPushButton" name="ManageUDWords">
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;View or modify the words in your custom dictionary.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
           <property name="text">
            <string>Manage user-defined &amp;words</string>
           </property>

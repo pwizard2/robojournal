@@ -40,26 +40,28 @@ ConfigurationEditor::ConfigurationEditor(QWidget *parent) :
 
     PopulateForm();
 
+    /*
     // Will Kraft -- Bugfix 5/6/13: Temporarily disable spellcheck on Linux-based systems due to
     // the overwhelming problems I've had with it. I hope to have this fixed for good by 0.5 once
     // I've stripped out the entire spellchecker and replaced it with something better.
 
-    //#ifdef __gnu_linux__
-    //    ui->UseSpellCheck->setChecked(false);
-    //    ui->ShowSpellingErrors->setChecked(false);
-    //    ui->Dictionary->clear();
+    #ifdef __gnu_linux__
+        ui->UseSpellCheck->setChecked(false);
+        ui->ShowSpellingErrors->setChecked(false);
+        ui->Dictionary->clear();
 
-    //    ui->UseSpellCheck->setEnabled(false);
-    //    ui->BrowseButton->setEnabled(false);
-    //    ui->ShowSpellingErrors->setEnabled(false);
-    //    ui->Dictionary->setEnabled(false);
+        ui->UseSpellCheck->setEnabled(false);
+        ui->BrowseButton->setEnabled(false);
+        ui->ShowSpellingErrors->setEnabled(false);
+        ui->Dictionary->setEnabled(false);
 
-    //    ui->UseSpellCheck->setToolTip("<p>This feature is temporarily unavailable on Linux-based operating systems.</p>");
-    //    ui->ShowSpellingErrors->setToolTip("<p>This feature is temporarily unavailable on Linux-based operating systems.</p>");
-    //    ui->Dictionary->setToolTip("<p>This feature is temporarily unavailable on Linux-based operating systems.</p>");
-    //    ui->BrowseButton->setToolTip("<p>This feature is temporarily unavailable on Linux-based operating systems.</p>");
+        ui->UseSpellCheck->setToolTip("<p>This feature is temporarily unavailable on Linux-based operating systems.</p>");
+        ui->ShowSpellingErrors->setToolTip("<p>This feature is temporarily unavailable on Linux-based operating systems.</p>");
+        ui->Dictionary->setToolTip("<p>This feature is temporarily unavailable on Linux-based operating systems.</p>");
+        ui->BrowseButton->setToolTip("<p>This feature is temporarily unavailable on Linux-based operating systems.</p>");
 
-    //#endif
+    #endif
+    */
 
 }
 
@@ -104,7 +106,7 @@ QStringList ConfigurationEditor::Scan_For_System_Dictionaries(){
     if(dictionaries.isEmpty()){
         QMessageBox m;
         m.critical(this,"RoboJournal","RoboJournal could not find any system-level dictionaries on your computer. To solve this problem,"
-                   " you should install some Hunspell-compatible dictionaries with your distro's package management software.");
+                   " you should install some Hunspell dictionaries with your distro's package management software.");
     }
 
     return dictionaries;
@@ -283,6 +285,7 @@ void ConfigurationEditor::on_UseSpellCheck_clicked(bool checked)
 
 #ifdef __gnu_linux__
         // Have RoboJournal use system-level dictionaries by default if we are running on Linux --Will Kraft (11/1/13).
+        ui->Dictionary->clear();
         ui->SystemLevelDic->click();
 #endif
 
@@ -291,14 +294,17 @@ void ConfigurationEditor::on_UseSpellCheck_clicked(bool checked)
         ui->SystemLevelDic->setDisabled(true);
         ui->SystemLevelDic->setChecked(false);
 
-#endif
-
         // Add the default en_US dictionary to the list by default so users won't have to browse for it --Will Kraft (11/3/13).
+        // Bugfix for Linux (11/17/13): don't add this dic if we're using system-level dictionaries. Move this code into the
+        // Win32 block because Linux was still hitting it and adding the built-in dictionary even when Buffer::system_level was true.
         QFile default_en(QDir::homePath()+ QDir::separator() + ".robojournal"+ QDir::separator() + "en_US.dic");
 
         if(default_en.exists()){
             ui->Dictionary->addItem(default_en.fileName());
         }
+
+#endif
+
 
     }
     else{

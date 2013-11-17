@@ -27,13 +27,119 @@
 #include <QMessageBox>
 #include <QDir>
 #include <QTextStream>
+#include <iostream>
+#include <QInputDialog>
+#include <QMessageBox>
 
+//###################################################################################################
 CustomWords::CustomWords(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CustomWords)
 {
     ui->setupUi(this);
     PrimaryConfig();
+}
+
+//###################################################################################################
+// Refresh the word list by reloading the dictionary --Will Kraft (11/17/13).
+void CustomWords::RefreshWordList(){
+
+    ui->WordList->clear();
+
+    QStringList words=Load_Words();
+    words.sort();
+
+    if(!words.isEmpty()){
+        ui->WordList->addItems(words);
+        ui->WordList->setCurrentRow(0);
+    }
+}
+
+
+//###################################################################################################
+// Add a new word to the user dictionary (11/17/13).
+void CustomWords::Add_Word(){
+    using namespace std;
+
+    QTemporaryFile scratch;
+
+    bool proceed=false;
+    QString new_word=QInputDialog::getText(this,"RoboJournal","Enter the new word:",QLineEdit::Normal);
+
+    if(new_word.isEmpty()){
+        return;
+    }
+    else{
+        QMessageBox m;
+        int choice=m.question(this,"RoboJournal","Do you really want to add \"" + new_word
+                              + "\" to your dictionary?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+        switch(choice){
+        case QMessageBox::Yes:
+            proceed=true;
+            break;
+
+        case QMessageBox::No:
+            return;
+            break;
+        }
+
+        // Write out a temp file with a the new word and then replace the current dictionary with the new file.
+        // We have to replace the whole file because Qt doesn't offer a way to stick a single line in the middle
+        // of a file.
+        if(proceed){
+
+            QStringList existing=Load_Words();
+
+            if(existing.contains(new_word)){
+                m.critical(this,"RoboJournal","Your custom dictionary already contains \""+ new_word + "\".");
+                return;
+            }
+
+            existing.append(new_word);
+            existing.sort();
+
+            if (scratch.open()){
+
+                QTextStream out(&scratch);
+
+                for(int i=0; i < existing.size(); i++){
+                    QString next=existing.at(i) + "\n";
+                    out << next;
+                }
+
+                scratch.close();
+            }
+
+            // overwrite the old dictionary file. Delete old file first so the copy function works.
+            QFile old(file_path);
+            old.remove();
+
+            bool overwrite=scratch.copy(old.fileName());
+
+            if(overwrite){
+                cout << "OUTPUT: Successfully updated user dictionary" << endl;
+            }
+            else{
+                QMessageBox n;
+                n.critical(this, "RoboJournal","RoboJournal could not update your custom dictionary.");
+            }
+
+            RefreshWordList();
+            return;
+        }
+    }
+}
+
+//###################################################################################################
+// Remove the "selected" word from the user dictionary (11/17/13).
+void CustomWords::Delete_Word(QString selected){
+
+}
+
+//###################################################################################################
+// Change the "selected" word in the user dictionary to something else (11/17/13).
+void CustomWords::Modify_Word(QString selected){
+
 }
 
 //###################################################################################################
@@ -45,6 +151,7 @@ CustomWords::~CustomWords()
 //###################################################################################################
 // Window primary config and setup (11/3/13).
 void CustomWords::PrimaryConfig(){
+    using namespace std;
 
     file_path=QDir::homePath() + QDir::separator() + ".robojournal" + QDir::separator() + "user_defined_words.txt";
 
@@ -71,9 +178,12 @@ void CustomWords::PrimaryConfig(){
         m.information(this,"RoboJournal","You have not defined any custom dictionary words yet.");
         ui->DeleteWord->setDisabled(true);
         ui->Modify->setDisabled(true);
+        cout << "OUTPUT: Your custom dictionary is empty." << endl;
+        return;
     }
 
     ui->WordList->addItems(words);
+    ui->WordList->setCurrentRow(0);
 }
 
 //###################################################################################################
@@ -95,4 +205,10 @@ QStringList CustomWords::Load_Words(){
         custom_words.close();
     }
     return words;
+}
+
+//###################################################################################################
+void CustomWords::on_AddWord_clicked()
+{
+    Add_Word();
 }

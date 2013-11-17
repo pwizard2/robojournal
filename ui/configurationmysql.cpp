@@ -59,6 +59,7 @@ void ConfigurationMySQL::on_Port_textChanged(const QString &arg1)
     }
 }
 
+//###################################################################################################
 void ConfigurationMySQL::PopulateForm(){
 
     ui->Username->setText(Buffer::defaultuser);
@@ -67,6 +68,10 @@ void ConfigurationMySQL::PopulateForm(){
     ui->Database->setText(Buffer::defaultdatabase);
 
     ui->AllowRoot->setChecked(Buffer::allowroot);
+
+    // Bugfix: Set has_displayed variable to false so the empty journal list message gets displayed once
+    //if the journal list is empty -- Will Kraft (11/17/13).
+    has_displayed=false;
 
     Show_Known_Journals();
 
@@ -115,13 +120,14 @@ void ConfigurationMySQL::Show_Known_Journals(){
     ui->KnownJournals->setRootIsDecorated(0);
 
     FavoriteCore f;
-    QList<QStringList> journals=f.getKnownJournals();
+    QList<QStringList> journals=f.getKnownJournals();   
 
-    if(journals.isEmpty()){
+    if((journals.isEmpty()) && (!has_displayed)){
 
         QMessageBox m;
         m.information(this,"RoboJournal","The list of known MySQL-based journals is currently empty. This problem "
                       "should automatically resolve itself the next time you make a connection or use the Journal Selector.");
+        has_displayed=true;
 
     }
     else{

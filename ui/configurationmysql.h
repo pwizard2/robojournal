@@ -54,6 +54,11 @@ private:
 
     QTreeWidgetItem *default_db;
 
+    // Bugfix 11/17/13: Prevent the messagebox from being displayed more than once. If the SQLite driver is not present, the messagebox
+    // displays over and over again, locking up the entire program. This bool keeps track of whether the box has been displayed
+    // already. --Will Kraft
+    bool has_displayed;
+
 };
 
 #endif // CONFIGURATIONMYSQL_H
