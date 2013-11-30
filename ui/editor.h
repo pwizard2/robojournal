@@ -22,8 +22,7 @@
 
 #include <QDialog>
 #include <QTextEdit>
-#include "ui/SpellTextEdit.h"
-#include "ui/highlighter.h"
+#include "core/hunspell/ctextcheckeredit.h"
 #include <QSplitter>
 #include "ui/editortagmanager.h"
 #include "ui_editortagmanager.h"
@@ -56,8 +55,7 @@ public:
     static int year;
     static QString tags; // new for 0.5, added 6/29/13
 
-    SpellTextEdit *spell;
-    Highlighter *high;
+    CTextCheckerEdit *spell;
     QTextEdit *regular;
 
     QSplitter *divide;

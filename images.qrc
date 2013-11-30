@@ -88,5 +88,6 @@
         <file>icons/information.png</file>
         <file>icons/database-gold.png</file>
         <file>icons/task--plus.png</file>
+        <file>icons/spellcheck_add.png</file>
     </qresource>
 </RCC>

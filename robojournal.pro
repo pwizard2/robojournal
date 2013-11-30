@@ -37,19 +37,6 @@ SOURCES += main.cpp\
 	ui/configurationeditor.cpp \
 	ui/configurationexport.cpp \
 	ui/exportpreview.cpp \
-	ui/hunspell/affentry.cxx \
-	ui/hunspell/affixmgr.cxx \
-	ui/hunspell/csutil.cxx \
-	ui/hunspell/dictmgr.cxx \
-	ui/hunspell/filemgr.cxx \
-	ui/hunspell/hashmgr.cxx \
-	ui/hunspell/hunspell.cxx \
-	ui/hunspell/hunzip.cxx \
-	ui/hunspell/phonet.cxx \
-	ui/hunspell/suggestmgr.cxx \
-	ui/hunspell/utf_info.cxx \
-	ui/SpellTextEdit.cpp \
-	ui/highlighter.cpp \
 	sql/sqlshield.cpp \
 	ui/tagreminder.cpp \
         ui/newjournalcreator.cpp \
@@ -66,7 +53,23 @@ SOURCES += main.cpp\
         ui/exportsingle.cpp \
         ui/exportmulti.cpp \
         ui/exportcreatedump.cpp \
-    ui/customwords.cpp
+        ui/customwords.cpp \
+        core/hunspell/spellchecker.cpp \
+        core/hunspell/utf_info.cxx \
+        core/hunspell/suggestmgr.cxx \
+        core/hunspell/replist.cxx \
+        core/hunspell/phonet.cxx \
+        core/hunspell/hunzip.cxx \
+        core/hunspell/hunspell.cxx \
+        core/hunspell/hashmgr.cxx \
+        core/hunspell/filemgr.cxx \
+        core/hunspell/dictmgr.cxx \
+        core/hunspell/csutil.cxx \
+        core/hunspell/affixmgr.cxx \
+        core/hunspell/affentry.cxx \
+        core/hunspell/ctextcheckeredit.cpp \
+        core/hunspell/ctextsyntaxhighlighter.cpp
+
 
 HEADERS  += ui/mainwindow.h \
 	core/buffer.h \
@@ -90,23 +93,6 @@ HEADERS  += ui/mainwindow.h \
 	ui/configurationeditor.h \
 	ui/configurationexport.h \
 	ui/exportpreview.h \
-	ui/hunspell/affixmgr.hxx \
-	ui/hunspell/atypes.hxx \
-	ui/hunspell/baseaffix.hxx \
-	ui/hunspell/csutil.hxx \
-	ui/hunspell/dictmgr.hxx \
-	ui/hunspell/filemgr.hxx \
-	ui/hunspell/hashmgr.hxx \
-	ui/hunspell/htypes.hxx \
-	ui/hunspell/hunspell.h \
-	ui/hunspell/hunspell.hxx \
-	ui/hunspell/hunzip.hxx \
-	ui/hunspell/langnum.hxx \
-	ui/hunspell/phonet.hxx \
-	ui/hunspell/suggestmgr.hxx \
-	ui/hunspell/w_char.hxx \
-	ui/SpellTextEdit.h \
-	ui/highlighter.h \
 	sql/sqlshield.h \
 	ui/tagreminder.h \
         ui/newjournalcreator.h \
@@ -123,7 +109,28 @@ HEADERS  += ui/mainwindow.h \
 	ui/exportsingle.h \
 	ui/exportmulti.h \
 	ui/exportcreatedump.h \
-    ui/customwords.h
+        ui/customwords.h \
+        core/hunspell/spellchecker.h \
+        core/hunspell/w_char.hxx \
+        core/hunspell/suggestmgr.hxx \
+        core/hunspell/replist.hxx \
+        core/hunspell/phonet.hxx \
+        core/hunspell/langnum.hxx \
+        core/hunspell/hunzip.hxx \
+        core/hunspell/hunvisapi.h \
+        core/hunspell/hunspell.hxx \
+        core/hunspell/hunspell.h \
+        core/hunspell/htypes.hxx \
+        core/hunspell/hashmgr.hxx \
+        core/hunspell/filemgr.hxx \
+        core/hunspell/dictmgr.hxx \
+        core/hunspell/csutil.hxx \
+        core/hunspell/baseaffix.hxx \
+        core/hunspell/atypes.hxx \
+        core/hunspell/affixmgr.hxx \
+        core/hunspell/affentry.hxx \
+        core/hunspell/ctextcheckeredit.h \
+        core/hunspell/ctextsyntaxhighlighter.h
 
 
 FORMS    += ui/mainwindow.ui \
@@ -155,7 +162,8 @@ FORMS    += ui/mainwindow.ui \
 	ui/exportsingle.ui \
 	ui/exportmulti.ui \
 	ui/exportcreatedump.ui \
-    ui/customwords.ui
+        ui/customwords.ui
+
 
 # Declaration of images and other to-be-embedded resources.
 RESOURCES  = images.qrc

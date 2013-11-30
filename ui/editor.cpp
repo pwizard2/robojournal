@@ -36,8 +36,7 @@
 #include <QColor>
 #include <QPalette>
 #include <QDesktopWidget>
-#include "ui/SpellTextEdit.h"
-#include "ui/highlighter.h"
+#include "core/hunspell/ctextcheckeredit.h"
 #include <QWidgetAction>
 #include <QSplitter>
 #include "ui/editortagmanager.h"
@@ -309,19 +308,22 @@ void Editor::PrimaryConfig(){
     // Option 1: Use Jan Sundermeyer's spellcheck-enabled editor thingy.
     if(Buffer::use_spellcheck){
 
-        spell=new SpellTextEdit(this,Buffer::current_dictionary);
-        high=new Highlighter(spell->document(),Buffer::current_dictionary,true);
-
-        spell->setDict(Buffer::current_dictionary);
-        high->setDict(Buffer::current_dictionary);
+        spell=new CTextCheckerEdit();
 
         // allow the app to detect when the SpellTextEdit adds a word or has its text changed in any way.
         // The second function is essential for the word count feature to work.
-        connect(spell,SIGNAL(addWord(QString)), high,SLOT(slot_addWord(QString)));
+        //connect(spell,SIGNAL(addWord(QString)), this,SLOT(slot_addWord(QString)));
         connect(spell, SIGNAL(textChanged()), this, SLOT(on_spell_textChanged()));
 
-        layout->addWidget(spell,true);
+        left_half->addWidget(spell,true);
+        editor_panel->setLayout(left_half);
 
+        divide->insertWidget(0,editor_panel);
+        divide->insertWidget(1,et);
+
+        // Hide the editor widget we're not using. If we don't hide it, the user can see it
+        // behind the splitter. Hiding it is safer than deleting it (11/30/13).
+        ui->EntryPost->setVisible(false);
     }
 
     // Option 2: If we're not using spellcheck, just use a regular QTextEdit. This is unchanged from =< 0.3.
@@ -332,7 +334,10 @@ void Editor::PrimaryConfig(){
 
         divide->insertWidget(0,editor_panel);
         divide->insertWidget(1,et);
-        //layout->addWidget(ui->EntryPost,true);
+
+        // Hide the editor widget we're not using. If we don't hide it, the user can see it
+        // behind the splitter. Hiding it is safer than deleting it (11/30/13).
+        spell->setVisible(false);
     }
 
     layout->addWidget(divide,1);
@@ -371,7 +376,7 @@ void Editor::PrimaryConfig(){
         }
         else{
             ui->ShowErrors->setChecked(false);
-            high->enableSpellChecking(false);
+            //high->enableSpellChecking(false);
         }
 
     }
@@ -1050,11 +1055,11 @@ void Editor::on_PostEntry_clicked()
 void Editor::on_ShowErrors_toggled(bool checked)
 {
     if(checked){
-        high->enableSpellChecking(true);
+
 
     }
     else{
-        high->enableSpellChecking(false);
+        //high->enableSpellChecking(false);
 
     }
 }
