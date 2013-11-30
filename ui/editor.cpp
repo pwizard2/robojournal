@@ -334,10 +334,6 @@ void Editor::PrimaryConfig(){
 
         divide->insertWidget(0,editor_panel);
         divide->insertWidget(1,et);
-
-        // Hide the editor widget we're not using. If we don't hide it, the user can see it
-        // behind the splitter. Hiding it is safer than deleting it (11/30/13).
-        spell->setVisible(false);
     }
 
     layout->addWidget(divide,1);

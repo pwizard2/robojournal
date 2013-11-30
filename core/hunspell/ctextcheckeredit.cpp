@@ -19,7 +19,7 @@
 
 #include "ctextcheckeredit.h"
 #include "spellchecker.h"
-
+#include "core/buffer.h"
 #include <QMenu>
 #include <QContextMenuEvent>
 #include <QTextCursor>
@@ -28,25 +28,40 @@
 #include <QCoreApplication>
 #include <QMessageBox>
 #include <QDir>
+#include <iostream>
 
 
 SpellChecker *spellChecker;
 QList<QAction *> suggestionWordsList;
 QAction *suggestedWord,
-        *addToDict;
+*addToDict;
+
 QString selectedWord;
 
 CTextCheckerEdit::CTextCheckerEdit(QWidget *parent)
     : QTextEdit(parent)
 {
+    using namespace std;
 
     QIcon dict(":/icons/spellcheck_add.png");
 
-    QString dictPath = "/usr/share/hunspell/en_US";
+    QString dictPath = QDir::homePath() + QDir::separator() + ".robojournal" + QDir::separator() + "en_US";
+
+    // Set current dictionary from confiuguration settings. --Will Kraft (11/29/13).
+    if(!Buffer::current_dictionary.isEmpty()){
+        dictPath=Buffer::current_dictionary;
+        dictPath.chop(4);
+    }
+    else{
+        cout << "OUTPUT: Could not access saved dictionary from configuration! Defaulting to failsafe.";
+    }
+
+    dictPath=QDir::toNativeSeparators(dictPath);
+
     QString userDict= QDir::homePath() + QDir::separator() + ".robojournal/user_defined_words.txt";
     spellChecker = new SpellChecker(dictPath, userDict);
 
-    addToDict = new QAction(tr("Add to custom dictionary"),this);
+    addToDict = new QAction(tr("Add to my custom &dictionary"),this);
     addToDict->setIcon(dict);
 
     connect(addToDict,SIGNAL(triggered()),this,SLOT(addToDictionary()));
@@ -158,13 +173,15 @@ void CTextCheckerEdit::updateTextSpeller()
             setExtraSelections(esList);
 
             // reset the word highlight
-//            esList.clear();
+            //            esList.clear();
             setExtraSelections(esList);
 
-                    }
+        }
         cursor.movePosition(QTextCursor::NextWord, QTextCursor::MoveAnchor, 1);
     }
     //cursor.endEditBlock();
     setTextCursor(oldCursor);
-//    QMessageBox::warning(this,"wait","press OK!");
+    //    QMessageBox::warning(this,"wait","press OK!");
 }
+
+

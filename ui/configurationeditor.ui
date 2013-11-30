@@ -214,7 +214,7 @@ p, li { white-space: pre-wrap; }
           </property>
           <property name="icon">
            <iconset resource="../images.qrc">
-            <normaloff>:/icons/spell-check-error.png</normaloff>:/icons/spell-check-error.png</iconset>
+            <normaloff>:/icons/spellcheck_add.png</normaloff>:/icons/spellcheck_add.png</iconset>
           </property>
          </widget>
         </item>
