@@ -34,10 +34,10 @@ ConfigurationGeneral::ConfigurationGeneral(QWidget *parent) :
 
 
     // Set up Database List
-    QIcon mysql(":/icons/mysql_icon2.png");
+    QIcon mysql(":/icons/mariadb.png");
     QIcon sqlite(":/icons/sqlite_icon.png");
 
-    ui->Backend->addItem(mysql,"MySQL");
+    ui->Backend->addItem(mysql,"MySQL/MariaDB");
     ui->Backend->addItem(sqlite,"SQLite");
 
 
@@ -128,7 +128,18 @@ void ConfigurationGeneral::GetChanges(){
     Newconfig::new_alternate_rows=ui->Usealternating->isChecked();
     Newconfig::new_name_in_titlebar=ui->NameTitlebar->isChecked();
     Newconfig::new_toolbar_pos=ui->ToolbarPosition->currentIndex();
-    Newconfig::new_dbtype=ui->Backend->currentText();
+
+    // Get changes for backend (12/1/13):
+    switch(ui->Backend->currentIndex()){
+        case 0:
+            Newconfig::new_dbtype="MySQL";
+            break;
+
+        case 1:
+            Newconfig::new_dbtype="SQLite";
+        break;
+    }
+
     Newconfig::new_use_dow=ui->DOW->isChecked();
     Newconfig::new_record_time=ui->RecordTime->isChecked();
     Newconfig::new_24_hr=ui->UseMilitary->isChecked();

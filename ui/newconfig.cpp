@@ -154,7 +154,7 @@ void Newconfig::PrimaryConfig(){
     QIcon editor(":/icons/ui-text-area.png");
     QIcon appearance(":/icons/picture.png");
     QIcon disk(":/icons/external.png");
-    QIcon mysql(":/icons/mysql_icon2.png");
+    QIcon mysql(":/icons/mariadb.png");
     QIcon sqlite(":/icons/sqlite_icon.png");
 
     ui->Categories->clear();
@@ -166,39 +166,49 @@ void Newconfig::PrimaryConfig(){
     QTreeWidgetItem *settings_general = new QTreeWidgetItem(ui->Categories);
     settings_general->setIcon(0, general);
     settings_general->setText(0,"General");
+    settings_general->setToolTip(0,"General");
     settings_general->setSizeHint(0,space);
 
     QTreeWidgetItem *settings_behavior = new QTreeWidgetItem(ui->Categories);
     settings_behavior->setIcon(0, behavior);
     settings_behavior->setText(0,"Journal");
+    settings_behavior->setToolTip(0,"Journal");
     settings_behavior->setSizeHint(0,space);
 
 
     QTreeWidgetItem *settings_editor = new QTreeWidgetItem(ui->Categories);
     settings_editor->setIcon(0, editor);
     settings_editor->setText(0,"Editor");
+    settings_editor->setToolTip(0,"Editor");
     settings_editor->setSizeHint(0,space);
 
     QTreeWidgetItem *settings_appearance = new QTreeWidgetItem(ui->Categories);
     settings_appearance->setIcon(0, appearance);
     settings_appearance->setText(0,"Appearance");
+    settings_appearance->setToolTip(0,"Appearance");
     settings_appearance->setSizeHint(0,space);
 
     QTreeWidgetItem *settings_export = new QTreeWidgetItem(ui->Categories);
     settings_export->setIcon(0, disk);
     settings_export->setText(0,"Export Settings");
+    settings_export->setToolTip(0,"Export Settings");
     settings_export->setSizeHint(0,space);
 
     QTreeWidgetItem *settings_mysql = new QTreeWidgetItem(ui->Categories);
     settings_mysql->setIcon(0, mysql);
-    settings_mysql->setText(0,"MySQL Settings");
+    settings_mysql->setText(0,"MySQL/MariaDB Settings");
+    settings_mysql->setToolTip(0,"MySQL/MariaDB Settings");
     settings_mysql->setSizeHint(0,space);
 
     // New SQLite page for version 0.5
     QTreeWidgetItem *settings_sqlite = new QTreeWidgetItem(ui->Categories);
     settings_sqlite->setIcon(0, sqlite);
     settings_sqlite->setText(0,"SQLite Settings");
+    settings_sqlite->setToolTip(0,"SQLite Settings");
     settings_sqlite->setSizeHint(0,space);
+
+    // Make sure the minimum width for categories list is wide enough to accommodate the settings_mysql object (12/1/13).
+    ui->Categories->setMinimumWidth(175);
 
     // Create a StackedWidget. The stack holds all the "pages" and (most importantly) remembers the current state of each.
     // The stack shows only one page at a time. When an item in the category list (General, Journal, etc.) is clicked

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>609</width>
+    <width>636</width>
     <height>463</height>
    </rect>
   </property>
@@ -37,8 +37,14 @@
      <property name="lineWidth">
       <number>0</number>
      </property>
+     <property name="isWrapping" stdset="0">
+      <bool>true</bool>
+     </property>
      <property name="spacing">
       <number>3</number>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
      </property>
      <item>
       <property name="text">
@@ -60,11 +66,11 @@
      </item>
      <item>
       <property name="text">
-       <string>Backup MySQL Journal</string>
+       <string>Backup MySQL/MariaDB Journal</string>
       </property>
       <property name="icon">
        <iconset resource="../images.qrc">
-        <normaloff>:/icons/mysql_icon2.png</normaloff>:/icons/mysql_icon2.png</iconset>
+        <normaloff>:/icons/mariadb.png</normaloff>:/icons/mariadb.png</iconset>
       </property>
      </item>
     </widget>
@@ -87,7 +93,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>401</width>
+          <width>428</width>
           <height>423</height>
          </rect>
         </property>

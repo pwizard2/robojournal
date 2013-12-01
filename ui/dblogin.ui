@@ -18,16 +18,7 @@
     <normaloff>:/icons/robojournal-icon.png</normaloff>:/icons/robojournal-icon.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
+   <property name="margin">
     <number>0</number>
    </property>
    <item>
@@ -44,10 +35,10 @@
      <widget class="QWidget" name="MySQLPage">
       <attribute name="icon">
        <iconset resource="../images.qrc">
-        <normaloff>:/icons/mysql_icon2.png</normaloff>:/icons/mysql_icon2.png</iconset>
+        <normaloff>:/icons/mariadb.png</normaloff>:/icons/mariadb.png</iconset>
       </attribute>
       <attribute name="title">
-       <string>&amp;MySQL</string>
+       <string>&amp;MySQL/MariaDB</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>

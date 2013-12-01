@@ -120,17 +120,17 @@ void ConfigurationMySQL::Show_Known_Journals(){
     ui->KnownJournals->setRootIsDecorated(0);
 
     FavoriteCore f;
-    QList<QStringList> journals=f.getKnownJournals();   
+    QList<QStringList> journals=f.getKnownJournals();
 
-    if((journals.isEmpty()) && (!has_displayed)){
+    if(journals.isEmpty()){
 
         QMessageBox m;
         m.information(this,"RoboJournal","The list of known MySQL-based journals is currently empty. This problem "
                       "should automatically resolve itself the next time you make a connection or use the Journal Selector.");
-        has_displayed=true;
-
+        return;
     }
     else{
+
         for(int i=0; i < journals.size(); i++){
             QStringList row=journals.at(i);
             QTreeWidgetItem *new_item=new QTreeWidgetItem(ui->KnownJournals);
@@ -166,7 +166,7 @@ void ConfigurationMySQL::Show_Known_Journals(){
 
 
     // Only do database maintenance if there is a password in the buffer since we need it to log in (8/19/13).
-    if(!Buffer::password.isEmpty()){
+    if((!Buffer::password.isEmpty()) && (!journals.isEmpty())){
 
         QString host=Buffer::host;
 

@@ -113,7 +113,7 @@
       <item>
        <widget class="QLabel" name="label_5">
         <property name="text">
-         <string>&lt;p&gt;The following list contains all known MySQL journals that are associated with your user account:&lt;/p&gt;</string>
+         <string>&lt;p&gt;The following list contains all known MySQL/MariaDB journals that are associated with your user account:&lt;/p&gt;</string>
         </property>
         <property name="wordWrap">
          <bool>true</bool>

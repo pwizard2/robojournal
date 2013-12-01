@@ -197,6 +197,8 @@ private:
     QDate lastdate;
     bool date_override_trigger_tripped;
 
+    QString backend_type;
+
 };
 
 #endif // MAINWINDOW_H

@@ -21,16 +21,7 @@
    <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
+   <property name="margin">
     <number>0</number>
    </property>
    <item>
@@ -90,11 +81,11 @@
        </item>
        <item>
         <property name="text">
-         <string>MySQL Journal</string>
+         <string>MySQL/MariaDB Journal</string>
         </property>
         <property name="icon">
          <iconset resource="../images.qrc">
-          <normaloff>:/icons/mysql_icon2.png</normaloff>:/icons/mysql_icon2.png</iconset>
+          <normaloff>:/icons/mariadb.png</normaloff>:/icons/mariadb.png</iconset>
         </property>
        </item>
       </widget>
@@ -113,7 +104,7 @@
           <x>0</x>
           <y>0</y>
           <width>391</width>
-          <height>394</height>
+          <height>402</height>
          </rect>
         </property>
        </widget>
