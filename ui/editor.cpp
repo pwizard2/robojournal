@@ -284,13 +284,6 @@ void Editor::PrimaryConfig(){
     layout->addWidget(ui->line);
     left_half->addWidget(bar);
 
-
-#ifdef _WIN32
-    // Delete the toolbar dividing line on Windows. On most Linux window managers it helps to have a divider, but
-    // on Windows it just looks bad.
-    delete ui->line;
-#endif
-
     // (added for 0.5 -- 6/10/13) Set up vertical splitter for text area and tag area.
     divide=new QSplitter(this);
     divide->setOrientation(Qt::Horizontal);
@@ -310,12 +303,15 @@ void Editor::PrimaryConfig(){
 
         spell=new CTextCheckerEdit();
 
+        spell->setFrameStyle(QFrame::Panel | QFrame::Sunken);
+
         // allow the app to detect when the SpellTextEdit adds a word or has its text changed in any way.
         // The second function is essential for the word count feature to work.
         //connect(spell,SIGNAL(addWord(QString)), this,SLOT(slot_addWord(QString)));
         connect(spell, SIGNAL(textChanged()), this, SLOT(on_spell_textChanged()));
 
         left_half->addWidget(spell,true);
+
         editor_panel->setLayout(left_half);
 
         divide->insertWidget(0,editor_panel);
@@ -328,6 +324,8 @@ void Editor::PrimaryConfig(){
 
     // Option 2: If we're not using spellcheck, just use a regular QTextEdit. This is unchanged from =< 0.3.
     else{
+
+        ui->EntryPost->setFrameStyle(QFrame::WinPanel | QFrame::Sunken);
 
         left_half->addWidget(ui->EntryPost,true);
         editor_panel->setLayout(left_half);
@@ -412,10 +410,14 @@ void Editor::PrimaryConfig(){
     h_layout->setMargin(0);
     h_layout->setContentsMargins(0,0,0,0); // make sure the splitter goes all the way to the edge of the frame
 
-    QFrame *line = new QFrame(handle);
-    line->setFrameStyle(QFrame::WinPanel | QFrame::Raised);
-    line->setLineWidth(3);
-    h_layout->addWidget(line);
+    //    QFrame *line = new QFrame(handle);
+    //    line->setFrameStyle(QFrame::WinPanel | QFrame::Raised);
+    //    line->setLineWidth(3);
+    //    h_layout->addWidget(line);
+
+    // Make the toolbars flat because the raised borders look really ugly on Windows. --Will Kraft (11/30/13).
+    bar->setStyleSheet("QToolBar { border: 0px }");
+    masterbar->setStyleSheet("QToolBar { border: 0px }");
 #endif
 
     //tighten up toolbar spacing for 0.5 (7/15/13)
@@ -496,12 +498,12 @@ void Editor::ConfirmExit(){
         int choice=m.exec();
 
         switch(choice){
-        case QMessageBox::Yes:
-            this->done(0);
+            case QMessageBox::Yes:
+                this->done(0);
             break;
 
-        case QMessageBox::No:
-            // do nothing
+            case QMessageBox::No:
+                // do nothing
             break;
         }
     }

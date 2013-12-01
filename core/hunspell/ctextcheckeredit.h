@@ -2,6 +2,12 @@
     This file is part of RoboJournal.
     Copyright (c) 2014 by Will Kraft <pwizard@gmail.com>.
 
+    This code was originally written by someone named "Edogen" over on
+    http://www.qtcentre.org/threads/38227-QTextEdit-with-hunspell-spell-checker-and-syntax-highlighter.
+    Unfortunately, there was no copyright header in the provided code.
+    If you know how to get in touch with edogen (whoever he/she is), please let
+    me know so I can give appropriate credit. --Will Kraft (11/30/13).
+
     RoboJournal is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or

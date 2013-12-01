@@ -381,6 +381,12 @@ void EditorTagManager::PrimaryConfig(){
     bar->setLayoutDirection(Qt::LeftToRight);
     bar->setContextMenuPolicy(Qt::DefaultContextMenu);
 
+#ifdef _WIN32
+    bar->setStyleSheet("QToolBar { border: 0px }");
+
+#endif
+
+
     const QFont toolbarFont("Sans",7);
     bar->setFont(toolbarFont);
 

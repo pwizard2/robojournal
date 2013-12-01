@@ -78,7 +78,7 @@ void ConfigurationSQLite::PopulateForm(){
     }
 
     // On windows, omit the part about the ~ home directory.
-#ifdef _WIN32:
+#ifdef _WIN32
     ui->label_5->setText("<p>The following list contains all known SQLite journals that are associated with you:</p>");
     #endif
 }
