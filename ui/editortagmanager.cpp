@@ -286,6 +286,11 @@ void EditorTagManager::DefineTag(){
         defined->setCheckState(0, Qt::Checked);
         defined->setFont(0, selected);
         defined->setForeground(0,selected_fg);
+
+        // Add it to the tag list and active tags list for filtering (12/1/13).
+        current_list << tag;
+        active_tags << tag;
+
     }
 }
 

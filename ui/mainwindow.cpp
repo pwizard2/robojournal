@@ -1566,10 +1566,18 @@ void MainWindow::PrimaryConfig(){
     h_layout->setMargin(0);
     h_layout->setContentsMargins(0,0,0,0); // make sure the splitter goes all the way to the edge of the frame
 
-    QFrame *line = new QFrame(handle);
-    line->setFrameStyle(QFrame::WinPanel | QFrame::Raised);
-    line->setLineWidth(3);
-    h_layout->addWidget(line);
+    // Disable raised splitter because it looked ugly on the Editor.
+    //    QFrame *line = new QFrame(handle);
+    //    line->setFrameStyle(QFrame::WinPanel | QFrame::Raised);
+    //    line->setLineWidth(3);
+    //    h_layout->addWidget(line);
+
+    // Flatten main toolbar and set frame style for UI elements on both sides of the splitter so they are easier to see. (12/1/13).
+   ui->mainToolBar->setStyleSheet("QToolBar { border: 0px }");
+   ui->Output->setFrameStyle(QFrame::WinPanel | QFrame::Sunken);
+   ui->EntryList->setFrameStyle(QFrame::WinPanel | QFrame::Sunken);
+
+
 #endif
 
     //#############################################################################
