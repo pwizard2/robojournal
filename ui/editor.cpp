@@ -204,7 +204,6 @@ void Editor::PrimaryConfig(){
     bar->addAction(spellAction);
     bar->addAction(tagAction);
 
-
     // Set up spacers for the Title/Date bar (masterbar). These are used to keep the title/date fields from being squished together.
 
     QWidget* spacer1 = new QWidget();
@@ -303,8 +302,6 @@ void Editor::PrimaryConfig(){
 
         spell=new CTextCheckerEdit();
 
-        spell->setFrameStyle(QFrame::Panel | QFrame::Sunken);
-
         // allow the app to detect when the SpellTextEdit adds a word or has its text changed in any way.
         // The second function is essential for the word count feature to work.
         //connect(spell,SIGNAL(addWord(QString)), this,SLOT(slot_addWord(QString)));
@@ -317,6 +314,10 @@ void Editor::PrimaryConfig(){
         divide->insertWidget(0,editor_panel);
         divide->insertWidget(1,et);
 
+#ifdef _WIN32
+        spell->setFrameStyle(QFrame::WinPanel | QFrame::Sunken);
+#endif
+
         // Hide the editor widget we're not using. If we don't hide it, the user can see it
         // behind the splitter. Hiding it is safer than deleting it (11/30/13).
         ui->EntryPost->setVisible(false);
@@ -325,13 +326,15 @@ void Editor::PrimaryConfig(){
     // Option 2: If we're not using spellcheck, just use a regular QTextEdit. This is unchanged from =< 0.3.
     else{
 
-        ui->EntryPost->setFrameStyle(QFrame::WinPanel | QFrame::Sunken);
-
         left_half->addWidget(ui->EntryPost,true);
         editor_panel->setLayout(left_half);
 
         divide->insertWidget(0,editor_panel);
         divide->insertWidget(1,et);
+
+#ifdef _WIN32
+        ui->EntryPost->setFrameStyle(QFrame::WinPanel | QFrame::Sunken);
+#endif
     }
 
     layout->addWidget(divide,1);
@@ -452,9 +455,6 @@ void Editor::Set_Editor_Fonts(){
         else{
             ui->EntryPost->setFont(font);
         }
-
-
-
     }
     else{
 
@@ -544,8 +544,6 @@ Editor::Editor(QWidget *parent) :
         SetDate();
     }
 
-
-
     // Only zero everything out if we are creating a new entry. Otherwise, DocumentStats()
     // gets called when the editor starts up in edit mode and the proper values are pre-loaded.
 
@@ -618,12 +616,10 @@ void Editor::LoadEntry(QString entry){
             ui->EntryPost->setPlainText(body);
         }
 
-
         QDate postdate;
         postdate.setDate(list.at(3).toInt(),list.at(1).toInt(),list.at(2).toInt());
 
         ui->EntryDate->setDate(postdate);
-
 
         // Do document statistics
         DocumentStats();
@@ -738,7 +734,6 @@ bool Editor::NewEntry(){
         Editor::tags="Null";
     }
 
-
     bool success=false;
     cout << "OUTPUT: Adding new entry \"" + Editor::title.toStdString() + "\" to database " << Buffer::database_name.toStdString() << "...";
 
@@ -749,8 +744,6 @@ bool Editor::NewEntry(){
 
     if(success){
         cout << "SUCCESS!" << endl;
-
-
     }
     else{
         cout << "FAILED" << endl;
@@ -761,9 +754,7 @@ bool Editor::NewEntry(){
 
 //#############################################################################################################
 Editor::~Editor()
-{
-
-
+{   
     delete ui;
 }
 

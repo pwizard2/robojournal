@@ -1576,8 +1576,7 @@ void MainWindow::PrimaryConfig(){
     ui->mainToolBar->setStyleSheet("QToolBar { border: 0px }");
     ui->Output->setFrameStyle(QFrame::WinPanel | QFrame::Sunken);
     ui->EntryList->setFrameStyle(QFrame::WinPanel | QFrame::Sunken);
-
-
+    ui->SearchList->setFrameStyle(QFrame::WinPanel | QFrame::Sunken);
 #endif
 
     //#############################################################################
@@ -1628,11 +1627,15 @@ void MainWindow::PrimaryConfig(){
     //#############################################################################
     // new for RoboJournal 0.5:
 
-    // Use the backend value to set a more user-friendly backend label because MySQL is now MySQL/SQLite (12/1/13).
+    // Use the backend value to set a more user-friendly backend label because MySQL is now MySQL/MariaDB (12/1/13).
     if(Buffer::backend=="MySQL")
         backend_type="MySQL/MariaDB";
     if(Buffer::backend=="SQLite")
         backend_type=Buffer::backend;
+
+    // New for 0.5: Fix text alignment issue for labels with pictures (12/1/13).
+    ui->SearchCount->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    ui->StatusMessage->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
 }
 
 //################################################################################################

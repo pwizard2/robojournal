@@ -67,7 +67,6 @@ QSize TagListDelegate::sizeHint(const QStyleOptionViewItem &option, const QModel
 void TagListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
                             const QModelIndex &index) const{
 
-
     // figure out how wide the line should be (8/11/13).
     QPalette palette;
     QRect rect=option.rect;
@@ -299,7 +298,6 @@ void EditorTagManager::DefineTag(){
 // 6/10/13: Create toolbar and layout for this class.
 void EditorTagManager::PrimaryConfig(){
 
-
     //Set up Tag Actions Menu (10/14/13).
     QMenu* tag_actions=new QMenu();
 
@@ -388,7 +386,7 @@ void EditorTagManager::PrimaryConfig(){
 
 #ifdef _WIN32
     bar->setStyleSheet("QToolBar { border: 0px }");
-
+    ui->AvailableTags->setFrameStyle(QFrame::WinPanel | QFrame::Sunken);
 #endif
 
 
@@ -431,6 +429,7 @@ void EditorTagManager::PrimaryConfig(){
 
     // use TagListDelegate to draw lines between list items.
     ui->AvailableTags->setItemDelegate(new TagListDelegate(this));
+    ui->AvailableTags->setWordWrap(true);
 }
 
 // ###################################################################################################
