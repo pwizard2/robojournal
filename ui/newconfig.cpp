@@ -333,5 +333,3 @@ void Newconfig::on_buttonBox_accepted()
 {
     UpdateData();
 }
-
-

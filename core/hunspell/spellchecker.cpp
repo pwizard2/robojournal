@@ -29,17 +29,22 @@
 #include <QTextStream>
 #include <QStringList>
 #include <QDebug>
-
 #include "hunspell.hxx"
+
+#include "core/buffer.h"
 
 SpellChecker::SpellChecker(const QString &dictionaryPath, const QString &userDictionary)
 {
     _userDictionary = userDictionary;
 
     QString dictFile = dictionaryPath + ".dic";
-    QString affixFile = dictionaryPath + ".aff";
+    //QString affixFile = dictionaryPath + ".aff";
+
+    QString affixFile=Buffer::current_dictionary_aff;
+
     QByteArray dictFilePathBA = dictFile.toLocal8Bit();
     QByteArray affixFilePathBA = dictFile.toLocal8Bit();
+
     _hunspell = new Hunspell(dictFilePathBA.constData(), affixFilePathBA.constData());
 
     if(!_userDictionary.isEmpty()) {

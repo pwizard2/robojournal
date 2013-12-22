@@ -403,8 +403,6 @@ void Editor::PrimaryConfig(){
 
     doc=new QTextDocument();
 
-
-#ifdef _WIN32
     // 6/16/13: Make the splitter easier to see. Windows 7 renders these things as flat by default so the idea
     // is to emulate the old-school raised splitter bar appearance so the user will know something is there.
     QSplitterHandle *handle=divide->handle(1);
@@ -419,9 +417,10 @@ void Editor::PrimaryConfig(){
     //    h_layout->addWidget(line);
 
     // Make the toolbars flat because the raised borders look really ugly on Windows. --Will Kraft (11/30/13).
+    // 12-21/13: Use this appearance for all operating systems-- remode #ifdef blocks.
     bar->setStyleSheet("QToolBar { border: 0px }");
     masterbar->setStyleSheet("QToolBar { border: 0px }");
-#endif
+
 
     //tighten up toolbar spacing for 0.5 (7/15/13)
     QSize barSize(16,16);

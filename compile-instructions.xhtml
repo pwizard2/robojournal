@@ -160,45 +160,50 @@
 to assist users in the process of compiling RoboJournal from its source code.
 Since building RoboJournal requires a Qt environment with full MySQL support,
 this documentation also explains how to properly prepare and compile Qt from
-its source code. If you need to compile Qt, instructions and guidelines for
-doing so are given in the "How to Build Qt with MySQL Support" section.
-Internet access can be required to fetch one or more required components.</p>
+its base source code. If you need to compile Qt, please consult the "How to
+Build Qt with MySQL Support" section. You may require Internet access to fetch
+one or more required components.</p>
 
-<p>This documentation uses various styles to differentiate portions of the
-text. Sections with a <span class="console">black background</span> are literal
-commands meant to be entered at a command prompt (xterm or cmd.exe). In
+<p>This documentation uses various styles to clearly differentiate portions of
+the text. Sections with a <span class="console">black background</span> are
+literal commands meant to be entered at a command prompt (xterm or cmd.exe). In
 practical usage, the entire command inside a black section is meant to be one
-line with absolutely no line breaks, even if the section wraps to the next line
-in the documentation. Sections with a <span class="arg">green background</span>
-are used to reference specific portions of a command but are not full commands
-themselves.</p>
+line with <em>absolutely no line breaks</em>, even if the section wraps to the
+next line in the documentation. Sections with a <span class="arg">green
+background</span> are used to reference specific portions of a command but are
+not complete commands themselves.</p>
 
-<h2>  Table of Contents</h2>
-<ol>
-  <li><a href="#prereq">Prerequisites</a> </li>
+<h2 id="L7606">  Table of Contents</h2>
+
+<div class="toc">
+<ul>
+  <li><a href="#prereq">Prerequisites</a></li>
   <li><a href="#prepare">Preparing Qt</a> 
-    <ol>
-      <li><a href="#config">How to Build Qt with MySQL Support</a> </li>
-      <li><a href="#reprocess">Preparing the MySQL Libraries for Windows</a>
-      </li>
-    </ol>
+    <ul>
+      <li><a href="#config">How to Build Qt with MySQL Support</a></li>
+      <li><a href="#L7776">Qt Assistant and QCollectionGenerator on
+      Linux</a></li>
+      <li><a href="#reprocess">Preparing the MySQL Libraries for
+      Windows</a></li>
+    </ul>
   </li>
   <li><a href="#build">Building RoboJournal From Source</a> 
-    <ol>
-      <li><a href="#windows">Manual Windows Procedure</a> </li>
+    <ul>
+      <li><a href="#windows">Manual Windows Procedure</a></li>
       <li><a href="#depends">Resolving Windows Dependencies</a></li>
       <li><a href="#debian_requirements">Debian, Ubuntu, and Linux Mint
         Requirements</a></li>
       <li><a href="#fedora_requirements">Fedora Requirements</a></li>
-      <li><a href="#linux">Manual Linux Procedure</a> </li>
-    </ol>
+      <li><a href="#linux">Manual Linux Procedure</a></li>
+    </ul>
   </li>
-</ol>
+</ul>
+</div>
 
 <h2 id="prereq">  Prerequisites</h2>
 
 <p>Before you can compile RoboJournal, you must have <em>all</em> of the
-following:</p>
+following components:</p>
 <ol>
   <li>RoboJournal source tarball (and any extra software required to unpack the
     tar.gz archive). The current stable version at the time of this writing is
@@ -213,27 +218,26 @@ following:</p>
     Because of this, those who wish to get RoboJournal from GitHub should clone
     from the "master" branch that is kept synchronized with the current stable
     version. </li>
-  <li>A Qt ≥ 4.7 environment to compile against. Consult the "Preparing Qt"
-    section in this documentation for details on what is required.</li>
+  <li>A Qt 4.7,or 4.8 environment to compile against (RoboJournal has
+    <em>not</em> been ported to Qt 5 yet). Consult the "<a
+    href="#prepare">Preparing Qt</a>" section in this documentation for details
+    on what is required.</li>
   <li>GNU Compiler Toolkit. On Linux, the package containing the full kit is
-    called build-essential on several distros, including Ubuntu and Debian. In
-    addition to compilers, build-essential contains other utilities that will
-    help you create a software package; you should only package your custom
-    build if you plan to eventually redistribute it.<br />
-
-
-    <div class="FYI">
-    <strong>FYI:</strong> Windows users should use the <a
-    href="http://sourceforge.net/projects/mingw/files/">MinGW toolkit</a>
+    called "build-essential" on several distros, including Ubuntu and Debian.
+    In addition to compilers, build-essential contains other utilities that
+    will help you create a software package; you should only package your
+    custom build if you plan to eventually redistribute it.<br />
+    <br />
+    Windows users should use the <a
+    href="http://sourceforge.net/projects/mingwbuilds/">MinGW toolkit</a>
     (Minimalist GNU for Windows) instead of other compiler toolchains. This
-    guide only provides instructions for MinGW. Alternatives may work fine but
-    they should still be considered experimental/unsupported for the purpose of
-    building RoboJournal. </div>
-  </li>
+    guide only provides instructions for MinGW. Alternative toolkits may also
+    work but you should still consider them to be experimental/unsupported for
+    the purpose of building RoboJournal. </li>
   <li>A text editor (<a href="http://notepad-plus-plus.org/">Notepad++</a> is
-    recommended) if you wish to use the Build Helper Script to compile for
-    Windows. You will need to edit the script before using it for the first
-    time. The Linux Build Helper Script (linux_compile.pl) rarely requires any
+    ideal) if you wish to use the Build Helper Script to compile for Windows.
+    You <em>must</em> edit the script before using it for the first time. The
+    Linux Build Helper Script (linux_compile.pl) rarely requires any
     modification prior to use.</li>
   <li>A reasonable amount of experience with command line interfaces.</li>
 </ol>
@@ -242,19 +246,18 @@ following:</p>
 RoboJournal should operate reliably and correctly on the aforementioned
 operating systems but others should be considered experimental at this point.
 If you build and deploy RoboJournal on an experimental operating system, you
-should be ready for unexpected bugs even if everything appears to work
+should be ready for unexpected bugs even if everything appears to compile
 correctly.</p>
 
 <p>If you wish to use standard RoboJournal, you should use pre-compiled
 binaries for best results. There is an installer available for Microsoft
 Windows and you can obtain packages compatible with Debian-based Linux from the
 Debian repositories. These packages work with Ubuntu, Linux Mint, or any other
-Debian-based Linux. You should try these options first to see if they work. If
-not, or if you are using an operating system for which no RoboJournal installer
-package exists, your only option will be to build from source. The
-"robojournal" package in Debian is often one or two versions behind, so Debian
-users will need to build from source if the latest version is not available in
-the unstable or experimental repositories.</p>
+Debian-based Linux. You should try these options first to see if they work.
+Your only option is to build from source if you are using an operating system
+for which no RoboJournal installer package exists. Debian users need to build
+from source if the unstable or experimental repositories do not contain the
+current version of RoboJournal.</p>
 
 <h2 id="prepare">  Preparing Qt</h2>
 
@@ -262,7 +265,7 @@ the unstable or experimental repositories.</p>
 libraries available for use with RoboJournal.  Suitable Qt libraries are
 defined as being compiled for your correct operating system/system architecture
 and contain complete driver support for both MySQL and SQLite. Linux and
-Windows Qt environments are not interchangeable; you can <em>not</em> use a set
+Windows Qt environments are not interchangeable; you <em>cannot</em> use a set
 of Windows libraries on Linux and vice versa. A complete Qt environment is
 much harder to find ready-made for Microsoft Windows, so Windows users will
 probably have to compile their own from scratch. <strong>The official Qt
@@ -270,9 +273,9 @@ Software Development Kit (SDK) offered by Digia is unsuitable for building
 RoboJournal because the SDK lacks adequate database support.</strong> </p>
 
 <p>Linux users should check their distro repositories first to see if there is
-a complete set (containing the core SQL module and separate packages for MySQL
-and SQLite drivers) of Qt libraries available.  If so, they can be used to
-compile RoboJournal and building from source is unnecessary. </p>
+a <em>complete</em> set of Qt libraries available (containing the core SQL
+module and separate packages for MySQL and SQLite drivers).  If so, they can
+be used to compile RoboJournal and building from source is unnecessary. </p>
 <hr />
 
 <h3 id="config">How to Build Qt with MySQL Support</h3>
@@ -281,53 +284,83 @@ compile RoboJournal and building from source is unnecessary. </p>
 what you decide to include during its configuration process. In other words, if
 you omit support for a SQL driver, that driver will not be available in the
 finished build. SQLite support is built-in and requires no headers/libraries
-(although you still have to include it in the configure command). However, you
-must specify the path to the headers/libraries for all other drivers you wish
-to include.</p>
+(although you still have to instruct the configure command to build it).
+However, you must specify the path to the headers/libraries for all other SQL
+drivers you wish to include.</p>
 
-<p>Building a custom Qt environment from source requires all of the
-following:</p>
+<p>For best results, you should use <a
+href="http://sourceforge.net/projects/mingwbuilds/">MinGW-Builds</a> as your
+compiler toolkit since other variants of MinGW may not compile Qt properly.
+Building a custom Qt environment from source requires all of the following:</p>
 <ol>
   <li>Basic (or better) proficiency with command line interfaces.</li>
-  <li>MySQL headers and libraries. Headers consist of the *.h files found in
-    the MySQL include directory; libraries are found in the file libmysql.lib.
-    The location of these objects on your system (assuming they are available)
-    will vary depending on your situation. 
+  <li>MySQL or MariaDB headers and libraries. Headers consist of the *.h files
+    found in the MySQL or MariaDB include directory; libraries are stored as
+    the file "libmysql.lib". The location of these objects on your system
+    (assuming they are available) will vary depending on your situation. 
 
     <div class="FYI">
-    FYI: If you are using a 32-bit compiler, (MinGW) MySQL libraries
+    FYI: If you are using a 32-bit compiler, (MinGW) MySQL/MariaDB libraries
     <em>must</em> be 32-bit even on 64-bit Windows systems. Compiling against
     64-bit libraries will cause the build attempt to fail because MinGW can
     only produce 32-bit binaries. However, if you can obtain 64-bit compilers
     (64-bit GNU toolkit or MinGW-w64) you could then produce a fully 64-bit
-    RoboJournal binary based on 64-bit Qt and MySQL libraries. However, this
-    should be considered experimental. </div>
+    RoboJournal binary based on 64-bit Qt and MySQL/MariaDB libraries. </div>
   </li>
-  <li>Qt (≥ 4.7) source code from the Qt Project's <a
-    href="http://qt-project.org/downloads">website</a>. Since the source code
-    comes packaged in a zip or tar.gz file, you also need the appropriate
-    software to extract these archives. </li>
-  <li>Perl (<a
-    href="http://www.activestate.com/activeperl/downloads">ActivePerl</a> is
-    recommended) if building on Windows. The built-in Perl interpreter included
-    in most Linux distributions is adequate for the task. </li>
+  <li>Qt 4.7 or 4.8 source code from the Qt Project's <a
+    href="http://qt-project.org/downloads">website</a> or the <a
+    href="https://qt.gitorious.org/">Qt Git repository</a>. Since the source
+    code comes packaged in a zip or tar.gz file (unless you downloaded it with
+    Git), you also need the appropriate software to extract these archives.
+  </li>
+  <li>A Perl interpreter (like <a
+    href="http://www.activestate.com/activeperl/downloads">ActivePerl</a>) is
+    required in order to configure Qt on Windows. The built-in Perl interpreter
+    included in most Linux distributions is adequate for the task when
+    compiling on Linux. </li>
   <li><a
     href="http://sourceware.org/binutils/docs-2.16/binutils/dlltool.html">dlltool</a>
     and <a href="http://olex.openlogic.com/packages/mingw-utils">reimp</a> (if
     building on Windows). Sometimes you must acquire one or both of these tools
-    separately from the MinGW bundle. </li>
+    separately from the MinGW bundle. It is often difficult to find a working
+    copy of Reimp these days, so you may need to build it from <a
+    href="http://wyw.dcweb.cn/download.asp?path=&amp;file=reimp_new.zip">source</a>
+    (you can use MinGW for this) in advance. You must <a
+    href="#reprocess">convert your MySQL/MariaDB library file to a useful
+    format</a> <em>before</em> starting the Qt compile process on Windows.</li>
 </ol>
 
-<p>After unpacking and installing the prerequisites, you must configure Qt
-before you can compile it. Open a command prompt (xterm or similar on Linux,
-cmd.exe on Windows), navigate to the directory where you extracted the source
-code, and run one of the following commands:</p>
+<p>Open a command prompt (xterm or similar on Linux, cmd.exe on Windows). The
+entire compile process takes place in this command line environment. Even
+though there is no graphical user interface to assist you, the process is not
+difficult (assuming everything is configured correctly prior to building)
+because the build process is mostly automated.</p>
+
+<p>First, the Qt configuration process on Windows requires you to set the
+cmd.exe PATH to the location of your Perl and MinGW installations
+<em>before</em> you start the compile process (the cmd.exe from the recommended
+version of MinGW does this automatically). Both MinGW and Perl store their
+executables in their "bin" folders, so be sure to explicitly reference that in
+the PATH. Each directory you want the build process to have access to in the
+PATH should be separated by a semicolon. For instance, assume Perl is installed
+at C:\Perl64 and MinGW is installed at C:\MinGW; you would run <span
+class="console">path C:\MinGW\bin;C:\Perl64\bin</span> at the cmd.exe command
+prompt because the compiler needs to access programs from both directories at
+once (change these directory locations as needed to fit your actual system
+configuration). Linux users do <strong><em>not</em></strong> need to set a
+custom path because all the necessary programs are stored in the same place
+(/usr/bin). You do <em><strong>not</strong></em> need to set the path if
+cmd.exe is able to locate and run perl.exe and mingw32-make.exe. </p>
+
+<p>Next, you must configure Qt before you can compile it. Navigate to the
+directory where you extracted the Qt source code, and run one of the following
+commands:</p>
 <ul>
   <li>On Linux: <span class="console">./configure -opensource -platform
-    linux-g++ -release -qt-sql-mysql -qt-sql-sqlite -I /usr/include/mysql -L
-    /usr/lib/mysql</span></li>
+    linux-g++ -release -qt-sql-mysql -plugin-sql-sqlite -I /usr/include/mysql
+    -L /usr/lib/mysql</span></li>
   <li>On Windows: <span class="console">configure.exe -opensource -platform
-    win32-g++ -release -qt-sql-mysql -qt-sql-sqlite -l mysql -I
+    win32-g++ -release -qt-sql-mysql -plugin-sql-sqlite -l mysql -I
     C:\MySQL\include -L C:\MySQL\lib</span></li>
 </ul>
 
@@ -338,24 +371,30 @@ assigned to the <span class="arg">-I</span> and <span class="arg">-L</span>
 arguments (if necessary) to reflect the actual paths to these objects on your
 system.</p>
 
+<div class="FYI">
+<strong>FYI:</strong> You <em>must</em> compile SQLite as a plugin on Windows
+(as <span class="arg">-plugin-sql-sqlite</span>) instead of embedding it
+directly into Qt with <span class="arg">-qt-sql-sqlite</span>.</div>
+
 <p>Once configuration is finished, the configure script instructs you to begin
 the compile procedure. This is done by running <span
 class="console">make</span> (or <span class="console">mingw32-make</span> on
 Windows). You should expect the build process to take several hours depending
-on your processor speed and the number of cores devoted to the process. Once
-the build is finished, you must install Qt by running <span
-class="console">make install</span> or <span class="console">mingw32-make
-install</span>, after which the new environment is ready to be used.</p>
+on your processor speed and the number of cores devoted to the process. If you
+have a multi-core CPU, you can put all of your cores to work on the build by
+adding a <span class="arg">-j <em>x</em></span> argument to the make command,
+where <em>x</em> is the number of cores your CPU has. For instance, you would
+enter <span class="console">make -j 4</span> or <span
+class="console">mingw32-make -j 4</span> if you have a quad-core CPU and want
+to process four jobs at once.</p>
 
-<p>Although RoboJournal will work if you compile the MySQL/SQLite driver as a
-plugin, you should compile the drivers into the main Qt SQL module for best
-results (i.e use <span class="arg">-qt-sql-mysql</span> instead of <span
-class="arg">–qt-plugin-mysql</span> during the Qt configuration process).
-That way, you are much less likely to run into any unexpected problems caused
-by Qt not being able to find the MySQL/SQLite plugins at runtime. RoboJournal
-will not be able to make any database connections if it was built using a
-flawed Qt where the drivers were compiled improperly, failed to compile, or are
-otherwise missing.</p>
+<p>Finally, you must install Qt once the complile process is finished by
+running <span class="console">make install</span> or <span
+class="console">mingw32-make install</span>. The new Qt environment is ready
+for use once the installation process is finished.</p>
+<hr />
+
+<h3 id="L7776">Qt Assistant and QCollectionGenerator on Linux</h3>
 
 <p>The RoboJournal build procedure requires the Qt Assistant and
 QCollectionGenerator programs to be installed where the compiler can locate and
@@ -401,12 +440,13 @@ External Resource: <a href="http://www.rag.com.au/linux/qt4howto.html">Qt Build
 Tutorial</a>.</p>
 <hr />
 
-<h3 id="reprocess">Preparing the MySQL Libraries for Windows</h3>
+<h3 id="reprocess">Preparing the MySQL/MariaDB Libraries for Windows</h3>
 
-<p>MySQL header files are compatible with any operating system and require no
-changes. While the "raw" Windows MySQL development library file (libmysql.lib)
-can be used as-is by the Linux compiler, it is unusable on Windows unless you
-alter it with the dlltool and reimp utilities prior to the compile process:</p>
+<p>MySQL/MariaDB header files are compatible with any operating system and
+require no changes. While the "raw" Windows MySQL/MariaDB development library
+file (libmysql.lib) can be used as-is by the Linux compiler, it is unusable on
+Windows unless you alter it with the dlltool and reimp utilities prior to the
+compile process:</p>
 <ol>
   <li>Open a cmd.exe terminal and set its PATH to the directory that contains
     reimp and dlltool.</li>
@@ -415,13 +455,12 @@ alter it with the dlltool and reimp utilities prior to the compile process:</p>
     class="arg">-L</span> argument of the configure statement (i.e.
     C:\MySQL\lib).</li>
   <li>Run reimp on the library: <span class="console">reimp -d
-    libmysql.lib</span>. A file called libmysql.def is produced through this
-    step.</li>
-  <li>Use dlltool on libmysql.def: <span class="console">dlltool --input -def
+    libmysql.lib</span>. This step produces a file called libmysql.def.</li>
+  <li>Use dlltool on libmysql.def: <span class="console">dlltool --input-def
     libmysql.def --dllname libmysql.dll --output-lib libmysql.a -k</span>.</li>
   <li>Dlltool produces a file called libmysql.a, which is essentially the
-    "fixed" version of the MySQL development library. Once you have this file,
-    you are ready to build Qt.</li>
+    "fixed" version of the MySQL/MariaDB development library. Once you have
+    this file, you are ready to build Qt.</li>
 </ol>
 
 <h2 id="build">  Building RoboJournal From Source</h2>
@@ -458,7 +497,7 @@ robojournal-0.5 folder between builds.</p>
 
 <div class="FYI">
 <p><strong>FYI:</strong> RoboJournal 0.4.1 introduces a similar build script
-for Unix/Linux. It is stored as a Perl-based script in the RoboJournal source
+for Unix/Linux, stored as a Perl-based script in the RoboJournal source
 directory. Since practically every Linux system includes Perl support out of
 the box, the script works without requiring anything extra (beyond the base
 RoboJournal build requirements for your specific distribution). This script
@@ -472,9 +511,8 @@ directory, and run <span class="console">./linux_compile.pl</span>.</p>
 
 <h3 id="windows">Manual Windows Procedure</h3>
 
-<p>This procedure should work for any NT-based Windows since Windows 2000. If
-you wish to compile RoboJournal manually instead of using the build helper
-script, follow the procedure below. For the sake of simplicity in this
+<p>If you wish to compile RoboJournal manually instead of using the build
+helper script, follow the procedure below. For the sake of simplicity in this
 procedure, assume Qt is located in C:\Qt, MinGW is located in C:\MinGW, and
 RoboJournal's source code is located in C:\robojournal-0.5. In a real-world
 situation, these locations vary depending on where you installed everything.
@@ -712,9 +750,9 @@ including the Makefile and executable. You <em>must</em> run a distclean
 between every build.</p>
 <hr />
 
-<p>Last updated: July 5, 2013</p>
+<p>Last updated: December 21, 2013</p>
 
-<p>Copyright © 2012, 2013 by Will Kraft. This documentation is part of
+<p>Copyright © 2012, 2013, 2014 by Will Kraft. This documentation is part of
 RoboJournal and is available under the <a
 href="http://www.gnu.org/licenses/fdl-1.3-standalone.html">GNU Free
 Documentation License (GFDL)</a>. RoboJournal's source code and binaries are

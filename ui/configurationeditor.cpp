@@ -186,6 +186,8 @@ void ConfigurationEditor::GetChanges(){
     Newconfig::new_use_misc_processing=ui->MiscFormatting->isChecked();
     Newconfig::new_system_dic=ui->SystemLevelDic->isChecked();
 
+    aff_file=Find_AFF_File(ui->Dictionary->currentText());
+
     // Preserve current AFF value if the user didn't make changes this session
     if(!aff_file.isEmpty()){
         Newconfig::new_current_dictionary_aff=aff_file;
@@ -249,7 +251,6 @@ QString  ConfigurationEditor::Find_AFF_File(QString dict){
     if(Aff.exists()){
         cout << "OUTPUT: Found AFF File for selected dictionary (" << Aff.fileName().toStdString() << ")" << endl;
         aff_file=Aff.fileName();
-
     }
 
     else{
@@ -259,12 +260,12 @@ QString  ConfigurationEditor::Find_AFF_File(QString dict){
                          QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
 
         switch(h){
-            case QMessageBox::Yes:
-                aff_file= QFileDialog::getOpenFileName(this, tr("Select Aff File"),dict_name, tr("Aff Files (*.aff)"));
+        case QMessageBox::Yes:
+            aff_file= QFileDialog::getOpenFileName(this, tr("Select Aff File"),dict_name, tr("Aff Files (*.aff)"));
             break;
 
-            case QMessageBox::No:
-                // do nothing
+        case QMessageBox::No:
+            // do nothing
             break;
         }
     }
@@ -346,4 +347,10 @@ void ConfigurationEditor::on_ManageUDWords_clicked()
 {
     CustomWords w(this);
     w.exec();
+}
+
+//#############################################################################################################
+// Find AFF file based on current dictionary list option (12/21/13).
+void ConfigurationEditor::on_Dictionary_currentIndexChanged(const QString &arg1){
+    Find_AFF_File(arg1);
 }

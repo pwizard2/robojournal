@@ -140,6 +140,7 @@ private slots:
 
 
 
+
 private:
     Ui::Newconfig *ui;
 

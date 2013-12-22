@@ -1,0 +1,5 @@
+# Files that should be ignored by the git "add" process #
+###################
+*.pro.user
+robojournal.qhc
+robojournal.qch

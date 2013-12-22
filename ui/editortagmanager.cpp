@@ -384,11 +384,10 @@ void EditorTagManager::PrimaryConfig(){
     bar->setLayoutDirection(Qt::LeftToRight);
     bar->setContextMenuPolicy(Qt::DefaultContextMenu);
 
-#ifdef _WIN32
+    // Make the toolbars flat because the raised borders look really ugly on Windows. --Will Kraft (11/30/13).
+    // 12-21/13: Use this appearance for all operating systems-- remode #ifdef blocks.
     bar->setStyleSheet("QToolBar { border: 0px }");
     ui->AvailableTags->setFrameStyle(QFrame::WinPanel | QFrame::Sunken);
-#endif
-
 
     const QFont toolbarFont("Sans",7);
     bar->setFont(toolbarFont);

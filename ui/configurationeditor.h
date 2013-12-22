@@ -45,8 +45,8 @@ private slots:
     void on_BrowseButton_clicked();
     void on_UseSpellCheck_clicked(bool checked);
     void on_SystemLevelDic_toggled(bool checked);
-
     void on_ManageUDWords_clicked();
+    void on_Dictionary_currentIndexChanged(const QString &arg1);
 };
 
 #endif // CONFIGURATIONEDITOR_H
