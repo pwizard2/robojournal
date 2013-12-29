@@ -82,6 +82,9 @@ QString HTMLCore::AssembleEntry(QString id){
 
     QString entry=assembler.join("\n");
 
+    // ID is going to be used eventually but add this to suppress compiler warning (12/29/13).
+    id=-1;
+
     return entry;
 }
 
@@ -408,6 +411,12 @@ void HTMLCore::Do_Export(QString path, QString id, bool use_html)
     if(file.open(QIODevice::ReadWrite)) {
         QTextStream stream(&file);
 
+        QString user=Buffer::username;
+
+        // Bugfix 12/29/13: Use full name if the configuration requires it.
+        if(Buffer::use_full_name)
+            user=Buffer::full_name;
+
         if(use_html){
 
             QString entry_tags=tags;
@@ -420,7 +429,7 @@ void HTMLCore::Do_Export(QString path, QString id, bool use_html)
                 entry_tags=entry_tags.replace(";","<li class=\"tag\">");
                 entry_tags="<ul><li style=\"list-style-type: none\"><b>Tags:</b><li class=\"tag\">" + entry_tags + "</ul>";
 
-            }
+            } 
 
             // Get values for CSS fields
             Setup_Export_CSS();
@@ -445,7 +454,7 @@ void HTMLCore::Do_Export(QString path, QString id, bool use_html)
             stream << "<body>" << endl;
             stream << "<h1>" << title << "</h1>" << endl;
             stream << "<div class=\"datebox\">&nbsp;&nbsp;On " <<
-                      date << " at " << timestamp << ", " << Buffer::username << " wrote:</div>" << endl;
+                      date << " at " << timestamp << ", " << user << " wrote:</div>" << endl;
             stream << "<p>" << body << "</p>" << endl;
             stream << "\t\t<p>" << entry_tags << "</p><br><br>" << endl;
             stream << "<hr>" << endl;
@@ -478,7 +487,7 @@ void HTMLCore::Do_Export(QString path, QString id, bool use_html)
             body=body.replace("\n", "\r\n");
 
             stream << "\r\n" << title.toUpper() << "\r\n\r\n" << endl;
-            stream << "On " << date << " at " << timestamp << ", " << Buffer::username << " wrote:\r\n" << endl;
+            stream << "On " << date << " at " << timestamp << ", " << user << " wrote:\r\n" << endl;
             stream << "################################################################################" << endl;
             stream << "\r\n\r\n" << endl;
             stream << body << endl;

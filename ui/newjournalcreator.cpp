@@ -183,8 +183,7 @@ bool NewJournalCreator::Create_SQLite_Database(){
 
     if(success){
 
-        int choice2=m.information(this,"RoboJournal","The new journal was successfully created at <b>" + path + "</b>.");
-
+        m.information(this,"RoboJournal","The new journal was successfully created at <b>" + path + "</b>.");
         f.SQLite_Add_to_DB(path,sqlite_is_favorite);
 
     }
@@ -338,7 +337,7 @@ void NewJournalCreator::accept(){
     if(ui->DatabaseType->currentRow()==1){
         bool valid=s->HarvestData();
 
-        bool successful2;
+        bool successful2=false;
         if(valid){
             successful2=Create_SQLite_Database();
         }

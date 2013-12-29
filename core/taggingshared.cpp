@@ -61,14 +61,14 @@ QString TaggingShared::DefineTag(QStringList ExistingTags){
     SQLShield s;
     tag=s.Break_Injections(tag);
 
-    bool goodtag=true;
+    //bool goodtag=true;
     QMessageBox m;
 
     // only proceed if the user clicked ok; cancel returns a null string
     if(!tag.isEmpty()){
 
         if(ExistingTags.contains(tag)){
-            goodtag=false;
+            //goodtag=false;
 
             // the list isn't called the Available tags list any more in 0.5.
             m.critical(MainWindow::mw,"RoboJournal","\"" + tag + "\" is already on the tags list.");
@@ -83,7 +83,7 @@ QString TaggingShared::DefineTag(QStringList ExistingTags){
         QRegExp banned("null", Qt::CaseInsensitive);
 
         if(banned.exactMatch(tag)){
-            goodtag=false;
+            //goodtag=false;
             m.critical(MainWindow::mw,"RoboJournal","You are not allowed to declare \"" + tag +
                        "\" (or any other uppercase/lowercase variant of it) because it is a reserved keyword.");
             tag.clear();

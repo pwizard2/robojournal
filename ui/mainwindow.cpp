@@ -1759,7 +1759,7 @@ void MainWindow::Connect(){
 
                     // Get ID list
                     //int year_range=Buffer::entryrange.toInt();
-                    IDList=my.Create_ID_List(Buffer::entryrange);
+                    IDList=my.Create_ID_List();
 
                     CreateTree();
 
@@ -2280,7 +2280,7 @@ void MainWindow::Write(){
     MySQLCore my;
 
     IDList.clear();
-    IDList=my.Create_ID_List(Buffer::entryrange);
+    IDList=my.Create_ID_List();
 
     // Use the backend value to set a more user-friendly backend label because MySQL is now MySQL/SQLite (12/1/13).
     if(Buffer::backend=="MySQL")
@@ -2313,7 +2313,6 @@ void MainWindow::HighlightCurrentSelection(QString CurrentID){
 
     while (*it) {
         if ((*it)->text(1) == CurrentID)
-
             (*it)->setSelected(true);
 
         ++it;
@@ -2350,6 +2349,9 @@ void MainWindow::HighlightCurrentSelection(QString CurrentID){
             }
         }
         e.UpdateValues(title,current_entry_date,current_entry_body,current_entry_time);
+    }
+    else{
+        return;
     }
 
     ui->Tag->setEnabled(true);
@@ -3411,8 +3413,6 @@ void MainWindow::GetAdjacent(int direction){
     if(CurrentID != "-1"){
         HighlightCurrentSelection(Record);
     }
-
-
 }
 
 //################################################################################################

@@ -1381,7 +1381,7 @@ QList<QString> MySQLCore::TagSearch(){
 
 //################################################################################################
 // This creates the list of all entries in the database so we can browse backward and forward
-QList<QString> MySQLCore::Create_ID_List(int year_range){
+QList<QString> MySQLCore::Create_ID_List(){
     using namespace std;
     QList <QString> IDList;
 
@@ -1393,7 +1393,6 @@ QList<QString> MySQLCore::Create_ID_List(int year_range){
 
     QSqlQuery id(query,db2);
     id.exec();
-    year_range=0;  // not used, so set to null for now
 
     int pos=0;
     while(id.next()){

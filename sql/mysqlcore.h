@@ -50,7 +50,7 @@ public:
     QList<QString> getMonth(QString nextyear);
     QList<QString> getDay(QString itemmonth, QString nextyear);
     QList<QString> getEntries(QString itemday, QString itemmonth);
-    QList<QString> Create_ID_List(int year_range);
+    QList<QString> Create_ID_List();
 
     QList<QString> getEntriesMonth(QString month, QString year);
     QList<QString> TagSearch();
