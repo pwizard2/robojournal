@@ -45,7 +45,7 @@ public:
     static QString backend; // database backend var
     static int databaseport; // database port to use for connections
     static int entryrange; // number of years to show, only used if allentries==false
-    static QString full_name; // ful lname of the user. (new for 0.4)
+    static QString full_name; // full name of the user. (new for 0.4)
     static int toolbar_pos; // Toolbar position... 0=left; 1=top; 2=right
 
     static bool alwaysusedefaults; // always use default values if true
@@ -178,6 +178,9 @@ public:
     static bool no_safety;
     static bool system_dic; // 11/1/13.
 
+    static bool remember_last; // 12/28/13.
+    static int last_db;
+    static int last_host;
 };
 
 #endif // BUFFER_H

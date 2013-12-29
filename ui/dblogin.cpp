@@ -157,7 +157,7 @@ void DBLogin::on_buttonBox_accepted()
             Buffer::username=ui->Username->placeholderText();
         }
         else{
-             Buffer::username=ui->Username->text();
+            Buffer::username=ui->Username->text();
         }
 
         Buffer::password=ui->Password->text();
@@ -181,12 +181,23 @@ void DBLogin::on_buttonBox_accepted()
             }
         }
     }
+
+    // Save the current MariaDB host and database values (12/28/13).
+    Buffer::last_db=ui->WhichDB->currentIndex();
+    Buffer::last_host=ui->DBHost->currentIndex();
+    Buffer::remember_last=true;
 }
 
 void DBLogin::on_buttonBox_rejected()
 {
     //login_succeeded=0;
     Buffer::login_succeeded=false;
+
+    // Clear saved DBLogin values from Buffer because we don't need to remember them anymore (12/28/13).
+    Buffer::last_db = -1;
+    Buffer::last_host = -1;
+    Buffer::remember_last=false;
+
 }
 
 //###################################################################################################
@@ -244,6 +255,12 @@ void DBLogin::PopulateComboBoxes(){
                 item->setIcon(gold_db);
             }
         }
+    }
+
+    // Restore most-recently used values if login was unsuccessful (12/28/13).
+    if((Buffer::remember_last) && (Buffer::last_db != -1) && (Buffer::last_host != -1)){
+        ui->DBHost->setCurrentIndex(Buffer::last_host);
+        ui->WhichDB->setCurrentIndex(Buffer::last_db);
     }
 }
 

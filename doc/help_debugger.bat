@@ -2,7 +2,7 @@
 :: Enter the full path to the Qt libraries you wish to compile against. 
 :: You must specifically point to the "bin" folder in which qmake.exe resides, e.g. C:\qt-4.7.4\bin
 :: The Qt directory by itself (C:\qt-4.7.4\) will not work.
-@set qt=C:\qt-4.8.4\bin
+@set qt=C:\Qt\qt-everywhere-opensource-src-4.8.5\bin
 
 
 

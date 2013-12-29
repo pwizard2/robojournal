@@ -160,6 +160,13 @@ bool Buffer::system_dic;
 // Hold stored mysqldump location for Windows builds only. Linux/Unix always uses /usr/bin/mysqldump so this is not necessary (9/2/13).
 QString Buffer::mysqldump_path_win;
 
+// Remember if there was a failed login attempt this session and what the most recent database index was (12/28/13).
+bool Buffer::remember_last;
+int Buffer::last_host;
+int Buffer::last_db;
+
+//
+
 Buffer::Buffer()
 {
 

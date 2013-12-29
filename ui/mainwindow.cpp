@@ -100,75 +100,75 @@ void MainWindow::SwitchTab(int index){
 
     switch(index){
 
-        case 0: // Entries Tab is active
+    case 0: // Entries Tab is active
 
-            Buffer::On_Search=false;
-            ui->Output->setText(Buffer::EntryText);
-            vbar->setValue(Buffer::entry_scroll_pos);
+        Buffer::On_Search=false;
+        ui->Output->setText(Buffer::EntryText);
+        vbar->setValue(Buffer::entry_scroll_pos);
 
-            //re-enable buttons based on whether they were enabled before we switched to search mode
-            ui->TodayButton->setEnabled(Buffer::latest_enabled);
-            ui->LastEntry->setEnabled(Buffer::previous_enabled);
-            ui->NextEntry->setEnabled(Buffer::next_enabled);
-            ui->WriteButton->setEnabled(Buffer::write_enabled);
-            ui->EditEntryButton->setEnabled(Buffer::edit_enabled);
-            ui->DeleteEntry->setEnabled(Buffer::delete_enabled);
-            ui->ExportEntry->setEnabled(Buffer::export_enabled);
-            ui->Tag->setEnabled(Buffer::tag_enabled);
-            ui->DisconnectButton->setEnabled(Buffer::disconnect_enabled);
+        //re-enable buttons based on whether they were enabled before we switched to search mode
+        ui->TodayButton->setEnabled(Buffer::latest_enabled);
+        ui->LastEntry->setEnabled(Buffer::previous_enabled);
+        ui->NextEntry->setEnabled(Buffer::next_enabled);
+        ui->WriteButton->setEnabled(Buffer::write_enabled);
+        ui->EditEntryButton->setEnabled(Buffer::edit_enabled);
+        ui->DeleteEntry->setEnabled(Buffer::delete_enabled);
+        ui->ExportEntry->setEnabled(Buffer::export_enabled);
+        ui->Tag->setEnabled(Buffer::tag_enabled);
+        ui->DisconnectButton->setEnabled(Buffer::disconnect_enabled);
 
-            ui->actionLatest_Entry->setEnabled(Buffer::latest_enabled);
-            ui->actionNext_Entry->setEnabled(Buffer::next_enabled);
-            ui->actionPrevious_Entry->setEnabled(Buffer::previous_enabled);
-            ui->actionDelete_Current_Entry->setEnabled(Buffer::delete_enabled);
-            ui->actionEdit_Selected_Entry->setEnabled(Buffer::edit_enabled);
-            ui->actionWrite->setEnabled(Buffer::write_enabled);
-            ui->actionManage_Tags_2->setEnabled(Buffer::tag_enabled);
-            ui->actionExport_Entry->setEnabled(Buffer::export_enabled);
-            ui->actionDisconnect->setEnabled(Buffer::disconnect_enabled);
+        ui->actionLatest_Entry->setEnabled(Buffer::latest_enabled);
+        ui->actionNext_Entry->setEnabled(Buffer::next_enabled);
+        ui->actionPrevious_Entry->setEnabled(Buffer::previous_enabled);
+        ui->actionDelete_Current_Entry->setEnabled(Buffer::delete_enabled);
+        ui->actionEdit_Selected_Entry->setEnabled(Buffer::edit_enabled);
+        ui->actionWrite->setEnabled(Buffer::write_enabled);
+        ui->actionManage_Tags_2->setEnabled(Buffer::tag_enabled);
+        ui->actionExport_Entry->setEnabled(Buffer::export_enabled);
+        ui->actionDisconnect->setEnabled(Buffer::disconnect_enabled);
 
         break;
 
-        case 1: // Search Tab is active
+    case 1: // Search Tab is active
 
-            Buffer::On_Search=true;
-            ui->Output->setText(Buffer::SearchText);
-            vbar->setValue(Buffer::search_scroll_pos);
+        Buffer::On_Search=true;
+        ui->Output->setText(Buffer::SearchText);
+        vbar->setValue(Buffer::search_scroll_pos);
 
-            ui->SearchButton->setDefault(true);
-            ui->SearchTerm->setFocus();
+        ui->SearchButton->setDefault(true);
+        ui->SearchTerm->setFocus();
 
-            // remember what toolbar buttons were enabled and disable them in search mode.
-            Buffer::latest_enabled=ui->TodayButton->isEnabled();
-            Buffer::previous_enabled=ui->LastEntry->isEnabled();
-            Buffer::next_enabled=ui->NextEntry->isEnabled();
-            Buffer::write_enabled=ui->WriteButton->isEnabled();
-            Buffer::edit_enabled=ui->EditEntryButton->isEnabled();
-            Buffer::delete_enabled=ui->DeleteEntry->isEnabled();
-            Buffer::export_enabled=ui->ExportEntry->isEnabled();
-            Buffer::tag_enabled=ui->Tag->isEnabled();
-            Buffer::disconnect_enabled=ui->DisconnectButton->isEnabled();
+        // remember what toolbar buttons were enabled and disable them in search mode.
+        Buffer::latest_enabled=ui->TodayButton->isEnabled();
+        Buffer::previous_enabled=ui->LastEntry->isEnabled();
+        Buffer::next_enabled=ui->NextEntry->isEnabled();
+        Buffer::write_enabled=ui->WriteButton->isEnabled();
+        Buffer::edit_enabled=ui->EditEntryButton->isEnabled();
+        Buffer::delete_enabled=ui->DeleteEntry->isEnabled();
+        Buffer::export_enabled=ui->ExportEntry->isEnabled();
+        Buffer::tag_enabled=ui->Tag->isEnabled();
+        Buffer::disconnect_enabled=ui->DisconnectButton->isEnabled();
 
-            // Disable the buttons while in search mode.
-            ui->TodayButton->setDisabled(true);
-            ui->LastEntry->setDisabled(true);
-            ui->NextEntry->setDisabled(true);
-            ui->WriteButton->setDisabled(true);
-            ui->EditEntryButton->setDisabled(true);
-            ui->DeleteEntry->setDisabled(true);
-            ui->ExportEntry->setDisabled(true);
-            ui->Tag->setDisabled(true);
-            ui->DisconnectButton->setDisabled(true);
+        // Disable the buttons while in search mode.
+        ui->TodayButton->setDisabled(true);
+        ui->LastEntry->setDisabled(true);
+        ui->NextEntry->setDisabled(true);
+        ui->WriteButton->setDisabled(true);
+        ui->EditEntryButton->setDisabled(true);
+        ui->DeleteEntry->setDisabled(true);
+        ui->ExportEntry->setDisabled(true);
+        ui->Tag->setDisabled(true);
+        ui->DisconnectButton->setDisabled(true);
 
-            ui->actionLatest_Entry->setDisabled(true);
-            ui->actionNext_Entry->setDisabled(true);
-            ui->actionPrevious_Entry->setDisabled(true);
-            ui->actionDelete_Current_Entry->setDisabled(true);
-            ui->actionEdit_Selected_Entry->setDisabled(true);
-            ui->actionWrite->setDisabled(true);
-            ui->actionManage_Tags_2->setDisabled(true);
-            ui->actionExport_Entry->setDisabled(true);
-            ui->actionDisconnect->setDisabled(true);
+        ui->actionLatest_Entry->setDisabled(true);
+        ui->actionNext_Entry->setDisabled(true);
+        ui->actionPrevious_Entry->setDisabled(true);
+        ui->actionDelete_Current_Entry->setDisabled(true);
+        ui->actionEdit_Selected_Entry->setDisabled(true);
+        ui->actionWrite->setDisabled(true);
+        ui->actionManage_Tags_2->setDisabled(true);
+        ui->actionExport_Entry->setDisabled(true);
+        ui->actionDisconnect->setDisabled(true);
 
         break;
     }
@@ -193,28 +193,28 @@ QStringList MainWindow::HighlightResults(QString entry, QString title, QString t
 
     // assign a color based on stored int value.
     switch(Buffer::highlight_color){
-        case 0: //yellow
-            color="#ffff00";
+    case 0: //yellow
+        color="#ffff00";
         break;
 
-        case 1: // orange
-            color="#ff9933";
+    case 1: // orange
+        color="#ff9933";
         break;
 
-        case 2: // pink
-            color="#ff99cc";
+    case 2: // pink
+        color="#ff99cc";
         break;
 
-        case 3: // lime
-            color="#99ff99";
+    case 3: // lime
+        color="#99ff99";
         break;
 
-        case 4: // cyan
-            color="#00ffff";
+    case 4: // cyan
+        color="#00ffff";
         break;
 
-        case 5: //purple
-            color="#cc99ff";
+    case 5: //purple
+        color="#cc99ff";
         break;
     }
 
@@ -242,20 +242,20 @@ QStringList MainWindow::HighlightResults(QString entry, QString title, QString t
 
         switch(index){
 
-            case 0: //do nothing... no search term because tag list is enabled.
+        case 0: //do nothing... no search term because tag list is enabled.
             break;
 
-            case 1: // highlight title only
-                title=title.replace(reg,"<span style=\"background-color: " + color + "\">" + term + "</span>");
+        case 1: // highlight title only
+            title=title.replace(reg,"<span style=\"background-color: " + color + "\">" + term + "</span>");
             break;
 
-            case 2: // highlight body only
-                entry=entry.replace(reg,"<span style=\"background-color: " + color + "\">" + term + "</span>");
+        case 2: // highlight body only
+            entry=entry.replace(reg,"<span style=\"background-color: " + color + "\">" + term + "</span>");
             break;
 
-            case 3: // highlight title and body
-                title=title.replace(reg,"<span style=\"background-color: " + color + "\">" + term  + "</span>");
-                entry=entry.replace(reg,"<span style=\"background-color: " + color + "\">" + term  + "</span>");
+        case 3: // highlight title and body
+            title=title.replace(reg,"<span style=\"background-color: " + color + "\">" + term  + "</span>");
+            entry=entry.replace(reg,"<span style=\"background-color: " + color + "\">" + term  + "</span>");
             break;
 
         }
@@ -265,20 +265,20 @@ QStringList MainWindow::HighlightResults(QString entry, QString title, QString t
 
         switch(index){
 
-            case 0: //do nothing... no search term because tag list is enabled.
+        case 0: //do nothing... no search term because tag list is enabled.
             break;
 
-            case 1: // highlight title only
-                title=title.replace(term,"<span style=\"background-color: " + color + "\">" + term + "</span>");
+        case 1: // highlight title only
+            title=title.replace(term,"<span style=\"background-color: " + color + "\">" + term + "</span>");
             break;
 
-            case 2: // highlight body only
-                entry=entry.replace(term,"<span style=\"background-color: " + color + "\">" + term + "</span>");
+        case 2: // highlight body only
+            entry=entry.replace(term,"<span style=\"background-color: " + color + "\">" + term + "</span>");
             break;
 
-            case 3: // highlight title and body
-                title=title.replace(term,"<span style=\"background-color: " + color + "\">" + term + "</span>");
-                entry=entry.replace(term,"<span style=\"background-color: " + color + "\">" + term + "</span>");
+        case 3: // highlight title and body
+            title=title.replace(term,"<span style=\"background-color: " + color + "\">" + term + "</span>");
+            entry=entry.replace(term,"<span style=\"background-color: " + color + "\">" + term + "</span>");
             break;
 
         }
@@ -351,32 +351,32 @@ void MainWindow::SearchDatabase(){
                 QString iconpath;
 
                 switch(Buffer::entry_node_icon){
-                    case 0:
-                        iconpath=":/icons/pencil.png";
+                case 0:
+                    iconpath=":/icons/pencil.png";
                     break;
 
-                    case 1:
-                        iconpath=":/icons/pencil2.png";
+                case 1:
+                    iconpath=":/icons/pencil2.png";
                     break;
 
-                    case 2:
-                        iconpath=":/icons/pencil-small.png";
+                case 2:
+                    iconpath=":/icons/pencil-small.png";
                     break;
 
-                    case 3:
-                        iconpath=":/icons/balloon-quotation.png";
+                case 3:
+                    iconpath=":/icons/balloon-quotation.png";
                     break;
 
-                    case 4:
-                        iconpath=":/icons/node.png";
+                case 4:
+                    iconpath=":/icons/node.png";
                     break;
 
-                    case 5:
-                        iconpath=":/icons/bullet_black.png";
+                case 5:
+                    iconpath=":/icons/bullet_black.png";
                     break;
 
-                    case 6:
-                        iconpath=":/icons/bullet_blue.png";
+                case 6:
+                    iconpath=":/icons/bullet_blue.png";
                     break;
                 }
 
@@ -411,22 +411,22 @@ void MainWindow::SearchDatabase(){
                     int month=0, day=0, year=0;
 
                     switch(Buffer::date_format){
-                        case 0: // European
-                            month=date.at(1).toInt();
-                            day=date.at(0).toInt();
-                            year=date.at(2).toInt();
+                    case 0: // European
+                        month=date.at(1).toInt();
+                        day=date.at(0).toInt();
+                        year=date.at(2).toInt();
                         break;
 
-                        case 1: // USA Style
-                            month=date.at(0).toInt();
-                            day=date.at(1).toInt();
-                            year=date.at(2).toInt();
+                    case 1: // USA Style
+                        month=date.at(0).toInt();
+                        day=date.at(1).toInt();
+                        year=date.at(2).toInt();
                         break;
 
-                        case 2: // ISO
-                            month=date.at(1).toInt();
-                            day=date.at(2).toInt();
-                            year=date.at(0).toInt();
+                    case 2: // ISO
+                        month=date.at(1).toInt();
+                        day=date.at(2).toInt();
+                        year=date.at(0).toInt();
                         break;
                     }
 
@@ -864,12 +864,12 @@ void MainWindow::Print(){
 
     switch(choice){
 
-        case QPrintDialog::Accepted:
-            ui->Output->print(&p);
+    case QPrintDialog::Accepted:
+        ui->Output->print(&p);
         break;
 
-        case QPrintDialog::Rejected:
-            // do nothing
+    case QPrintDialog::Rejected:
+        // do nothing
         break;
     }
 }
@@ -1119,7 +1119,8 @@ void MainWindow::ShowHelp(){
 
                 b.critical(this,"RoboJournal","RoboJournal could not locate the collection file"
                            " (robojournal.qhc) or the compiled help file (robojournal.qch). Please"
-                           " locate these two files and copy them into <b>" + location + "</b>.");
+                           " locate these two files and copy them into <b>" +
+                           QDir::toNativeSeparators(location) + "</b>.");
                 this->setCursor(Qt::ArrowCursor);
 
             }
@@ -1128,14 +1129,14 @@ void MainWindow::ShowHelp(){
                 if(!collection_file.exists()){
                     b.critical(this,"RoboJournal","RoboJournal cannot display the documentation because the Collection File "
                                "needed by Qt Assistant is missing. Please copy the Collection File to <b>" +
-                               collection_path + "</b> and try again.");
+                               QDir::toNativeSeparators(collection_path) + "</b> and try again.");
                     this->setCursor(Qt::ArrowCursor);
                 }
 
                 if(!documentation_file.exists()){
                     b.critical(this,"RoboJournal","RoboJournal cannot display the documentation because the Compiled Help File "
                                "needed by Qt Assistant is missing. Please copy the Compiled Help File to <b>" +
-                               compiled_help_path + "</b> and try again.");
+                               QDir::toNativeSeparators(compiled_help_path) + "</b> and try again.");
                     this->setCursor(Qt::ArrowCursor);
                 }
             }
@@ -1146,8 +1147,8 @@ void MainWindow::ShowHelp(){
     else{
         QMessageBox c;
         c.critical(this,"RoboJournal","RoboJournal cannot display the documentation because Qt Assistant"
-                   " is not installed correctly. Please install (or move) the Qt Assistant executable to <b>" +
-                   assistant + "</b> and try again.");
+                   " is not installed correctly.<br><br>Please install (or move) the Qt Assistant executable to <nobr><b>" +
+                   QDir::toNativeSeparators(assistant) + "</b></nobr> and try again.");
         this->setCursor(Qt::ArrowCursor);
 
     }
@@ -1412,16 +1413,16 @@ void MainWindow::PrimaryConfig(){
 
     switch(Buffer::toolbar_pos){
 
-        case 0:
-            this->addToolBar(Qt::LeftToolBarArea,ui->mainToolBar);
+    case 0:
+        this->addToolBar(Qt::LeftToolBarArea,ui->mainToolBar);
         break;
 
-        case 1:
-            this->addToolBar(Qt::TopToolBarArea,ui->mainToolBar);
+    case 1:
+        this->addToolBar(Qt::TopToolBarArea,ui->mainToolBar);
         break;
 
-        case 2:
-            this->addToolBar(Qt::RightToolBarArea,ui->mainToolBar);
+    case 2:
+        this->addToolBar(Qt::RightToolBarArea,ui->mainToolBar);
         break;
     }
 
@@ -1629,6 +1630,12 @@ void MainWindow::PrimaryConfig(){
     ui->Output->setFrameStyle(QFrame::WinPanel | QFrame::Sunken);
     ui->EntryList->setFrameStyle(QFrame::WinPanel | QFrame::Sunken);
     ui->SearchList->setFrameStyle(QFrame::WinPanel | QFrame::Sunken);
+
+    //Set up login memory. This holds the row index for the most recent host and database. Set it to nothing by default since
+    //the program should initially rely on default values (12/28/13).
+    Buffer::remember_last=false;
+    Buffer::last_db=-1;
+    Buffer::last_host=-1;
 }
 
 //################################################################################################
@@ -1666,6 +1673,11 @@ void MainWindow::Connect(){
             }
             else{
 
+                // Clear saved DBLogin values from Buffer because we don't need to remember them anymore (12/28/13).
+                Buffer::last_db = -1;
+                Buffer::last_host = -1;
+                Buffer::remember_last=false;
+
                 if(!is_sane){
 
                     // does the journal fail sanity check because it is old....
@@ -1684,13 +1696,13 @@ void MainWindow::Connect(){
                         int choice=u.exec();
 
                         switch(choice){
-                            case QMessageBox::Yes:
-                                // Update journal
-                                cout << "OUTPUT: Starting journal upgrade process...";
-                                UpgradeJournal();
+                        case QMessageBox::Yes:
+                            // Update journal
+                            cout << "OUTPUT: Starting journal upgrade process...";
+                            UpgradeJournal();
                             break;
-                            case QMessageBox::No:
-                                // do nothing
+                        case QMessageBox::No:
+                            // do nothing
                             break;
                         }
 
@@ -2027,23 +2039,23 @@ void MainWindow::DeleteSelectedEntry(){
 
 
             switch(choice){
-                case QMessageBox::Ok:
-                    if(Buffer::backend=="MySQL"){
-                        my.DeleteEntry(CurrentID);
-                        CreateTree();
+            case QMessageBox::Ok:
+                if(Buffer::backend=="MySQL"){
+                    my.DeleteEntry(CurrentID);
+                    CreateTree();
 
-                        ui->StatusMessage->setText("<img src=\":/icons/mariadb.png\">&nbsp;Connected to " + backend_type  + " database <b>" +
-                                                   Buffer::database_name + "</b> on <b>" +  Buffer::host);
-                        ui->Output->setPlainText(NULL);
+                    ui->StatusMessage->setText("<img src=\":/icons/mariadb.png\">&nbsp;Connected to " + backend_type  + " database <b>" +
+                                               Buffer::database_name + "</b> on <b>" +  Buffer::host);
+                    ui->Output->setPlainText(NULL);
 
-                        // Bugfix (8/15/12) prevent the deleter from being used again until a different node is clicked
-                        CurrentID = -1;
-                        ui->EntryList->clearSelection();
-                    }
+                    // Bugfix (8/15/12) prevent the deleter from being used again until a different node is clicked
+                    CurrentID = -1;
+                    ui->EntryList->clearSelection();
+                }
                 break;
 
-                case QMessageBox::Cancel:
-                    // do nothing
+            case QMessageBox::Cancel:
+                // do nothing
                 break;
 
 
@@ -2199,16 +2211,16 @@ void MainWindow::Preferences(){
         // Setup toolbar position again in case user changed it
         switch(Buffer::toolbar_pos){
 
-            case 0:
-                this->addToolBar(Qt::LeftToolBarArea,ui->mainToolBar);
+        case 0:
+            this->addToolBar(Qt::LeftToolBarArea,ui->mainToolBar);
             break;
 
-            case 1:
-                this->addToolBar(Qt::TopToolBarArea,ui->mainToolBar);
+        case 1:
+            this->addToolBar(Qt::TopToolBarArea,ui->mainToolBar);
             break;
 
-            case 2:
-                this->addToolBar(Qt::RightToolBarArea,ui->mainToolBar);
+        case 2:
+            this->addToolBar(Qt::RightToolBarArea,ui->mainToolBar);
             break;
         }
     }
@@ -2355,52 +2367,52 @@ void MainWindow::HighlightCurrentSelection(QString CurrentID){
 QString MainWindow::GetLongMonth(int month){
     QString longmonth;
     switch(month){
-        case 1:
-            longmonth="January";
+    case 1:
+        longmonth="January";
         break;
 
-        case 2:
-            longmonth="February";
+    case 2:
+        longmonth="February";
         break;
 
-        case 3:
-            longmonth="March";
+    case 3:
+        longmonth="March";
         break;
 
-        case 4:
-            longmonth="April";
+    case 4:
+        longmonth="April";
         break;
 
-        case 5:
-            longmonth="May";
+    case 5:
+        longmonth="May";
         break;
 
-        case 6:
-            longmonth="June";
+    case 6:
+        longmonth="June";
         break;
 
-        case 7:
-            longmonth="July";
+    case 7:
+        longmonth="July";
         break;
 
-        case 8:
-            longmonth="August";
+    case 8:
+        longmonth="August";
         break;
 
-        case 9:
-            longmonth="September";
+    case 9:
+        longmonth="September";
         break;
 
-        case 10:
-            longmonth="October";
+    case 10:
+        longmonth="October";
         break;
 
-        case 11:
-            longmonth="November";
+    case 11:
+        longmonth="November";
         break;
 
-        case 12:
-            longmonth="December";
+    case 12:
+        longmonth="December";
         break;
 
     }
@@ -2422,32 +2434,32 @@ void MainWindow::CreateTree(){
     QString iconpath;
 
     switch(Buffer::entry_node_icon){
-        case 0:
-            iconpath=":/icons/pencil.png";
+    case 0:
+        iconpath=":/icons/pencil.png";
         break;
 
-        case 1:
-            iconpath=":/icons/pencil2.png";
+    case 1:
+        iconpath=":/icons/pencil2.png";
         break;
 
-        case 2:
-            iconpath=":/icons/pencil-small.png";
+    case 2:
+        iconpath=":/icons/pencil-small.png";
         break;
 
-        case 3:
-            iconpath=":/icons/balloon-quotation.png";
+    case 3:
+        iconpath=":/icons/balloon-quotation.png";
         break;
 
-        case 4:
-            iconpath=":/icons/node.png";
+    case 4:
+        iconpath=":/icons/node.png";
         break;
 
-        case 5:
-            iconpath=":/icons/bullet_black.png";
+    case 5:
+        iconpath=":/icons/bullet_black.png";
         break;
 
-        case 6:
-            iconpath=":/icons/bullet_blue.png";
+    case 6:
+        iconpath=":/icons/bullet_blue.png";
         break;
     }
 
@@ -2548,16 +2560,16 @@ void MainWindow::CreateTree(){
                         // Organize Date depending on Buffer data
                         switch(Buffer::date_format){
 
-                            case 0: // international
-                                day->setText(0, itemday.trimmed() + " " + longmonth.trimmed()  );
+                        case 0: // international
+                            day->setText(0, itemday.trimmed() + " " + longmonth.trimmed()  );
                             break;
 
-                            case 1:  // usa
-                                day->setText(0,longmonth.trimmed() + " " + itemday.trimmed());
+                        case 1:  // usa
+                            day->setText(0,longmonth.trimmed() + " " + itemday.trimmed());
                             break;
 
-                            case 2: // japan
-                                day->setText(0,longmonth.trimmed() + " " + itemday.trimmed());
+                        case 2: // japan
+                            day->setText(0,longmonth.trimmed() + " " + itemday.trimmed());
                             break;
                         }
 
@@ -2763,21 +2775,21 @@ void MainWindow::CreateTree(){
 
                         switch(Buffer::date_format){
 
-                            // BUGFIX for version 0.5 (6/11/13):
-                            // Ensure all strings are trimmed to get rid of any unwanted spaces or linebreaks.
-                            // This debris sometimes gets introduced when the database is restored from a dump file
-                            // and it throws the entire tree off.
+                        // BUGFIX for version 0.5 (6/11/13):
+                        // Ensure all strings are trimmed to get rid of any unwanted spaces or linebreaks.
+                        // This debris sometimes gets introduced when the database is restored from a dump file
+                        // and it throws the entire tree off.
 
-                            case 0: // international
-                                entry=item[2].trimmed() + " " + longmonth.trimmed() + ": " + item[1].trimmed();
+                        case 0: // international
+                            entry=item[2].trimmed() + " " + longmonth.trimmed() + ": " + item[1].trimmed();
                             break;
 
-                            case 1:  // usa
-                                entry=longmonth.trimmed() + " " + item[2].trimmed() + ": " + item[1].trimmed();
+                        case 1:  // usa
+                            entry=longmonth.trimmed() + " " + item[2].trimmed() + ": " + item[1].trimmed();
                             break;
 
-                            case 2: // japan
-                                entry=longmonth.trimmed() + " " + item[2].trimmed() + ": " + item[1].trimmed();
+                        case 2: // japan
+                            entry=longmonth.trimmed() + " " + item[2].trimmed() + ": " + item[1].trimmed();
                             break;
                         }
 
@@ -3446,12 +3458,12 @@ void MainWindow::on_actionSetup_Wizard_2_triggered()
                                    " Are you sure you want to do this?",QMessageBox::Cancel,QMessageBox::Ok);
 
         switch(reconfigure){
-            case QMessageBox::Ok:
-                f.exec();
+        case QMessageBox::Ok:
+            f.exec();
             break;
 
-            case QMessageBox::Cancel:
-                // do nothing
+        case QMessageBox::Cancel:
+            // do nothing
             break;
         }
     }
@@ -3624,12 +3636,12 @@ void MainWindow::on_tabWidget_currentChanged(int index)
 
     switch(index){
 
-        case 0:
-            Buffer::search_scroll_pos=vbar->value();
+    case 0:
+        Buffer::search_scroll_pos=vbar->value();
         break;
 
-        case 1:
-            Buffer::entry_scroll_pos=vbar->value();
+    case 1:
+        Buffer::entry_scroll_pos=vbar->value();
         break;
     }
 
@@ -3690,14 +3702,14 @@ void MainWindow::on_actionRestore_Splitter_Position_triggered()
                               QMessageBox::No | QMessageBox::Yes, QMessageBox::No);
 
         switch(choice){
-            case QMessageBox::Yes:
-                ui->splitter->setSizes(size);
-                Buffer::mw_splitter_size.clear();
+        case QMessageBox::Yes:
+            ui->splitter->setSizes(size);
+            Buffer::mw_splitter_size.clear();
 
             break;
 
-            case QMessageBox::No:
-                // do nothing
+        case QMessageBox::No:
+            // do nothing
             break;
         }
     }
