@@ -600,15 +600,16 @@ QString MainWindow::FormatTags(QString tags, QString color1, QString color2){
             color2 + "; width=100%;\"><small>&nbsp;&nbsp;Tags</small></div><br>";
 
     if(has_tags){
-        // add HR
         output_tags= div + "&nbsp;&nbsp;" + output_tags;
     }
     else{
-        output_tags= div + "&nbsp;&nbsp;<small>This entry has not been tagged yet.</small>";
+		// Use full sentences for the no-tag-data messages --Will Kraft (12/30/13).
+        output_tags= div + "&nbsp;&nbsp;<small>You have not tagged this entry yet.</small>";
     }
 
     if(tags_array.at(0).isEmpty()){
-        output_tags= div + "&nbsp;&nbsp;<small>No tags for this post.</small>";
+		// Use full sentences for the no-tag-data messages --Will Kraft (12/30/13).
+        output_tags= div + "&nbsp;&nbsp;<small>There is no tag data for this post.</small>";
     }
 
 
