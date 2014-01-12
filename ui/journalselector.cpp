@@ -162,6 +162,11 @@ void JournalSelector::SetPreferences(){
             SettingsManager b;
             b.NewConfig(host,database,port,user);
 
+
+            // Pass information to FavoriteCore --Will Kraft (1/11/14)
+            FavoriteCore f;
+            f.Add_to_DB(database,user,host);
+
             QMessageBox m;
             m.information(this,"RoboJournal", "<b>" + database + "</b> is now your default journal.");
             this->accept();

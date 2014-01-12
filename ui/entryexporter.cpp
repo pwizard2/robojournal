@@ -93,7 +93,7 @@ void EntryExporter::PrimaryConfig(){
     // The Export button now has an icon to help differentiate it from the Cancel button.
     // New for 0.5 -- Will Kraft (7/30/13).
     QIcon ex(":/icons/external.png");
-    QPushButton *export_button=ui->buttonBox->addButton(tr("&Export"),QDialogButtonBox::AcceptRole);
+    export_button=ui->buttonBox->addButton(tr("&Export"),QDialogButtonBox::AcceptRole);
     export_button->setIcon(ex);
     export_button->setDefault(true);
 
@@ -118,8 +118,7 @@ void EntryExporter::PrimaryConfig(){
     }
 
     // Ensure the first page is visible when window opens.
-    stack->setCurrentIndex(0);   
-
+    stack->setCurrentIndex(0);
 }
 
 //################################################################################################
@@ -320,10 +319,27 @@ void EntryExporter::UpdateValues(QString new_title, QString new_date, QString ne
 
 void EntryExporter::on_Menu_currentRowChanged(int currentRow)
 {
-    stack->setCurrentIndex(currentRow);
 
-    QListWidgetItem *current=ui->Menu->item(currentRow);
-    current->setSelected(true);
+    //prevent dump from working if the current journal is not local. There is no way to run MySQLDump on a remote server,
+    //nor would we want to due to the nightmare security issues that would cause. --Will Kraft (1/12/14)
+    if((Buffer::host !="localhost") && (Buffer::host != "127.0.0.1")){
+        stack->setCurrentIndex(currentRow);
+
+        if(currentRow==2){
+            lockOKButton();
+        }
+        else{
+            unlockOKButton();
+        }
+
+    }
+    else{
+        stack->setCurrentIndex(currentRow);
+
+        QListWidgetItem *current=ui->Menu->item(currentRow);
+        current->setSelected(true);
+        unlockOKButton();
+    }
 }
 
 
@@ -336,4 +352,29 @@ void EntryExporter::accept(){
     if(proceed){
         close();
     }
+}
+
+//#########################################################################################################
+// Unlock the OK button to allow the user to submit the form. This also locks the
+// DatabaseType object to prevent the user from switching journal types before clicking OK.
+// Ported from NewJournalCreator class on 1/12/14 (Will Kraft).
+void EntryExporter::unlockOKButton(){
+    export_button->setEnabled(true);
+    dump->setEnabled(true);
+
+}
+
+//#########################################################################################################
+// Lock the OK button to allow the user to prevent the form from being submitted  This also unlocks the
+// DatabaseType object so the user can switch the journal type if necessary.
+// Ported from NewJournalCreator class on 1/12/14 (Will Kraft).
+void EntryExporter::lockOKButton(){
+
+    export_button->setEnabled(false);
+    dump->setEnabled(false);
+
+    QMessageBox m;
+    m.critical(this, "RoboJournal", "RoboJournal cannot create a dump of the current journal because it is running on a "
+               "remote server. If you need to create a backup, you must run MySQLDump from the server (<b>" +
+               Buffer::host + "</b>) that is hosting your journal.");
 }

@@ -44,6 +44,10 @@ public:
 
     static QString export_path;
     static QString mysqldump_exec;
+
+signals:
+    void unlockOK();
+    void unlockNotOK();
     
 private slots:
     void on_AllowCustomName_toggled(bool checked);

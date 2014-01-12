@@ -55,6 +55,10 @@ public:
     static QString timestamp;
     void UpdateValues(QString new_title, QString new_date, QString new_body, QString new_timestamp);
 
+public slots:
+    void lockOKButton();
+    void unlockOKButton();
+
 private slots:
 
     void on_Menu_currentRowChanged(int currentRow);
@@ -78,6 +82,8 @@ private:
     ExportSingle *single;
     ExportMulti *multi;
     ExportCreateDump *dump;
+
+    QPushButton* export_button;
 
     void accept();
 

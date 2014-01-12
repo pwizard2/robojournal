@@ -1657,6 +1657,7 @@ void MainWindow::Connect(){
 
         this->setCursor(Qt::WaitCursor);
 
+
         if(Buffer::backend=="MySQL"){
 
             MySQLCore my;
@@ -1667,8 +1668,11 @@ void MainWindow::Connect(){
             if(!success){
                 // allow user to try again
                 l.ResetPassword();
+                ui->ConnectButton->setEnabled(true);
+                ui->StatusMessage->setText("Click the <b>Connect</b> button (or press <b>F2</b>) to work with a journal database.");
                 this->setCursor(Qt::ArrowCursor);
                 Connect();
+
 
                 return;
             }
@@ -1678,6 +1682,9 @@ void MainWindow::Connect(){
                 Buffer::last_db = -1;
                 Buffer::last_host = -1;
                 Buffer::remember_last=false;
+
+                ui->ConnectButton->setEnabled(false);
+                ui->StatusMessage->setText("Connection in progress, please wait...");
 
                 if(!is_sane){
 

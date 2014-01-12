@@ -40,10 +40,10 @@ public:
     bool Validate();
     void HarvestData();
 
-
 signals:
     void unlockOK();
     void unlockNotOK();
+
 
 public slots:
     void ClearForm();
