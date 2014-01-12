@@ -1595,6 +1595,10 @@ void MainWindow::PrimaryConfig(){
         this->restoreGeometry(Buffer::mainwindow_geometry);
     }
 
+    // Hide user status indicatir and entry count until we need them. --Will Kraft (1/12/14).
+    ui->Status_User->setVisible(false);
+    ui->TotalCount->setVisible(false);
+
     //#############################################################################
     //new for RoboJournal 0.4.1:
 
@@ -1643,6 +1647,23 @@ void MainWindow::PrimaryConfig(){
 // Connect to database function
 void MainWindow::Connect(){
     using namespace std;
+
+    this->setCursor(Qt::WaitCursor);
+    ui->ConnectButton->setEnabled(false);
+    ui->StatusMessage->setText("Connection in progress, please wait...");
+
+
+    // Add progress bar for connections. --Will Kraft (1/12/14).
+    QProgressBar *progress = new QProgressBar(this);
+    //progress->setMinimum(0);
+    //progress->setMaximum(0);
+    progress->setMaximumHeight(15);
+    progress->setMaximumHeight(15);
+    ui->statusBar->addWidget(progress,1);
+    progress->setValue(25);
+
+
+
     DBLogin l(this);
     l.setWindowTitle("New Connection [" + backend_type + "]");
 
@@ -1650,14 +1671,23 @@ void MainWindow::Connect(){
 
 
     l.Refresh();
-    l.exec();
+    int choice=l.exec();
+
+    // Reset the form if the user rejects the login dialog --Will Kraft (1/12/14).
+    if(choice==0){
+        ui->ConnectButton->setEnabled(true);
+        this->setCursor(Qt::ArrowCursor);
+        ui->StatusMessage->setText("Click the <b>Connect</b> button (or press <b>F2</b>) to work with a journal database.");
+        delete progress;
+        return;
+    }
+
+    progress->setValue(35);
 
     // if user provided login data
     if(Buffer::login_succeeded){
 
-        this->setCursor(Qt::WaitCursor);
-
-
+        progress->setValue(50);
         if(Buffer::backend=="MySQL"){
 
             MySQLCore my;
@@ -1682,9 +1712,7 @@ void MainWindow::Connect(){
                 Buffer::last_db = -1;
                 Buffer::last_host = -1;
                 Buffer::remember_last=false;
-
-                ui->ConnectButton->setEnabled(false);
-                ui->StatusMessage->setText("Connection in progress, please wait...");
+                 progress->setValue(60);
 
                 if(!is_sane){
 
@@ -1727,10 +1755,16 @@ void MainWindow::Connect(){
                         cout << "ERROR: Database " << Buffer::database_name.toStdString() <<
                                 " FAILED sanity check, aborting load sequence!" << endl;
 
+                        delete progress;
+                        ui->ConnectButton->setEnabled(true);
+                        ui->StatusMessage->setText("Click the <b>Connect</b> button (or press <b>F2</b>) to work with a journal database.");
+                        this->setCursor(Qt::ArrowCursor);
+                        return;
+
                     }
                 }
                 else{
-
+                     progress->setValue(75);
                     ui->WriteButton->setEnabled(true);
 
 
@@ -1768,11 +1802,14 @@ void MainWindow::Connect(){
                     // Get ID list
                     //int year_range=Buffer::entryrange.toInt();
                     IDList=my.Create_ID_List();
-
+                    progress->setValue(80);
                     CreateTree();
-
+                    progress->setValue(99);
                     ui->StatusMessage->setText("<img src=\":/icons/mariadb.png\">&nbsp;Connected to " + backend_type  + " database <b>" +
                                                Buffer::database_name + "</b> on <b>" +  Buffer::host);
+
+                    ui->Status_User->setVisible(true);
+                    ui->TotalCount->setVisible(true);
 
                     // provide user notification on statusbar (new for 0.3)
                     ui->Status_User->setTextFormat(Qt::RichText);
@@ -1800,6 +1837,9 @@ void MainWindow::Connect(){
                 }
 
                 this->setCursor(Qt::ArrowCursor);
+                ui->statusBar->removeWidget(progress);
+                 progress->setValue(100);
+
             }
         }
 
@@ -1985,6 +2025,8 @@ void MainWindow::Connect(){
         QMessageBox m;
         m.information(this,"RoboJournal",msg);
     }
+
+      delete progress;
 }
 
 //################################################################################################
@@ -2193,6 +2235,10 @@ void MainWindow::Disconnect(){
     // for comparison to the date override value (9/12/13).
     if(Buffer::datebox_override)
         date_override_trigger_tripped=false;
+
+    // Hide user and Total count items again.
+    ui->Status_User->setVisible(false);
+    ui->TotalCount->setVisible(false);
 
 }
 
