@@ -1701,6 +1701,7 @@ void MainWindow::Connect(){
                 ui->ConnectButton->setEnabled(true);
                 ui->StatusMessage->setText("Click the <b>Connect</b> button (or press <b>F2</b>) to work with a journal database.");
                 this->setCursor(Qt::ArrowCursor);
+                delete progress;
                 Connect();
 
 
