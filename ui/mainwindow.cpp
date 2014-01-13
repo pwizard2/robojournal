@@ -1436,7 +1436,6 @@ void MainWindow::PrimaryConfig(){
     // New in 0.3: User notification is a separate statusbar object.
     ui->statusBar->addPermanentWidget(ui->Status_User,0);
     ui->Status_User->clear();
-
     ui->statusBar->addPermanentWidget(ui->TotalCount,0);
 
 
@@ -2993,10 +2992,10 @@ void MainWindow::TotalEntryCount(int totalcount){
 
     // Note: Use space characters here instead of HTML nonbreaking space. For some reason, "&nbsp" shows up.
     if(totalcount==1){
-        ui->TotalCount->setText("<img src=\":/icons/page_white_database.png\">&nbsp;&nbsp;" + count  + " entry&nbsp;");
+        ui->TotalCount->setText("<img src=\":/icons/page_white_database.png\">&nbsp;&nbsp;" + count  + " entry");
     }
     else{
-        ui->TotalCount->setText("<img src=\":/icons/page_white_database.png\">&nbsp;&nbsp;" + count  + " entries&nbsp;");
+        ui->TotalCount->setText("<img src=\":/icons/page_white_database.png\">&nbsp;&nbsp;" + count  + " entries");
     }
 
     QString indicator;
@@ -3005,23 +3004,17 @@ void MainWindow::TotalEntryCount(int totalcount){
     if(Buffer::allentries){
         indicator="<nobr>Total number of entries to date in <b>" + Buffer::database_name + "</b></nobr>";
         ui->TotalCount->setToolTip(indicator);
-        //ui->statusBar->showMessage("Displaying all entries in the database...",1500);
     }
     else{
         if(Buffer::entryrange==1){
 
-            //QFrame *div = new QFrame(this);
-            //div->setFrameStyle();
-
             indicator="<nobr>Total number of entries for current range (" +
                     QString::number(Buffer::entryrange) + " year) in <b>" + Buffer::database_name + "</b></nobr>";
             ui->TotalCount->setToolTip(indicator);
-            //ui->statusBar->showMessage("Displaying all entries from this year...",1500);
+
 
 
             // Add year indicator if user decides to use it
-
-
             if(Buffer::use_indicator){
 
                 ui->TotalCount->setText(ui->TotalCount->text() +  "<b>:</b>" +
@@ -3032,16 +3025,13 @@ void MainWindow::TotalEntryCount(int totalcount){
             indicator="<nobr>Total number of entries for current range (" +
                     QString::number(Buffer::entryrange) + " years) in <b>" + Buffer::database_name + "</b></nobr>";
             ui->TotalCount->setToolTip(indicator);
-            //ui->statusBar->showMessage("Displaying all entries from the last " + Buffer::entryrange
-            //+ " years...",1500);
-
 
             // Add year indicator if user decides to use it
             if(Buffer::use_indicator){
 
                 QString range=QString::number(Buffer::entryrange);
                 ui->TotalCount->setText(ui->TotalCount->text() +  "<b>:</b>" + "&nbsp;<img src=\":/icons/arrow-repeat.png\">&nbsp;"
-                                        + range + " years&nbsp;");
+                                        + range + " years");
             }
         }
     }

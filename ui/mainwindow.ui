@@ -754,7 +754,13 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </attribute>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QStatusBar" name="statusBar">
+   <property name="styleSheet">
+    <string notr="true">QStatusBar::item {
+border: none;
+} </string>
+   </property>
+  </widget>
   <action name="actionWrite">
    <property name="icon">
     <iconset resource="../images.qrc">
