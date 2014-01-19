@@ -62,7 +62,8 @@ JournalSelector::JournalSelector(QWidget *parent) :
     // Select the use defaults button when the class is instantiated.
     // Bugfix 12/8/12: It should always be checked if we're in firstrun mode.
     if((Buffer::alwaysusedefaults) || (Buffer::firstrun)){
-        ui->UseDefaults->click();
+        ui->Host->setPlaceholderText("localhost");
+        ui->Port->setPlaceholderText("3306");
     }
 }
 
@@ -75,14 +76,12 @@ void JournalSelector::ResetForm(){
     ui->Password->clear();
     ui->JournalList->clear();
 
+    ui->Host->clear();
+    ui->Port->clear();
+
     if(Buffer::alwaysusedefaults){
-        while(!ui->UseDefaults->isChecked()){
-            ui->UseDefaults->click();
-        }
-    }
-    else{
-        ui->Host->clear();
-        ui->Port->clear();
+        ui->Host->setPlaceholderText("localhost");
+        ui->Port->setPlaceholderText("3306");
     }
 }
 
@@ -90,46 +89,67 @@ void JournalSelector::ResetForm(){
 // Validate user/pass and allows the connection to be made. Allowing blank username/pass breaks
 //other database connections so it should be stopped here.
 bool JournalSelector::Validate(){
-    bool valid=true;
+
+    // Use placeholder text for default values in version 0.5 --Will Kraft (1/19/13).
+    QString host, port;
+
+    // Use placeholder text as default values.
+    if(Buffer::alwaysusedefaults){
+
+        host=ui->Host->text();
+        if(ui->Host->text().isEmpty())
+            host=ui->Host->placeholderText();
+
+        port=ui->Port->text();
+
+        if(ui->Port->text().isEmpty())
+            port=ui->Port->placeholderText();
+    }
+    else{
+        host=ui->Host->text();
+        port=ui->Port->text();
+    }
 
     QMessageBox b;
 
     bool no_Username=ui->Username->text().isEmpty();
     bool no_Password=ui->Password->text().isEmpty();
-    bool no_host=ui->Host->text().isEmpty();
-    bool no_port=ui->Port->text().isEmpty();
+    bool no_host=host.isEmpty();
+    bool no_port=port.isEmpty();
 
     if((no_Username) && (no_Password)){
-        valid=false;
         b.critical(this,"RoboJournal","You must enter a username and password!");
+        return false;
     }
     else{
         if(no_Username){
-            valid=false;
             b.critical(this,"RoboJournal","You must enter a username!");
             ui->Username->setFocus();
+            return false;
         }
 
         if(no_Password){
-            valid=false;
+
             b.critical(this,"RoboJournal","You must enter a password!");
             ui->Password->setFocus();
+            return false;
         }
     }
 
     if(no_host){
-        valid=false;
+
         b.critical(this,"RoboJournal","You must enter a hostname!");
         ui->Host->setFocus();
+        return false;
     }
 
     if(no_port){
-        valid=false;
         b.critical(this,"RoboJournal","You must enter the port that <b>Host</b> should use!");
         ui->Port->setFocus();
+        return false;
     }
 
-    return valid;
+    return true;
 }
 
 //################################################################################################
@@ -370,14 +390,14 @@ void JournalSelector::on_ManagePermissions_clicked()
 void JournalSelector::on_DBType_currentIndexChanged(int index)
 {
     switch(index){
-        case 0:
-            ui->Browse->setEnabled(false);
-            ui->ConnectionSettings->setEnabled(true);
+    case 0:
+        ui->Browse->setEnabled(false);
+        ui->ConnectionSettings->setEnabled(true);
         break;
 
-        case 1:
-            ui->Browse->setEnabled(true);
-            ui->ConnectionSettings->setEnabled(false);
+    case 1:
+        ui->Browse->setEnabled(true);
+        ui->ConnectionSettings->setEnabled(false);
         break;
     }
 }

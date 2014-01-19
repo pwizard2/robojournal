@@ -43,6 +43,7 @@
 #include <QDebug>
 #include <core/settingsmanager.h>
 
+//#############################################################################################################
 Newconfig::Newconfig(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Newconfig)
@@ -55,14 +56,12 @@ Newconfig::Newconfig(QWidget *parent) :
 
 }
 
-
+//#############################################################################################################
 Newconfig::~Newconfig()
 {
 
     delete ui;
 }
-
-
 
 // new default settings that can be called from any class through Config::$var.
 // These should be null unless initiated elsewhere.
@@ -269,6 +268,7 @@ void Newconfig::PrimaryConfig(){
 
 }
 
+//#############################################################################################################
 void Newconfig::resizeEvent(QResizeEvent *){
 
     if(!startup){
@@ -277,7 +277,7 @@ void Newconfig::resizeEvent(QResizeEvent *){
     }
 }
 
-
+//#############################################################################################################
 void Newconfig::on_Categories_currentItemChanged(QTreeWidgetItem *current)
 {
     int idx=ui->Categories->currentIndex().row();
@@ -304,6 +304,8 @@ void Newconfig::on_Categories_currentItemChanged(QTreeWidgetItem *current)
     //Buffer::config_sizechanged=false;
 }
 
+//#############################################################################################################
+// Get changes from the page classes and pass it to the SettingsManager so it can be written to configuration.
 void Newconfig::UpdateData(){
 
     setCursor(Qt::WaitCursor);
@@ -328,7 +330,7 @@ void Newconfig::UpdateData(){
     setCursor(Qt::ArrowCursor);
 }
 
-
+//#############################################################################################################
 void Newconfig::on_buttonBox_accepted()
 {
     UpdateData();

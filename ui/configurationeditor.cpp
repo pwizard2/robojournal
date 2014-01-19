@@ -186,7 +186,8 @@ void ConfigurationEditor::GetChanges(){
     Newconfig::new_use_misc_processing=ui->MiscFormatting->isChecked();
     Newconfig::new_system_dic=ui->SystemLevelDic->isChecked();
 
-    aff_file=Find_AFF_File(ui->Dictionary->currentText());
+    if((Buffer::use_spellcheck) && (showAFFWarning))
+        aff_file=Find_AFF_File(ui->Dictionary->currentText());
 
     // Preserve current AFF value if the user didn't make changes this session
     if(!aff_file.isEmpty()){
@@ -352,5 +353,14 @@ void ConfigurationEditor::on_ManageUDWords_clicked()
 //#############################################################################################################
 // Find AFF file based on current dictionary list option (12/21/13).
 void ConfigurationEditor::on_Dictionary_currentIndexChanged(const QString &arg1){
-    Find_AFF_File(arg1);
+    if((Buffer::use_spellcheck) && (showAFFWarning))
+        Find_AFF_File(arg1);
+}
+
+//#############################################################################################################
+// Keep track of whether we should show AFF warning. This fixes the bug that causes the AFF messagebox to appear when
+// the user unchecks the Use Spellcheck box. --Will Kraft (1/19/14).
+void ConfigurationEditor::on_UseSpellCheck_toggled(bool checked)
+{
+    showAFFWarning=checked;
 }

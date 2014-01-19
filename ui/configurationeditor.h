@@ -40,6 +40,7 @@ private:
     QString aff_file;
     QString Find_AFF_File(QString dict);
     QStringList Scan_For_System_Dictionaries();
+    bool showAFFWarning;
 
 private slots:
     void on_BrowseButton_clicked();
@@ -47,6 +48,7 @@ private slots:
     void on_SystemLevelDic_toggled(bool checked);
     void on_ManageUDWords_clicked();
     void on_Dictionary_currentIndexChanged(const QString &arg1);
+    void on_UseSpellCheck_toggled(bool checked);
 };
 
 #endif // CONFIGURATIONEDITOR_H
