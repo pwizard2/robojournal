@@ -50,6 +50,7 @@ public:
     QStringList GetFavorites(QString host);
     QStringList GetHosts();
     bool Do_Maintenance(QList<QStringList> favorites_list, QStringList dynamic_list);
+    bool Check_For_Existing_Name(QString proposedName);
 
     //Sqlite-related functions
     void SQLite_Add_to_DB(QString database, bool is_favorite);

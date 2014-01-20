@@ -602,3 +602,39 @@ void FavoriteCore::Do_Maintenance_SQLite(){
         }
     }
 }
+
+//###################################################################################################
+// Check the favorites database for name $journal. If it exists, return true. Otherwise, return false.
+// This function is used to prevent write errors i nthe database-- the SQLite rules prohibit multiple
+// rows with the same values. Having a check helps to keep everything unique, even across
+// hosts. --Will Kraft (1/19/14).
+bool FavoriteCore::Check_For_Existing_Name(QString proposedName){
+
+    QStringList journals;
+
+    QSqlDatabase db=QSqlDatabase::database("@favorites");
+    db.open();
+
+    QSqlQuery fetch("SELECT database FROM mysql_favorites",db);
+    fetch.exec();
+
+    while(fetch.next()){
+        QVariant v0=fetch.value(0);
+        QString nextitem=v0.toString();
+
+        // ensure that each item is unique; if nextitem is already on the list, don't add it again.
+        if(!journals.contains(nextitem)){
+            journals << nextitem;
+        }
+    }
+
+    db.close();
+
+    // do the check.
+    bool isUnique=true;
+
+    if(journals.contains(proposedName))
+        isUnique=false;
+
+    return isUnique;
+}

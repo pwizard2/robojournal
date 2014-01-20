@@ -26,6 +26,7 @@
 #include <QMessageBox>
 #include "core/buffer.h"
 #include "sql/sqlshield.h"
+#include "core/favoritecore.h"
 
 MySQLJournalPage::MySQLJournalPage(QWidget *parent) :
     QWidget(parent),
@@ -68,8 +69,21 @@ void MySQLJournalPage::PrimaryConfig(){
     sysuser=sysuser.replace(" ","_");
     sysuser=sysuser.toLower();
 
+    QString proposedName=sysuser + "_journal";
+
+    //Check to see if the journal name is already in use (1/19/14)
+    FavoriteCore f;
+    bool isUnique=f.Check_For_Existing_Name(proposedName);
+
+    if(!isUnique){
+       QString new_name=alternateName(proposedName);
+       ui->JournalName->setText(new_name);
+    }
+    else{
+        ui->JournalName->setText(proposedName);
+    }
+
     ui->Username->setText(sysuser);
-    ui->JournalName->setText(sysuser + "_journal");
 }
 
 //#################################################################################################
@@ -229,7 +243,7 @@ void MySQLJournalPage::PasswordsMatch(){
     QPixmap bad(":/icons/cross-circle.png");
 
     if((ui->Password1->text() == ui->Password2->text()) && (ui->Password1->text().length() > 0)
-       && (ui->Password1->text().length() >= 7)){
+            && (ui->Password1->text().length() >= 7)){
         ui->MatchNotify->setText("Passwords match");
         ui->MatchNotify->setStyleSheet("font-weight: bold; color: green");
         ui->MatchIcon->setPixmap(good);
@@ -302,8 +316,9 @@ void MySQLJournalPage::on_Username_editingFinished()
 bool MySQLJournalPage::Validate(){
 
     QMessageBox a;
+    QString journal=ui->JournalName->text();
 
-    if(ui->JournalName->text().isEmpty()){
+    if(journal.isEmpty()){
         a.critical(this,"RoboJournal","You must provide a name for this journal!");
         ui->JournalName->setFocus();
         return false;
@@ -313,6 +328,28 @@ bool MySQLJournalPage::Validate(){
         a.critical(this,"RoboJournal","You must enter a username!");
         ui->Username->setFocus();
         return false;
+    }
+
+    // Check for existing journal names (1/19/14).
+    FavoriteCore f;
+    bool unique=f.Check_For_Existing_Name(journal);
+
+    if(!unique){
+        QString alt=alternateName(journal);
+        QMessageBox n;
+        int choice=n.question(this,"RoboJournal","The journal name you specified is already in use. "
+                              "Do you want to use alternate name <b>" + alt + "</b>?",
+                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+
+        switch(choice){
+        case QMessageBox::Yes:
+            ui->JournalName->setText(alt);
+            break;
+
+        case QMessageBox::No:
+            return false;
+            break;
+        }
     }
 
     QRegExp root("root",Qt::CaseInsensitive);
@@ -343,15 +380,17 @@ bool MySQLJournalPage::Validate(){
                               "Do you really want to use it?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
 
         switch(choice){
-            case QMessageBox::Yes:
+        case QMessageBox::Yes:
             return true;
             break;
 
-            case QMessageBox::No:
+        case QMessageBox::No:
             return false;
             break;
         }
     }
+
+
 
     return true;
 }
@@ -392,4 +431,26 @@ void MySQLJournalPage::HarvestData(){
     NewJournalCreator::journal_name=s.Break_Injections(raw_journal);
     NewJournalCreator::root_password=s.Break_Injections(raw_root_pass);
     NewJournalCreator::port=s.Break_Injections(raw_port);
+}
+
+//#################################################################################################
+// Create an alternate name (i.e. journal_name2 if journal_name already exists) --Will Kraft (1/19/14).
+QString MySQLJournalPage::alternateName(QString proposedName){
+
+    QRegExp digit("\\d+");
+    QString new_name;
+
+    if(proposedName.lastIndexOf(digit)==proposedName.length()){
+        int pos = digit.indexIn(proposedName);
+        if (pos > -1){
+            int num = digit.cap(1).toInt();
+            num++;
+            new_name=proposedName + QString::number(num);
+        }
+    }
+    else{
+        new_name=proposedName + QString::number(2);
+    }
+
+    return new_name;
 }

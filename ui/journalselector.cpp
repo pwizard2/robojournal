@@ -17,7 +17,6 @@
     along with RoboJournal.  If not, see <http://www.gnu.org/licenses/>.
   */
 
-
 #include "ui/journalselector.h"
 #include "ui_journalselector.h"
 #include "sql/mysqlcore.h"

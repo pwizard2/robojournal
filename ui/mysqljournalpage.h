@@ -63,6 +63,7 @@ private:
     void PrimaryConfig();
     void PasswordsMatch();
     int PasswordStrength(QString passwd);
+    QString alternateName(QString proposedName);
 };
 
 #endif // MYSQLJOURNALPAGE_H

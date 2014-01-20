@@ -90,6 +90,9 @@ void Editor::PrimaryConfig(){
         ui->TagButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     }
 
+    // Hide showErrors button (1/19/14).
+    ui->ShowErrors->setVisible(false);
+
     QToolBar *bar=new QToolBar(this);
     bar->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
     bar->setLayoutDirection(Qt::LeftToRight);

@@ -1429,6 +1429,7 @@ void MainWindow::PrimaryConfig(){
 
 
     // Setup Statusbar
+    ui->statusBar->setContentsMargins(0,0,0,0);
     ui->TotalCount->clear();
     ui->statusBar->addWidget(ui->StatusMessage,1);
 
