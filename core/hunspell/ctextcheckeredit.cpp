@@ -185,9 +185,8 @@ void CTextCheckerEdit::updateTextSpeller()
         }
         cursor.movePosition(QTextCursor::NextWord, QTextCursor::MoveAnchor, 1);
     }
-    //cursor.endEditBlock();
+
     setTextCursor(oldCursor);
-    //    QMessageBox::warning(this,"wait","press OK!");
 }
 
 

@@ -67,11 +67,15 @@ DBLogin::DBLogin(QWidget *parent) :
 
     if(Buffer::backend=="MySQL"){
         ui->tabWidget->setTabEnabled(1,false);
+        setWindowTitle("New Connection [MySQL/MariaDB]");
     }
 
     if(Buffer::backend=="SQLite"){
         ui->tabWidget->setTabEnabled(0,false);
+        setWindowTitle("New Connection [SQLite]");
     }
+
+
 
     PopulateComboBoxes();
 }

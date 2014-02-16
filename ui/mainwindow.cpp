@@ -1665,7 +1665,7 @@ void MainWindow::Connect(){
 
 
     DBLogin l(this);
-    l.setWindowTitle("New Connection [" + backend_type + "]");
+    //l.setWindowTitle("New Connection [" + backend_type + "]");
 
     bool is_connected=false; // check to see if connection is true
 
@@ -1688,6 +1688,8 @@ void MainWindow::Connect(){
     if(Buffer::login_succeeded){
 
         progress->setValue(50);
+
+
         if(Buffer::backend=="MySQL"){
 
             MySQLCore my;
@@ -1703,7 +1705,6 @@ void MainWindow::Connect(){
                 this->setCursor(Qt::ArrowCursor);
                 delete progress;
                 Connect();
-
 
                 return;
             }

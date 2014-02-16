@@ -437,6 +437,28 @@ void MySQLJournalPage::HarvestData(){
 // Create an alternate name (i.e. journal_name2 if journal_name already exists) --Will Kraft (1/19/14).
 QString MySQLJournalPage::alternateName(QString proposedName){
 
+    /*
+    QRegExp filter("\\w+\\d");
+    QString new_name;
+
+    // Filter if input journal name is something like "journal1", "test2", etc.
+    if(filter.exactMatch(proposedName)){
+
+        int place=proposedName.lastIndexOf("\\d");
+        proposedName
+
+
+    }
+    else{
+        while(!filter.exactMatch(proposedName)){
+            new_name.chop(1);
+        }
+
+        if
+    }
+    */
+
+
     QRegExp digit("\\d+");
     QString new_name;
 
@@ -444,13 +466,16 @@ QString MySQLJournalPage::alternateName(QString proposedName){
         int pos = digit.indexIn(proposedName);
         if (pos > -1){
             int num = digit.cap(1).toInt();
+            proposedName.chop(1);
             num++;
             new_name=proposedName + QString::number(num);
         }
     }
     else{
+        proposedName.chop(1);
         new_name=proposedName + QString::number(2);
     }
+
 
     return new_name;
 }
