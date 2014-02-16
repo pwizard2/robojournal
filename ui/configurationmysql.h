@@ -59,6 +59,9 @@ private:
     // already. --Will Kraft
     bool has_displayed;
 
+    // Store whether the confirmation response should be shown for ApplyDefaultProperties. This is here to prevent the
+    // notification from being shown when the form loads up.
+    bool load_up;
 };
 
 #endif // CONFIGURATIONMYSQL_H

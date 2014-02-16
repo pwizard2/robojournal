@@ -331,7 +331,6 @@ void EntryExporter::on_Menu_currentRowChanged(int currentRow)
         else{
             unlockOKButton();
         }
-
     }
     else{
         stack->setCurrentIndex(currentRow);
@@ -375,6 +374,6 @@ void EntryExporter::lockOKButton(){
 
     QMessageBox m;
     m.critical(this, "RoboJournal", "RoboJournal cannot create a dump of the current journal because it is stored on a "
-               "remote server  (<b>" + Buffer::host + "</b>). If you need to create a backup, you must run MySQLDump "
-               "from the server that is hosting your journal.");
+               "remote server  (<b>" + Buffer::host + "</b>). If you need to create a backup of this journal, you must run "
+               "MySQLDump manually on the remote host.");
 }

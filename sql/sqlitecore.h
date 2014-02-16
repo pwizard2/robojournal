@@ -28,7 +28,7 @@ class SQLiteCore
 {
 public:
     SQLiteCore();
-    bool Connect();
+    bool Connect(QString dbname);
     bool Disconnect();
     bool AddEntry();
     bool RemoveEntry();

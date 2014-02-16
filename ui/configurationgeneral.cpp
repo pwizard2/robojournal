@@ -38,8 +38,7 @@ ConfigurationGeneral::ConfigurationGeneral(QWidget *parent) :
     QIcon sqlite(":/icons/sqlite_icon.png");
 
     ui->Backend->addItem(mysql,"MySQL/MariaDB");
-    ui->Backend->addItem(sqlite,"SQLite");
-
+    //ui->Backend->addItem(sqlite,"SQLite"); // Hide SQLite item for now.
 
     PopulateForm();
 

@@ -73,7 +73,12 @@ void ConfigurationMySQL::PopulateForm(){
     //if the journal list is empty -- Will Kraft (11/17/13).
     has_displayed=false;
 
+    // Suppress message for ApplyDefaultProperties. --Will Kraft (2/16/14).
+    load_up=true;
+
     Show_Known_Journals();
+
+    load_up=false;
 
 }
 
@@ -146,12 +151,12 @@ void ConfigurationMySQL::Show_Known_Journals(){
             new_item->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
 
             switch(row.at(4).toInt()){
-                case 0:
-                    new_item->setCheckState(0, Qt::Unchecked);
+            case 0:
+                new_item->setCheckState(0, Qt::Unchecked);
                 break;
 
-                case 1:
-                    new_item->setCheckState(0, Qt::Checked);
+            case 1:
+                new_item->setCheckState(0, Qt::Checked);
                 break;
             }
 
@@ -222,6 +227,14 @@ void ConfigurationMySQL::ApplyDefaultProperties(QTreeWidgetItem *item){
 
     ui->KnownJournals->resizeColumnToContents(0);
     ui->KnownJournals->resizeColumnToContents(1);
+
+    QMessageBox m;
+
+    // Show confirmation of a default journal change. Suppress this message when the form is instantiated.
+    if(!load_up)
+        m.information(this,"RoboJournal","The default journal has been changed to <b>" +
+                      item->text(0) + "@" + item->text(1) + "</b>.");
+
 }
 
 // Demote the old default database whenever a new one is chosen from the list.
@@ -257,16 +270,16 @@ void ConfigurationMySQL::on_KnownJournals_itemDoubleClicked(QTreeWidgetItem *ite
 
             switch(choice){
 
-                case QMessageBox::Yes:
-                    ui->Database->setText(new_choice);
-                    ui->DefaultHost->setText(new_host);
+            case QMessageBox::Yes:
+                ui->Database->setText(new_choice);
+                ui->DefaultHost->setText(new_host);
 
-                    demoteDatabase(default_db);
-                    ApplyDefaultProperties(item);
+                demoteDatabase(default_db);
+                ApplyDefaultProperties(item);
 
                 break;
 
-                case QMessageBox::No: // do nothing
+            case QMessageBox::No: // do nothing
                 break;
             }
         }

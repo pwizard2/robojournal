@@ -51,8 +51,6 @@ JournalSelector::JournalSelector(QWidget *parent) :
     QPushButton *okbutton=ui->buttonBox->button(QDialogButtonBox::Ok);
     okbutton->setDisabled(true);
 
-
-    ui->DBType->setEnabled(true);
     ui->Browse->setDisabled(true); // Browse should only be enabled for SQLite databases
     ui->Username->setFocus();
 
@@ -64,6 +62,10 @@ JournalSelector::JournalSelector(QWidget *parent) :
         ui->Host->setPlaceholderText("localhost");
         ui->Port->setPlaceholderText("3306");
     }
+
+    //hide SQLite db option in version 0.5. Remove the next line during 0.6 development --Will Kraft (2/16/14).
+    ui->DBType->removeItem(1);
+
 }
 
 //################################################################################################

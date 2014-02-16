@@ -1872,18 +1872,22 @@ void MainWindow::Connect(){
             }
         }
     }
+
+
+
+
     if(Buffer::backend=="SQLite"){
 
         SQLiteCore sl;
-        bool success=sl.Connect();
+        bool success=sl.Connect(Buffer::database_name);
 
         if(!success){
             QMessageBox m;
             m.critical(this,"Error", Buffer::backend + " connection attempt with <b>" +
-                       Buffer::database_name + "</b> on <b>" +
-                       Buffer::host + "</b> failed.");
+                       Buffer::database_name + "</b> failed.");
         }
         else{
+            progress->setValue(75);
             ui->WriteButton->setEnabled(true);
 
 

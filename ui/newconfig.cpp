@@ -224,7 +224,6 @@ void Newconfig::PrimaryConfig(){
     stack->addWidget(x=new ConfigurationExport(this));
     stack->addWidget(m=new ConfigurationMySQL(this));
     stack->addWidget(s=new ConfigurationSQLite(this));
-
     // Limit how much the width of the window can be compressed. New for 0.5 (7/2/13).
     ui->PageArea->setMinimumWidth(g->width());
 
@@ -266,6 +265,8 @@ void Newconfig::PrimaryConfig(){
     // Add necessary padding to ui elements. New for 0.5.
     ui->buttonBox->setContentsMargins(0,0,9,9);
 
+    // Hide SQLite options until 0.6. (2/16/14). That part isn't ready yet and developing it would push 0.5 out for several months.
+    settings_sqlite->setHidden(true);
 }
 
 //#############################################################################################################

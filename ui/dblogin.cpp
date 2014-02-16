@@ -67,6 +67,7 @@ DBLogin::DBLogin(QWidget *parent) :
 
     if(Buffer::backend=="MySQL"){
         ui->tabWidget->setTabEnabled(1,false);
+
         setWindowTitle("New Connection [MySQL/MariaDB]");
     }
 
@@ -76,6 +77,9 @@ DBLogin::DBLogin(QWidget *parent) :
     }
 
 
+    // Hide SQLite tab in version 0.5. Comment or delete the next line when 0.6 development starts!
+    // --Will Kraft (2/16/14).
+    ui->tabWidget->removeTab(1);
 
     PopulateComboBoxes();
 }
@@ -149,40 +153,48 @@ void DBLogin::on_buttonBox_accepted()
     // process normal logins
     else{
 
-        // get data from form and pass it to Buffer class
-        Buffer::login_succeeded=true;
+        if(Buffer::backend=="MySQL"){
+            // get data from form and pass it to Buffer class
+            Buffer::login_succeeded=true;
 
-        Buffer::database_name=ui->WhichDB->currentText();
+            Buffer::database_name=ui->WhichDB->currentText();
 
-        Buffer::host=ui->DBHost->currentText();
+            Buffer::host=ui->DBHost->currentText();
 
-        // For the sake of simplicity, use placeholder text for the default value. New for 0.5 (7/29/13).
-        if(ui->Username->text().isEmpty()){
-            Buffer::username=ui->Username->placeholderText();
-        }
-        else{
-            Buffer::username=ui->Username->text();
-        }
-
-        Buffer::password=ui->Password->text();
-
-        // Create/maintain Favorite DB list during each login. This is necessary because it allows
-        // RoboJournal to do maintenance behind the scenes in case a new DB gets added or one
-        // gets dropped, etc. New for 0.5. --Will Kraft (7/20/13).
-
-        MySQLCore m;
-
-        QString port=QString::number(Buffer::databaseport);
-        QStringList journals=m.GetDatabaseList(Buffer::host,port,Buffer::username,Buffer::password,true);
-        journals.sort();
-
-        FavoriteCore f;
-
-        if(!journals.isEmpty()){
-            for(int i=0; i < journals.size(); i++){
-                QString database=journals.at(i);
-                f.Add_to_DB(database,Buffer::username,Buffer::host);
+            // For the sake of simplicity, use placeholder text for the default value. New for 0.5 (7/29/13).
+            if(ui->Username->text().isEmpty()){
+                Buffer::username=ui->Username->placeholderText();
             }
+            else{
+                Buffer::username=ui->Username->text();
+            }
+
+            Buffer::password=ui->Password->text();
+
+            // Create/maintain Favorite DB list during each login. This is necessary because it allows
+            // RoboJournal to do maintenance behind the scenes in case a new DB gets added or one
+            // gets dropped, etc. New for 0.5. --Will Kraft (7/20/13).
+
+            MySQLCore m;
+
+            QString port=QString::number(Buffer::databaseport);
+            QStringList journals=m.GetDatabaseList(Buffer::host,port,Buffer::username,Buffer::password,true);
+            journals.sort();
+
+            FavoriteCore f;
+
+            if(!journals.isEmpty()){
+                for(int i=0; i < journals.size(); i++){
+                    QString database=journals.at(i);
+                    f.Add_to_DB(database,Buffer::username,Buffer::host);
+                }
+            }
+        }
+
+        if(Buffer::backend=="SQLite"){
+            QString choice=ui->SQLiteJournals->currentItem()->text();
+            Buffer::database_name=choice;
+
         }
     }
 

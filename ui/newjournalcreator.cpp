@@ -138,6 +138,9 @@ void NewJournalCreator::PrimaryConfig(){
 
     ui->buttonBox->setContentsMargins(9,3,9,9);
     ui->SetAsDefault->setContentsMargins(9,0,0,0);
+
+    // Hide SQlite option in version 0.5 (2/16/14).
+    sqlite_db->setHidden(true);
 }
 
 //#########################################################################################################
