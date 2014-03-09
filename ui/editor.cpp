@@ -500,12 +500,12 @@ void Editor::ConfirmExit(){
         int choice=m.exec();
 
         switch(choice){
-            case QMessageBox::Yes:
-                this->done(0);
+        case QMessageBox::Yes:
+            this->done(0);
             break;
 
-            case QMessageBox::No:
-                // do nothing
+        case QMessageBox::No:
+            // do nothing
             break;
         }
     }
@@ -733,7 +733,31 @@ bool Editor::NewEntry(){
         Editor::tags=tags;
     }
     else{
-        Editor::tags="Null";
+
+        // warn if there are no tags when a new entry is saved --Will Kraft (3/9/14).
+
+        if((Buffer::showwarnings) &&(tags.isEmpty())){
+            QMessageBox m;
+            int choice=m.question(this,"RoboJournal","You are about to add a new entry without any tag data. Do you really want to do this?",
+                                  QMessageBox::Yes|QMessageBox::No,QMessageBox::No);
+            switch(choice){
+
+                case QMessageBox::No:
+
+                    // Show tag pane.
+                    divide->setSizes(toggle_on);
+                    ui->TagButton->setChecked(true);
+                    return false;
+                    break;
+
+                case QMessageBox::Yes:
+                    Editor::tags="Null";
+                    break;
+            }
+        }
+        else{
+            Editor::tags="Null";
+        }
     }
 
     bool success=false;
