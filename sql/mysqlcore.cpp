@@ -82,9 +82,13 @@ bool MySQLCore::GrantPermissions(bool create_account, QString database, QString 
         q.exec();
     }
 
-    QSqlQuery q2("GRANT INSERT,DELETE,UPDATE,SELECT ON " + database + ".entries TO \'" +
+    QSqlQuery q2("GRANT INSERT,DELETE,UPDATE,SELECT,RELOAD ON " + database + ".entries TO \'" +
                  username + "\'@\'" + user_host + "\'",db2);
     success=q2.exec();
+
+    // Flush privileges on host after grant so the new changes are available immediately (Will Kraft 4/6/14).
+    QSqlQuery q3("FLUSH PRIVILEGES",db2);
+    q3.exec();
 
     db2.close();
 

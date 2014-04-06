@@ -76,8 +76,13 @@ void MySQLJournalPage::PrimaryConfig(){
     bool isUnique=f.Check_For_Existing_Name(proposedName);
 
     if(!isUnique){
-       QString new_name=alternateName(proposedName);
-       ui->JournalName->setText(new_name);
+       //QString new_name=alternateName(proposedName);
+      // ui->JournalName->setText(new_name);
+        QMessageBox m;
+        m.critical(this,"RoboJournal","The current journal name (<b>" + proposedName +
+                   "</b>) is already in use. Please enter a different name.");
+        ui->JournalName->clear();
+        ui->JournalName->setFocus();
     }
     else{
         ui->JournalName->setText(proposedName);
@@ -335,6 +340,8 @@ bool MySQLJournalPage::Validate(){
     bool unique=f.Check_For_Existing_Name(journal);
 
     if(!unique){
+
+        /*
         QString alt=alternateName(journal);
         QMessageBox n;
         int choice=n.question(this,"RoboJournal","The journal name you specified is already in use. "
@@ -350,6 +357,16 @@ bool MySQLJournalPage::Validate(){
             return false;
             break;
         }
+        */
+
+        // Force the user to enter a different name to prevent duplicates. (--Will Kraft 4/6/14).
+        QMessageBox m;
+        m.critical(this,"RoboJournal","The current journal name (<b>" + journal +
+                   "</b>) is already in use. Please enter a different name.");
+        ui->JournalName->clear();
+        ui->JournalName->setFocus();
+
+        return false;
     }
 
     QRegExp root("root",Qt::CaseInsensitive);

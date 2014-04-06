@@ -373,7 +373,7 @@ void EntryExporter::lockOKButton(){
     dump->setEnabled(false);
 
     QMessageBox m;
-    m.critical(this, "RoboJournal", "RoboJournal cannot create a dump of the current journal because it is stored on a "
+    m.critical(this, "RoboJournal", "RoboJournal cannot create a dump of the current journal because its data is stored on a "
                "remote server  (<b>" + Buffer::host + "</b>). If you need to create a backup of this journal, you must run "
                "MySQLDump manually on the remote host.");
 }

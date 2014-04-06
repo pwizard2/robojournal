@@ -48,7 +48,6 @@
 #include <QAbstractButton>
 #include "ui/tagger.h"
 #include "ui_tagger.h"
-#include "ui/journalcreator.h"
 #include "ui_journalcreator.h"
 #include "ui/journalselector.h"
 #include "ui_journalselector.h"
@@ -1835,7 +1834,7 @@ void MainWindow::Connect(){
 
                 // Add journal name to title bar if config allows it
                 if(Buffer::name_in_titlebar){
-                    this->setWindowTitle(Buffer::database_name +" - RoboJournal");
+                    this->setWindowTitle(Buffer::database_name +"@" + Buffer::host + " - RoboJournal");
                 }
 
                 this->setCursor(Qt::ArrowCursor);

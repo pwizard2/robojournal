@@ -144,7 +144,8 @@ bool JournalSelector::Validate(){
         return false;
     }
 
-    if(no_port){
+    // Bugfix: use placeholder text as default value. (Will Kraft, 4/6/14)
+    if((no_port) && (ui->Port->placeholderText().isEmpty())){
         b.critical(this,"RoboJournal","You must enter the port that <b>Host</b> should use!");
         ui->Port->setFocus();
         return false;

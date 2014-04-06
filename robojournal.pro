@@ -24,7 +24,6 @@ SOURCES += main.cpp\
 	sql/sqlitecore.cpp \
 	ui/aboutrj.cpp \
 	ui/firstrun.cpp \
-	ui/journalcreator.cpp \
 	ui/tagger.cpp \
 	ui/journalselector.cpp \
 	ui/entryexporter.cpp \
@@ -80,7 +79,6 @@ HEADERS  += ui/mainwindow.h \
 	sql/sqlitecore.h \
 	ui/aboutrj.h \
 	ui/firstrun.h \
-	ui/journalcreator.h \
 	ui/tagger.h \
 	ui/journalselector.h \
 	ui/entryexporter.h \
@@ -138,7 +136,6 @@ FORMS    += ui/mainwindow.ui \
 	ui/dblogin.ui \
 	ui/aboutrj.ui \
 	ui/firstrun.ui \
-	ui/journalcreator.ui \
 	ui/tagger.ui \
 	ui/journalselector.ui \
 	ui/entryexporter.ui \
