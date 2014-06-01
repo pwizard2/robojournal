@@ -115,7 +115,6 @@ bool JournalSelector::Validate(){
 
     bool no_Username=ui->Username->text().isEmpty();
     bool no_Password=ui->Password->text().isEmpty();
-    bool no_host=host.isEmpty();
     bool no_port=port.isEmpty();
 
     if((no_Username) && (no_Password)){
@@ -137,12 +136,6 @@ bool JournalSelector::Validate(){
         }
     }
 
-    if(no_host){
-
-        b.critical(this,"RoboJournal","You must enter a hostname!");
-        ui->Host->setFocus();
-        return false;
-    }
 
     // Bugfix: use placeholder text as default value. (Will Kraft, 4/6/14)
     if((no_port) && (ui->Port->placeholderText().isEmpty())){
@@ -163,6 +156,14 @@ void JournalSelector::SetPreferences(){
     QString user=ui->Username->text();
     QString host=ui->Host->text();
     QString port=ui->Port->text();
+
+    // Bugfix-- use default placeholder values if there are no user-defined host and
+    // port values --Will Kraft (5/31/14).
+    if(ui->Host->text().isEmpty())
+        host=ui->Host->placeholderText();
+
+    if(ui->Port->text().isEmpty())
+        port=ui->Port->placeholderText();
 
     // Break potential SQL injections so an attacker won't be able to nuke the database.
     // 0.5 Bugfix -- Will Kraft, 6/23/13

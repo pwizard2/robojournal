@@ -32,6 +32,7 @@
 #include <QDir>
 #include <QFile>
 #include "ui/newconfig.h"
+#include "core/favoritecore.h"
 
 
 
@@ -385,6 +386,11 @@ void SettingsManager::NewConfig(QString host, QString db_name, QString port, QSt
     // Bugfix 12/8/12:
     // Install dictionaries now so they are available immediately after firstrun is finished.
     InstallDictionaries();
+
+    //Create new favorites database. Meant to be a 5.0 bugfix to fix a problem that kept this
+    // from happening during firstrun --Will Kraft (5/31/14).
+    FavoriteCore f;
+    f.Setup_Favorites_Database();
 
     // Firstrun is now finished, allow the program to load normally by reading new config.
     LoadConfig(true);
