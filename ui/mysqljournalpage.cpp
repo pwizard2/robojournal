@@ -350,24 +350,6 @@ bool MySQLJournalPage::Validate(){
 
     if(!unique){
 
-        /*
-        QString alt=alternateName(journal);
-        QMessageBox n;
-        int choice=n.question(this,"RoboJournal","The journal name you specified is already in use. "
-                              "Do you want to use alternate name <b>" + alt + "</b>?",
-                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
-
-        switch(choice){
-        case QMessageBox::Yes:
-            ui->JournalName->setText(alt);
-            break;
-
-        case QMessageBox::No:
-            return false;
-            break;
-        }
-        */
-
         // Force the user to enter a different name to prevent duplicates. (--Will Kraft 4/6/14).
         QMessageBox m;
         m.critical(this,"RoboJournal","The current journal name (<b>" + journal +
@@ -416,8 +398,6 @@ bool MySQLJournalPage::Validate(){
         }
     }
 
-
-
     return true;
 }
 
@@ -462,28 +442,6 @@ void MySQLJournalPage::HarvestData(){
 //#################################################################################################
 // Create an alternate name (i.e. journal_name2 if journal_name already exists) --Will Kraft (1/19/14).
 QString MySQLJournalPage::alternateName(QString proposedName){
-
-    /*
-    QRegExp filter("\\w+\\d");
-    QString new_name;
-
-    // Filter if input journal name is something like "journal1", "test2", etc.
-    if(filter.exactMatch(proposedName)){
-
-        int place=proposedName.lastIndexOf("\\d");
-        proposedName
-
-
-    }
-    else{
-        while(!filter.exactMatch(proposedName)){
-            new_name.chop(1);
-        }
-
-        if
-    }
-    */
-
 
     QRegExp digit("\\d+");
     QString new_name;

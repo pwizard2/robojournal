@@ -301,17 +301,17 @@ void EditorTagManager::PrimaryConfig(){
     //Set up Tag Actions Menu (10/14/13).
     QMenu* tag_actions=new QMenu();
 
-    QAction* defineAction = new QAction("Declare new tag", this);
+    QAction* defineAction = new QAction("Declare &New Tag", this);
     QIcon declare(":/icons/tag--pencil.png");
     defineAction->setIcon(declare);
     defineAction->setIconVisibleInMenu(true);
 
-    QAction* stripAction = new QAction("Strip all tags", this);
+    QAction* stripAction = new QAction("&Strip All Tags", this);
     QIcon strip(":/icons/tag--minus.png");
     stripAction->setIcon(strip);
     stripAction->setIconVisibleInMenu(true);
 
-    QAction* autoAction = new QAction("Auto-tag entry (experimental)", this);
+    QAction* autoAction = new QAction("Auto-Tag &Entry (Experimental)", this);
     QIcon autotag(":/icons/task--plus.png");
     autoAction->setIcon(autotag);
     autoAction->setIconVisibleInMenu(true);
@@ -374,7 +374,7 @@ void EditorTagManager::PrimaryConfig(){
 
     // Show text label for Actions Menu if button text labels are enabled (10/16/13).
     if(Buffer::show_icon_labels){
-        ui->TagActions->setText("Tag Menu");
+        ui->TagActions->setText("Tag Menu  ");
         ui->TagActions->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     }
 
@@ -391,6 +391,7 @@ void EditorTagManager::PrimaryConfig(){
 
     const QFont toolbarFont("Sans",7);
     bar->setFont(toolbarFont);
+    ui->TagActions->setFont(toolbarFont);
 
     const QFont grepFont("Sans",9);
     ui->GrepBox->setFont(grepFont);
@@ -608,15 +609,12 @@ void EditorTagManager::query(){
         it++;
     }
 
+    /*
     // give the user a chance to declare the tag if it is not in the list
     if(!tags.contains(input)){
         EasyDeclareTag(input);
     }
-
-    // otherwise, search for it.
-    else{
-        // call to filter search function goes here eventually.
-    }
+    */
 }
 
 // ###################################################################################################
@@ -842,6 +840,20 @@ void EditorTagManager::on_GrepBox_textEdited(const QString &arg1)
                 }
             }
         }
+
+        // Show no result message if search returns no results (6/7/14).
+        if(filtered_tags.isEmpty()){
+            QTreeWidgetItem *next=new QTreeWidgetItem(ui->AvailableTags);
+            next->setText(0,"No results for \"" + ui->GrepBox->text() + "\"");
+            next->setFlags(next->flags() & ~Qt::ItemIsEnabled);
+            next->setFlags(next->flags() & ~Qt::ItemIsUserCheckable);
+            next->setDisabled(true);
+            ui->AvailableTags->setDisabled(true);
+        }
+        else{
+            ui->AvailableTags->setDisabled(false);
+
+        }
     }
 }
 
@@ -852,6 +864,7 @@ void EditorTagManager::on_FilterButton_toggled(bool checked)
         ui->GrepBox->setFocus();
     }
     else{
+        ui->AvailableTags->setDisabled(false);
         // Restore full tag list
         ui->AvailableTags->clear();
         CreateTagList();
