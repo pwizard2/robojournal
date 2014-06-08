@@ -39,6 +39,8 @@
 #include "sql/sqlshield.h"
 #include <QApplication>
 #include "ui/mainwindow.h"
+#include <QtNetwork/QNetworkInterface>
+#include <QSqlError>
 
 
 QSqlDatabase MySQLCore::db;
@@ -1464,7 +1466,9 @@ QList<QString> MySQLCore::getEntriesMonth(QString month, QString year){
   */
 
 bool MySQLCore::CreateDatabase(QString host,QString root_pass, QString db_name,
-                               QString port, QString newuser, QString newuser_pass){
+                               QString port, QString newuser, QString newuser_pass,
+                               bool on_remote_host)
+{
 
     QSqlDatabase db2 = QSqlDatabase::addDatabase("QMYSQL", "@create");
     using namespace std;
@@ -1529,11 +1533,49 @@ bool MySQLCore::CreateDatabase(QString host,QString root_pass, QString db_name,
         // Grant rights to new user
         db2.open();
         QString grant="GRANT SELECT, INSERT, DROP, UPDATE, DELETE ON " + db_name +
-                ".* TO " + newuser + "@'" + host + "' IDENTIFIED BY '" + newuser_pass + "'";
-
+                ".* TO '" + newuser + "'@'" + host + "' IDENTIFIED BY '" + newuser_pass + "'";
         QSqlQuery grant_rights(grant,db2);
-
         grant_rights.exec();
+
+
+        // 0.5 Bugfix: Grant persissions to user if database is located on remote host --Will Kraft (6/7/14).
+        if(on_remote_host){
+
+             QList<QHostAddress> if_list = QNetworkInterface::allAddresses();
+             QStringList ipaddr;
+
+             // Get a list of all ip addresses on the system and save the ones that are for LAN (192.168.x.y)
+             for(int nIter=0; nIter<if_list.count(); nIter++)
+             {
+                   QString addr=if_list[nIter].toString();
+
+                   if(addr.contains("192.168."))
+                       ipaddr << addr;
+             }
+
+             // Grant permessions to every IP in the list so the user wil lbe able to access their journal from
+             // the current remote computer.
+
+             for(int i=0; i<ipaddr.count(); i++){
+
+                 host=ipaddr.at(i);
+
+                 QSqlQuery grant_remote_rights("GRANT SELECT, INSERT, DROP, UPDATE, DELETE ON `" + db_name +
+                                               "`.* TO '" + newuser + "'@'" + host + "' IDENTIFIED BY '" +
+                                               newuser_pass + "'; FLUSH PRIVILEGES",db2);
+                 grant_remote_rights.exec();
+
+                 cout << "OUTPUT: Granting rights to remote database '" << newuser.toStdString() << "'@'"
+                      << host.toStdString() << "'." << endl;
+
+                 qDebug() << grant_remote_rights.lastError();
+             }
+        }
+
+        // Flush the privileges so the new Grants start working
+        QSqlQuery flush("FLUSH PRIVILEGES",db2);
+        flush.exec();
+
 
         db2.close();
     }

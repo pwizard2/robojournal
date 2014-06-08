@@ -27,6 +27,7 @@
 #include "core/buffer.h"
 #include "sql/sqlshield.h"
 #include "core/favoritecore.h"
+#include <QtNetwork/QNetworkInterface>
 
 MySQLJournalPage::MySQLJournalPage(QWidget *parent) :
     QWidget(parent),
@@ -34,6 +35,14 @@ MySQLJournalPage::MySQLJournalPage(QWidget *parent) :
 {
     ui->setupUi(this);
     PrimaryConfig();
+
+    //Debug info for network, comment out when finished.
+    QList<QHostAddress> list = QNetworkInterface::allAddresses();
+    for(int nIter=0; nIter<list.count(); nIter++)
+    {
+          qDebug() << list[nIter].toString();
+    }
+
 }
 
 //#################################################################################################

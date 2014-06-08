@@ -8,7 +8,7 @@
 ######################################################
 
 # Declaration of all Qt modules that should be built into the binary.
-QT += core gui sql webkit
+QT += core gui sql webkit network
 
 TARGET = robojournal
 TEMPLATE = app

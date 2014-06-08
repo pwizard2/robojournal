@@ -55,7 +55,7 @@ public:
     QList<QString> getEntriesMonth(QString month, QString year);
     QList<QString> TagSearch();
 
-    bool CreateDatabase(QString host,QString root_pass, QString db_name, QString port, QString newuser, QString newuser_pass);
+    bool CreateDatabase(QString host,QString root_pass, QString db_name, QString port, QString newuser, QString newuser_pass, bool on_remote_host);
 
     bool Update(QString title, int month, int day, int year,  QString body, QString id, QString tags);
 

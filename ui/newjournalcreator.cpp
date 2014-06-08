@@ -141,6 +141,9 @@ void NewJournalCreator::PrimaryConfig(){
 
     // Hide SQlite option in version 0.5 (2/16/14).
     sqlite_db->setHidden(true);
+
+    // Bugfix: Set min height to be equal to the mysql page (6/7/14)
+    this->setMinimumHeight(m->height());
 }
 
 //#########################################################################################################
@@ -202,8 +205,14 @@ bool NewJournalCreator::Create_SQLite_Database(){
 // Create a new mysql journal (6/1/13)
 bool NewJournalCreator::Create_MySQL_Database(){
 
+
+    // Bugfix for 0.5: Pass a new variable for remote hosts if the journal is not on localhost. --Will Kraft (6/7/14).
+    bool remote=false;
+    if((hostname != "localhost") && (hostname != "127.0.0.1"))
+        remote=true;
+
     MySQLCore mysql;
-    bool success=mysql.CreateDatabase(hostname,root_password,journal_name,port,username,password);
+    bool success=mysql.CreateDatabase(hostname,root_password,journal_name,port,username,password,remote);
 
     QMessageBox msg;
     if(success){
