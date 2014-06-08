@@ -6,3 +6,5 @@ robojournal.qch
 *.cpp~
 *.h~
 *.o
+ui_*
+moc_*

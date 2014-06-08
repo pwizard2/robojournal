@@ -2295,6 +2295,8 @@ void MainWindow::Preferences(){
     ui->actionManage_Tags_2->setDisabled(true);
     ui->actionExport_Entry->setDisabled(true);
 
+
+
     setCursor(Qt::ArrowCursor);
 }
 

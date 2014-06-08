@@ -3,14 +3,12 @@
 
 <html>
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Linux (vers 25 March 2009), see www.w3.org">
-  <meta name="generator" content="Bluefish 2.2.4">
+  <meta name="generator" content="Bluefish 2.2.4" >
 
   <title>Installing RoboJournal and Other Related Programs -
   RoboJournal Documentation</title>
-  <meta name="author" content="Will Kraft">
-  <meta name="date" content="2014-06-08T12:29:03-0500">
+  <meta name="author" content="Will Kraft" >
+  <meta name="date" content="2014-06-08T12:26:15-0500" >
   <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <meta http-equiv="content-style-type" content="text/css">
@@ -29,20 +27,11 @@
       <ul>
         <li onclick="javascript:history.go(-1)" class="backbutton">
         <img src="img/prev.png" width="16" height="16" alt=
-        "Previous" longdesc="Previous%20Documentation" style=
-        "vertical-align: middle; margin-bottom: 3px">&nbsp;Back</li>
+          "Previous" longdesc="Previous%20Documentation" style="vertical-align: middle; margin-bottom: 3px">&nbsp;Back</li>
 
-        <li class="menuitem"><img src="img/toc.png" width="16"
-        height="16" alt="TOC" longdesc="Table%20of%20Contents"
-        style=
-        "vertical-align: middle; margin-bottom: 3px">&nbsp;<a href=
-        "toc.html">Table of Contents</a></li>
+        <li class="menuitem">img src="img/toc.png" width="16" height="16" alt="TOC" longdesc="Table of Contents"  style="vertical-align: middle; margin-bottom: 3px" />&nbsp;<a href="toc.html">Table of Contents</a></li>
 
-        <li class="menuitem"><img src="img/question.png" width="16"
-        height="16" alt="FAQ" longdesc=
-        "Frequently%20Asked%20Questions" style=
-        "vertical-align: middle; margin-bottom: 3px">&nbsp;<a href=
-        "faq.html">FAQ</a></li>
+        <li class="menuitem"><img src="img/question.png" width="16" height="16" alt="FAQ" longdesc="Frequently Asked Questions" style="vertical-align: middle; margin-bottom: 3px" />&nbsp;<a href="faq.html">FAQ</a></li>
       </ul>
     </div>
 
@@ -506,22 +495,22 @@
 
       <div id="footer_container">
         <div id="footer_left">
-          <img src="img/prev.png" width="16" height="16" alt=
+           <img src="img/prev.png" width="16" height="16" alt=
           "Previous" longdesc="Previous%20Documentation" style=
-          "vertical-align: middle;">&nbsp;<a href="toc.html">Table
-          of Contents</a>
+          "vertical-align: middle;">&nbsp;<a href="toc.html">Table of Contents</a>
         </div>
 
         <div id="footer_center">
           <a href="#top">Installing RoboJournal</a>
         </div>
 
-        <div id="footer_right"><a href=
-        "getting_started.html">Getting Started with
-        RoboJournal</a>&nbsp;<img src="img/next.png" width="16"
-        height="16" alt="Next Documentation" longdesc=
+        <div id="footer_right">
+          <a href="getting_started.html">Getting Started with
+          RoboJournal</a>&nbsp;<img src="img/next.png" width=
+        "16" height="16" alt="Next Documentation" longdesc=
         "Next%20Documentation" style=
-        "vertical-align: middle;"></div>
+        "vertical-align: middle;">
+        </div>
       </div>
 
       <p class="copyright">Copyright &Acirc;&copy; 2013 by Will
