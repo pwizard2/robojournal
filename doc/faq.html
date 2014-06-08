@@ -6,11 +6,13 @@
   <meta name="generator" content=
   "HTML Tidy for Linux (vers 25 March 2009), see www.w3.org">
   <meta name="generator" content="Bluefish 2.2.4">
+  <meta name="generator" content="Bluefish 2.2.4">
+  <meta name="generator" content="Bluefish 2.2.4">
 
   <title>Frequently Asked Questions - RoboJournal
   Documentation</title>
   <meta name="author" content="Will Kraft">
-  <meta name="date" content="2014-06-08T12:29:03-0500">
+  <meta name="date" content="2014-06-08T13:30:15-0500">
   <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <meta http-equiv="content-style-type" content="text/css">
@@ -81,41 +83,29 @@
       (possibly 0.6), RoboJournal will support RSA (and possibly
       AES) on-the-fly encryption for all journal content.</p>
 
-      <h2 id="spellcheck">Question: Why is spellcheck disabled on
-      the Linux version of RoboJournal?<br></h2>
+      <h2 id="spellcheck">Question: Why does spellcheck flag some
+      words incorrectly?<br></h2>
 
-      <p><em>Will Kraft's answer</em> (updated on 5/6/13):<br>
+      <p><em>Will Kraft's answer</em> (updated on 6/8/14):<br>
       <br>
-      I had no choice but to issue a service patch that disables
-      spellcheck (for the time being) on all instances of
-      RoboJournal that have been compiled for any Linux-based
-      operating system. The only other [unacceptable] option was to
-      leave this serious problem completely unaddressed.</p>
-
-      <p>This decision is due to the well-known crashing bug that
-      has plagued RoboJournal ever since the spellcheck feature was
-      introduced in version 0.4. I have recently made progress on
-      figuring out what is causing the bug but there is no way for
-      me to fix it in a timely manner. I intend to replace the
-      spellcheck system entirely before RoboJournal 0.5 is released
-      (since that is what the fix requires) in order to resolve
-      this bug once and for all. In the meantime, this patch
-      prevents a Linux-user's copy of RoboJournal from crashing
-      merely because he or she enabled spellcheck at some point.
-      This patch is <strong>temporary</strong>; I intend to restore
-      full functionality as soon as possible.</p>
-
-      <p>The patch does <em>not</em> affect the Windows version of
-      RoboJournal because that version has always been immune to
-      this crashing bug. Therefore, all custom Windows binaries
-      will continue to have fully-functional spellcheck.</p>
+      The new spellcheck in RoboJournal 0.5 is still a work in
+      progress. It's much better than the old one but it still has
+      some bugs to work out. I hope to make more progress by the
+      time RoboJournal 0.6 comes out (no idea when that will
+      be).</p>
 
       <h2>Question: Why does the whitespace removal feature
       sometimes add lots of empty lines to a new entry?</h2>
 
       <p><em>Will Kraft's answer:</em><br>
       <br>
-      This is on my list of things to fix in RoboJournal 0.5.</p>
+      This was originally on my list of things to fix in
+      RoboJournal 0.5. Unfortunately, I had to delay it again due
+      to my busy schedule's tendency to cut into my free
+      development time. I hope to include a fix in RoboJournal 0.6,
+      along with some other low-level architectural
+      changes/improvements for old bugs I haven't been able to
+      address until now.</p>
 
       <p>The bug is most often triggered whenever you paste content
       from an external source (like a website) into a new entry and
@@ -182,7 +172,7 @@
       <p>If you are interested in any of these roles, please
       contact me at pwizard[<em>at</em>]gmail[<em>dot</em>]com.</p>
 
-      <p class="copyright">Copyright &copy; 2013 by Will Kraft. All
+      <p class="copyright">Copyright &copy; 2014 by Will Kraft. All
       parts of the RoboJournal Documentation are subject to the
       terms of the <a href=
       "http://www.gnu.org/licenses/fdl.html">GNU Free Documentation
