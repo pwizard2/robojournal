@@ -48,7 +48,6 @@
 #include <QAbstractButton>
 #include "ui/tagger.h"
 #include "ui_tagger.h"
-#include "ui_journalcreator.h"
 #include "ui/journalselector.h"
 #include "ui_journalselector.h"
 #include "ui/entryexporter.h"
@@ -3677,7 +3676,6 @@ void MainWindow::on_actionJournal_Creator_triggered()
         }
     }
 
-    //JournalCreator jc(this);
     NewJournalCreator jc(this);
     jc.exec();
 }

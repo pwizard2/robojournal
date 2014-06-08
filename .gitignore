@@ -8,3 +8,5 @@ robojournal.qch
 *.o
 ui_*
 moc_*
+*.html~
+Makefile
