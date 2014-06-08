@@ -60,9 +60,6 @@
           <a href="#create">Creating a New Journal Database</a>
 
           <ol>
-            <li><a href="#sqlite_journal">Creating a SQLite-based
-            Journal</a></li>
-
             <li><a href="#mysql_journal">Creating a MySQL-Based
             Journal</a></li>
           </ol>
@@ -178,23 +175,17 @@
 
       <p>In either case, the <strong>Journal Creator</strong>
       window is displayed:<img alt="Figure 3" src=
-      "img/screens/new_jc1.png" class="screenshot" height="515"
-      width="593"><span class="caption">Figure 3: Journal Creator
+      "img/screens/new_jc1.png" class="screenshot" height="525"
+      width="595"><span class="caption">Figure 3: Journal Creator
       Overview page.</span></p>
 
-      <p>The <strong>Set this new journal as my default</strong>
+      <p>The <strong>Set the new journal as the default</strong>
       checkbox is always checked (and locked) during first-run. If
       you run the Journal Creator again at a later time, this
       checkbox (then unchecked and unlocked) gives you the option
       to replace the current default with the brand-new journal.
       The Journal Creator always shows the Overview page by
-      default. The Overview page helps you make a decision about
-      which database to use by explaining the main advantages and
-      disadvantages of each option.</p>
-
-      <h3 id="sqlite_journal">Creating a SQLite-based Journal</h3>
-
-      <p>More to come later-- keep this text as a placeholder.</p>
+      default.</p>
 
       <h3 id="mysql_journal">Creating a MySQL-Based Journal</h3>
 
@@ -204,10 +195,10 @@
 
       <ol class="list">
         <li>Once the Journal Creator window is open, click the
-        <strong>MySQL Journal</strong> option in the menu on the
+        <strong>MySQL/MariaDB Journal</strong> option in the menu on the
         left side of the window. The MySQL Journal page is
         displayed:<img alt="Figure 4" src="img/screens/new_jc2.png"
-        class="screenshot" height="515" width="593"><span class=
+        class="screenshot" height="525" width="595"><span class=
         "caption">Figure 4: The Journal Creator populates several
         fields automatically based on your operating system
         settings.</span></li>
@@ -230,19 +221,19 @@
           <br>
           Once both password fields match, the Journal Creator
           assigns a strength rating to your password based on
-          certain criteria. The strength ratings range from 0%
-          (extremely weak) to 100% (extremely secure). Generally, a
-          strength rating of at least 75% means your password is
+          certain criteria. The strength ratings range from 0
+          (extremely weak) to 100 (extremely secure). Generally, a
+          strength rating of at least 75/100 means your password is
           strong enough to resist most attempts to crack it.
           <img alt="Figure 5" src="img/screens/new_jc3.png" class=
-          "screenshot" height="515" width="593"><span class=
+          "screenshot" height="525" width="595"><span class=
           "caption">Figure 5: The <strong>Password
           strength</strong> meter provides a visual indicator of
           password quality and resilience.</span>
 
           <div class="FYI">
             <strong>FYI:</strong> Password strength is calculated
-            according to length and diversity. A strong (&gt;50%)
+            according to length and diversity. A strong (&gt;50/100)
             password contains a random mixture of glyphs (upper and
             lowercase letters, integers, and symbols) and no
             dictionary words. RoboJournal adds points to the score
@@ -274,13 +265,13 @@
         Creator window. Once you have done so, RoboJournal attempts
         to create the new journal with the parameters you
         specified: <img alt="Figure 6" src=
-        "img/screens/new_jc4.png" class="screenshot" height="515"
-        width="593"><span class="caption">Figure 6: The MySQL page
+        "img/screens/new_jc4.png" class="screenshot" height="525"
+        width="595"><span class="caption">Figure 6: The MySQL page
         with all fields completely filled in.</span>
 
           <div class="FYI">
             <strong>FYI:</strong> If your password's strength is
-            less than 50% and confirmation dialogs <a href=
+            less than 50/100 and confirmation dialogs <a href=
             "preferences.html#global_preferences">are enabled</a>,
             RoboJournal issues a warning and requires you to verify
             your decision to use a weak password.
@@ -295,8 +286,7 @@
         List of Known Journals if you choose <b>No</b>. To prevent
         your list of favorites from becoming too cluttered, you
         should only add journals you intend to use on a regular
-        basis.<br>
-
+        basis.<br><br>RoboJournal can create journals on remote hosts in this manner <em>only if</em> you have <a href="getting_started.html#mysql_procedure">enabled MySQL remote root access</a>. If you have done so, RoboJournal attempts to create the journal and then sets the appropriate permissions that are required to access the journal from your current computer. However, the permission granting process is not completely reliable when automated so it is sometimes necessary to do it by hand.
           <div class="FYI">
             <strong>FYI:</strong> The next two steps are displayed
             <em>only</em> if RoboJournal is in first-run mode.

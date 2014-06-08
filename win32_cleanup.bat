@@ -1,7 +1,7 @@
 
 
 :: Enter the full path to MinGW toolkit. It usually installs to C:\MinGW\bin
-@set mingw=C:\MinGW\bin
+@set mingw=C:\MinGW\mingw32\bin
 
 
 :: DO *NOT* EDIT BELOW THIS LINE!!!!!!!
