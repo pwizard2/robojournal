@@ -67,7 +67,8 @@ SOURCES += main.cpp\
         core/hunspell/affixmgr.cxx \
         core/hunspell/affentry.cxx \
         core/hunspell/ctextcheckeredit.cpp \
-        core/hunspell/ctextsyntaxhighlighter.cpp
+        core/hunspell/ctextsyntaxhighlighter.cpp \
+        core/helpcore.cpp
 
 
 HEADERS  += ui/mainwindow.h \
@@ -128,7 +129,8 @@ HEADERS  += ui/mainwindow.h \
         core/hunspell/affixmgr.hxx \
         core/hunspell/affentry.hxx \
         core/hunspell/ctextcheckeredit.h \
-        core/hunspell/ctextsyntaxhighlighter.h
+        core/hunspell/ctextsyntaxhighlighter.h \
+        core/helpcore.h
 
 
 FORMS    += ui/mainwindow.ui \

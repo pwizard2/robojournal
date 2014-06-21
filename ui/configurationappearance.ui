@@ -307,6 +307,20 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>UseTheme</tabstop>
+  <tabstop>Font</tabstop>
+  <tabstop>FontSize</tabstop>
+  <tabstop>ColorValue</tabstop>
+  <tabstop>ColorButton</tabstop>
+  <tabstop>BGImage</tabstop>
+  <tabstop>BrowseButton</tabstop>
+  <tabstop>ClearButton</tabstop>
+  <tabstop>TileBackground</tabstop>
+  <tabstop>Entrylist_Background</tabstop>
+  <tabstop>BGFixed</tabstop>
+  <tabstop>DateboxOverride</tabstop>
+ </tabstops>
  <resources>
   <include location="../images.qrc"/>
  </resources>

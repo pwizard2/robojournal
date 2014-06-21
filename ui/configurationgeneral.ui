@@ -295,6 +295,20 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>AlwaysUseDefaults</tabstop>
+  <tabstop>UseConfirmation</tabstop>
+  <tabstop>UseToolbarLabels</tabstop>
+  <tabstop>NameTitlebar</tabstop>
+  <tabstop>Usealternating</tabstop>
+  <tabstop>TagReminder</tabstop>
+  <tabstop>ToolbarPosition</tabstop>
+  <tabstop>Backend</tabstop>
+  <tabstop>DOW</tabstop>
+  <tabstop>RecordTime</tabstop>
+  <tabstop>UseMilitary</tabstop>
+  <tabstop>DateFormat</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

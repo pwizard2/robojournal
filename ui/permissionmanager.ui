@@ -280,6 +280,18 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>DBHost</tabstop>
+  <tabstop>Port</tabstop>
+  <tabstop>RootPassword</tabstop>
+  <tabstop>Databases</tabstop>
+  <tabstop>Scan</tabstop>
+  <tabstop>Username</tabstop>
+  <tabstop>Password</tabstop>
+  <tabstop>UserHost</tabstop>
+  <tabstop>CreateUser</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
  <resources>
   <include location="../images.qrc"/>
  </resources>

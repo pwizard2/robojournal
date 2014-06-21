@@ -297,6 +297,15 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>JournalName</tabstop>
+  <tabstop>Username</tabstop>
+  <tabstop>Password1</tabstop>
+  <tabstop>Password2</tabstop>
+  <tabstop>JournalHost</tabstop>
+  <tabstop>Port</tabstop>
+  <tabstop>RootPassword</tabstop>
+ </tabstops>
  <resources>
   <include location="../images.qrc"/>
  </resources>

@@ -617,6 +617,28 @@ p, li { white-space: pre-wrap; }
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>EntryTitle</tabstop>
+  <tabstop>PostEntry</tabstop>
+  <tabstop>Cancel</tabstop>
+  <tabstop>CutButton</tabstop>
+  <tabstop>CopyButton</tabstop>
+  <tabstop>PasteButton</tabstop>
+  <tabstop>UndoButton</tabstop>
+  <tabstop>RedoButton</tabstop>
+  <tabstop>TagButton</tabstop>
+  <tabstop>ShowCode</tabstop>
+  <tabstop>ShowErrors</tabstop>
+  <tabstop>bold</tabstop>
+  <tabstop>Italic</tabstop>
+  <tabstop>Underline</tabstop>
+  <tabstop>ParaLeft</tabstop>
+  <tabstop>ParaCenter</tabstop>
+  <tabstop>ParaRight</tabstop>
+  <tabstop>Blockquote</tabstop>
+  <tabstop>EntryPost</tabstop>
+  <tabstop>EntryDate</tabstop>
+ </tabstops>
  <resources>
   <include location="../images.qrc"/>
  </resources>

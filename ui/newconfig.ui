@@ -21,16 +21,7 @@
    <bool>false</bool>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
+   <property name="margin">
     <number>0</number>
    </property>
    <item>
@@ -88,7 +79,7 @@
           <x>0</x>
           <y>0</y>
           <width>426</width>
-          <height>423</height>
+          <height>427</height>
          </rect>
         </property>
        </widget>
@@ -131,6 +122,11 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>Categories</tabstop>
+  <tabstop>PageArea</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
  <resources>
   <include location="../images.qrc"/>
  </resources>

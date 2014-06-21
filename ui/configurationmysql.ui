@@ -219,6 +219,15 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>DefaultHost</tabstop>
+  <tabstop>Database</tabstop>
+  <tabstop>Port</tabstop>
+  <tabstop>DefaultPort</tabstop>
+  <tabstop>Username</tabstop>
+  <tabstop>KnownJournals</tabstop>
+  <tabstop>AllowRoot</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

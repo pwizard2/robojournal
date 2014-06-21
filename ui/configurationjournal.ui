@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>361</width>
-    <height>578</height>
+    <height>510</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -509,6 +509,21 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>ShowAllEntries</tabstop>
+  <tabstop>YearRange</tabstop>
+  <tabstop>ShowRangeIndicator</tabstop>
+  <tabstop>NodeIcon</tabstop>
+  <tabstop>FullName</tabstop>
+  <tabstop>Male</tabstop>
+  <tabstop>Female</tabstop>
+  <tabstop>Highlight</tabstop>
+  <tabstop>HighlightColor</tabstop>
+  <tabstop>SortByDay</tabstop>
+  <tabstop>ShowTitle</tabstop>
+  <tabstop>Autoload</tabstop>
+  <tabstop>UseFullName</tabstop>
+ </tabstops>
  <resources>
   <include location="../images.qrc"/>
  </resources>

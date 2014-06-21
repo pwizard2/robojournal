@@ -721,6 +721,8 @@ void EditorTagManager::AutoTag(QString id){
 
     m.information(this,"RoboJournal","RoboJournal scanned the entry and automatically applied "
                   + QString::number(matches.size()) + " tag(s).");
+
+
 }
 
 // ###################################################################################################

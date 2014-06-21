@@ -156,6 +156,16 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>FileName</tabstop>
+  <tabstop>ExportLocation</tabstop>
+  <tabstop>BrowseButton</tabstop>
+  <tabstop>HTML</tabstop>
+  <tabstop>PlainText</tabstop>
+  <tabstop>IncludeDate</tabstop>
+  <tabstop>IncludeJournalName</tabstop>
+  <tabstop>AllowFreeEdits</tabstop>
+ </tabstops>
  <resources>
   <include location="../images.qrc"/>
  </resources>

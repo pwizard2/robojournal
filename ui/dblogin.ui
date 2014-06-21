@@ -188,6 +188,15 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>DBHost</tabstop>
+  <tabstop>WhichDB</tabstop>
+  <tabstop>Username</tabstop>
+  <tabstop>Password</tabstop>
+  <tabstop>buttonBox</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>SQLiteJournals</tabstop>
+ </tabstops>
  <resources>
   <include location="../images.qrc"/>
  </resources>

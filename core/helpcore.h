@@ -1,7 +1,7 @@
 /*
     This file is part of RoboJournal.
     Copyright (c) 2012 by Will Kraft <pwizard@gmail.com>.
-    
+
 
     RoboJournal is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,38 +17,14 @@
     along with RoboJournal.  If not, see <http://www.gnu.org/licenses/>.
   */
 
-#ifndef FIRSTRUN_H
-#define FIRSTRUN_H
+#ifndef HELPCORE_H
+#define HELPCORE_H
 
-#include <QDialog>
-#include <QAbstractButton>
-
-namespace Ui {
-    class FirstRun;
-}
-
-class FirstRun : public QDialog
+class Helpcore
 {
-    Q_OBJECT
-
 public:
-    explicit FirstRun(QWidget *parent = 0);
-    ~FirstRun();
-
-
-private slots:
-
-    void on_buttonBox_accepted();
-
-    void on_buttonBox_rejected();
-
-    void on_buttonBox_clicked(QAbstractButton *button);
-
-private:
-    Ui::FirstRun *ui;
-
-    void Launcher();
-
+    Helpcore();
+    void Show_Documentation();
 };
 
-#endif // FIRSTRUN_H
+#endif // HELPCORE_H

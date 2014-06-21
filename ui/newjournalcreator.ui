@@ -177,6 +177,12 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>DatabaseType</tabstop>
+  <tabstop>PageArea</tabstop>
+  <tabstop>SetAsDefault</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
  <resources>
   <include location="../images.qrc"/>
  </resources>

@@ -1171,6 +1171,29 @@ border: none;
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>ConnectButton</tabstop>
+  <tabstop>DisconnectButton</tabstop>
+  <tabstop>TodayButton</tabstop>
+  <tabstop>LastEntry</tabstop>
+  <tabstop>NextEntry</tabstop>
+  <tabstop>Tag</tabstop>
+  <tabstop>ExportEntry</tabstop>
+  <tabstop>WriteButton</tabstop>
+  <tabstop>EditEntryButton</tabstop>
+  <tabstop>DeleteEntry</tabstop>
+  <tabstop>ConfigButton</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>EntryList</tabstop>
+  <tabstop>SearchTerm</tabstop>
+  <tabstop>SearchButton</tabstop>
+  <tabstop>SearchFilter</tabstop>
+  <tabstop>ClearButton</tabstop>
+  <tabstop>WholeWords</tabstop>
+  <tabstop>TagList</tabstop>
+  <tabstop>SearchList</tabstop>
+  <tabstop>Output</tabstop>
+ </tabstops>
  <resources>
   <include location="../images.qrc"/>
  </resources>

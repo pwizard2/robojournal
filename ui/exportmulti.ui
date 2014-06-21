@@ -191,6 +191,18 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>FileName</tabstop>
+  <tabstop>ExportLocation</tabstop>
+  <tabstop>BrowseButton</tabstop>
+  <tabstop>HTML</tabstop>
+  <tabstop>PlainText</tabstop>
+  <tabstop>IncludeExportDate</tabstop>
+  <tabstop>ExportLooseFiles</tabstop>
+  <tabstop>PermitName</tabstop>
+  <tabstop>SortAscending</tabstop>
+  <tabstop>SortDescending</tabstop>
+ </tabstops>
  <resources>
   <include location="../images.qrc"/>
  </resources>
