@@ -445,6 +445,10 @@ p.footnote{
   
 }
 
+#footer_right img{
+	padding-top: 4px;
+}
+
 p.copyright{
 	font-family: inherit;
 	font-size: 15px;
