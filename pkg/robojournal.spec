@@ -22,14 +22,13 @@ runs on Windows and Linux.
 %package doc
 BuildArch: noarch
 Summary: Documentation files for RoboJournal
-Requires: qt-assistant, robojournal
+Requires: robojournal
 
 %description doc
-Documentation (compiled help file and collection file) for RoboJournal %{version}.
+Documentation (pure HTML) for RoboJournal %{version}.
 
 %files doc
-%{_docdir}/robojournal/robojournal.qhc
-%{_docdir}/robojournal/robojournal.qch
+%{_docdir}/robojournal/*
 
 %dir %{_docdir}/robojournal/
 
@@ -61,8 +60,8 @@ menus/robojournal.desktop
 # Install documentation by hand (9/2/13).
 mkdir $RPM_BUILD_ROOT%{_docdir}
 mkdir $RPM_BUILD_ROOT%{_docdir}/robojournal
-cp doc/robojournal.qhc $RPM_BUILD_ROOT%{_docdir}/robojournal/robojournal.qhc
-cp doc/robojournal.qch $RPM_BUILD_ROOT%{_docdir}/robojournal/robojournal.qch
+cp -r doc/* $RPM_BUILD_ROOT%{_docdir}/robojournal
+cp changelog.xhtml $RPM_BUILD_ROOT%{_docdir}/robojournal/changelog.xhtml
 
 # Delete Debian menu entry and xpm icon file because they are completely unnecessary on Fedora. This is an easier,
 # more reliable solution than using a patch to keep these items from being installed in the first place. (9/30/13).
@@ -79,5 +78,5 @@ rm -f ${RPM_BUILD_ROOT}%{_datadir}/pixmaps/robojournal.xpm
 
 %changelog
 
-* Sat Jun 21 2014 Will Kraft <pwizard@gmail.com> 0.5-1
+* Sat Jun 22 2014 Will Kraft <pwizard@gmail.com> 0.5-1
 - Initial release.
