@@ -153,6 +153,15 @@ void HelpViewer::PrimaryConfig(){
 //###########################################################################################################
 void HelpViewer::on_ChangelogButton_clicked()
 {
-    ui->webView->setUrl(QUrl::fromLocalFile(QDir::currentPath() +
-                                            QDir::separator() + "changelog.xhtml"));
+
+    QString log;
+#ifdef _WIN32
+    log=QDir::currentPath() + QDir::separator() + "changelog.xhtml");
+#endif
+
+#ifdef unix
+    log="/usr/share/doc/robojournal/changelog.xhtml";
+#endif;
+
+    ui->webView->setUrl(QUrl::fromLocalFile(log));
 }

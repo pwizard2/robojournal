@@ -192,7 +192,7 @@ unix {
     # It is sometimes necessary to temporarily comment out the QMAKE_POST_LINK (ln 146) while compiling
     # in Qt Creator b/c it may complain about doc/compile_doc.pl being missing during each build.
 
-    # No longer needed in version 0.5 since Doc is just raw HTML now (6/22/14).
+    # No longer needed in version 0.5 since documentation is just raw HTML now (6/22/14).
 
     #QMAKE_POST_LINK += perl doc/compile_doc.pl
 
@@ -202,7 +202,7 @@ unix {
     man.path = /usr/share/man/man7
     
     documentation.path = /usr/share/doc/robojournal
-    documentation.files = doc/*
+    documentation.files = doc/* changelog.xhtml
     
     shortcut.path = /usr/share/applications
     shortcut.files = menus/robojournal.desktop
