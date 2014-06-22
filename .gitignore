@@ -11,3 +11,6 @@ moc_*
 *.html~
 Makefile
 *.css~
+release/*
+release
+debug
