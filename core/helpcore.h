@@ -1,6 +1,6 @@
 /*
     This file is part of RoboJournal.
-    Copyright (c) 2012 by Will Kraft <pwizard@gmail.com>.
+    Copyright (c) 2014 by Will Kraft <pwizard@gmail.com>.
 
 
     RoboJournal is free software: you can redistribute it and/or modify
@@ -25,6 +25,7 @@ class Helpcore
 public:
     Helpcore();
     void Show_Documentation();
+    void Show_Documentation_New();
 };
 
 #endif // HELPCORE_H

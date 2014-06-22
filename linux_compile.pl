@@ -12,7 +12,7 @@ $default_qmake_path="/usr/bin/qmake";
 ##########################################################################
 
 # This file is part of RoboJournal.
-# Copyright (c) 2012, 2013 by Will Kraft <pwizard@gmail.com>.
+# Copyright (c) 2012-2014 by Will Kraft <pwizard@gmail.com>.
 # MADE IN USA
 #
 #
@@ -37,7 +37,7 @@ $default_qmake_path="/usr/bin/qmake";
 system(clear);
 print "################################################################\n";
 print "\tRoboJournal Build Helper Script for Linux/Unix\n";
-print "\tVersion 1.3 -- May 7, 2013 by Will Kraft\n";
+print "\tVersion 1.4 -- June 22, 2014 by Will Kraft\n";
 print "################################################################\n";
 
 $install_location="/usr/local/bin/robojournal";
@@ -56,14 +56,6 @@ die "\n\nABORT: You do not need to build RoboJournal from source because\nit ",
 "uninstall the current \"robojournal\"\npackage before you can build this version!\n\n\n";
 }
 
-$collectiongenerator="/usr/bin/qcollectiongenerator";
-unless(-e $collectiongenerator){
-die "\n\nABORT: Setup cannot continue because QCollectionGenerator is not\ninstalled ",
-"in the correct location (/usr/bin/qcollectiongenerator).\nThis program is needed to ",
-"prepare the documentation files.\n\n * Debian (and Ubuntu/Mint) users should install ",
-"the\n   \"qt4-dev-tools\" package to fix this problem.\n\n * Fedora users need to ",
-"install the \"qt-devel\" package.\n\n\n";
-}
 
 print "\n\n";
 print "This script helps you compile and install RoboJournal on Linux-\n";
@@ -107,11 +99,6 @@ print "\n\nDo you want to create a package build? (Y/N)\n\nTip: You should answe
 "you need to package RoboJournal for the Debian repositories.\n\n: ";
  $choice2=<STDIN>;
  
-#print "\n\nDo you need to patch the Makefile prior to building? (Y/N)\n\nTip: Users of Fedora ",
-#" or any other distro that requires direct\nlinking should type Y. Debian, Ubuntu, and Mint ",
-#"users should\nanswer N.\n\n: ";
-#$choice4=<STDIN>;
-
 print "\n\nDo you want to install the program after compiling it? (Y/N)\n\nFYI: Installation ",
 "requires sudo access! Furthermore, documentation\ndoesn't work correctly without a proper installation.\n\n: ";
 $choice3=<STDIN>;
@@ -142,17 +129,17 @@ else{
 		system("make -j 3");
 
 		# 4/9/13: post-release bugfix for documentation that doesn't install the first time for some reason.
-		 $docpath1="/usr/share/doc/robojournal/robojournal.qhc";
-		 $docpath2="/usr/share/doc/robojournal/robojournal.qch";
+		 $docpath1="/usr/share/doc/robojournal";
+
 		
 		if($choice3 =~ m/[y]|[yes]/i){
 			system ("sudo make install");
 		  
-			unless((-e $docpath1) && (-e $docpath2)){
+			unless(-e $docpath1){
 				#install documentation by hand
 				print "Force-installing documentation...\n\n";
 				system("sudo mkdir /usr/share/doc/robojournal");
-				system("sudo cp doc/robojournal.qhc doc/robojournal.qch /usr/share/doc/robojournal");
+				system("sudo cp -r doc/* /usr/share/doc/robojournal");
 			}
 		}  
     }
@@ -174,11 +161,11 @@ else{
     if($choice3 =~ m/[y]|[yes]/i){
 		system ("sudo make install");
 				
-		unless((-e $docpath1) && (-e $docpath2)){
-			#install documentation by hand
-			print "Force-installing documentation...\n\n";
-			system("sudo mkdir /usr/share/doc/robojournal");
-			system("sudo cp doc/robojournal.qhc doc/robojournal.qch /usr/share/doc/robojournal");
+		unless(-e $docpath1){
+				#install documentation by hand
+				print "Force-installing documentation...\n\n";
+				system("sudo mkdir /usr/share/doc/robojournal");
+				system("sudo cp -r doc/* /usr/share/doc/robojournal");
 		}
  
     }  

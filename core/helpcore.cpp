@@ -25,6 +25,7 @@
 #include "ui/mainwindow.h"
 #include <QDir>
 #include <iostream>
+#include "ui/helpviewer.h"
 
 Helpcore::Helpcore()
 {
@@ -164,3 +165,14 @@ void Helpcore::Show_Documentation(){
 
     }
 }
+
+
+//###########################################################################################################
+// New for 0.5: Load documentation as raw HTML instead of using the convoluted Qt Assistant thingy.
+// This was necessary because Qt Assistant was just too unreliable --Will Kraft (6/22/14).
+
+void Helpcore::Show_Documentation_New(){
+    HelpViewer h(MainWindow::mw);
+    h.setWindowFlags(Qt::Window);
+    h.exec();
+ }

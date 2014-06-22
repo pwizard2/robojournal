@@ -396,45 +396,8 @@ for use once the installation process is finished.</p>
 
 <h3 id="L7776">Qt Assistant and QCollectionGenerator on Linux</h3>
 
-<p>The RoboJournal build procedure requires the Qt Assistant and
-QCollectionGenerator programs to be installed where the compiler can locate and
-properly utilize them (these programs are acquired by installing the
-"qt4-dev-tools" package). QCollectionGenerator is used to compile RoboJournal's
-documentation from its base components whereas Qt Assistant is required to
-display the resulting documentation output file. </p>
-
-<p>If you decide to custom-build your own Qt, you should use the Qt Assistant
-and QCollectionGenerator applications produced through that process instead of
-the ones from the "qt4-dev-tools" package. In all instances, the RoboJournal
-build procedure expects to find QCollectionGenerator at
-/usr/bin/qcollectiongenerator and Qt Assistant at /usr/bin/assistant yet a
-custom Qt stores these utilities elsewhere. As a consequence, the RoboJournal
-build attempt will fail. </p>
-
-<p>The easiest way to solve this problem is through the use of hardlinks
-because the RoboJournal build script cannot tell the difference between a
-hardlink and an actual program. If your custom Qt is installed elsewhere, you
-can use the Unix "ln" (link) utility to create hardlinks to these programs in
-the /usr/bin folder. When the build script sends instructions to the
-/usr/bin/qcollectiongenerator hardlink, the instructions are then forwarded to
-that program's true location instead (causing everything to work properly).
-Invoking the "ln" utility requires root or superuser (sudo) permissions because
-the command affects the contents of the system-level /usr/bin folder.</p>
-
-<p>This procedure can be done through the following commands:</p>
-<ul>
-  <li>Qt Assistant: <span class="arg">sudo ln [absolute path to your assistant
-    executable] [target destination]</span>; for instance, <span
-    class="console">sudo ln /usr/local/Trolltech/Qt-4.8.4/bin/assistant
-    /usr/bin/assistant</span></li>
-  <li>QCollectionGenerator: <span class="arg">sudo ln [absolute path to your
-    qcollectiongenerator executable] [target destination]</span>; for instance,
-    <span class="console">sudo ln
-    /usr/local/Trolltech/Qt-4.8.4/bin/qcollectiongenerator
-    /usr/bin/collectiongenerator</span></li>
-</ul>
-
-<p><br />
+<p>RoboJournal 0.5 and later no longer require QCollectionGenerator or Qt
+Assistant to be installed during the build process.<br />
 <br />
 External Resource: <a href="http://www.rag.com.au/linux/qt4howto.html">Qt Build
 Tutorial</a>.</p>
@@ -569,7 +532,7 @@ occasionally be a problem.</p>
 drive (they <em>must</em> be from the same Qt and MinGW libraries you compiled
 against) and copy them to the C:\robojournal-0.5 (or
 C:\robojournal-0.5\release) folder. The following list displays the required
-files and where they are most likely to be located:</p>
+files and where they are most likely to be located on your hard drive:</p>
 <ul>
   <li>libgcc_s_dw2-1.dll (MinGW bin folder)</li>
   <li>libmysql.dll (MySQL lib folder)</li>
@@ -579,21 +542,10 @@ files and where they are most likely to be located:</p>
   <li>QtSql4.dll (Qt 4.x lib folder)</li>
   <li>QtNetwork4.dll (Qt 4.x lib folder)</li>
   <li>QtWebKit4.dll (Qt 4.x lib folder)</li>
-  <li>assistant.exe (Qt bin folder) 
-    <ul>
-      <li>QtCLucene4.dll (Qt 4.x bin folder)</li>
-      <li>QtHelp4.dll (Qt 4.x lib folder)</li>
-      <li>qsqllite4.dll (Qt 4.x plugins/sqldrivers folder)*</li>
-    </ul>
-  </li>
-  <li>robojournal.qch (should already exist in the C:\robojournal-0.5\release
-    folder after the build process)</li>
-  <li>robojournal.qhc (should already exist in the C:\robojournal-0.5\release
-    folder after the build process)</li>
+  <li>qsqllite4.dll (Qt 4.x plugins/sqldrivers folder)</li>
 </ul>
 
-<p><small>* Place this file in C:\robojournal-0.5\release\sqldrivers (create
-the "sqldrivers" folder if it does not exist).</small></p>
+<p><small></small></p>
 <hr />
 
 <h3 id="debian_requirements">Debian, Ubuntu, and Linux Mint Requirements</h3>
@@ -750,7 +702,7 @@ including the Makefile and executable. You <em>must</em> run a distclean
 between every build.</p>
 <hr />
 
-<p>Last updated: December 21, 2013</p>
+<p>Last updated: June 22, 2014</p>
 
 <p>Copyright © 2012, 2013, 2014 by Will Kraft. This documentation is part of
 RoboJournal and is available under the <a

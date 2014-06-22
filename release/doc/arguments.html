@@ -1,0 +1,316 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Windows (vers 25 March 2009), see www.w3.org">
+  <meta name="generator" content="Bluefish 2.2.6" >
+  <meta name="generator" content="Bluefish 2.2.6" >
+  <meta name="generator" content="Bluefish 2.2.6" >
+
+  <title>Appendix B: RoboJournal Program Arguments - RoboJournal
+  Documentation</title>
+  <meta name="author" content="Will Kraft" >
+  <meta name="date" content="2014-06-21T14:38:13-0600" >
+  <meta http-equiv="content-type" content=
+  "text/html; charset=us-ascii">
+  <meta http-equiv="content-style-type" content="text/css">
+  <link rel="stylesheet" type="text/css" href="css/master.css">
+  <link rel="icon" type="image/png" href="img/rj_icon.png">
+</head>
+
+<body>
+  <div class="content">
+    <img src="img/rj_doc_header.png" alt=
+    "RoboJournal Documentation" class="masthead" height="72" width=
+    "606">
+
+    <p class="doc_version">for version 0.5</p>
+
+    <div class="menu">
+      <ul>
+        <li onclick="javascript:history.go(-1)" class="backbutton">
+        <img src="img/prev.png" width="16" height="16" alt=
+        "Previous" longdesc=
+        "Previous%20Documentation">&nbsp;Back</li>
+
+        <li class="menuitem"><img src="img/toc.png" width="16"
+        height="16" alt="TOC" longdesc=
+        "Table%20of%20Contents">&nbsp;<a href="toc.html">Table of
+        Contents</a></li>
+
+        <li class="menuitem">FAQ</li>
+      </ul>
+    </div>
+
+    <div class="main_text">
+      <h1>Appendix B: RoboJournal Program Arguments</h1>
+
+      <h2 id="L1798">Sections</h2>
+
+      <div class="toc">
+        <ol>
+          <li><a href="#L1810">Overview</a></li>
+
+          <li>
+            <a href="#L1584">Date Override</a>
+
+            <ol>
+              <li>
+                <a href="#L1609">Proper Syntax</a>
+
+                <ol>
+                  <li><a href="#L1622">Enabling Date Override on
+                  Windows</a></li>
+
+                  <li><a href="#L1653">Enabling Date Override on
+                  Unix/Linux</a></li>
+                </ol>
+              </li>
+            </ol>
+          </li>
+
+          <li>
+            <a href="#L1062">Disable Safety Protocols</a>
+
+            <ol>
+              <li><a href="#L1079">Proper Syntax</a></li>
+            </ol>
+          </li>
+        </ol>
+      </div>
+
+      <h2 id="L1810">Overview</h2>
+
+      <p>RoboJournal is capable of receiving additional arguments
+      prior to launch. Many programs, especially those without
+      graphical user interfaces, utilize arguments (also known as
+      "switches" on some operating systems) to set program behavior
+      in advance. These arguments are usually entered at a command
+      line (i.e. Bash prompt on Linux/Unix or cmd.exe on Windows)
+      or through a program launch window (such as the Run Command
+      on Windows).</p>
+
+      <p>Using arguments is inherently easier on Linux because
+      command prompts are far more accessible. For instance,
+      pressing the ALT and F2 keys simultaneously displays a Run
+      Application window on common desktop environments like KDE or
+      GNOME/MATE. On Windows XP and older, the "Run" option on the
+      Start Menu was the easiest way to launch a program with
+      custom arguments. On Windows 7 and later, the Run Command
+      still exists but is hidden by default. As such, you must
+      <a href=
+      "http://windows.microsoft.com/en-us/windows7/what-happened-to-the-run-command">
+      re-enable</a> (Windows 8 method <a href=
+      "http://windows.microsoft.com/en-us/windows-8/where-is-run-command">
+      here</a>) the Run Command before you can launch RoboJournal
+      with custom arguments. Furthermore, most Windows programs are
+      designed to be more user-friendly and therefore rely less on
+      esoteric arguments in favor of more comprehensive controls in
+      a program's user interface.</p>
+
+      <h2 id="L1584">Date Override</h2>
+
+      <p>Under normal conditions, RoboJournal applies today's date
+      to all new entries created during the current <a href=
+      "fundamentals.html#default">session</a>. However, you can
+      force RoboJournal 0.5 (and later) to use an alternate date
+      for new entries with a hidden but useful function that is
+      activated prior to the current session. This function is
+      universally referred to as the "date override" in this
+      documentation. Requiring the user to enable the date override
+      on a per-session basis is meant to be a safeguard against
+      overuse.</p>
+
+      <p>The date override allows you to set a false date of origin
+      for entries written during a session in which date override
+      is active. For instance, you can use the date override to
+      make it appear as though an entry was written on 12/31/2013
+      even if you actually wrote it on 1/1/2014. This can be useful
+      in situations where your duties require you to keep a daily
+      log. If you forget to write an entry for one or more days,
+      you can use the date override to "fill in" the missing
+      entries at a later time. Date override only affects new
+      entries created during the session; existing entries keep
+      their original dates if you edit them while date override is
+      active.</p>
+
+      <div class="FYI">
+        <strong>FYI:</strong> RoboJournal employs safety protocols
+        that prevent users from using the date override to insert
+        entries at a previous point in the timeline or at a future
+        date. RoboJournal allows you to use the date override to
+        insert a new entry <em>only if</em> the override date falls
+        between the most recent item in the timeline (for instance,
+        September 8th in Figure 1) and the current date.
+      </div>
+
+      <p>RoboJournal always displays a warning message after each
+      login when date override is active:<img alt="Figure 1" src=
+      "img/screens/date_override1.png" title="Figure 1" class=
+      "screenshot" height="589" width="750"><span class=
+      "caption">Figure 1: A notification/warning message is shown
+      at the start of each connection while date override is
+      active.</span></p>
+
+      <h3 id="L1609">Proper Syntax</h3>
+
+      <p>You can trigger the date override feature by appending
+      <span class="console">--date-override=mm-dd-yyyy</span> to
+      the RoboJournal executable path (for instance, <span class=
+      "console">C:\Program Files (x86)\RoboJournal\robojournal.exe
+      --date-override=mm-dd-yyyy</span>). For the argument to be
+      recognized, you must always include <em>one</em> space
+      between the executable name ("../robojournal.exe" or
+      "robojournal") and <span class=
+      "console">--date-override</span>. The <span class=
+      "console">mm-dd-yyyy</span> portion of the argument refers to
+      the date you want to use (in mm/dd/yyyy format) instead of
+      the current date. For instance, you could use <span class=
+      "console">--date-override=01-01-2013</span> to set the
+      current session's date to January 1, 2013.</p>
+
+      <p>RoboJournal accepts and initiates the override if the
+      specified date is valid; for instance, 02-28-2013 is
+      acceptable while 02-30-2013 is not because February 30 does
+      not exist in any year. RoboJournal ignores the date override
+      argument and operates normally if the specified date is
+      invalid and/or the argument syntax is incorrect. You can
+      separate the month, day, and year values in the date with
+      hyphens or forward slashes (but not a mix of both). The
+      following sections demonstrate the correct syntax and usage
+      for Windows and Unix-like operating systems (such as
+      Linux):</p>
+
+      <h4 id="L1622">Enabling Date Override on Windows</h4>
+
+      <p>Windows does not accept the <span class=
+      "console">--date-override</span> argument when the program is
+      launched through a desktop or Start Menu shortcut. Therefore,
+      the only way to initiate date override from Windows is
+      through the Run Command window on the Windows Start
+      menu:<img alt="Figure 2" src=
+      "img/screens/date_override_win1.png" title="Figure 2" class=
+      "screenshot" height="212" width="413"><span class=
+      "caption">Figure 2: Under the current settings, RoboJournal's
+      date override is set for September 3, 2013.</span></p>
+
+      <div class="FYI">
+        <strong>FYI:</strong> Windows usually puts quotation marks
+        around commands in the <strong>Open</strong> field,
+        especially if they were added with the
+        <strong>Browse</strong> button. You <em>must</em> remove
+        the quotation marks for the date override command to be
+        valid (i.e. <span class="console">C:\Program Files
+        (x86)\RoboJournal\robojournal.exe
+        --date-override=09-03-2013</span> is correct while
+        <span class="console">"C:\Program Files
+        (x86)\RoboJournal\robojournal.exe
+        --date-override=09-03-2013"</span> is not).
+      </div>
+
+      <h4 id="L1653">Enabling Date Override on Unix/Linux</h4>
+
+      <p>Enabling date override on Linux or any other type of
+      Unix-like operating system (like Mac OS X) is extremely
+      simple due to how those operating systems store executables.
+      Since Unix-like operating systems usually store all installed
+      applications&mdash;including RoboJournal&mdash;in a single
+      folder (/usr/bin), there is no need to specify absolute
+      pathnames when launching a program from the console.<br></p>
+
+      <p>To start RoboJournal with date override enabled, open a
+      terminal application (Konsole, XTerm, mate-terminal, etc.)
+      and enter <span class="console">robojournal
+      --date-override=mm-dd-yyyy</span> at the command
+      prompt:<img style="width: 664px; height: 460px;" alt=
+      "Figure 3" title="Figure 3" src=
+      "img/screens/date_override_linux.png" class=
+      "screenshot"><span class="caption">Figure 3: Launching
+      RoboJournal through mate-terminal on Linux Mint 15 with the
+      date override set to September 8, 2013.</span></p>
+
+      <p>Alternatively, you can launch RoboJournal through the
+      aforementioned Run Application window by pressing the ALT and
+      F2 keys simultaneously (assuming you are running KDE, GNOME,
+      MATE, or a similar desktop environment). The Run Application
+      window's appearance varies depending on which desktop
+      environment you are using at the time:<img style=
+      "width: 498px; height: 175px;" alt="Figure 4" title=
+      "Figure 4" src="img/screens/date_override_linux2.png" class=
+      "screenshot"><span class="caption">Figure 4: Launching
+      RoboJournal (with date override enabled) through the Run
+      Application window on Linux Mint 15.</span></p>
+
+      <h2 id="L1062">Disable Safety Protocols</h2>
+
+      <p>Starting in version 0.5, RoboJournal utilizes safety
+      protocols that protect database integrity by preventing
+      misure of the date override feature. If you invoke the date
+      override by providing a date that is valid but is not truly
+      logical, RoboJournal's safety protocols normally prevent you
+      from adding new entries by disabling the <strong>Write in
+      Journal</strong> toolbar button/menu item. RoboJournal
+      considers a date to be logical <em>only</em> if it falls
+      inbetween the most recent entry in the journal and the
+      current date.</p>
+
+      <p>The safety protocols usually prevent misuse of the date
+      override feature but on rare occasions you may need finer
+      control. The <span class="console">--no-safety</span>
+      argument disables the date override safety protocols and
+      allows you to write new entries whether the current override
+      date is logical or not:</p>
+
+      <p><img alt="Figure 2" src="img/screens/date_override2.png"
+      width="749" height="589" class="screenshot"><span class=
+      "caption">Figure 2: Safety protocols have been disabled in
+      this screenshot. The <strong>Write in Journal</strong> button
+      is enabled even though the override date is one day later
+      than the current system date (shown in the Windows Taskbar)
+      and nearly a week ahead of the most recent entry in the
+      journal (September 8).</span></p>
+
+      <h3 id="L1079">Proper Syntax</h3>
+
+      <p>The <span class="console">--no-safety</span> argument
+      <em>must</em> be listed after the date override argument in
+      order to be recognized:</p>
+
+      <p>i.e. <span class="console">C:\Program Files
+      (x86)\RoboJournal\robojournal.exe --date-override=mm-dd-yyyy
+      --no-safety</span></p>
+
+      <div class="FYI">
+        <strong>FYI:</strong> The <span class=
+        "console">--no-safety</span> argument can be dangerous to
+        database integrity when overused or misused. You should
+        only invoke this feature when absolutely necessary and
+        exercise extreme caution while it is active.
+      </div>
+
+      <div id="footer_container">
+        <div id="footer_left">
+          <img src="img/prev.png" width="16" height="16" alt=
+          "Previous" longdesc="Previous%20Documentation" style=
+          "vertical-align: middle;">&nbsp;<a href=
+          "shortcut_keys.html">Appendix A</a>
+        </div>
+
+        <div id="footer_center">
+          <a href="#top">Appendix B</a>
+        </div>
+
+        <div id="footer_right"></div>
+      </div>
+
+      <p class="copyright">Copyright &copy; 2014 by Will Kraft. All
+      parts of the RoboJournal Documentation are subject to the
+      terms of the <a href=
+      "http://www.gnu.org/licenses/fdl.html">GNU Free Documentation
+      License</a>.</p>
+    </div>
+  </div>
+</body>
+</html>

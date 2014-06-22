@@ -90,5 +90,10 @@
         <file>icons/task--plus.png</file>
         <file>icons/spellcheck_add.png</file>
         <file>icons/mariadb.png</file>
+        <file>doc/rj_help.png</file>
+        <file>doc/img/next.png</file>
+        <file>doc/img/prev.png</file>
+        <file>icons/home.png</file>
+        <file>icons/clock-history.png</file>
     </qresource>
 </RCC>

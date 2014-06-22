@@ -1025,7 +1025,8 @@ void MainWindow::ShowHelp(){
 
     // Use new Helpcore instead of embedding code directly. --Will Kraft (6/21/14).
     Helpcore h;
-    h.Show_Documentation();
+    //h.Show_Documentation();
+    h.Show_Documentation_New();
 
     this->setCursor(Qt::ArrowCursor);
 }

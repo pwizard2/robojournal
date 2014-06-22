@@ -124,6 +124,7 @@ void FirstRun::on_buttonBox_clicked(QAbstractButton *button)
 {
     if(button->text()=="Help"){
        Helpcore h;
-       h.Show_Documentation();
+       //h.Show_Documentation();
+       h.Show_Documentation_New();
     }
 }

@@ -13,7 +13,7 @@
 
 @TITLE ROBOJOURNAL BUILD HELPER SCRIPT FOR WINDOWS 2000/XP/VISTA/7
 @ECHO.
-@ECHO Version 1.4 -- 4/2/2013
+@ECHO Version 1.5 -- 6/22/2014
 @ECHO.
 @ECHO #############################################################
 @ECHO.
@@ -45,12 +45,13 @@ mingw32-make
 
 strip -s release/robojournal.exe
 
-@path %qt%
 ::@qhelpgenerator.exe doc/robojournal.qhp -o release/robojournal.qch
 ::qcollectiongenerator.exe doc/robojournal.qhcp -o release/robojournal.qhc
-@qcollectiongenerator.exe doc/robojournal.qhcp -o doc/robojournal.qhc
-@move doc\robojournal.qch release
-@move doc\robojournal.qhc release
+::@qcollectiongenerator.exe doc/robojournal.qhcp -o doc/robojournal.qhc
+@path C:\Windows\System32
+@xcopy /si doc\* release\doc
+@copy changelog.xhtml release\changelog.xhtml
+
 @ECHO.
 
 :: Comment out the next three lines if you want to keep object code (*.o) and MOC-generated code

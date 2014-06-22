@@ -68,7 +68,8 @@ SOURCES += main.cpp\
         core/hunspell/affentry.cxx \
         core/hunspell/ctextcheckeredit.cpp \
         core/hunspell/ctextsyntaxhighlighter.cpp \
-        core/helpcore.cpp
+        core/helpcore.cpp \
+        ui/helpviewer.cpp
 
 
 HEADERS  += ui/mainwindow.h \
@@ -130,7 +131,8 @@ HEADERS  += ui/mainwindow.h \
         core/hunspell/affentry.hxx \
         core/hunspell/ctextcheckeredit.h \
         core/hunspell/ctextsyntaxhighlighter.h \
-        core/helpcore.h
+        core/helpcore.h \
+        ui/helpviewer.h
 
 
 FORMS    += ui/mainwindow.ui \
@@ -161,7 +163,8 @@ FORMS    += ui/mainwindow.ui \
 	ui/exportsingle.ui \
 	ui/exportmulti.ui \
 	ui/exportcreatedump.ui \
-        ui/customwords.ui
+        ui/customwords.ui \
+        ui/helpviewer.ui
 
 
 # Declaration of images and other to-be-embedded resources.
@@ -189,7 +192,9 @@ unix {
     # It is sometimes necessary to temporarily comment out the QMAKE_POST_LINK (ln 146) while compiling
     # in Qt Creator b/c it may complain about doc/compile_doc.pl being missing during each build.
 
-    QMAKE_POST_LINK += perl doc/compile_doc.pl
+    # No longer needed in version 0.5 since Doc is just raw HTML now (6/22/14).
+
+    #QMAKE_POST_LINK += perl doc/compile_doc.pl
 
     # set the final destinations of all install files
     
@@ -197,7 +202,7 @@ unix {
     man.path = /usr/share/man/man7
     
     documentation.path = /usr/share/doc/robojournal
-    documentation.files = doc/robojournal.qch doc/robojournal.qhc
+    documentation.files = doc/*
     
     shortcut.path = /usr/share/applications
     shortcut.files = menus/robojournal.desktop
