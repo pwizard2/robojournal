@@ -156,12 +156,12 @@ void HelpViewer::on_ChangelogButton_clicked()
 
     QString log;
 #ifdef _WIN32
-    log=QDir::currentPath() + QDir::separator() + "changelog.xhtml");
+    log=QDir::currentPath() + QDir::separator() + "changelog.xhtml";
 #endif
 
 #ifdef unix
     log="/usr/share/doc/robojournal/changelog.xhtml";
-#endif;
+#endif
 
     ui->webView->setUrl(QUrl::fromLocalFile(log));
 }
