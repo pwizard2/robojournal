@@ -73,6 +73,7 @@ void HelpViewer::LoadDoc(){
         ui->forwardButton->setDisabled(true);
         ui->HomeButton->setDisabled(true);
         ui->ChangelogButton->setDisabled(false);
+        return;
     }
 
     else{
@@ -116,6 +117,7 @@ void HelpViewer::PrimaryConfig(){
     QToolBar* bar=new QToolBar(this);
     bar->setContentsMargins(0,0,0,0);
     bar->setStyleSheet("QToolBar { border: 0px }");
+    bar->setIconSize(QSize(16,16));
 
     if(Buffer::show_icon_labels){
         ui->BackButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
@@ -130,6 +132,7 @@ void HelpViewer::PrimaryConfig(){
     bar->addWidget(ui->BackButton);
     bar->addWidget(ui->forwardButton);
     bar->addWidget(ui->HomeButton);
+    bar->addSeparator();
     bar->addWidget(ui->ChangelogButton);
 
 
@@ -162,6 +165,14 @@ void HelpViewer::on_ChangelogButton_clicked()
 #ifdef unix
     log="/usr/share/doc/robojournal/changelog.xhtml";
 #endif
+
+    QFile logfile(log);
+
+    if(!logfile.exists()){
+        QMessageBox m;
+        m.critical(this,"RoboJournal","RoboJournal could not find the changelog file in the expected location.");
+        return;
+    }
 
     ui->webView->setUrl(QUrl::fromLocalFile(log));
 }

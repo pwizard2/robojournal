@@ -16,3 +16,4 @@ release
 debug
 object_script.robojournal.Debug 
 object_script.robojournal.Release		
+Makefile.*
