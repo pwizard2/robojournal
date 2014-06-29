@@ -12,7 +12,7 @@
   <title>RoboJournal Fundamentals - RoboJournal
   Documentation</title>
   <meta name="author" content="Will Kraft" >
-  <meta name="date" content="2014-06-29T11:44:57-0600" >
+  <meta name="date" content="2014-06-29T12:58:34-0600" >
   <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <meta http-equiv="content-style-type" content="text/css">
@@ -550,10 +550,6 @@
         Connected Mode.</span></li>
       </ol>
 
-      <h3>Initiating a SQLite Connection</h3>
-
-      <p>More to come later, keep this open for the TOC.</p>
-
       <h3 id="connected_mode">Connected Mode</h3>
 
       <p>Successfully establishing a database connection takes
@@ -578,12 +574,12 @@
       for the current session.<br></p>
 
       <div class="FYI">
-        <strong>FYI:</strong> RoboJournal utilizes a "sanity check"
-        mechanism to determine if the database you are currently
-        attempting to connect to is compatible. A database is
+        <strong>FYI:</strong> During each connection attempt,
+        RoboJournal utilizes a "sanity check" test to determine
+        whether the current database is compatible. A database is
         considered to be "sane" if it matches a predefined table
-        structure. RoboJournal refuses to load any database that
-        fails the sanity check.
+        structure. As a precaution, RoboJournal refuses to load any
+        database that fails the sanity check.
       </div>
 
       <h2 id="disconnect">Disconnecting</h2>
