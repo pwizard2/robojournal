@@ -1,5 +1,6 @@
 #! /bin/bash
 
+
 # This script creates an RPM package of RoboJournal for your computer's CPU architecture.
 # For the sake of simplicity, it assumes RPM build tools are already installed and all 
 # RoboJournal dependencies are met. If you are *NOT* running a relatively new version of 
@@ -14,11 +15,13 @@ rpmdev-setuptree
 cp robojournal.spec ~/rpmbuild/SPECS
 cd ..
 cd ..
-cp robojournal robojournal-0.5
-tar -czvf ~/rpmbuild/SOURCES/robojournal-0.5.tar.gz robojournal-0.5
+cp -r robojournal robojournal-0.5
+tar -czvf ~/rpmbuild/SOURCES/robojournal-0.5.tar.gz robojournal-0.5 --exclude=.git
 rm -rf robojournal-0.5
-cd ~/rpmbuild/SPECS
-rpmbuild -ba robojournal.spec
-clear
-echo RPM Package created, look inside the ~/rpmbuild/RPMS folder.
-
+rpmbuild -ba ~/rpmbuild/SPECS/robojournal.spec
+echo  
+echo ---------------------------------------------------------------------------------------
+echo RPM packages created, look inside the ~/rpmbuild/RPMS folder. Source RPMS are in the 
+echo ~/rpmbuild/SRPMS folder.
+echo ---------------------------------------------------------------------------------------
+echo 
