@@ -28,7 +28,7 @@ Requires: robojournal
 Documentation (pure HTML) for RoboJournal %{version}.
 
 %files doc
-%{_docdir}/robojournal/*
+%{_docdir}/robojournal
 
 %dir %{_docdir}/robojournal/
 
@@ -57,12 +57,6 @@ desktop-file-install                                    \
 --dir=${RPM_BUILD_ROOT}%{_datadir}/applications         \
 menus/robojournal.desktop
 
-# Install documentation by hand (9/2/13).
-mkdir $RPM_BUILD_ROOT%{_docdir}
-mkdir $RPM_BUILD_ROOT%{_docdir}/robojournal
-cp -r doc/* $RPM_BUILD_ROOT%{_docdir}/robojournal
-cp changelog.xhtml $RPM_BUILD_ROOT%{_docdir}/robojournal/changelog.xhtml
-
 # Delete Debian menu entry and xpm icon file because they are completely unnecessary on Fedora. This is an easier,
 # more reliable solution than using a patch to keep these items from being installed in the first place. (9/30/13).
 rm -f ${RPM_BUILD_ROOT}%{_datadir}/menu/robojournal
@@ -78,5 +72,5 @@ rm -f ${RPM_BUILD_ROOT}%{_datadir}/pixmaps/robojournal.xpm
 
 %changelog
 
-* Sat Jun 22 2014 Will Kraft <pwizard@gmail.com> 0.5-1
+* Sat Jun 28 2014 Will Kraft <pwizard@gmail.com> 0.5-1
 - Initial release.
