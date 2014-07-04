@@ -198,7 +198,7 @@ unix {
 
     # set the final destinations of all install files
     
-    man.files = robojournal.7.gz
+    man.files = robojournal.7
     man.path = /usr/share/man/man7
     
     documentation.path = /usr/share/doc/robojournal

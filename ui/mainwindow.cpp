@@ -602,12 +602,12 @@ QString MainWindow::FormatTags(QString tags, QString color1, QString color2){
         output_tags= div + "&nbsp;&nbsp;" + output_tags;
     }
     else{
-		// Use full sentences for the no-tag-data messages --Will Kraft (12/30/13).
+        // Use full sentences for the no-tag-data messages --Will Kraft (12/30/13).
         output_tags= div + "&nbsp;&nbsp;<small>You have not tagged this entry yet.</small>";
     }
 
     if(tags_array.at(0).isEmpty()){
-		// Use full sentences for the no-tag-data messages --Will Kraft (12/30/13).
+        // Use full sentences for the no-tag-data messages --Will Kraft (12/30/13).
         output_tags= div + "&nbsp;&nbsp;<small>There is no tag data for this post.</small>";
     }
 
@@ -1590,7 +1590,7 @@ void MainWindow::Connect(){
                 Buffer::last_db = -1;
                 Buffer::last_host = -1;
                 Buffer::remember_last=false;
-                 progress->setValue(60);
+                progress->setValue(60);
 
                 if(!is_sane){
 
@@ -1642,7 +1642,7 @@ void MainWindow::Connect(){
                     }
                 }
                 else{
-                     progress->setValue(75);
+                    progress->setValue(75);
                     ui->WriteButton->setEnabled(true);
 
 
@@ -1716,7 +1716,7 @@ void MainWindow::Connect(){
 
                 this->setCursor(Qt::ArrowCursor);
                 ui->statusBar->removeWidget(progress);
-                 progress->setValue(100);
+                progress->setValue(100);
 
             }
         }
@@ -1908,7 +1908,7 @@ void MainWindow::Connect(){
         m.information(this,"RoboJournal",msg);
     }
 
-      delete progress;
+    delete progress;
 }
 
 //################################################################################################
@@ -3453,7 +3453,7 @@ void MainWindow::on_actionManage_Tags_2_triggered()
 {
     Tag();
 }
-
+//################################################################################################
 void MainWindow::on_actionSelect_Default_Journal_triggered()
 {
     if((ui->DisconnectButton->isEnabled()) || (Buffer::On_Search)){
@@ -3534,11 +3534,13 @@ void MainWindow::on_SearchFilter_currentIndexChanged(const QString &arg1)
     }
 }
 
+//################################################################################################
 void MainWindow::on_ClearButton_clicked()
 {
     ClearSearchResults();
 }
 
+//################################################################################################
 void MainWindow::on_actionJournal_Creator_triggered()
 {
     //Disconnect first
@@ -3576,6 +3578,7 @@ void MainWindow::on_tabWidget_currentChanged(int index)
     SwitchTab(index);
 }
 
+//################################################################################################
 void MainWindow::on_WholeWords_clicked()
 {
     // Every time this box gets checked, clean the last word searched so we can search again. This is important so
@@ -3644,5 +3647,28 @@ void MainWindow::on_actionRestore_Splitter_Position_triggered()
     else{
         ui->splitter->setSizes(size);
         Buffer::mw_splitter_size.clear();
+    }
+}
+
+//################################################################################################
+// New for 0.5: Give people the option to edit when they double-click on an entry item. Requested by Ritesh Raj Saraff. (Will Kraft 7/4/14).
+void MainWindow::on_EntryList_itemDoubleClicked(QTreeWidgetItem *item, int column)
+{
+
+    if((CurrentID != "-1") && (Buffer::open_editor)){
+        QMessageBox m;
+        int choice=m.question(this,"RoboJournal","Do you want to open \"" + item->text(0) + "\" in the editor?",
+                              QMessageBox::No | QMessageBox::Yes, QMessageBox::No);
+
+        switch(choice){
+        case QMessageBox::Yes:
+            Modify();
+            break;
+
+        case QMessageBox::No:
+            // do nothing
+            break;
+        }
+
     }
 }

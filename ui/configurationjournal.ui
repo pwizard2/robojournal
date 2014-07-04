@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>361</width>
-    <height>510</height>
+    <height>571</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -488,6 +488,16 @@ p, li { white-space: pre-wrap; }
         </property>
         <property name="text">
          <string>Display full &amp;name (instead of username)</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="EditorShortcut">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If checked, RoboJournal will open the currently-selected entry in the Editor if you double-click its node in the Timeline. This is meant ot be a convenient alternative to pressing &lt;span style=&quot; font-weight:600;&quot;&gt;F6 &lt;/span&gt;or clicking the &lt;span style=&quot; font-weight:600;&quot;&gt;Modify Entry&lt;/span&gt; button.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="text">
+         <string>&amp;Double-click an entry to open it in the Editor</string>
         </property>
        </widget>
       </item>

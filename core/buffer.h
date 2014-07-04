@@ -181,6 +181,7 @@ public:
     static bool remember_last; // 12/28/13.
     static int last_db;
     static int last_host;
+    static bool open_editor; // last minute addition to 0.5.
 };
 
 #endif // BUFFER_H

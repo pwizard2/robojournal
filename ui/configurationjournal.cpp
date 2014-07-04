@@ -80,6 +80,7 @@ void ConfigurationJournal::GetChanges(){
     Newconfig::new_use_full_name=ui->UseFullName->isChecked();
     Newconfig::new_highlight_color=ui->HighlightColor->currentIndex();
     Newconfig::new_entry_node_icon=ui->NodeIcon->currentIndex();
+    Newconfig::new_open_editor=ui->EditorShortcut->isChecked();
 
 }
 
@@ -111,6 +112,7 @@ void ConfigurationJournal::PopulateForm(){
     ui->Autoload->setChecked(Buffer::autoload);
     ui->Highlight->setChecked(Buffer::use_highlight);
     ui->UseFullName->setChecked(Buffer::use_full_name);
+    ui->EditorShortcut->setChecked(Buffer::open_editor);
 
     ui->NodeIcon->setCurrentIndex(Buffer::entry_node_icon);
 

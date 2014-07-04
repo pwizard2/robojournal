@@ -130,6 +130,7 @@ public:
     static QString new_sqlite_default;
     static QStringList new_sqlite_favorites;
     static bool new_system_dic;
+    static bool new_open_editor;
 
 private slots:
 

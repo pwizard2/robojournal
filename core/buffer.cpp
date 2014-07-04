@@ -146,6 +146,7 @@ QByteArray Buffer::mw_splitter_size; // former 0.5 code but backported on 9/13/1
 QStringList Buffer::sqlite_favorites;
 QString Buffer::sqlite_default;
 bool Buffer::use_my_journals;
+bool Buffer::open_editor;
 
 // date override flag (8/23/13).
 bool Buffer::use_date_override;

@@ -846,7 +846,7 @@ void EditorTagManager::on_GrepBox_textEdited(const QString &arg1)
         // Show no result message if search returns no results (6/7/14).
         if(filtered_tags.isEmpty()){
             QTreeWidgetItem *next=new QTreeWidgetItem(ui->AvailableTags);
-            next->setText(0,"No results for \"" + ui->GrepBox->text() + "\"");
+            next->setText(0,"No tags contain \"" + ui->GrepBox->text() + "\"");
             next->setFlags(next->flags() & ~Qt::ItemIsEnabled);
             next->setFlags(next->flags() & ~Qt::ItemIsUserCheckable);
             next->setDisabled(true);

@@ -305,9 +305,10 @@ void SettingsManager::NewConfig(QString host, QString db_name, QString port, QSt
     settings.setValue("set_date_format", 1);
     settings.setValue("enable_rich_text", false);
     settings.setValue("use_dow", true);
+    settings.setValue("open_editor", true);
 
     // Update for 0.5: never enable tooblar button text by default. This feature is actually
-    // deprecated as of 6/21/13 because it wastes too much space.
+    // deprecated as of 6/21/13 because it wastes too much space. Undeprecated b/c the font issue has been solved now.
     if((!Buffer::show_icon_labels) && (!Buffer::firstrun)){
         settings.setValue("enable_toolbar_button_text", false);
     }
@@ -588,6 +589,7 @@ void SettingsManager::LoadConfig(bool startup){
         Buffer::sqlite_default=settings.value("SQLite/sqlite_default").toString();
         Buffer::sqlite_favorites=settings.value("SQLite/sqlite_favorites").toStringList();
         Buffer::mysqldump_path_win=settings.value("Behavior/mysqldump_path_win").toString(); // added 9/2/13
+        Buffer::open_editor = settings.value("Behavior/open_editor").toBool(); // Added 7/4/14.
 
         if(reload){
             LoadConfig(false);
@@ -673,6 +675,7 @@ void SettingsManager::UpdateConfig(){
     settings.setValue("name_in_titlebar", Newconfig::new_name_in_titlebar);
     settings.setValue("show_untagged_reminder", Newconfig::new_show_untagged_reminder);
     settings.setValue("system_dictionaries", Newconfig::new_system_dic);
+    settings.setValue("open_editor", Newconfig::new_open_editor);
     settings.endGroup();
 
     settings.beginGroup("Appearance");

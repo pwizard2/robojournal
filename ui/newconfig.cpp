@@ -138,6 +138,7 @@ bool Newconfig::new_use_my_journals;
 QStringList Newconfig::new_sqlite_favorites;
 QString Newconfig::new_sqlite_default;
 bool Newconfig::new_system_dic;
+bool Newconfig::new_open_editor;
 
 //##################################################################################
 // This function sets up the form (creates categories for list, etc.)
