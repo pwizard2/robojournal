@@ -5,14 +5,11 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Windows (vers 25 March 2009), see www.w3.org">
-  <meta name="generator" content="Bluefish 2.2.6" >
-  <meta name="generator" content="Bluefish 2.2.6" >
-  <meta name="generator" content="Bluefish 2.2.6" >
 
   <title>RoboJournal Preferences - RoboJournal
   Documentation</title>
   <meta name="author" content="Will Kraft" >
-  <meta name="date" content="2014-06-22T15:57:05-0600" >
+  <meta name="date" content="2014-07-05T13:34:43-0600" >
   <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <meta http-equiv="content-style-type" content="text/css">
@@ -101,8 +98,8 @@
                   <a href="#spellcheck">Spell Check</a>
 
                   <ol class="toc">
-                    <li><a href="#select_dict">Selecting a
-                    Dictionary for the First Time</a></li>
+                    <li><a href="#user_def">User-Defined
+                    Words</a></li>
                   </ol>
                 </li>
               </ol>
@@ -185,7 +182,7 @@
       fits properly without distortion. If a page is larger than
       the available display area, the Preferences window utilizes
       vertical scrollbars to allow you to access controls that
-      would otherwise be inaccessable due to being placed outside
+      would otherwise be inaccessible due to being placed outside
       the bounds of the window. These scrollbars are only used if a
       page does not fit the current window size; to eliminate the
       scrollbars, you must resize the Preferences window to the
@@ -216,7 +213,7 @@
 
       <p><img alt="RoboJournal Preferences -- General Page" src=
       "img/screens/preferences_general.png" class="screenshot"
-      height="593" width="605"><span class="caption">Figure 1:
+      height="626" width="591"><span class="caption">Figure 1:
       RoboJournal Preferences Window &mdash; General
       Page</span></p>
 
@@ -428,7 +425,7 @@
 
       <p><img alt="RoboJournal Preferences: Journal Page" src=
       "img/screens/preferences_journal.png" class="screenshot"
-      height="604" width="642"><span class="caption">Figure 2:
+      height="626" width="591"><span class="caption">Figure 2:
       RoboJournal Preferences Window &mdash; Journal
       Page</span></p>
 
@@ -437,7 +434,7 @@
       <p>This group contains settings that define the current entry
       range (the timespan of entries shown in the Timeline). The
       entry range feature limits how many entries RoboJournal shows
-      at once in order to keep the Timeline at a managable length.
+      at once in order to keep the Timeline at a manageable length.
       For instance, setting an entry range of two years causes
       RoboJournal to show all entries made within the last two
       years (including the current year) in the Timeline. As time
@@ -648,6 +645,16 @@
             You can also disable this setting manually and leave
             the full name value intact.</td>
           </tr>
+
+          <tr>
+            <td class="left">Double-click an entry to open it in
+            the Editor</td>
+
+            <td class="right">When this option is enabled,
+            RoboJournal allows you to edit the current item when
+            you double-click on it. This is meant to be an easy way
+            to make changes to existing entries.</td>
+          </tr>
         </tbody>
       </table>
 
@@ -662,7 +669,7 @@
 
       <p><img alt="RoboJournal Preferences: Editor Page" src=
       "img/screens/preferences_editor.png" class="screenshot"
-      height="604" width="642"><span class="caption">Figure 3:
+      height="626" width="587"><span class="caption">Figure 3:
       RoboJournal Preferences Window &mdash; Editor Page</span></p>
 
       <h3 id="post_processing">Post Processing</h3>
@@ -765,16 +772,7 @@
       red underline to all spelling errors it detects. Spell check
       is not automatically enabled during first-run. To enable
       spell check, you must first select a dictionary for it to use
-      (refer to the "<a href="#select_dict">Selecting a Dictionary
-      for the First Time</a>" section).</p>
-
-      <div class="FYI">
-        <strong>FYI:</strong> Spell checking is completely disabled
-        on all Linux-based builds in RoboJournal 0.4.2 due to
-        stability/crashing issues. Consult the "<a href=
-        "faq.html#spellcheck">Frequently Asked Questions</a>"
-        documentation for details.
-      </div>
+      from the drop-down list.</p>
 
       <table border="0">
         <col>
@@ -792,96 +790,96 @@
           </tr>
 
           <tr>
-            <td class="left">Highlight spelling errors in text by
-            default</td>
+            <td class="left">Use System-Level Dictionaries</td>
 
-            <td class="right">If checked, this option determines
-            whether the Show Spelling Errors button in the Editor
-            window should be toggled on by default. This option is
-            locked while spell check is disabled.</td>
+            <td class="right">Non-Windows operating systems like
+            Linux usually have built-in dictionaries. These
+            dictionaries are automatically installed along with
+            everything else in the operating system and are meant
+            to be system-level resources that multiple applications
+            can utilize. If the <b>Use system-level
+            dictionaries</b> option is enabled, RoboJournal favors
+            the global OS dictionaries over its own; each time the
+            configuration window is opened, RoboJournal scans your
+            computer and lists all system-level dictionaries it
+            finds (in any language) in the <b>Select spell check
+            dictionary</b> list. You can then select any one of
+            these to use as your spell check dictionary.</td>
           </tr>
 
           <tr>
             <td class="left">Select spell check dictionary</td>
 
-            <td class="right">This text field contains the path to
-            the current dictionary file. This field can not be
-            edited directly even when unlocked; it is locked while
-            spellcheck is disabled.</td>
+            <td class="right">This combo/list box contains the path
+            to the current dictionary file. This field is locked
+            while spellcheck is disabled.<br>
+            <br>
+            When spell check is enabled, this field automatically
+            populates itself with all known dictionaries.You can
+            then select the dictionary you want to use from the
+            given options or click the <b>Browse</b> button to the
+            immediate right of the field to look for a different
+            one.</td>
           </tr>
         </tbody>
       </table>
 
-      <h4 id="select_dict">Selecting a Dictionary for the First
-      Time</h4>
+      <p>It is no longer necessary to manually browse for a
+      dictionary whenever you enable spell check because
+      RoboJournal now does this for you in versions 0.5 and later.
+      On Windows, RoboJournal automatically selects the US English
+      dictionary located in the <i>.robojournal</i> configuration
+      folder in your user profile folder. On Linux, RoboJournal
+      searches for and returns a list of global system-level
+      dictionaries, assuming you have any installed on your system.
+      If you do <span style=
+      "text-decoration: underline;">not</span> have any
+      system-level dictionaries, you can rectify this problem by
+      using your package manager to install some
+      Hunspell-compatible dictionary packages. If you have disabled
+      the <b>Use system-level dictionaries</b> option on Linux,
+      RoboJournal attempts to use the <i>.robojournal</i> folder's
+      US English dictionary in a manner similar to the Windows
+      default behavior.</p>
 
-      <p>RoboJournal automatically copies the built-in US English
-      dictionary to the ".robojournal" folder in your home
-      directory during first-run. The <strong>Select
-      Dictionary</strong> file browser always starts in that
-      location because it is guaranteed to contain at least one
-      valid dictionary. Although US English is the default
-      language, RoboJournal supports other languages as well. You
-      can acquire other dictionaries from the Internet but every
-      dictionary <em>must</em> consist of a DIC/AFF file pair in
-      order to be compatible with RoboJournal. Any dictionary
-      designed for use with the Hunspell spell check engine is
-      fully compatible with RoboJournal. For best results, both the
-      DIC and AFF files for each dictionary should be stored in the
-      same directory.</p>
+      <h3 id="user_def">User-Defined Words</h3>
 
-      <p>Once you select a DIC file with the <strong>Select
-      Dictionary</strong> file browser, RoboJournal attempts to
-      find the appropriate AFF file automatically. If RoboJournal
-      cannot locate an AFF file to go with the DIC file you
-      selected, you are instructed to find this AFF file manually
-      (a <strong>Locate AFF File</strong> file browser is displayed
-      after Step 3 in the following procedure).</p>
+      <p>RoboJournal 0.5 (and later) stores all custom words you
+      have defined in a file called <i>user_defined_words.txt</i>.
+      This file is located in the hidden <i>.robojournal</i> folder
+      in your home folder (Linux) or your user profile (Windows).
+      The spell check system does not mark your custom words as
+      being misspelled, even if they are not in the main dictionary
+      you are currently using. This feature allows you to gradually
+      assemble your own dictionary of non-conventional words that
+      the spell checker should ignore.</p>
 
-      <p>Once you are on the Editor page in the RoboJournal
-      Preferences window, perform the following procedure to enable
-      spell check:</p>
+      <p>Click the <b>Manage user-defined words</b> button in the
+      <b>Spell Check</b> group. This action displays the Manage
+      User Defined Words window: <img src=
+      "img/screens/user_dictionary.png" width="341" height="324"
+      alt="Figure 4" class="screenshot"><span class=
+      "caption">Figure 4: The custom words interface</span></p>
 
-      <ol class="list">
-        <li>Click the <strong>Enable spell check
-        functionality</strong> checkbox. The other
-        spellcheck-related options are unlocked and the
-        <strong>Select Dictionary</strong> file browser is
-        displayed:<img alt=
-        "&quot;Select Dictionary&quot; file browser dialog" src=
-        "img/screens/select_dictionary.png" class="screenshot"
-        height="478" width="779"><span class="caption">Figure 4:
-        The <strong>Select Dictionary</strong> file dialog</span>
+      <p>This interface gives you full control over your custom
+      word list so there is no need to ever edit the
+      <i>user_defined_words.txt</i> file manually.</p>
 
-          <div class="FYI">
-            <strong>FYI:</strong> If you are using an operating
-            system other than Windows 7, the Select Dictionary
-            dialog will look different than it does in Figure 4.
-          </div>
-        </li>
+      <ul class="bullets">
+        <li>The <b>Add Word</b> button displays a dialog that
+        allows you to declare a new word. This has the same effect
+        as adding a new word through the Editor's spell check
+        interface.</li>
 
-        <li>Navigate to a directory that contains dictionary files
-        (if necessary).</li>
+        <li>The <b>Delete Word</b> button removes the
+        currently-selected word from the list. At present, there is
+        no undo function, so if you accidentally delete a word you
+        will need to add it again.</li>
 
-        <li>Select the dictionary file you want to use and click
-        the <strong>Open</strong> button to continue.</li>
-
-        <li>The path to the chosen dictionary is now properly set
-        in the <strong>Select spell check dictionary</strong> field
-        on the Editor page.</li>
-      </ol>
-
-      <p>Once a dictionary has been selected, you can switch to a
-      different dictionary at any time by clicking the
-      <strong>Browse</strong> (folder icon) button immediately to
-      the right of the <strong>Select spell check
-      dictionary</strong> field. The <strong>Select
-      Dictionary</strong> dialog is displayed and you can select
-      the dictionary you wish to use. Click the
-      <strong>Open</strong> button to update the current value with
-      the new choice. The new dictionary becomes active when you
-      click the <strong>OK</strong> button on the RoboJournal
-      Preferences window.</p>
+        <li>The <b>Modify</b> button allows you to make changes to
+        the currently-selected word through a dialog
+        interface.</li>
+      </ul>
 
       <h2 id="appearance_page"><em>Appearance</em> Page</h2>
 
@@ -893,7 +891,7 @@
 
       <p><img alt="RoboJournal Preferences: Appearance Page" src=
       "img/screens/preferences_appearance.png" class="screenshot"
-      height="593" width="605"><span class="caption">Figure 5:
+      height="626" width="587"><span class="caption">Figure 5:
       RoboJournal Preferences Window &mdash; Appearance
       Page</span></p>
 
@@ -1109,7 +1107,7 @@
 
       <p><img alt="RoboJournal Preferences: Export Page" src=
       "img/screens/preferences_export.png" class="screenshot"
-      height="604" width="642"><span class="caption">Figure 10:
+      height="626" width="587"><span class="caption">Figure 10:
       RoboJournal Preferences Window &mdash; Export Settings
       Page</span></p>
 
@@ -1225,7 +1223,7 @@
 
       <p><img alt="RoboJournal Preferences: MySQL Page" src=
       "img/screens/preferences_mysql.png" class="screenshot"
-      height="570" width="626"><span class="caption_wide">Figure
+      height="626" width="587"><span class="caption_wide">Figure
       12: RoboJournal Preferences Window &mdash; MySQL Settings
       Page</span></p>
 

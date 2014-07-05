@@ -44,10 +44,12 @@ void ConfigurationAppearance::on_UseTheme_clicked(bool checked)
 
        // Bugfix: Disable background options out of the box.
        ui->ClearButton->click();
+       // Bugfix:  Set system colors by default (7/4/14).
+       ui->DateboxOverride->setChecked(true);
     }
     else{
         ui->groupBox->setDisabled(true);
-
+        ui->DateboxOverride->setChecked(false);
     }
 }
 

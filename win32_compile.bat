@@ -45,9 +45,6 @@ mingw32-make
 
 strip -s release/robojournal.exe
 
-::@qhelpgenerator.exe doc/robojournal.qhp -o release/robojournal.qch
-::qcollectiongenerator.exe doc/robojournal.qhcp -o release/robojournal.qhc
-::@qcollectiongenerator.exe doc/robojournal.qhcp -o doc/robojournal.qhc
 @path C:\Windows\System32
 @xcopy /si doc\* release\doc
 @copy changelog.xhtml release\changelog.xhtml

@@ -38,6 +38,7 @@ ConfigurationEditor::ConfigurationEditor(QWidget *parent) :
     // hide spellcheck group box until version 0.5
     //ui->groupBox_3->setVisible(false);
 
+
     PopulateForm();
 
     /*
@@ -63,6 +64,9 @@ ConfigurationEditor::ConfigurationEditor(QWidget *parent) :
     #endif
     */
 
+    // Bugfix 7/4/14: hide auto-highlight spelling errors button (for now) b/c that code isn't in use anymore (Will Kraft).
+    ui->ShowSpellingErrors->setVisible(false);
+
 }
 
 //#############################################################################################################
@@ -87,7 +91,7 @@ QStringList ConfigurationEditor::Scan_For_System_Dictionaries(){
 
     // Add most likely install locations for dictionaries to the list.
     locations << "/usr/share/hunspell";
-    //    locations << "/usr/share/myspell/dicts/";
+    locations << "/usr/share/myspell";
     //    locations << "/usr/share/hyphen/";
 
     for(int i=0; i < locations.size(); i++){
