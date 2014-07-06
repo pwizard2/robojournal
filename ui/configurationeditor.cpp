@@ -92,7 +92,8 @@ QStringList ConfigurationEditor::Scan_For_System_Dictionaries(){
     // Add most likely install locations for dictionaries to the list.
     locations << "/usr/share/hunspell";
     locations << "/usr/share/myspell";
-    //    locations << "/usr/share/hyphen/";
+    locations << "/usr/share/dict";
+    locations << "/usr/share/myspell/dicts";
 
     for(int i=0; i < locations.size(); i++){
         QString path=locations.at(i);

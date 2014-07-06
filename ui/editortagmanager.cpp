@@ -822,6 +822,7 @@ void EditorTagManager::on_GrepBox_textEdited(const QString &arg1)
                 next->setIcon(0,tagicon);
                 next->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
 
+
                 // Select tags that should be selected
                 if(active_tags.contains(filtered_tags.at(i))){
                     next->setCheckState(0, Qt::Checked);
