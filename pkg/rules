@@ -9,7 +9,7 @@ DESTDIR=$(CURDIR)/debian/robojournal
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
 override_dh_auto_configure:
-	qmake robojournal.pro
+	qmake-qt4 robojournal.pro
 
 override_dh_auto_install:
 	install -m755 -d $(DESTDIR)/usr/share/pixmaps
@@ -26,7 +26,4 @@ override_dh_installchangelogs:
 	
 	dh_installchangelogs
 
-override_dh_compress:
 
-	# bypass the robojournal help files compression
-	dh_compress -X.qhc -X.qch

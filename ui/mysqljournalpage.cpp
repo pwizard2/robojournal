@@ -36,12 +36,14 @@ MySQLJournalPage::MySQLJournalPage(QWidget *parent) :
     ui->setupUi(this);
     PrimaryConfig();
 
+    /*
     //Debug info for network, comment out when finished.
     QList<QHostAddress> list = QNetworkInterface::allAddresses();
     for(int nIter=0; nIter<list.count(); nIter++)
     {
           qDebug() << list[nIter].toString();
     }
+    */
 
 }
 

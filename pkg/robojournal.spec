@@ -67,10 +67,10 @@ rm -f ${RPM_BUILD_ROOT}%{_datadir}/pixmaps/robojournal.xpm
 %{_bindir}/robojournal
 %{_datadir}/applications/robojournal.desktop
 %{_datadir}/icons/robojournal64.png
-%{_mandir}/man7/robojournal.7*
+%{_mandir}/man7/robojournal.7
 
 
 %changelog
 
-* Sat Jun 28 2014 Will Kraft <pwizard@gmail.com> 0.5-1
+* Fri Jul 4 2014 Will Kraft <pwizard@gmail.com> 0.5-1
 - Initial release.

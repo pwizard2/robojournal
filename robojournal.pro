@@ -224,17 +224,3 @@ win32{
     CONFIG += qt release
     message(Creating 32-bit Windows release build...)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

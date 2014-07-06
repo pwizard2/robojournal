@@ -1,6 +1,14 @@
+robojournal (0.5-1) experimental; urgency=low
+
+  * New Upstream Release
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Sat, 05 Jul 2014 18:31:41 +0530
+
 robojournal (0.4.2-1) experimental; urgency=low
 
   * New Upstream Release
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Thu, 18 Apr 2013 10:37:41 +0530
 
 robojournal (0.4.1-1) experimental; urgency=low
 
