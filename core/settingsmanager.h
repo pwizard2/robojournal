@@ -23,6 +23,7 @@ public:
     void SaveNagPreferences();
     void SaveSplitterPos(QByteArray value);
     void Save_Mysqldump_Path(QString path);
+    void Save_HelpDoc(QString path);
 
 private:
     //extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;

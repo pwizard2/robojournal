@@ -46,6 +46,19 @@ SettingsManager::SettingsManager(){
     fail_param="[FAILED]";
 }
 
+//###################################################################################################
+// Remember the page most recently viewed in the documentation window so the user can pick up where
+// he/she left off on the previous session.  New for 0.5.  --Will Kraft (7/20/14).
+void SettingsManager::Save_HelpDoc(QString path){
+
+    QString config_path=QDir::homePath()+ QDir::separator() + ".robojournal"+ QDir::separator() + "robojournal.ini";
+    QSettings settings(config_path,QSettings::IniFormat);
+
+    settings.beginGroup("Behavior");
+    settings.setValue("help_page", path);
+    settings.endGroup();
+}
+
 
 //###################################################################################################
 // Save the current path ($path) to MySQLDump. This is used exclusively on Windows so RoboJournal can
@@ -590,6 +603,7 @@ void SettingsManager::LoadConfig(bool startup){
         Buffer::sqlite_favorites=settings.value("SQLite/sqlite_favorites").toStringList();
         Buffer::mysqldump_path_win=settings.value("Behavior/mysqldump_path_win").toString(); // added 9/2/13
         Buffer::open_editor = settings.value("Behavior/open_editor").toBool(); // Added 7/4/14.
+        Buffer::helpdoc= settings.value("Behavior/help_page").toString(); // Added 7/20/14.
 
         if(reload){
             LoadConfig(false);

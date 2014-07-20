@@ -23,6 +23,7 @@
 #define HELPVIEWER_H
 
 #include <QDialog>
+#include <QAbstractButton>
 
 namespace Ui {
 class HelpViewer;
@@ -45,10 +46,14 @@ private slots:
 
     void on_ChangelogButton_clicked();
 
+    void on_buttonBox_clicked(QAbstractButton *button);
+
 private:
     Ui::HelpViewer *ui;
     void LoadDoc();
     void PrimaryConfig();
+
+    void closeEvent(QCloseEvent *);
 };
 
 #endif // HELPVIEWER_H

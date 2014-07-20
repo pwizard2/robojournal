@@ -27,6 +27,10 @@
 #include <QVBoxLayout>
 #include <QToolBar>
 #include "core/buffer.h"
+#include <QCloseEvent>
+#include <QDebug>
+#include "core/settingsmanager.h"
+#include <QPushButton>
 
 
 //###########################################################################################################
@@ -77,7 +81,15 @@ void HelpViewer::LoadDoc(){
     }
 
     else{
-        ui->webView->setUrl(QUrl::fromLocalFile(path));
+
+        // Load the last page stored in the buffer.
+        if((!Buffer::helpdoc.isEmpty()) && (Buffer::helpdoc != "about:blank")){
+            ui->webView->setUrl(QUrl::fromLocalFile(Buffer::helpdoc));
+        }
+        else{ // otherwise, load the default.
+            ui->webView->setUrl(QUrl::fromLocalFile(path));
+        }
+
         ui->BackButton->setDisabled(false);
         ui->forwardButton->setDisabled(false);
         ui->HomeButton->setDisabled(false);
@@ -111,6 +123,12 @@ void HelpViewer::on_forwardButton_clicked()
 void HelpViewer::PrimaryConfig(){
 
     ui->buttonBox->setContentsMargins(0,0,6,6);
+
+    // Create Exit Documentation Button (7/20/14).
+    QIcon plug(":/icons/prohibition-button.png");
+    QPushButton *exit=ui->buttonBox->addButton(tr(" Exit Documentation "),QDialogButtonBox::RejectRole);
+    exit->setIcon(plug);
+    exit->setDefault(true);
 
     ui->scrollArea->setWidget(ui->webView);
 
@@ -175,4 +193,29 @@ void HelpViewer::on_ChangelogButton_clicked()
     }
 
     ui->webView->setUrl(QUrl::fromLocalFile(log));
+}
+
+//###########################################################################################################
+void HelpViewer::closeEvent(QCloseEvent* event){
+
+    // Save the most recently-viewed page to the config. --Will Kraft (7/20/14).
+    QString current=ui->webView->url().toLocalFile();
+    qDebug() << "Last viewed help: " << current;
+
+    if((current !="about:blank")){
+        SettingsManager sm;
+        sm.Save_HelpDoc(current);
+    }
+
+    Buffer::helpdoc=current;
+
+    event->accept();
+}
+
+//###########################################################################################################
+void HelpViewer::on_buttonBox_clicked(QAbstractButton *button)
+{
+    if(button->text()==" Exit Documentation ")
+        close();
+
 }

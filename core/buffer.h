@@ -182,6 +182,7 @@ public:
     static int last_db;
     static int last_host;
     static bool open_editor; // last minute addition to 0.5.
+    static QString helpdoc; // another last-minute addition, remembers the last page viewed in the help.
 };
 
 #endif // BUFFER_H

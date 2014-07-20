@@ -166,6 +166,9 @@ bool Buffer::remember_last;
 int Buffer::last_host;
 int Buffer::last_db;
 
+// another last-minute addition, remembers the last page viewed in the help (7/20/14).
+QString Buffer::helpdoc;
+
 //
 
 Buffer::Buffer()
