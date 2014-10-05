@@ -1,20 +1,14 @@
 					
 					WELCOME TO ROBOJOURNAL
-<<<<<<< HEAD
-					VERSION 0.4.2 (9/14/13)
-=======
 					VERSION 0.5 (10/5/14)
->>>>>>> experimental
+
 					
 ####################################################################
 							OVERVIEW
 ####################################################################
 
-<<<<<<< HEAD
-This archive contains the complete source code for RoboJournal 0.4.2.
+This archive contains the complete source code for RoboJournal 0.5.
 
-=======
->>>>>>> experimental
 RoboJournal is a cross-platform journal/diary tool written in Qt/C++.
 It works in conjunction with MySQL to allow the user to create
 journal databases locally or on a remote server. RoboJournal emphasizes
