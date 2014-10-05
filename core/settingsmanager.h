@@ -2,16 +2,15 @@
 #define SETTINGSMANAGER_H
 
 #include <QSettings>
-
+#include <QByteArray>
 
 class SettingsManager
 {
 
-
 public:
     SettingsManager();
 
-    void LoadConfig();
+    void LoadConfig(bool startup);
     void UpdateConfig();
     void NewConfig(QString host,QString db_name, QString port, QString newuser);
     QString FullName();
@@ -23,9 +22,14 @@ public:
     void SaveMainWindowSize(QByteArray geo);
     void SaveNagPreferences();
     void SaveSplitterPos(QByteArray value);
+    void Save_Mysqldump_Path(QString path);
+    void Save_HelpDoc(QString path);
+
 
 private:
     //extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
+    std::string ok_param;
+    std::string fail_param;
 };
 
 #endif // SETTINGSMANAGER_H

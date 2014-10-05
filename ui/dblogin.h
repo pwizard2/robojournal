@@ -1,7 +1,7 @@
 /*
     This file is part of RoboJournal.
     Copyright (c) 2012 by Will Kraft <pwizard@gmail.com>.
-    MADE IN USA
+    
 
     RoboJournal is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -58,16 +58,19 @@ protected:
 
 private slots:
 
-    void on_UseUserDefault_clicked();
-
-    void on_UseDBDefault_clicked();
-
     void on_buttonBox_accepted();
 
     void on_buttonBox_rejected();
 
+    void on_DBHost_currentIndexChanged(const QString &arg1);
+
+    void on_WhichDB_currentIndexChanged();
+
 private:
     Ui::DBLogin *ui;
+
+    void PopulateComboBoxes();
+    void RefreshJournalList(QString host);
 };
 
 #endif // DBLOGIN_H

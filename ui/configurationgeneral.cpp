@@ -1,7 +1,7 @@
 /*
     This file is part of RoboJournal.
     Copyright (c) 2012 by Will Kraft <pwizard@gmail.com>.
-    MADE IN USA
+    
 
 
     RoboJournal is free software: you can redistribute it and/or modify
@@ -34,12 +34,11 @@ ConfigurationGeneral::ConfigurationGeneral(QWidget *parent) :
 
 
     // Set up Database List
-    QIcon mysql(":/icons/mysql_icon2.png");
-    //QIcon sqlite(":/icons/sqlite_icon.png");
+    QIcon mysql(":/icons/mariadb.png");
+    QIcon sqlite(":/icons/sqlite_icon.png");
 
-    ui->Backend->addItem(mysql,"MySQL");
-    //ui->Backend->addItem(sqlite,"SQLite");
-
+    ui->Backend->addItem(mysql,"MySQL/MariaDB");
+    //ui->Backend->addItem(sqlite,"SQLite"); // Hide SQLite item for now.
 
     PopulateForm();
 
@@ -89,7 +88,16 @@ void ConfigurationGeneral::PopulateForm(){
 
     ui->AlwaysUseDefaults->setChecked(Buffer::alwaysusedefaults);
     ui->UseConfirmation->setChecked(Buffer::showwarnings);
+
+    // 6/21/13: Hide the UsetoolbarLabels object because that item is deprecated in 0.5.
+    // Hiding it is easier than stripping out the code from every class but I'm sure I'll do it eventually.
+    // -- Will Kraft
+    //ui->UseToolbarLabels->setVisible(false);
+    //ui->UseToolbarLabels->setChecked(false);
+
     ui->UseToolbarLabels->setChecked(Buffer::show_icon_labels);
+
+
     ui->Usealternating->setChecked(Buffer::alternate_rows);
     ui->NameTitlebar->setChecked(Buffer::name_in_titlebar);
     ui->ToolbarPosition->setCurrentIndex(Buffer::toolbar_pos);
@@ -119,7 +127,18 @@ void ConfigurationGeneral::GetChanges(){
     Newconfig::new_alternate_rows=ui->Usealternating->isChecked();
     Newconfig::new_name_in_titlebar=ui->NameTitlebar->isChecked();
     Newconfig::new_toolbar_pos=ui->ToolbarPosition->currentIndex();
-    Newconfig::new_dbtype=ui->Backend->currentText();
+
+    // Get changes for backend (12/1/13):
+    switch(ui->Backend->currentIndex()){
+        case 0:
+            Newconfig::new_dbtype="MySQL";
+            break;
+
+        case 1:
+            Newconfig::new_dbtype="SQLite";
+        break;
+    }
+
     Newconfig::new_use_dow=ui->DOW->isChecked();
     Newconfig::new_record_time=ui->RecordTime->isChecked();
     Newconfig::new_24_hr=ui->UseMilitary->isChecked();

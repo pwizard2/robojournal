@@ -1,9 +1,7 @@
 /*
     This file is part of RoboJournal.
     Copyright (c) 2012 by Will Kraft <pwizard@gmail.com>.
-    MADE IN USA
-
-
+    
     RoboJournal is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
@@ -46,10 +44,12 @@ void ConfigurationAppearance::on_UseTheme_clicked(bool checked)
 
        // Bugfix: Disable background options out of the box.
        ui->ClearButton->click();
+       // Bugfix:  Set system colors by default (7/4/14).
+       ui->DateboxOverride->setChecked(true);
     }
     else{
         ui->groupBox->setDisabled(true);
-
+        ui->DateboxOverride->setChecked(false);
     }
 }
 

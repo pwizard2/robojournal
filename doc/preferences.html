@@ -1,960 +1,1349 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html>
 <head>
-  <title>RoboJournal Preferences - RoboJournal Documentation</title>
-  <meta name="author" content="Will Kraft">
-  <meta name="date" content="2012-11-16T14:38:01-0600">
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="generator" content=
+  "HTML Tidy for Windows (vers 25 March 2009), see www.w3.org">
+
+  <title>RoboJournal Preferences - RoboJournal
+  Documentation</title>
+  <meta name="author" content="Will Kraft" >
+  <meta name="date" content="2014-07-05T13:34:43-0600" >
+  <meta http-equiv="content-type" content=
+  "text/html; charset=us-ascii">
   <meta http-equiv="content-style-type" content="text/css">
   <link rel="stylesheet" type="text/css" href="css/master.css">
   <link rel="icon" type="image/png" href="img/rj_icon.png">
 </head>
 <body>
-<div class="content">
-<img src="img/rj_doc_header.png" alt="RoboJournal Documentation"
- class="masthead" height="72" width="606">
-<p class="doc_version">for version 0.4.2</p>
-<div class="menu">
-<ul>
-  <li onclick="javascript:history.go(-1)" class="backbutton">&lt; Back</li>
-  <li class="menuitem"><a href="toc.html">Table of Contents</a></li>
-  <li class="menuitem"><a href="faq.html">FAQ</a></li>
-</ul>
-</div>
-<div class="main_text">
-<h1>RoboJournal Preferences </h1>
-<h2>Sections</h2>
-<ol class="toc">
-  <li><a href="#top">RoboJournal Preferences</a>
-    <ol class="toc">
-      <li><a href="#preferences_overview">Preferences Overview</a></li>
-      <li><a href="#general_page">General Page</a>
-        <ol class="toc">
-          <li><a href="#global_preferences">Global Preferences</a></li>
-          <li><a href="#backend">Backend (Database)</a></li>
-          <li><a href="#date_and_time">Date and Time</a></li>
-        </ol>
-      </li>
-      <li><a href="#journal_page">Journal Page</a>
-        <ol class="toc">
-          <li><a href="#entry_settings">Entry Settings and Range</a></li>
-          <li><a href="#user_info">User Information</a></li>
-          <li><a href="#highlighting">Highlighting</a></li>
-          <li><a href="#behavior">Behavior</a></li>
-        </ol>
-      </li>
-      <li><a href="#editor_page">Editor Page</a>
-        <ol class="toc">
-          <li><a href="#post_processing">Post-Processing</a></li>
-          <li><a href="#appearance">Appearance</a></li>
-          <li><a href="#spellcheck">Spell Check</a>
-            <ol class="toc">
-              <li><a href="#select_dict">Selecting a Dictionary for the
-First Time</a></li>
-            </ol>
-          </li>
-        </ol>
-      </li>
-      <li><a href="#appearance_page">Appearance Page</a>
-        <ol class="toc">
-          <li><a href="#enable_styles">Enabling Custom Styles</a>
-            <ol class="toc">
-              <li><a href="#select_color">Selecting a Font Color</a></li>
-              <li><a href="#set_bgimage">Setting a Background Image</a></li>
-              <li><a href="#clear_bgimage">Clearing a Background Image</a></li>
-            </ol>
-          </li>
-          <li><a href="#style_options">Style Options</a></li>
-        </ol>
-      </li>
-      <li><a href="#export_settings">Export Settings Page</a>
-        <ol class="toc">
-          <li><a href="#html_behavior">HTML Behavior</a></li>
-          <li><a href="#fonts_and_units">Fonts and Units</a></li>
-          <li><a href="#export_preview">Export Preview</a></li>
-        </ol>
-      </li>
-      <li><a href="#mysql_settings_page">MySQL Settings Page</a></li>
-    </ol>
-  </li>
-</ol>
-<h2 id="preferences_overview">Preferences Overview</h2>
-<p>RoboJournal's preferences system has been completely redesigned into
-a
-modular interface (starting in version 0.4). This new design offers
-vastly
-improved efficiency and increased potential for expansion in the
-future. The
-new design groups all available options into several categories
-depending on
-their specific purposes. Each category is officially known as a "page".
-To
-switch to a different page, click on its name in the list on the left
-side of
-the Preferences window. The title of the Preferences window indicates
-which
-page you are currently viewing (i.e. Preferences -- General;
-Preferences --
-Appearance, etc.).</p>
-<p>Since each page is inherently a different size (due to each page
-having a
-different number of options on it), RoboJournal's Preferences window
-automatically pads out the extra space on a page if necessary to ensure
-that
-everything fits properly without distortion. If a page is larger than
-the
-available display area, the Preferences window utilizes vertical
-scrollbars to
-allow you to access controls that would otherwise be inaccessable due
-to being
-placed outside the bounds of the window. These scrollbars are only used
-if a
-page does not fit the current window size; to eliminate the scrollbars,
-you
-must resize the Preferences window to the point where it is large
-enough to
-accommodate the entire page. RoboJournal automatically stretches each
-page on
-the horizontal axis to fit the available space (thereby eliminating the
-need
-for cumbersome horizontal scrollbars). </p>
-<p>The Preferences window is fully resizable; you can resize the window
-by
-dragging any side or corner of the window border into a more
-appropriate
-position. Whenever you resize the window, RoboJournal automatically
-records the
-size changes in your configuration file and automatically loads the new
-size
-each time the window is subsequently displayed. If the new size data
-becomes
-unavailable for some reason, the Preferences window automatically
-reverts to
-its original size (575<em>x</em>525 pixels).</p>
-<h2 id="general_page"><em>General</em> Page</h2>
-<p>The General page contains options that control the behavior of the
-entire
-program. The General page is always shown by default whenever the
-Preferences
-window is displayed. Otherwise, the General page is displayed when you
-click
-the <strong>General</strong> list item on the left side of the
-Preferences
-window:</p>
-<p><img alt="RoboJournal Preferences -- General Page"
- src="img/screens/preferences_general.png" class="screenshot"
- height="593" width="605"><span class="caption">Figure 1: RoboJournal
-Preferences
-Window — General Page</span></p>
-<h3 id="global_preferences">Global Preferences</h3>
-<p>All options in the <strong>Global Preferences</strong> group affect
-underlying program behavior and appearance.</p>
-<table>
-  <caption><br>
-  </caption> <col> <col> <tbody>
-    <tr>
-      <td class="left">Always suggest default settings</td>
-      <td class="right">If checked, this option requires RoboJournal to
-automatically populate affected form fields with default settings
-whenever a form capable of using these settings (e.g. New Connection
-dialog) is displayed. This action is <em>not</em> the same as
-mandating default settings because it is often possible to override the
-defaults on a form-by-form basis. </td>
-    </tr>
-    <tr>
-      <td class="left">Always show confirmation dialogs</td>
-      <td class="right">This security measure forces RoboJournal to
-display all confirmation dialogs in situations where they are supposed
-to be triggered. This practice helps prevent accidental deletions and
-other data loss in situations where carelessness can cause problems.
-You are <em>strongly</em> encouraged to leave this option enabled at
-all times!
-      <p>However, be advised that some confirmation dialogs are
-mandatory and are always shown (if triggered) whether this setting is
-enabled or not.</p>
-      </td>
-    </tr>
-    <tr>
-      <td class="left">Show labels on toolbar buttons</td>
-      <td class="right">If checked, this setting causes every toolbar
-to display their buttons with both icons and text labels (default
-setting). Unchecking this option causes all toolbar buttons to display
-their icon only. Some users may prefer icon-only mode because it saves
-space and usually eliminates the need for the toolbar overflow menu. </td>
-    </tr>
-    <tr>
-      <td class="left">Display current journal name in title bar</td>
-      <td class="right">This feature simply shows the name of the
-current journal in the main window title bar (i.e. sample_journal -
-RoboJournal). If unchecked, the title bar simply says, "RoboJournal"
-whether a connection is active or not.</td>
-    </tr>
-    <tr>
-      <td class="left">Display alternating row colors in lists</td>
-      <td class="right">This option causes all lists (specifically the
-Chronological Entry List and the search output list) to use alternating
-background colors. This looks good on some color schemes but is
-completely unreadable on others (so you may wish to disable it in some
-situations).</td>
-    </tr>
-    <tr>
-      <td class="left">Display Tag Reminder window during login</td>
-      <td class="right">If checked, this option causes RoboJournal to
-display the <a href="tags.html#tag_reminder">Tag Reminder</a> window
-immediately after login under the appropriate conditions (i.e. if the
-journal contains one or more untagged entries). The Tag Reminder window
-is completely suppressed while the <strong>Display Tag Reminder window
-during login</strong> box is unchecked.</td>
-    </tr>
-    <tr>
-      <td class="left">Toolbar docking position</td>
-      <td class="right">This drop-down list controls the default
-location of the main window's toolbar. This setting is persistent
-between sessions.
-      <p>It is possible to change the location of the toolbar during
-runtime by dragging it to a new position or using the setting in the
-Window » Toolbar position list, but these changes revert to the default
-setting the next time RoboJournal is used.</p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<h3 id="backend">Backend (Database)</h3>
-<p>The backend option controls which database engine RoboJournal should
-use.
-For instance, choosing "MySQL" from the list causes RoboJournal to
-switch to
-MySQL mode. You must switch the backend before you can work with a
-different
-type of database (like SQLite). RoboJournal can use only one backend at
-a
-time.</p>
-<h3 id="date_and_time">Date and Time</h3>
-<p>The <strong>Date and Time</strong> group controls all settings that
-determine how RoboJournal processes date and time data. </p>
-<table>
-  <caption><br>
-  </caption> <col> <col> <tbody>
-    <tr>
-      <td class="left">Display day of week when entries were made</td>
-      <td class="right">If checked, this setting causes RoboJournal to
-display the day of week along with the regular date and timestamp (i.e.
-Wednesday, 12/26/2012 at 12:00 am).</td>
-    </tr>
-    <tr>
-      <td class="left">Record the time when entries are made</td>
-      <td class="right">This setting requires RoboJournal to record the
-time when entries were made. Timestamps are displayed along with other
-relevant data in the entry header.
-      <p>RoboJournal does not display timestamps if this setting is
-disabled. RoboJournal will <em>not</em> store timestamps for entries
-made while this option is disabled. Entries with no timestamp data are
-indicated as being made at an "[unknown time]". There is currently no
-way to update timestamps on existing entries (other than manually
-editing the database).</p>
-      </td>
-    </tr>
-    <tr>
-      <td class="left">Use 24-hour clock in timestamps</td>
-      <td class="right">If enabled, this setting causes datestamps to
-be shown in 24-hour format (i.e. 16:00 instead of 4:00 pm).</td>
-    </tr>
-    <tr>
-      <td class="left">Preferred date format</td>
-      <td class="right">This drop-down list determines which date
-format RoboJournal should use in the entry header and Chronological
-Entry List. Supported formats include:
-      <dl>
-        <dt>USA</dt>
-        <dd>MM-DD-YYYY; January 1, 2013 (used throughout the United
-States).</dd>
-        <dt>European</dt>
-        <dd>DD-MM-YYYY; 1 January, 2013 (used primarily in Europe).</dd>
-        <dt>International Standards Organization 8601</dt>
-        <dd>YYYY-MM-DD; 2013, January 1 (used world-wide, especially in
-scientific context). </dd>
-      </dl>
-      <p>Certain date-related functions in RoboJournal (most notably
-the date column in the search results) override the preferred date
-format setting. These exceptions use the date format setting of your
-operating system instead.</p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<h2 id="journal_page"><em>Journal</em> Page</h2>
-<p>The Journal page contains options that govern journal behavior and
-general
-user preferences. The Journal page is displayed when you click the
-<strong>Journal</strong> list item on the left side of the Preferences
-window:</p>
-<p><img alt="RoboJournal Preferences: Journal Page"
- src="img/screens/preferences_journal.png" class="screenshot"
- height="604" width="642"><span class="caption">Figure 2: RoboJournal
-Preferences
-Window — Journal Page</span></p>
-<h3 id="entry_settings">Entry Settings and Range</h3>
-<p>This group contains settings that define the current entry range
-(the
-timespan of entries shown in the Chronological Entry List). The purpose
-of the
-entry range feature is to limit how many entries are shown at once in
-order to
-prevent the Chronological Entry List from being too long to easily
-navigate.
-For instance, setting an entry range of two years causes RoboJournal to
-show
-all entries made within the last two years (including the current
-year). As
-time passes, older entries are excluded from the allotted range while
-the
-newest ones are included. Disabling the entry range causes RoboJournal
-to
-display all entries from the current journal (regardless of age) in the
-Chronological Entry List. This group also has settings for
-miscellaneous
-behavior associated with entries.</p>
-<table>
-  <caption><br>
-  </caption> <col> <col> <tbody>
-    <tr>
-      <td class="left">Show all entries in journal</td>
-      <td class="right">This setting determines whether the entry range
-function is enabled. Checking this box disables the entry range and
-year range indicator features (as shown in the screenshot above). </td>
-    </tr>
-    <tr>
-      <td class="left">Show entries from the last:</td>
-      <td class="right">This list sets the current entry range from
-1-10 years. If the entry range function is disabled, this list locks
-and becomes unavailable.</td>
-    </tr>
-    <tr>
-      <td class="left">Show year range indicator on statusbar</td>
-      <td class="right">This feature (if enabled) causes the current
-entry range to be displayed on the main window statusbar along with the
-current entry count (i.e. "<em>x</em> Entries : <em>y</em> Years"). If
-the entry range function is disabled, this checkbox locks and is
-unavailable.</td>
-    </tr>
-    <tr>
-      <td class="left">Select entry node icon</td>
-      <td class="right">This allows you to select the icon used to
-represent individual entries in the Chronological Entry List and search
-output list. By default, RoboJournal represents individual entries with
-a pencil icon.</td>
-    </tr>
-  </tbody>
-</table>
-<h3 id="user_info">User Information</h3>
-<p>The <strong>User Information</strong> group contains settings that
-pertain
-to the user.</p>
-<table border="0">
-  <caption><br>
-  </caption> <col> <col> <tbody>
-    <tr>
-      <td class="left">Your full name (as you would like it to appear)</td>
-      <td class="right">
-      <p>This text box is meant to display your full name as you would
-like it to appear in the entry header. For example, you would probably
-set your full name to "John Doe" (or something similar) if your
-username were "john_doe". Unlike the username assigned to your journal,
-this value may contain spaces and uppercase characters. Your username
-is displayed in the header instead if this field is left blank. </p>
-      <p>This field is normally populated during first-run but its
-value can be changed at any time.</p>
-      </td>
-    </tr>
-    <tr>
-      <td class="left">Select your gender</td>
-      <td class="right">This setting determines which avatar icon (male
-or female) is displayed next to your username in the main window status
-bar.
-      <p>This setting is initially determined during first-run but its
-value can be changed at any time.</p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<h3 id="highlighting">Highlighting</h3>
-<p>The options in the <strong>Highlighting</strong> group control how
-RoboJournal highlights occurrences of a search term. This feature is
-designed
-to mimic traditional highlighter pens; all instances of a search term
-in an
-entry are displayed with a bright colored background to make them
-easier to
-locate in the text.</p>
-<table border="0">
-  <caption><br>
-  </caption> <col> <col> <tbody>
-    <tr>
-      <td class="left">Highlight current search term</td>
-      <td class="right">If checked, this option instructs RoboJournal
-to apply highlighting to searches.</td>
-    </tr>
-    <tr>
-      <td class="left">Select highlight color</td>
-      <td class="right">This list allows you to select the highlight
-color. The square box for each item on the list displays an approximate
-sample of that particular color.</td>
-    </tr>
-  </tbody>
-</table>
-<h3 id="behavior">Behavior</h3>
-<p>The <strong>Behavior</strong> group contains general options that
-control journal behavior and affect how journal content is rendered.
-These options work on a global scope; the same settings govern every
-single journal RoboJournal comes into contact with instead of being
-limited to the journal that is currently open.</p>
-<table border="0">
-  <caption><br>
-  </caption> <col> <col> <tbody>
-    <tr>
-      <td class="left">Group journal entries by day</td>
-      <td class="right">This option gives you the ability to sort
-entries by day instead of by month (which is the default behavior).
-Under normal conditions, entries are displayed with the date and title
-merged together (i.e. "January 1: Sample Entry"). Grouping entries by
-day adds another sub-category; in the aforementioned example, the entry
-"Sample Entry" would be a separate node listed under "January 1"
-instead of the two being merged together into a single node.
-      <p>This option is useful if you frequently post more than one
-entry per day and would like greater control of how such entries are
-displayed.</p>
-      </td>
-    </tr>
-    <tr>
-      <td class="left">Show title for current journal entry</td>
-      <td class="right">If checked, this option causes the title of the
-current entry to be included when the entry is displayed in the output
-pane.</td>
-    </tr>
-    <tr>
-      <td class="left">Display most recent entry automatically</td>
-      <td class="right">If checked, RoboJournal displays the most
-recent entry in the output pane immediately after you log in. If
-unchecked, Robojournal simply waits for you to select the entry you
-wish to view from the Chronological Entry List.</td>
-    </tr>
-    <tr>
-      <td class="left">Display full name (instead of username)</td>
-      <td class="right">This option determines whether RoboJournal
-displays the user's full name as it is written in the <strong>Your
-full name (as you would like it to appear)</strong> text box. This
-checkbox automatically disables itself and locks if the full name value
-is cleared. Inversely, this setting re-enables itself if a new full
-name value is entered. You can also disable this setting manually and
-leave the full name value intact.</td>
-    </tr>
-  </tbody>
-</table>
-<h2 id="editor_page"><em>Editor</em> Page</h2>
-<p>The Editor page contains settings that affect the behavior and
-performance
-of the Editor window, including post-processing features, appearance
-settings,
-and spell check integration. The Editor page is displayed when you
-click the
-<strong>Editor</strong> list item on the left side of the Preferences
-window:</p>
-<p><img alt="RoboJournal Preferences: Editor Page"
- src="img/screens/preferences_editor.png" class="screenshot"
- height="604" width="642"><span class="caption">Figure 3: RoboJournal
-Preferences
-Window — Editor Page</span></p>
-<h3 id="post_processing">Post Processing</h3>
+  <div class="content">
+    <img src="img/rj_doc_header.png" alt=
+    "RoboJournal Documentation" class="masthead" height="72" width=
+    "606">
 
-<p>The options in the <strong>Post-Processing</strong> group
-manipulate the
-text of new or revised entries after they have been saved. These
-functions
-perform necessary corrections and cleanup operations to body text as a
-means to
-improve appearance and fix common errors. In all instances,
-the post-processing
-functionality looks for specific patterns and then applies
-changes to all
-matching instances of those patterns it detects.</p>
+    <p class="doc_version">for version 0.5</p>
 
-<p>Since these changes are only applied after an entry is saved,
-post-processing does <em>not</em> affect old entries that were made
-before the
-post-processing features were introduced or were made while
-post-processing
-features were disabled. Post-processing is applied once after an entry
-has been
-saved in order to improve efficiency. Therefore, the only way to apply
-post-processing to
-old entries is to open them in the editor and then save them again.</p>
-<table border="0">
-  <caption></caption><tbody>
-    <tr>
-      <td class="left">Remove unnecessary whitespace from entries</td>
-      <td class="right">This function removes extra line breaks between
-paragraphs and trims extra space from the bottom of the entry.
-Whitespace removal also eliminates extra spaces between words (since
-all words should only be separated by one space).
-      <p>This feature is still semi-experimental and may occasionally
-produce unexpected results (a reliable fix is to edit the entry and
-save it again).</p>
-      </td>
-    </tr>
-    <tr>
-      <td class="left">Use HTML-compliant dashes and hyphens</td>
-      <td class="right">This feature ensures the correct use of dashes
-and hyphenation in entries. These are impossible to add with a regular
-keyboard (without resorting to key combinations) so this function does
-it for you. It replaces the common workaround for long dashes (i.e. --)
-with HTML-compliant long dash characters (i.e. — ) and removes any
-unnecessary spacing. Dashes between numbers are replaced with a proper
-medium-length dash (i.e. 1–2 instead of 1-2).</td>
-    </tr>
-    <tr>
-      <td class="left">Use smart (curly) quotation marks</td>
-      <td class="right">This feature replaces instances of "straight"
-quotation marks with “curly” quotation marks. Post-processing also
-affects grammatical contractions and possessive nouns (i.e. won't
-becomes won’t; John's becomes John’s). </td>
-    </tr>
-    <tr>
-      <td class="left">Apply miscellaneous formatting options</td>
-      <td class="right">Miscellaneous formatting applies
-post-processing features that are not easily categorized. These convert
-three or more consecutive periods into a true ellipsis character (…)
-and formalizes number notation (i.e. 12<sup>th</sup>, 101<sup>st</sup>).</td>
-    </tr>
-  </tbody>
-</table>
-<h3 id="appearance">Appearance</h3>
-<p>The <strong>Use custom theme font in the editor</strong> option
-causes the
-editor to use the same font/font size as the entry output pane in the
-main
-window. This improves consistency and helps you to preview how your
-entry will
-look once it has been saved. This option is locked (as shown in the
-screenshot
-above) if RoboJournal is not presently configured to use a custom style.</p>
-<h3 id="spellcheck">Spell Check</h3>
-<p>RoboJournal's spell check feature scans the contents of the editor
-each time
-a new word is entered and applies a wavy red underline to all
-misspelled words&nbsp;
-it detects. Spell check is not automatically enabled during first-run.
-To
-enable spell check, you must first select a dictionary for it to use
-(refer to
-the "<a href="#select_dict">Selecting a Dictionary for the First Time</a>"
-section).</p>
-<div class="FYI">
-<strong>FYI:</strong> Spell
-checking is completely disabled on all Linux-based builds of
-RoboJournal 0.4.2 due to stability/crashing issues. Consult the "<a
- href="faq.html#spellcheck">Frequently Asked Questions</a>"
-documentation for
-details.</div>
-<table border="0">
-  <caption><br>
-  </caption> <col> <col> <tbody>
-    <tr>
-      <td class="left">Enable spell check functionality</td>
-      <td class="right">This option controls whether spell check should
-be used in RoboJournal (if checked, this option automatically triggers
-the dictionary selection function). All spell check functionality
-remains disabled while this option is unchecked. </td>
-    </tr>
-    <tr>
-      <td class="left">Highlight spelling errors in text by default</td>
-      <td class="right">If checked, this option determines whether the
-Show Spelling Errors button in the Editor window should be toggled on
-by default. This option is locked while spell check is disabled. </td>
-    </tr>
-    <tr>
-      <td class="left">Select spell check dictionary</td>
-      <td class="right">This text field contains the path to the
-current dictionary file. This field can not be edited directly even
-when unlocked; it is locked while spellcheck is disabled.</td>
-    </tr>
-  </tbody>
-</table>
-<h4 id="select_dict">Selecting a Dictionary for the First Time</h4>
-<p>RoboJournal automatically copies the built-in US English dictionary
-to the
-".robojournal" folder in your home directory during first-run. The
-<strong>Select Dictionary</strong> file browser always starts in that
-location
-because it is guaranteed to contain at least one valid dictionary.
-Although US
-English is the default language, RoboJournal supports other languages
-as well.
-You can acquire other dictionaries from the Internet but every
-dictionary
-<em>must</em> consist of a DIC/AFF file pair in order to be compatible
-with
-RoboJournal. Any dictionary designed for use with the Hunspell spell
-check
-engine is fully compatible with RoboJournal. For best results, both the
-DIC and
-AFF files for each dictionary should be stored in the same directory.</p>
-<p>Once you select a DIC file with the <strong>Select Dictionary</strong>
-file
-browser, RoboJournal attempts to find the appropriate AFF file
-automatically.
-If RoboJournal cannot locate an AFF file to go with the DIC file you
-selected,
-you are instructed to find this AFF file manually (a <strong>Locate
-AFF
-File</strong> file browser is displayed after Step 3 in the following
-procedure). </p>
-<p>Once you are on the Editor page in the RoboJournal Preferences
-window,
-perform the following procedure to enable spell check:</p>
-<ol class="list">
-  <li>Click the <strong>Enable spell check functionality</strong>
-checkbox. The other spellcheck-related options are unlocked and the <strong>Select
-Dictionary</strong> file browser is displayed:<img
- alt="&quot;Select Dictionary&quot; file browser dialog"
- src="img/screens/select_dictionary.png" class="screenshot" height="478"
- width="779"><span class="caption">Figure 4: The <strong>Select
-Dictionary</strong> file dialog</span>
-    <div class="FYI"> <strong>FYI:</strong> If you are using an
-operating system other than Windows 7, the Select Dictionary dialog
-will look different than it does in Figure 4.</div>
-  </li>
-  <li>Navigate to a directory that contains dictionary files (if
-necessary). </li>
-  <li>Select the dictionary file you want to use and click the <strong>Open</strong>
-button to continue.</li>
-  <li>The path to the chosen dictionary is now properly set in the <strong>Select
-spell check dictionary</strong> field on the Editor page.</li>
-</ol>
-<p>Once a dictionary has been selected, you can switch to a different
-dictionary at any time by clicking the <strong>Browse</strong> (folder
-icon)
-button immediately to the right of the <strong>Select spell check
-dictionary</strong> field. The <strong>Select Dictionary</strong>
-dialog is
-displayed and you can select the dictionary you wish to use. Click the
-<strong>Open</strong> button to update the current value with the new
-choice.
-The new dictionary becomes active when you click the <strong>OK</strong>
-button
-on the RoboJournal Preferences window.</p>
-<h2 id="appearance_page"><em>Appearance</em> Page</h2>
-<p>The Appearance page controls the appearance and font settings of
-rendered
-entries in the output pane on the main window. The Appearance page is
-displayed
-when you click the <strong>Appearance</strong> list item on the left
-side of
-the Preferences window:</p>
-<p><img alt="RoboJournal Preferences: Appearance Page"
- src="img/screens/preferences_appearance.png" class="screenshot"
- height="593" width="605"><span class="caption">Figure 5: RoboJournal
-Preferences
-Window — Appearance Page</span></p>
-<h3 id="enable_styles">Enabling Custom Styles</h3>
-<p>All custom styles are disabled by default. Instead, RoboJournal uses
-a
-generic sans-serif font for text and system colors to indicate the
-header/highlighted text. The default settings are generally consistent
-with the
-overall system theme currently in use on your computer.</p>
-<p>The entire <strong>Style Options</strong> group is locked while the
-<strong>Use custom font and/or background image</strong> box is
-unchecked.
-Checking this box unlocks the group and allows you to define custom
-settings.
-Certain background-related options (<strong>Tile background image</strong>
-and
-<strong>Apply background image to entry list</strong>) will remain
-locked
-indefinitely unless a background image has been set.</p>
-<h4 id="select_color">Selecting a Font Color</h4>
-<p>Use the following procedure to select a font color:</p>
-<ol class="list">
-  <li>Click the <strong>Choose</strong> button on the Appearance page
-in the RoboJournal Preferences window. The Select Color dialog is
-displayed:<img alt="Color chooser dialog"
- src="img/screens/color_chooser.png" class="screenshot" height="383"
- width="506"><span class="caption">Figure 6: Select Color dialog box.
-This design is universal across all operating systems.</span></li>
-  <li>Select a preset color from the <strong>Basic colors</strong>
-list <em>or</em> use the targeting crosshair to select a custom color
-from the full spectrum (use the vertical slider on the far right side
-of the dialog to set color brightness). </li>
-  <li>Click the <strong>OK</strong> button to apply the selected color.</li>
-</ol>
-<div class="FYI">
-<strong>FYI</strong>: The color selected through the above procedure is
-also
-used for the date box header and tag header backgrounds. Because of
-this, both
-headers display their text in the <em>inverse</em> color of their
-backgrounds
-in order to ensure maximum contrast and readability.</div>
-<h4 id="set_bgimage">Setting a Background Image</h4>
-<ol class="list">
-  <li>Click the <strong>Browse</strong> (folder) button in the <strong>Style
-Options</strong> group:<img alt="Click the Browse Icon"
- src="img/screens/select_background.png" class="screenshot" height="236"
- width="378"><span class="caption">Figure 7: <strong>Browse</strong>
-button marked for identification.</span></li>
-  <li>The <strong>Choose Background Image</strong> file dialog is
-displayed:<img alt="Choose Background Image file dialog"
- src="img/screens/background_browse.png" class="screenshot" height="533"
- width="779"><span class="caption">Figure 8: Choose Background Image
-dialog.</span>
-    <div class="FYI"> FYI: The <strong>Choose Background Image</strong>
-dialog does not resemble Figure 8 on operating systems other than
-Windows 7.</div>
-  </li>
-  <li>Navigate to a folder that contains image files (*.png, *.jpg,
-*.bmp, or *.gif) and select the desired image by clicking on its
-filename. </li>
-  <li>Click the <strong>Open</strong> button.</li>
-  <li>Your choice is now displayed in the <strong>Select background
-image from disk</strong> field. The background is applied after you
-click the <strong>OK</strong> button in the RoboJournal Preferences
-window.</li>
-  <li>(Optional) Click the <strong>Tile background image</strong>
-checkbox if you want the background image to be repeated in the entry
-output pane.</li>
-  <li>(Optional) Click the <strong>Apply background image to entry list</strong>
-checkbox if you want to apply the background to the Chronological Entry
-List. </li>
-</ol>
-<h4 id="clear_bgimage">Clearing a Background Image</h4>
-<ol class="list">
-  <li>Click the <strong>Clear Background</strong> button in the <strong>Style
-Options</strong> group: <img alt="Clear background image"
- src="img/screens/clear_background.png" class="screenshot" height="231"
- width="372"><span class="caption">Figure 9: <strong>Clear Background</strong>
-button marked for identification.</span></li>
-  <li>The current background image is removed. This change is applied
-after you click the <strong>OK</strong> button in the RoboJournal
-Preferences window.</li>
-</ol>
-<div class="FYI">
-<strong>FYI:</strong> This action causes all background-related options
-in the
-<strong>Style Options</strong> group to uncheck themselves and lock.
-Any
-background image in the Chronological Entry List will persist until the
-current
-session has ended.</div>
-<h3 id="style_options">Style Options</h3>
-<p>The following table lists and provides a description of each object
-in the
-<strong>Style Options</strong> group.</p>
-<table>
-  <col> <col> <tbody>
-    <tr>
-      <td class="left">Select font and base font size</td>
-      <td class="right">The font and font size lists control which
-typeface is to be used in Journal entries and its point size. This
-font/font size is also used in the Editor if the <strong>Use custom
-theme font in the editor</strong> box on the Editor page is checked.</td>
-    </tr>
-    <tr>
-      <td class="left">Font color</td>
-      <td class="right">This value sets the current font color. Colors
-are specified in the 6-character hexadecimal format (i.e. #000000)
-commonly used on the web. </td>
-    </tr>
-    <tr>
-      <td class="left">Select background image from disk</td>
-      <td class="right">This text field contains the path to the
-current background image. </td>
-    </tr>
-    <tr>
-      <td class="left">Tile background image</td>
-      <td class="right">If checked, this option causes the background
-image to be tiled on the X and Y axis in the entry output pane. If
-unchecked, the current background image is only displayed once without
-repeating. This option is locked if no background image has been set.</td>
-    </tr>
-    <tr>
-      <td class="left">Apply background image to entry list</td>
-      <td class="right">If checked, this feature applies the background
-image to the Chronological Entry List.
-      <p>Once enabled, this feature takes effect immediately after
-clicking the <strong>OK</strong> button on the RoboJournal Preferences
-window. However, disabling this feature requires you to restart
-RoboJournal before the change will take effect.</p>
-      </td>
-    </tr>
-    <tr>
-      <td class="left">Use system colors in date/timestamp box</td>
-      <td class="right">This feature overrides the rule that applies
-the current font color to the background in the date/time header and
-tag header. If checked, this option forces the use of system colors
-even when a custom theme is in use; this is ideal for those who wish to
-use a custom font but retain default colors/background settings.</td>
-    </tr>
-  </tbody>
-</table>
-<h2 id="export_settings"><em>Export Settings</em> Page</h2>
-<p>The options on the Export Settings page allow you to control how
-exported
-entries are processed. Since this function takes database content and
-uses it
-to create documents in both HTML and plain-text format, any changes
-made to the
-options on this page do not affect entries that have already been
-exported.
-</p>
-<p>The Export Settings page is displayed when you click the <strong>Export
-Settings</strong> list item on the left side of the Preferences window:</p>
-<p><img alt="RoboJournal Preferences: Export Page"
- src="img/screens/preferences_export.png" class="screenshot"
- height="604" width="642"><span class="caption">Figure 10: RoboJournal
-Preferences
-Window — Export Settings Page</span></p>
-<h3 id="html_behavior">HTML Behavior</h3>
-<p>The HTML Behavior group contains options that affect the visual
-appearance
-of exported HTML documents. As such, these settings are entirely
-optional.
-These options are <em>not</em> applied to plain text files.</p>
-<table border="0">
-  <caption><br>
-  </caption> <col> <col> <tbody>
-    <tr>
-      <td class="left">Use rounded corners on date/timestamp header</td>
-      <td class="right">If checked, this option causes the entry
-exporter to apply rounded corners (using Cascading Style Sheets) to the
-date/timestamp header in both the single entry export and full journal
-export functions. This function is purely decorative and may not be
-visible on older browsers.</td>
-    </tr>
-    <tr>
-      <td class="left">Use system colors in exported HTML files</td>
-      <td class="right">If checked, this function applies the system
-colors for highlighted text (foreground) and selected color
-(background) to exported documents. The purpose of this setting is to
-allow the exported text to more closely resemble the entry as it is
-shown in the entry output pane.
-      <p>If unchecked, black text is used for the foreground and a
-neutral gray is used for the background.</p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<h3 id="fonts_and_units">Fonts and Units</h3>
-<p>RoboJournal supports separate fonts for headers and entries in
-exported HTML
-documents. In normal situations, sans-serif font should be used for
-headers and
-serif font for text. Fonts are chosen through the <strong>Preferred
-HTML
-Fonts</strong> group while sizes/units are determined by the <strong>Font
-Sizes
-and Units</strong> group. </p>
-<p>To select a font, click on the <strong>Select header font</strong>
-or
-<strong>Select body text font</strong> lists (depending on which one
-you want
-to change). The font lists contain all fonts installed on your system;
-scroll
-through the current list until you locate the desired font. On Windows,
-RoboJournal uses Verdana (header) and Times New Roman (body) as the
-default
-fonts.</p>
-<p>Fonts can be displayed in point size (pt) or em units. Point size is
-a fixed
-size traditionally used in word processing and print media; 1pt is
-generally
-equivalent to 1/72 inch. Em units are more scalable than pt and refer
-to
-current font size; 1em = 12 pt, 2em = 24pt, etc. Even though 1em is
-always
-equivalent to 12pt, the apparent size of em increases in proportion to
-general
-font size; 1em appears larger under a base font size of 120% than under
-a size
-of 100%. In contrast, point size always remains consistent regardless
-of base
-font size. Generally, you should use pt if you intend to print your
-exported
-journal entries while em units are more appropriate if readability
-across
-different devices is your highest priority. </p>
-<p>The available font sizes depend on the unit currently in use.
-Changing the
-unit assigned to header or body fonts causes the affected available
-size list
-to refresh and display new values appropriate for that unit. Select the
-desired
-value from the list to set a font size.</p>
-<h3 id="export_preview">Export Preview</h3>
-<p>After changing fonts, font sizes, font units, or HTML Behavior
-settings, you
-can preview your changes by clicking the <strong>Preview Export
-Settings</strong> button. The Export Preview window is displayed:</p>
-<p><img alt="Export Preview Window" src="img/screens/export_preview.png"
- class="screenshot" height="529" width="613"><span class="caption_wide">Figure
-11: The Export Preview window provides a faithful representation of the
-current export settings.</span><span class="caption_wide"></span><span
- class="caption_wide"> </span></p>
-<p>The Export Preview window allows you
-to "test" new settings before
-saving
-them. The current settings of the Export Settings page are used to
-render a
-sample entry that contains a title, date/timestamp header, and several
-paragraphs of body text. This feature is designed to be as accurate as
-possible. The body text is an excerpt from the classic
-Latin
-<em>Lorem Ipsum</em> text used throughout the print industry since the
-1500s.
-Click the <strong>Close</strong> button to exit the Export Preview. </p>
-<h2 id="mysql_settings_page"><em>MySQL Settings</em> Page</h2>
-<p>The MySQL page contains options that define and control all settings
-related
-to MySQL. The MySQL Settings page is displayed when you click the <strong>MySQL
-Settings</strong> list item on the left side of the Preferences window:
-</p>
-<p><img alt="RoboJournal Preferences: MySQL Page"
- src="img/screens/preferences_mysql.png" class="screenshot" height="604"
- width="642"><span class="caption_wide">Figure 12: RoboJournal
-Preferences Window — MySQL Settings Page</span></p>
-<p>The <strong>Default Account</strong> group contains options that
-determine
-the default account for MySQL connections, including the default Host,
-Database, Port, and Username to use if RoboJournal is configured to
-always
-suggest default settings. The <strong>Default</strong> button (to the
-right of
-the Port field) is an easy way to reset the Port field to its default
-value of
-"3306" in case you previously changed it and need to change it back. </p>
-<p>Enabling the <strong>Allow root logins on host</strong> option
-overrides the
-security protocol that prevents users from logging in as the MySQL root
-user.
-This option should not be used unless absolutely necessary since the
-root
-account has full control over all database functions (including those
-which
-have the potential to be harmful). By design, RoboJournal places
-restrictions
-on regular user accounts for security purposes.</p>
-<div id="footer_container">
-<div id="footer_left">« <a href="search.html">Using the Search Function</a></div>
-<div id="footer_center">
-<a href="#top">RoboJournal Preferences</a></div>
-<div id="footer_right">
-<a href="shortcut_keys.html">Appendix</a> »</div>
-</div>
-<p class="copyright">Copyright © 2013 by Will Kraft. All parts of the
-RoboJournal Documentation are covered by the terms of the <a
- href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation
-License</a>.
-</p>
-</div>
-</div>
+    <div class="menu">
+      <ul>
+        <li onclick="javascript:history.go(-1)" class="backbutton">
+        <img src="img/prev.png" width="16" height="16" alt=
+        "Previous" longdesc=
+        "Previous%20Documentation">&nbsp;Back</li>
+
+        <li class="menuitem"><img src="img/toc.png" width="16"
+        height="16" alt="TOC" longdesc=
+        "Table%20of%20Contents">&nbsp;<a href="toc.html">Table of
+        Contents</a></li>
+
+        <li class="menuitem"><img src="img/question.png" width="16"
+        height="16" alt="FAQ" longdesc=
+        "Frequently%20Asked%20Questions">&nbsp;<a href=
+        "faq.html">FAQ</a></li>
+      </ul>
+    </div>
+
+    <div class="main_text">
+      <h1>RoboJournal Preferences</h1>
+
+      <h2>Sections</h2>
+
+      <ol class="toc">
+        <li>
+          <a href="#top">RoboJournal Preferences</a>
+
+          <ol class="toc">
+            <li><a href="#preferences_overview">Preferences
+            Overview</a></li>
+
+            <li>
+              <a href="#general_page">General Page</a>
+
+              <ol class="toc">
+                <li><a href="#global_preferences">Global
+                Preferences</a></li>
+
+                <li><a href="#backend">Backend (Database)</a></li>
+
+                <li><a href="#date_and_time">Date and Time</a></li>
+              </ol>
+            </li>
+
+            <li>
+              <a href="#journal_page">Journal Page</a>
+
+              <ol class="toc">
+                <li><a href="#entry_settings">Entry Settings and
+                Range</a></li>
+
+                <li><a href="#user_info">User Information</a></li>
+
+                <li><a href="#highlighting">Highlighting</a></li>
+
+                <li><a href="#behavior">Behavior</a></li>
+              </ol>
+            </li>
+
+            <li>
+              <a href="#editor_page">Editor Page</a>
+
+              <ol class="toc">
+                <li><a href=
+                "#post_processing">Post-Processing</a></li>
+
+                <li><a href="#appearance">Appearance</a></li>
+
+                <li>
+                  <a href="#spellcheck">Spell Check</a>
+
+                  <ol class="toc">
+                    <li><a href="#user_def">User-Defined
+                    Words</a></li>
+                  </ol>
+                </li>
+              </ol>
+            </li>
+
+            <li>
+              <a href="#appearance_page">Appearance Page</a>
+
+              <ol class="toc">
+                <li>
+                  <a href="#enable_styles">Enabling Custom
+                  Styles</a>
+
+                  <ol class="toc">
+                    <li><a href="#select_color">Selecting a Font
+                    Color</a></li>
+
+                    <li><a href="#set_bgimage">Setting a Background
+                    Image</a></li>
+
+                    <li><a href="#clear_bgimage">Clearing a
+                    Background Image</a></li>
+                  </ol>
+                </li>
+
+                <li><a href="#style_options">Style Options</a></li>
+              </ol>
+            </li>
+
+            <li>
+              <a href="#export_settings">Export Settings Page</a>
+
+              <ol class="toc">
+                <li><a href="#html_behavior">HTML Behavior</a></li>
+
+                <li><a href="#fonts_and_units">Fonts and
+                Units</a></li>
+
+                <li><a href="#export_preview">Export
+                Preview</a></li>
+              </ol>
+            </li>
+
+            <li>
+              <a href="#mysql_settings_page">MySQL Settings
+              Page</a>
+
+              <ol>
+                <li><a href="#default_account">Default
+                Account</a></li>
+
+                <li><a href="#favorite_journals">Favorite
+                Journals</a></li>
+
+                <li><a href="#security">Security</a></li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+      </ol>
+
+      <h2 id="preferences_overview">Preferences Overview</h2>
+
+      <p>RoboJournal's preferences system has been completely
+      redesigned into a modular interface (starting in version
+      0.4). This new design offers vastly improved efficiency and
+      increased potential for expansion in the future. The new
+      design groups all available options into several categories
+      depending on their specific purposes. Each category is
+      officially known as a "page". To switch to a different page,
+      click on its name in the list on the left side of the
+      Preferences window. The title of the Preferences window
+      indicates which page you are currently viewing (i.e.
+      Preferences -- General; Preferences -- Appearance, etc.).</p>
+
+      <p>Since each page is inherently a different size (due to
+      each page having a different number of options on it),
+      RoboJournal's Preferences window automatically pads out the
+      extra space on a page if necessary to ensure that everything
+      fits properly without distortion. If a page is larger than
+      the available display area, the Preferences window utilizes
+      vertical scrollbars to allow you to access controls that
+      would otherwise be inaccessible due to being placed outside
+      the bounds of the window. These scrollbars are only used if a
+      page does not fit the current window size; to eliminate the
+      scrollbars, you must resize the Preferences window to the
+      point where it is large enough to accommodate the entire
+      page. RoboJournal automatically stretches each page on the
+      horizontal axis to fit the available space (thereby
+      eliminating the need for cumbersome horizontal
+      scrollbars).</p>
+
+      <p>The Preferences window is fully resizable; you can resize
+      the window by dragging any side or corner of the window
+      border into a more appropriate position. Whenever you resize
+      the window, RoboJournal automatically records the size
+      changes in your configuration file and automatically loads
+      the new size each time the window is subsequently displayed.
+      If the new size data becomes unavailable for some reason, the
+      Preferences window automatically reverts to its original size
+      (575<em>x</em>525 pixels).</p>
+
+      <h2 id="general_page"><em>General</em> Page</h2>
+
+      <p>The General page contains options that control the
+      behavior of the entire program. The General page is always
+      shown by default whenever the Preferences window is
+      displayed. Otherwise, the General page is displayed when you
+      click the <strong>General</strong> list item on the left side
+      of the Preferences window:</p>
+
+      <p><img alt="RoboJournal Preferences -- General Page" src=
+      "img/screens/preferences_general.png" class="screenshot"
+      height="626" width="591"><span class="caption">Figure 1:
+      RoboJournal Preferences Window &mdash; General
+      Page</span></p>
+
+      <h3 id="global_preferences">Global Preferences</h3>
+
+      <p>All options in the <strong>Global Preferences</strong>
+      group affect underlying program behavior and appearance.</p>
+
+      <table>
+        <tbody>
+          <tr>
+            <td class="left">Always suggest default settings</td>
+
+            <td class="right">If checked, this option requires
+            RoboJournal to automatically populate affected form
+            fields with default settings whenever a form capable of
+            using these settings (e.g. New Connection dialog) is
+            displayed. This action is <em>not</em> the same as
+            mandating default settings because it is often possible
+            to override the defaults on a form-by-form basis.</td>
+          </tr>
+
+          <tr>
+            <td class="left">Always show confirmation dialogs</td>
+
+            <td class="right">
+              This security measure forces RoboJournal to display
+              all confirmation dialogs in situations where they are
+              supposed to be triggered. This practice helps prevent
+              accidental deletions and other data loss in
+              situations where carelessness can cause problems. You
+              are <em>strongly</em> encouraged to leave this option
+              enabled at all times!
+
+              <p>However, be advised that some confirmation dialogs
+              are mandatory and are always shown (if triggered)
+              whether this setting is enabled or not.</p>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="left">Show labels on toolbar buttons</td>
+
+            <td class="right">If checked, this setting causes every
+            toolbar to display their buttons with both icons and
+            text labels (default setting). Unchecking this option
+            causes all toolbar buttons to display their icon only.
+            Some users may prefer icon-only mode because it saves
+            space and usually eliminates the need for the toolbar
+            overflow menu.</td>
+          </tr>
+
+          <tr>
+            <td class="left">Display current journal name in title
+            bar</td>
+
+            <td class="right">This feature simply shows the name of
+            the current journal in the main window title bar (i.e.
+            sample_journal - RoboJournal). If unchecked, the title
+            bar simply says, "RoboJournal" whether a connection is
+            active or not.</td>
+          </tr>
+
+          <tr>
+            <td class="left">Display alternating row colors in
+            lists</td>
+
+            <td class="right">This option causes all lists
+            (specifically the Timeline and the search output list)
+            to use alternating background colors. This looks good
+            on some color schemes but is completely unreadable on
+            others (so you may wish to disable it in some
+            situations).</td>
+          </tr>
+
+          <tr>
+            <td class="left">Display Tag Reminder window during
+            login</td>
+
+            <td class="right">If checked, this option causes
+            RoboJournal to display the <a href=
+            "tags.html#tag_reminder">Tag Reminder</a> window
+            immediately after login under the appropriate
+            conditions (i.e. if the journal contains one or more
+            untagged entries). The Tag Reminder window is
+            completely suppressed while the <strong>Display Tag
+            Reminder window during login</strong> box is
+            unchecked.</td>
+          </tr>
+
+          <tr>
+            <td class="left">Toolbar docking position</td>
+
+            <td class="right">
+              This drop-down list controls the default location of
+              the main window's toolbar. This setting is persistent
+              between sessions.
+
+              <p>It is possible to change the location of the
+              toolbar during runtime by dragging it to a new
+              position or using the setting in the Window &rarr;
+              Toolbar position list, but these changes revert to
+              the default setting the next time RoboJournal is
+              used.</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 id="backend">Backend (Database)</h3>
+
+      <p>The backend option controls which database engine
+      RoboJournal should use. For instance, choosing "MySQL" from
+      the list causes RoboJournal to switch to MySQL mode. You must
+      switch the backend before you can work with a different type
+      of database (like SQLite). RoboJournal can use only one
+      backend at a time.</p>
+
+      <h3 id="date_and_time">Date and Time</h3>
+
+      <p>The <strong>Date and Time</strong> group controls all
+      settings that determine how RoboJournal processes date and
+      time data.</p>
+
+      <table>
+        <col>
+        <col>
+
+        <tbody>
+          <tr>
+            <td class="left">Display day of week when entries were
+            made</td>
+
+            <td class="right">If checked, this setting causes
+            RoboJournal to display the day of week along with the
+            regular date and timestamp (i.e. Wednesday, 12/26/2012
+            at 12:00 am).</td>
+          </tr>
+
+          <tr>
+            <td class="left">Record the time when entries are
+            made</td>
+
+            <td class="right">
+              This setting requires RoboJournal to record the time
+              when entries were made. Timestamps are displayed
+              along with other relevant data in the entry header.
+
+              <p>RoboJournal does not display timestamps if this
+              setting is disabled. RoboJournal will <em>not</em>
+              store timestamps for entries made while this option
+              is disabled. Entries with no timestamp data are
+              indicated as being made at an "[unknown time]". There
+              is currently no way to update timestamps on existing
+              entries (other than manually editing the
+              database).</p>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="left">Use 24-hour clock in timestamps</td>
+
+            <td class="right">If enabled, this setting causes
+            datestamps to be shown in 24-hour format (i.e. 16:00
+            instead of 4:00 pm).</td>
+          </tr>
+
+          <tr>
+            <td class="left">Preferred date format</td>
+
+            <td class="right">
+              This drop-down list determines which date format
+              RoboJournal should use in the entry header and
+              Chronological Entry List. Supported formats include:
+
+              <dl>
+                <dt>USA</dt>
+
+                <dd>MM-DD-YYYY; January 1, 2013 (used throughout
+                the United States).</dd>
+
+                <dt>European</dt>
+
+                <dd>DD-MM-YYYY; 1 January, 2013 (used primarily in
+                Europe).</dd>
+
+                <dt>International Standards Organization 8601</dt>
+
+                <dd>YYYY-MM-DD; 2013, January 1 (used world-wide,
+                especially in scientific context).</dd>
+              </dl>
+
+              <p>Certain date-related functions in RoboJournal
+              (most notably the date column in the search results)
+              override the preferred date format setting. These
+              exceptions use the date format setting of your
+              operating system instead.</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="journal_page"><em>Journal</em> Page</h2>
+
+      <p>The Journal page contains options that govern journal
+      behavior and general user preferences. The Journal page is
+      displayed when you click the <strong>Journal</strong> list
+      item on the left side of the Preferences window:</p>
+
+      <p><img alt="RoboJournal Preferences: Journal Page" src=
+      "img/screens/preferences_journal.png" class="screenshot"
+      height="626" width="591"><span class="caption">Figure 2:
+      RoboJournal Preferences Window &mdash; Journal
+      Page</span></p>
+
+      <h3 id="entry_settings">Entry Settings and Range</h3>
+
+      <p>This group contains settings that define the current entry
+      range (the timespan of entries shown in the Timeline). The
+      entry range feature limits how many entries RoboJournal shows
+      at once in order to keep the Timeline at a manageable length.
+      For instance, setting an entry range of two years causes
+      RoboJournal to show all entries made within the last two
+      years (including the current year) in the Timeline. As time
+      progresses, older entries gradually move out of range and are
+      no longer displayed. Disabling the entry range causes
+      RoboJournal to display all entries from the current journal
+      (regardless of age).</p>
+
+      <p>Limiting the entry range also offers some performance
+      benefits. Requiring RoboJournal to display the entire journal
+      can be slow if there are several full years to process each
+      time the Timeline needs to be displayed or updated. On the
+      other hand, RoboJournal is able to generate the Timeline much
+      more quickly if the entry range is set to 1-2 years. Entries
+      that are outside the current range can still be found through
+      the search tool, so there is no reason to display old entries
+      unless you need all of them available at any given time.</p>
+
+      <p>The Entry Settings and Range group also has options for
+      miscellaneous behavior associated with entries.</p>
+
+      <table>
+        <col>
+        <col>
+
+        <tbody>
+          <tr>
+            <td class="left">Show all entries in journal</td>
+
+            <td class="right">This setting determines whether the
+            entry range function is enabled. Checking this box
+            disables the entry range and year range indicator
+            features (as shown in the screenshot above).</td>
+          </tr>
+
+          <tr>
+            <td class="left">Show entries from the last:</td>
+
+            <td class="right">This list sets the current entry
+            range from 1-10 years. If the entry range function is
+            disabled, this list locks and becomes unavailable.</td>
+          </tr>
+
+          <tr>
+            <td class="left">Show year range indicator on
+            statusbar</td>
+
+            <td class="right">This feature (if enabled) causes the
+            current entry range to be displayed on the main window
+            statusbar along with the current entry count (i.e.
+            "<em>x</em> Entries : <em>y</em> Years"). If the entry
+            range function is disabled, this checkbox locks and is
+            unavailable.</td>
+          </tr>
+
+          <tr>
+            <td class="left">Select entry node icon</td>
+
+            <td class="right">This allows you to select the icon
+            used to represent individual entries in the Timeline
+            and search output list. By default, RoboJournal
+            represents individual entries with a pencil icon.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 id="user_info">User Information</h3>
+
+      <p>The <strong>User Information</strong> group contains
+      settings that directly relate to your user account:</p>
+
+      <table border="0">
+        <col>
+        <col>
+
+        <tbody>
+          <tr>
+            <td class="left">Your full name (as you would like it
+            to appear)</td>
+
+            <td class="right">This text box is meant to display
+            your full name as you would like it to appear in the
+            entry header. For example, you would probably set your
+            full name to "John Doe" (or something similar) if your
+            username were "john_doe". Unlike the username assigned
+            to your journal, this value may contain spaces and
+            uppercase characters.<br>
+            <br>
+            Your username is displayed in the header instead if
+            this field is left blank. This field is normally
+            populated during first-run but its value can be changed
+            at any time.</td>
+          </tr>
+
+          <tr>
+            <td class="left">Select your gender</td>
+
+            <td class="right">
+              This setting determines which avatar icon (male or
+              female) is displayed next to your username in the
+              main window status bar.
+
+              <p>This setting is initially determined during
+              first-run but its value can be changed at any
+              time.</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 id="highlighting">Highlighting</h3>
+
+      <p>The options in the <strong>Highlighting</strong> group
+      control how RoboJournal highlights occurrences of a search
+      term. This feature is designed to mimic traditional
+      highlighter pens; all instances of a search term in an entry
+      are displayed with a bright colored background to make them
+      easier to locate in the text.</p>
+
+      <table border="0">
+        <col>
+        <col>
+
+        <tbody>
+          <tr>
+            <td class="left">Highlight current search term</td>
+
+            <td class="right">If checked, this option instructs
+            RoboJournal to apply highlighting to searches.</td>
+          </tr>
+
+          <tr>
+            <td class="left">Select highlight color</td>
+
+            <td class="right">This list allows you to select the
+            highlight color. The square box for each item on the
+            list displays an approximate sample of that particular
+            color.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 id="behavior">Behavior</h3>
+
+      <p>The <strong>Behavior</strong> group contains general
+      options that control journal behavior and affect how journal
+      content is rendered. These options work on a global scope;
+      the same settings govern every single journal RoboJournal
+      comes into contact with instead of being limited to the
+      journal that is currently open.<br></p>
+
+      <table border="0">
+        <col>
+        <col>
+
+        <tbody>
+          <tr>
+            <td class="left">Group journal entries by day</td>
+
+            <td class="right">
+              This option gives you the ability to sort entries by
+              day instead of by month (which is the default
+              behavior). Under normal conditions, entries are
+              displayed with the date and title merged together
+              (i.e. "January 1: Sample Entry"). Grouping entries by
+              day adds another sub-category; in the aforementioned
+              example, the entry "Sample Entry" would be a separate
+              node listed under "January 1" instead of the two
+              being merged together into a single node.
+
+              <p>This option is useful if you frequently post more
+              than one entry per day and would like greater control
+              of how such entries are displayed.</p>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="left">Show title for current journal
+            entry</td>
+
+            <td class="right">If checked, this option causes the
+            title of the current entry to be included when the
+            entry is displayed in the output pane.</td>
+          </tr>
+
+          <tr>
+            <td class="left">Display most recent entry
+            automatically</td>
+
+            <td class="right">If checked, RoboJournal displays the
+            most recent entry in the output pane immediately after
+            you log in. If unchecked, Robojournal simply waits for
+            you to select the entry you wish to view from the
+            Timeline.</td>
+          </tr>
+
+          <tr>
+            <td class="left">Display full name (instead of
+            username)</td>
+
+            <td class="right">This option determines whether
+            RoboJournal displays the user's full name as it is
+            written in the <strong>Your full name (as you would
+            like it to appear)</strong> text box. This checkbox
+            automatically disables itself and locks if the full
+            name value is cleared. Inversely, this setting
+            re-enables itself if a new full name value is entered.
+            You can also disable this setting manually and leave
+            the full name value intact.</td>
+          </tr>
+
+          <tr>
+            <td class="left">Double-click an entry to open it in
+            the Editor</td>
+
+            <td class="right">When this option is enabled,
+            RoboJournal allows you to edit the current item when
+            you double-click on it. This is meant to be an easy way
+            to make changes to existing entries.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="editor_page"><em>Editor</em> Page</h2>
+
+      <p>The Editor page contains settings that affect the behavior
+      and performance of the Editor window, including
+      post-processing features, appearance settings, and spell
+      check integration. The Editor page is displayed when you
+      click the <strong>Editor</strong> list item on the left side
+      of the Preferences window:</p>
+
+      <p><img alt="RoboJournal Preferences: Editor Page" src=
+      "img/screens/preferences_editor.png" class="screenshot"
+      height="626" width="587"><span class="caption">Figure 3:
+      RoboJournal Preferences Window &mdash; Editor Page</span></p>
+
+      <h3 id="post_processing">Post Processing</h3>
+
+      <p>The options in the <strong>Post-Processing</strong> group
+      manipulate the text of new or revised entries after they have
+      been saved. These functions perform necessary corrections and
+      cleanup operations to body text as a means to improve
+      appearance and fix common errors. In all instances, the
+      post-processing functionality looks for specific patterns and
+      then applies changes to all matching instances of those
+      patterns it detects.</p>
+
+      <p>Since these changes are only applied after an entry is
+      saved, post-processing does <em>not</em> affect old entries
+      that were made before the post-processing features were
+      introduced or were made while post-processing features were
+      disabled. Post-processing is applied once after an entry has
+      been saved in order to improve efficiency. Therefore, the
+      only way to apply post-processing to old entries is to open
+      them in the editor and then save them again.</p>
+
+      <table border="0">
+        <col>
+        <col>
+
+        <tbody>
+          <tr>
+            <td class="left">Remove unnecessary whitespace from
+            entries</td>
+
+            <td class="right">
+              This function removes extra line breaks between
+              paragraphs and trims extra space from the bottom of
+              the entry. Whitespace removal also eliminates extra
+              spaces between words (since all words should only be
+              separated by one space).
+
+              <p>This feature is still semi-experimental and may
+              occasionally produce unexpected results (a reliable
+              fix is to edit the entry and save it again).</p>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="left">Use HTML-compliant dashes and
+            hyphens</td>
+
+            <td class="right">This feature ensures the correct use
+            of dashes and hyphenation in entries. These are
+            impossible to add with a regular keyboard (without
+            resorting to key combinations) so this function does it
+            for you. It replaces the common workaround for long
+            dashes (i.e. --) with HTML-compliant long dash
+            characters (i.e. &mdash; ) and removes any unnecessary
+            spacing. Dashes between numbers are replaced with a
+            proper medium-length dash (i.e. 1&ndash;2 instead of
+            1-2).</td>
+          </tr>
+
+          <tr>
+            <td class="left">Use smart (curly) quotation marks</td>
+
+            <td class="right">This feature replaces instances of
+            "straight" quotation marks with &ldquo;curly&rdquo;
+            quotation marks. Post-processing also affects
+            grammatical contractions and possessive nouns (i.e.
+            won't becomes won&rsquo;t; John's becomes
+            John&rsquo;s).</td>
+          </tr>
+
+          <tr>
+            <td class="left">Apply miscellaneous formatting
+            options</td>
+
+            <td class="right">Miscellaneous formatting applies
+            post-processing features that are not easily
+            categorized. These convert three or more consecutive
+            periods into a true ellipsis character (&hellip;) and
+            formalizes number notation (i.e. 12<sup>th</sup>,
+            101<sup>st</sup>).</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 id="appearance">Appearance</h3>
+
+      <p>The <strong>Use custom theme font in the editor</strong>
+      option causes the editor to use the same font/font size as
+      the entry output pane in the main window. This improves
+      consistency and allows you to preview how your entry will
+      look once it has been saved. This option is locked (as shown
+      in the screenshot above) if RoboJournal is not presently
+      configured to use a custom style.</p>
+
+      <h3 id="spellcheck">Spell Check</h3>
+
+      <p>RoboJournal's spell check feature scans the contents of
+      the editor each time a new word is entered and applies a wavy
+      red underline to all spelling errors it detects. Spell check
+      is not automatically enabled during first-run. To enable
+      spell check, you must first select a dictionary for it to use
+      from the drop-down list.</p>
+
+      <table border="0">
+        <col>
+        <col>
+
+        <tbody>
+          <tr>
+            <td class="left">Enable spell check functionality</td>
+
+            <td class="right">This option controls whether spell
+            check should be used in RoboJournal (if checked, this
+            option automatically triggers the dictionary selection
+            function). All spell check functionality remains
+            disabled while this option is unchecked.</td>
+          </tr>
+
+          <tr>
+            <td class="left">Use System-Level Dictionaries</td>
+
+            <td class="right">Non-Windows operating systems like
+            Linux usually have built-in dictionaries. These
+            dictionaries are automatically installed along with
+            everything else in the operating system and are meant
+            to be system-level resources that multiple applications
+            can utilize. If the <b>Use system-level
+            dictionaries</b> option is enabled, RoboJournal favors
+            the global OS dictionaries over its own; each time the
+            configuration window is opened, RoboJournal scans your
+            computer and lists all system-level dictionaries it
+            finds (in any language) in the <b>Select spell check
+            dictionary</b> list. You can then select any one of
+            these to use as your spell check dictionary.</td>
+          </tr>
+
+          <tr>
+            <td class="left">Select spell check dictionary</td>
+
+            <td class="right">This combo/list box contains the path
+            to the current dictionary file. This field is locked
+            while spellcheck is disabled.<br>
+            <br>
+            When spell check is enabled, this field automatically
+            populates itself with all known dictionaries.You can
+            then select the dictionary you want to use from the
+            given options or click the <b>Browse</b> button to the
+            immediate right of the field to look for a different
+            one.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>It is no longer necessary to manually browse for a
+      dictionary whenever you enable spell check because
+      RoboJournal now does this for you in versions 0.5 and later.
+      On Windows, RoboJournal automatically selects the US English
+      dictionary located in the <i>.robojournal</i> configuration
+      folder in your user profile folder. On Linux, RoboJournal
+      searches for and returns a list of global system-level
+      dictionaries, assuming you have any installed on your system.
+      If you do <span style=
+      "text-decoration: underline;">not</span> have any
+      system-level dictionaries, you can rectify this problem by
+      using your package manager to install some
+      Hunspell-compatible dictionary packages. If you have disabled
+      the <b>Use system-level dictionaries</b> option on Linux,
+      RoboJournal attempts to use the <i>.robojournal</i> folder's
+      US English dictionary in a manner similar to the Windows
+      default behavior.</p>
+
+      <h3 id="user_def">User-Defined Words</h3>
+
+      <p>RoboJournal 0.5 (and later) stores all custom words you
+      have defined in a file called <i>user_defined_words.txt</i>.
+      This file is located in the hidden <i>.robojournal</i> folder
+      in your home folder (Linux) or your user profile (Windows).
+      The spell check system does not mark your custom words as
+      being misspelled, even if they are not in the main dictionary
+      you are currently using. This feature allows you to gradually
+      assemble your own dictionary of non-conventional words that
+      the spell checker should ignore.</p>
+
+      <p>Click the <b>Manage user-defined words</b> button in the
+      <b>Spell Check</b> group. This action displays the Manage
+      User Defined Words window: <img src=
+      "img/screens/user_dictionary.png" width="341" height="324"
+      alt="Figure 4" class="screenshot"><span class=
+      "caption">Figure 4: The custom words interface</span></p>
+
+      <p>This interface gives you full control over your custom
+      word list so there is no need to ever edit the
+      <i>user_defined_words.txt</i> file manually.</p>
+
+      <ul class="bullets">
+        <li>The <b>Add Word</b> button displays a dialog that
+        allows you to declare a new word. This has the same effect
+        as adding a new word through the Editor's spell check
+        interface.</li>
+
+        <li>The <b>Delete Word</b> button removes the
+        currently-selected word from the list. At present, there is
+        no undo function, so if you accidentally delete a word you
+        will need to add it again.</li>
+
+        <li>The <b>Modify</b> button allows you to make changes to
+        the currently-selected word through a dialog
+        interface.</li>
+      </ul>
+
+      <h2 id="appearance_page"><em>Appearance</em> Page</h2>
+
+      <p>The Appearance page controls the appearance and font
+      settings of rendered entries in the output pane on the main
+      window. The Appearance page is displayed when you click the
+      <strong>Appearance</strong> list item on the left side of the
+      Preferences window:</p>
+
+      <p><img alt="RoboJournal Preferences: Appearance Page" src=
+      "img/screens/preferences_appearance.png" class="screenshot"
+      height="626" width="587"><span class="caption">Figure 5:
+      RoboJournal Preferences Window &mdash; Appearance
+      Page</span></p>
+
+      <h3 id="enable_styles">Enabling Custom Styles</h3>
+
+      <p>All custom styles are disabled by default. Instead,
+      RoboJournal uses a generic sans-serif font for text and
+      system colors to indicate the header/highlighted text. The
+      default settings are generally consistent with the overall
+      system theme currently in use on your computer.</p>
+
+      <p>The entire <strong>Style Options</strong> group is locked
+      while the <strong>Use custom font and/or background
+      image</strong> box is unchecked. Checking this box unlocks
+      the group and allows you to define custom settings. Certain
+      background-related options (<strong>Tile background
+      image</strong> and <strong>Apply background image to entry
+      list</strong>) will remain locked indefinitely unless a
+      background image has been set.</p>
+
+      <h4 id="select_color">Selecting a Font Color</h4>
+
+      <p>Use the following procedure to select a font color:</p>
+
+      <ol class="list">
+        <li>Click the <strong>Choose</strong> button on the
+        Appearance page in the RoboJournal Preferences window. The
+        Select Color dialog is displayed:<img alt=
+        "Color chooser dialog" src="img/screens/color_chooser.png"
+        class="screenshot" height="383" width="506"><span class=
+        "caption">Figure 6: Select Color dialog box. This design is
+        universal across all operating systems.</span></li>
+
+        <li>Select a preset color from the <strong>Basic
+        colors</strong> list <em>or</em> use the targeting
+        crosshair to select a custom color from the full spectrum
+        (use the vertical slider on the far right side of the
+        dialog to set color brightness).</li>
+
+        <li>Click the <strong>OK</strong> button to apply the
+        selected color.</li>
+      </ol>
+
+      <div class="FYI">
+        <strong>FYI</strong>: The color selected through the above
+        procedure is also used for the date box header and tag
+        header backgrounds. Because of this, both headers display
+        their text in the <em>inverse</em> color of their
+        backgrounds in order to ensure maximum contrast and
+        readability.
+      </div>
+
+      <h4 id="set_bgimage">Setting a Background Image</h4>
+
+      <ol class="list">
+        <li>Click the <strong>Browse</strong> (folder) button in
+        the <strong>Style Options</strong> group:<img alt=
+        "Click the Browse Icon" src=
+        "img/screens/select_background.png" class="screenshot"
+        height="236" width="378"><span class="caption">Figure 7:
+        <strong>Browse</strong> button marked for
+        identification.</span></li>
+
+        <li>The <strong>Choose Background Image</strong> file
+        dialog is displayed:<img alt=
+        "Choose Background Image file dialog" src=
+        "img/screens/background_browse.png" class="screenshot"
+        height="533" width="779"><span class="caption">Figure 8:
+        Choose Background Image dialog.</span>
+
+          <div class="FYI">
+            FYI: The <strong>Choose Background Image</strong>
+            dialog does not resemble Figure 8 on operating systems
+            other than Windows 7.
+          </div>
+        </li>
+
+        <li>Navigate to a folder that contains image files (*.png,
+        *.jpg, *.bmp, or *.gif) and select the desired image by
+        clicking on its filename.</li>
+
+        <li>Click the <strong>Open</strong> button.</li>
+
+        <li>Your choice is now displayed in the <strong>Select
+        background image from disk</strong> field. The background
+        is applied after you click the <strong>OK</strong> button
+        in the RoboJournal Preferences window.</li>
+
+        <li>(Optional) Click the <strong>Tile background
+        image</strong> checkbox if you want the background image to
+        be repeated in the entry output pane.</li>
+
+        <li>(Optional) Click the <strong>Apply background image to
+        entry list</strong> checkbox if you want to apply the
+        background to the Chronological Entry List.</li>
+      </ol>
+
+      <h4 id="clear_bgimage">Clearing a Background Image</h4>
+
+      <ol class="list">
+        <li>Click the <strong>Clear Background</strong> button in
+        the <strong>Style Options</strong> group: <img alt=
+        "Clear background image" src=
+        "img/screens/clear_background.png" class="screenshot"
+        height="231" width="372"><span class="caption">Figure 9:
+        <strong>Clear Background</strong> button marked for
+        identification.</span></li>
+
+        <li>The current background image is removed. This change is
+        applied after you click the <strong>OK</strong> button in
+        the RoboJournal Preferences window.</li>
+      </ol>
+
+      <div class="FYI">
+        <strong>FYI:</strong> This action causes all
+        background-related options in the <strong>Style
+        Options</strong> group to uncheck themselves and lock. Any
+        background image in the Timeline will persist until the
+        current session has ended.
+      </div>
+
+      <h3 id="style_options">Style Options</h3>
+
+      <p>The following table lists and provides a description of
+      each object in the <strong>Style Options</strong> group.</p>
+
+      <table>
+        <col>
+        <col>
+
+        <tbody>
+          <tr>
+            <td class="left">Select font and base font size</td>
+
+            <td class="right">The font and font size lists control
+            which typeface is to be used in Journal entries and its
+            point size. This font/font size is also used in the
+            Editor if the <strong>Use custom theme font in the
+            editor</strong> box on the Editor page is checked.</td>
+          </tr>
+
+          <tr>
+            <td class="left">Font color</td>
+
+            <td class="right">This value sets the current font
+            color. Colors are specified in the 6-character
+            hexadecimal format (i.e. #000000) commonly used on the
+            web.</td>
+          </tr>
+
+          <tr>
+            <td class="left">Select background image from disk</td>
+
+            <td class="right">This text field contains the path to
+            the current background image.</td>
+          </tr>
+
+          <tr>
+            <td class="left">Tile background image</td>
+
+            <td class="right">If checked, this option causes the
+            background image to be tiled on the X and Y axis in the
+            entry output pane. If unchecked, the current background
+            image is only displayed once without repeating. This
+            option is locked if no background image has been
+            set.</td>
+          </tr>
+
+          <tr>
+            <td class="left">Apply background image to entry
+            list</td>
+
+            <td class="right">
+              If checked, this feature applies the background image
+              to the Timeline.
+
+              <p>Once enabled, this feature takes effect
+              immediately after clicking the <strong>OK</strong>
+              button on the RoboJournal Preferences window.
+              However, disabling this feature requires you to
+              restart RoboJournal before the change will take
+              effect.</p>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="left">Use system colors in date/timestamp
+            box</td>
+
+            <td class="right">This feature overrides the rule that
+            applies the current font color to the background in the
+            date/time header and tag header. If checked, this
+            option forces the use of system colors even when a
+            custom theme is in use; this is ideal for those who
+            wish to use a custom font but retain default
+            colors/background settings.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="export_settings"><em>Export Settings</em> Page</h2>
+
+      <p>The options on the Export Settings page allow you to
+      control how exported entries are processed. Since this
+      function takes database content and uses it to create
+      documents in both HTML and plain-text format, any changes
+      made to the options on this page will not affect entries that
+      have already been exported.</p>
+
+      <p>The Export Settings page is displayed when you click the
+      <strong>Export Settings</strong> list item on the left side
+      of the Preferences window:</p>
+
+      <p><img alt="RoboJournal Preferences: Export Page" src=
+      "img/screens/preferences_export.png" class="screenshot"
+      height="626" width="587"><span class="caption">Figure 10:
+      RoboJournal Preferences Window &mdash; Export Settings
+      Page</span></p>
+
+      <h3 id="html_behavior">HTML Behavior</h3>
+
+      <p>The HTML Behavior group contains options that affect the
+      visual appearance of exported HTML documents. As such, these
+      settings are entirely optional. These options are
+      <em>not</em> applied to plain text files.</p>
+
+      <table border="0">
+        <col>
+        <col>
+
+        <tbody>
+          <tr>
+            <td class="left">Use rounded corners on date/timestamp
+            header</td>
+
+            <td class="right">If checked, this option causes the
+            entry exporter to apply rounded corners (using
+            Cascading Style Sheets) to the date/timestamp header in
+            both the single entry export and full journal export
+            functions. This function is purely decorative and may
+            not be visible on older browsers.</td>
+          </tr>
+
+          <tr>
+            <td class="left">Use system colors in exported HTML
+            files</td>
+
+            <td class="right">
+              If checked, this function applies the system colors
+              for highlighted text (foreground) and selected color
+              (background) to exported documents. The purpose of
+              this setting is to allow the exported text to more
+              closely resemble the entry as it is shown in the
+              entry output pane.
+
+              <p>If unchecked, black text is used for the
+              foreground and a neutral gray is used for the
+              background.</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 id="fonts_and_units">Fonts and Units</h3>
+
+      <p>RoboJournal supports separate fonts for headers and
+      entries in exported HTML documents. In normal situations,
+      sans-serif font should be used for headers and serif font for
+      text. Fonts are chosen through the <strong>Preferred HTML
+      Fonts</strong> group while sizes/units are determined by the
+      <strong>Font Sizes and Units</strong> group.</p>
+
+      <p>To select a font, click on the <strong>Select header
+      font</strong> or <strong>Select body text font</strong> lists
+      (depending on which one you want to change). The font lists
+      contain all fonts installed on your system; scroll through
+      the current list until you locate the desired font. On
+      Windows, RoboJournal uses Verdana (header) and Times New
+      Roman (body) as the default fonts.</p>
+
+      <p>Fonts can be displayed in point size (pt) or em units.
+      Point size is a fixed size traditionally used in word
+      processing and print media; 1pt is generally equivalent to
+      1/72 inch. Em units are more scalable than pt and refer to
+      current font size; 1em = 12 pt, 2em = 24pt, etc. Even though
+      1em is always equivalent to 12pt, the apparent size of em
+      increases in proportion to general font size; 1em appears
+      larger under a base font size of 120% than under a size of
+      100%. In contrast, point size always remains consistent
+      regardless of base font size. Generally, you should use pt if
+      you intend to print your exported journal entries while em
+      units are more appropriate if readability across different
+      devices is your highest priority.</p>
+
+      <p>The available font sizes depend on the unit currently in
+      use. Changing the unit assigned to header or body fonts
+      causes the affected available size list to refresh and
+      display new values appropriate for that unit. Select the
+      desired value from the list to set a font size.</p>
+
+      <h3 id="export_preview">Export Preview</h3>
+
+      <p>After changing fonts, font sizes, font units, or HTML
+      Behavior settings, you can preview your changes by clicking
+      the <strong>Preview Export Settings</strong> button. The
+      Export Preview window is displayed:</p>
+
+      <p><img alt="Export Preview Window" src=
+      "img/screens/export_preview.png" class="screenshot" height=
+      "529" width="613"><span class="caption_wide">Figure 11: The
+      Export Preview window provides a faithful representation of
+      the current export settings.</span> The Export Preview window
+      allows you to "test" new settings before saving them. The
+      current settings of the Export Settings page are used to
+      render a sample entry that contains a title, date/timestamp
+      header, and several paragraphs of body text. This feature is
+      designed to be as accurate as possible. The body text is an
+      excerpt from the classic Latin <em>Lorem Ipsum</em> text used
+      throughout the print industry since the 1500s. Click the
+      <strong>Close</strong> button to exit the Export Preview.</p>
+
+      <h2 id="mysql_settings_page"><em>MySQL Settings</em>
+      Page</h2>
+
+      <p>The MySQL page contains options that define and control
+      all settings related to MySQL. The MySQL Settings page is
+      displayed when you click the <strong>MySQL Settings</strong>
+      list item on the left side of the Preferences window:</p>
+
+      <p><img alt="RoboJournal Preferences: MySQL Page" src=
+      "img/screens/preferences_mysql.png" class="screenshot"
+      height="626" width="587"><span class="caption_wide">Figure
+      12: RoboJournal Preferences Window &mdash; MySQL Settings
+      Page</span></p>
+
+      <h3 id="default_account">Default Account</h3>
+
+      <p>The <strong>Default Account</strong> group contains
+      options that determine the default account for MySQL
+      connections, including the default <b>Host</b>,
+      <b>Database</b>, <b>Port</b>, and <b>Username</b> to use if
+      RoboJournal is configured to always suggest default settings.
+      The <strong>Default</strong> button (to the right of the
+      <b>Port</b> field) is an easy way to reset the <b>Port</b>
+      field to its default value of "3306" in case you previously
+      changed it and need to change it back.</p>
+
+      <p>RoboJournal 0.5 (and later) offers an easy way to change
+      the default database. Find the database you wish to use as
+      your default in the List of Known Journals (Figure 13) and
+      double-click its entry node. Once you have done so, your
+      chosen database is "promoted" to the new default database
+      (RoboJournal asks you to confirm your decision if
+      confirmation dialogs are enabled). Once you have set a new
+      default, the old default database is still considered to be a
+      favorite unless you decide to clear its checkbox.</p>
+
+      <h3 id="favorite_journals">Favorite Journals</h3>
+
+      <p>RoboJournal 0.5 introduces the "Favorites" system for
+      MySQL journals. Under this new design, RoboJournal
+      automatically scans the current host for databases bound to
+      your user account every time you <a href=
+      "fundamentals.html#connect">log in</a>, <a href=
+      "getting_started.html#mysql_journal">create a new
+      journal</a>, or use the <a href=
+      "gettings_started.html#js_mysql">Journal Selector</a>. This
+      list of databases is stored in the ".robojournal" folder in
+      your home directory along with your RoboJournal configuration
+      file.</p>
+
+      <p>The Favorites system records each journal (and the host it
+      is associated with) only once to ensure there are no
+      duplicate entries in the list. Each time a new database is
+      created or detected, RoboJournal automatically appends it to
+      the list of databases associated with your user account.
+      Collectively, this data is formally called the List of Known
+      Journals. The List of Known Journals is unique for each user.
+      Some users may have only one journal while others may have
+      dozens of them for various purposes.</p>
+
+      <p>Because displaying the full List of Known Journals in the
+      <a href="fundamentals.html#mysql_init">New Connection
+      dialog</a> becomes impractical as the list increases in size,
+      RoboJournal allows you to select one or more items from the
+      list to be your "favorites". The favorite journals populate
+      the <strong>Journal</strong> drop-down list on the New
+      Connection dialog&nbsp; (the current default journal is
+      always considered a favorite). For maximum effectiveness,
+      your favorite journals should be the ones you use most
+      frequently. All favorites are represented by a checked item
+      in the List of Known Journals on the MySQL Page in
+      RoboJournal Preferences:<img alt="Figure 13" src=
+      "img/screens/mysql_favorites.png" class="screenshot" height=
+      "249" width="417"><span class="caption_wide">Figure 13: The
+      MySQL Settings page conveniently displays all known journals
+      (and their hosts) that are associated with your user
+      account.</span></p>
+
+      <p>To select a journal as a favorite, click the checkbox next
+      to its name in the list. To un-favorite a journal, clear the
+      checkbox next to the appropriate entry. RoboJournal saves
+      your changes once you click the <strong>OK</strong> button on
+      the&nbsp; Preferences window. If a connection is currently
+      active, RoboJournal takes this opportunity to scan for
+      journals that no longer exist and automatically removes any
+      such journals it finds from the List of Known
+      Journals.<br></p>
+
+      <p>The default journal (for instance, "journal1" in Figure
+      13) is <em>always</em> selected as a favorite because it is
+      the journal you connect to most frequently. Also, forcing the
+      default item to be a favorite guarantees that there will
+      always be at least one item in the New Connection window's
+      <strong>Journal</strong> list. For ease of identification,
+      the default journal is represented with a gold-colored
+      database icon and bold text.</p>
+
+      <h3 id="security">Security</h3>
+
+      <p>Enabling the <strong>Allow root logins on host</strong>
+      option overrides the security protocol that prevents users
+      from logging in as the MySQL root user. This option should
+      not be used unless absolutely necessary since the root
+      account has full control over all database functions
+      (including those which have the potential to be harmful). By
+      design, RoboJournal places restrictions on regular user
+      accounts for security purposes.</p>
+
+      <div id="footer_container">
+        <div id="footer_left">
+          <img src="img/prev.png" width="16" height="16" alt=
+          "Previous" longdesc=
+          "Previous%20Documentation">&nbsp;<a href=
+          "search.html">Using the Search Function</a>
+        </div>
+
+        <div id="footer_center">
+          <a href="#top">RoboJournal Preferences</a>
+        </div>
+
+        <div id="footer_right"><a href=
+        "shortcut_keys.html">Appendix A</a>&nbsp;<img src=
+        "img/next.png" width="16" height="16" alt=
+        "Next Documentation" longdesc="Next%20Documentation"></div>
+      </div>
+
+      <p class="copyright">Copyright &copy; 2014 by Will Kraft. All
+      parts of the RoboJournal Documentation are subject to the
+      terms of the <a href=
+      "http://www.gnu.org/licenses/fdl.html">GNU Free Documentation
+      License</a>.</p>
+    </div>
+  </div>
 </body>
 </html>

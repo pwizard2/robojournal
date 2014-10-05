@@ -1,7 +1,7 @@
 /*
     This file is part of RoboJournal.
     Copyright (c) 2012 by Will Kraft <pwizard@gmail.com>.
-    MADE IN USA
+    
 
 
     RoboJournal is free software: you can redistribute it and/or modify
@@ -35,12 +35,15 @@
 #include "ui_configurationeditor.h"
 #include "ui/configurationexport.h"
 #include "ui_configurationexport.h"
+#include "ui/configurationsqlite.h"
+#include "ui_configurationsqlite.h"
 #include <QStackedWidget>
 #include "core/buffer.h"
 #include <QGraphicsView>
 #include <QDebug>
 #include <core/settingsmanager.h>
 
+//#############################################################################################################
 Newconfig::Newconfig(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Newconfig)
@@ -53,14 +56,12 @@ Newconfig::Newconfig(QWidget *parent) :
 
 }
 
-
+//#############################################################################################################
 Newconfig::~Newconfig()
 {
 
     delete ui;
 }
-
-
 
 // new default settings that can be called from any class through Config::$var.
 // These should be null unless initiated elsewhere.
@@ -132,6 +133,13 @@ bool Newconfig::new_use_misc_processing;
 bool Newconfig::new_name_in_titlebar;
 bool Newconfig::new_show_untagged_reminder;
 
+// new for 0.5 (6/5/13)
+bool Newconfig::new_use_my_journals;
+QStringList Newconfig::new_sqlite_favorites;
+QString Newconfig::new_sqlite_default;
+bool Newconfig::new_system_dic;
+bool Newconfig::new_open_editor;
+
 //##################################################################################
 // This function sets up the form (creates categories for list, etc.)
 void Newconfig::PrimaryConfig(){
@@ -140,18 +148,14 @@ void Newconfig::PrimaryConfig(){
     // hide question mark button in title bar when running on Windows
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
-//    int width=this->width();
-//    int height=this->height();
-//    this->setMaximumSize(width,height);
-//    this->setMinimumSize(width,height);
-
     // set up category list (icons and entries)
     QIcon general(":/icons/application.png");
     QIcon behavior(":/icons/book.png");
     QIcon editor(":/icons/ui-text-area.png");
     QIcon appearance(":/icons/picture.png");
     QIcon disk(":/icons/external.png");
-    QIcon mysql(":/icons/mysql_icon2.png");
+    QIcon mysql(":/icons/mariadb.png");
+    QIcon sqlite(":/icons/sqlite_icon.png");
 
     ui->Categories->clear();
 
@@ -162,33 +166,49 @@ void Newconfig::PrimaryConfig(){
     QTreeWidgetItem *settings_general = new QTreeWidgetItem(ui->Categories);
     settings_general->setIcon(0, general);
     settings_general->setText(0,"General");
+    settings_general->setToolTip(0,"General");
     settings_general->setSizeHint(0,space);
 
     QTreeWidgetItem *settings_behavior = new QTreeWidgetItem(ui->Categories);
     settings_behavior->setIcon(0, behavior);
     settings_behavior->setText(0,"Journal");
+    settings_behavior->setToolTip(0,"Journal");
     settings_behavior->setSizeHint(0,space);
 
 
     QTreeWidgetItem *settings_editor = new QTreeWidgetItem(ui->Categories);
     settings_editor->setIcon(0, editor);
     settings_editor->setText(0,"Editor");
+    settings_editor->setToolTip(0,"Editor");
     settings_editor->setSizeHint(0,space);
 
     QTreeWidgetItem *settings_appearance = new QTreeWidgetItem(ui->Categories);
     settings_appearance->setIcon(0, appearance);
     settings_appearance->setText(0,"Appearance");
+    settings_appearance->setToolTip(0,"Appearance");
     settings_appearance->setSizeHint(0,space);
 
     QTreeWidgetItem *settings_export = new QTreeWidgetItem(ui->Categories);
     settings_export->setIcon(0, disk);
     settings_export->setText(0,"Export Settings");
+    settings_export->setToolTip(0,"Export Settings");
     settings_export->setSizeHint(0,space);
 
     QTreeWidgetItem *settings_mysql = new QTreeWidgetItem(ui->Categories);
     settings_mysql->setIcon(0, mysql);
-    settings_mysql->setText(0,"MySQL Settings");
+    settings_mysql->setText(0,"MySQL/MariaDB Settings");
+    settings_mysql->setToolTip(0,"MySQL/MariaDB Settings");
     settings_mysql->setSizeHint(0,space);
+
+    // New SQLite page for version 0.5
+    QTreeWidgetItem *settings_sqlite = new QTreeWidgetItem(ui->Categories);
+    settings_sqlite->setIcon(0, sqlite);
+    settings_sqlite->setText(0,"SQLite Settings");
+    settings_sqlite->setToolTip(0,"SQLite Settings");
+    settings_sqlite->setSizeHint(0,space);
+
+    // Make sure the minimum width for categories list is wide enough to accommodate the settings_mysql object (12/1/13).
+    ui->Categories->setMinimumWidth(175);
 
     // Create a StackedWidget. The stack holds all the "pages" and (most importantly) remembers the current state of each.
     // The stack shows only one page at a time. When an item in the category list (General, Journal, etc.) is clicked
@@ -204,6 +224,9 @@ void Newconfig::PrimaryConfig(){
     stack->addWidget(a=new ConfigurationAppearance(this));
     stack->addWidget(x=new ConfigurationExport(this));
     stack->addWidget(m=new ConfigurationMySQL(this));
+    stack->addWidget(s=new ConfigurationSQLite(this));
+    // Limit how much the width of the window can be compressed. New for 0.5 (7/2/13).
+    ui->PageArea->setMinimumWidth(g->width());
 
     // put the stack in the ScrollArea.
     ui->PageArea->setWidget(stack);
@@ -226,12 +249,9 @@ void Newconfig::PrimaryConfig(){
     // Ensure the General Widget is visible when window opens.
     stack->setCurrentIndex(0);
 
-
-
-
     // restore window size from previous session
     bool usetemp=!Buffer::config_temporarysize.isEmpty();
-    cout << " Temporary size is valid : " << usetemp << endl;
+    //cout << " Temporary size is valid : " << usetemp << endl;
 
     if(usetemp && startup){
 
@@ -243,9 +263,14 @@ void Newconfig::PrimaryConfig(){
 
     startup=false;
 
+    // Add necessary padding to ui elements. New for 0.5.
+    ui->buttonBox->setContentsMargins(0,0,9,9);
 
+    // Hide SQLite options until 0.6. (2/16/14). That part isn't ready yet and developing it would push 0.5 out for several months.
+    settings_sqlite->setHidden(true);
 }
 
+//#############################################################################################################
 void Newconfig::resizeEvent(QResizeEvent *){
 
     if(!startup){
@@ -254,17 +279,14 @@ void Newconfig::resizeEvent(QResizeEvent *){
     }
 }
 
-
-
-
-
+//#############################################################################################################
 void Newconfig::on_Categories_currentItemChanged(QTreeWidgetItem *current)
 {
     int idx=ui->Categories->currentIndex().row();
 
     QString category=current->text(0);
 
-    this->setWindowTitle("Preferences -- " + category);
+    this->setWindowTitle("Preferences - " + category);
 
     if (stack->currentWidget() != 0) {
         stack->currentWidget()->setSizePolicy(QSizePolicy::Ignored,
@@ -284,7 +306,11 @@ void Newconfig::on_Categories_currentItemChanged(QTreeWidgetItem *current)
     //Buffer::config_sizechanged=false;
 }
 
+//#############################################################################################################
+// Get changes from the page classes and pass it to the SettingsManager so it can be written to configuration.
 void Newconfig::UpdateData(){
+
+    setCursor(Qt::WaitCursor);
 
     // fetch new form data from each page
     g->GetChanges();
@@ -294,18 +320,22 @@ void Newconfig::UpdateData(){
     x->GetChanges();
     m->GetChanges();
 
+    // new for 0.5:
+    s->GetChanges();
+
     MadeChanges=true;
 
     // update the settings
     SettingsManager sm;
     sm.UpdateConfig();
+
+    setCursor(Qt::ArrowCursor);
 }
 
-
+//#############################################################################################################
 void Newconfig::on_buttonBox_accepted()
 {
     UpdateData();
 }
-
 
 

@@ -71,5 +71,29 @@
         <file>icons/na.png</file>
         <file>icons/pencil2.png</file>
         <file>icons/balloon-quotation.png</file>
+        <file>icons/cross-circle.png</file>
+        <file>icons/tick-circle.png</file>
+        <file>icons/edit-quotation.png</file>
+        <file>icons/edit-alignment.png</file>
+        <file>icons/edit-alignment-right.png</file>
+        <file>icons/edit-alignment-center.png</file>
+        <file>icons/edit-underline.png</file>
+        <file>icons/edit-italic.png</file>
+        <file>icons/edit-bold.png</file>
+        <file>icons/tag--minus.png</file>
+        <file>icons/tag--pencil.png</file>
+        <file>icons/tag--arrow.png</file>
+        <file>icons/edit-code.png</file>
+        <file>icons/ui-splitter.png</file>
+        <file>icons/information.png</file>
+        <file>icons/database-gold.png</file>
+        <file>icons/task--plus.png</file>
+        <file>icons/spellcheck_add.png</file>
+        <file>icons/mariadb.png</file>
+        <file>doc/rj_help.png</file>
+        <file>doc/img/next.png</file>
+        <file>doc/img/prev.png</file>
+        <file>icons/home.png</file>
+        <file>icons/clock-history.png</file>
     </qresource>
 </RCC>

@@ -1,7 +1,7 @@
 /*
     This file is part of RoboJournal.
     Copyright (c) 2012 by Will Kraft <pwizard@gmail.com>.
-    MADE IN USA
+    
 
     RoboJournal is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
 
     You should have received a copy of the GNU General Public License
     along with RoboJournal.  If not, see <http://www.gnu.org/licenses/>.
-  */
+*/
 
 
 #include "ui/editor.h"
@@ -36,19 +36,41 @@
 #include <QColor>
 #include <QPalette>
 #include <QDesktopWidget>
-#include "ui/SpellTextEdit.h"
-#include "ui/highlighter.h"
+#include "core/hunspell/ctextcheckeredit.h"
 #include <QWidgetAction>
+#include <QSplitter>
+#include "ui/editortagmanager.h"
+#include "ui_editortagmanager.h"
+#include "core/htmlcore.h"
+#include <QSplitterHandle>
 
 QString Editor::body;
 QString Editor::title;
 int Editor::day;
 int Editor::month;
 int Editor::year;
-
+QString Editor::tags;
 
 void Editor::reject(){
     ConfirmExit();
+}
+
+// This function shows/hides the HTML code in the editor TextEdit. New for 0.5. 7/3/13.
+//############################################################################################################
+void Editor::ToggleHTML(bool checked){
+
+    QString html=ui->EntryPost->toHtml();
+    ui->EntryPost->clear();
+
+    if(checked){
+
+
+        ui->EntryPost->setPlainText(html);
+    }
+    else{
+
+        ui->EntryPost->setHtml(doc->toPlainText());
+    }
 }
 
 //#############################################################################################################
@@ -57,21 +79,29 @@ void Editor::PrimaryConfig(){
     using namespace std;
 
     if(Buffer::show_icon_labels){
-        ui->PostEntry->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->Cancel->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->CutButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->CopyButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->PasteButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->UndoButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->RedoButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->ShowErrors->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        ui->PostEntry->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->Cancel->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->CutButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->CopyButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->PasteButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->UndoButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->RedoButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->ShowErrors->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->TagButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     }
+
+    // Hide showErrors button (1/19/14).
+    ui->ShowErrors->setVisible(false);
 
     QToolBar *bar=new QToolBar(this);
     bar->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
     bar->setLayoutDirection(Qt::LeftToRight);
-    bar->setContextMenuPolicy(Qt::NoContextMenu);
-    
+
+    bar->setContextMenuPolicy(Qt::DefaultContextMenu);
+
+    QFont toolbarFont("Sans",7);
+    bar->setFont(toolbarFont);
+
     // set the lower toolbar icon size to 16x16.
     QSize s(16,16);
     bar->setIconSize(s);
@@ -102,11 +132,65 @@ void Editor::PrimaryConfig(){
     QWidgetAction* spellAction = new QWidgetAction(this);
     spellAction->setDefaultWidget(ui->ShowErrors);
 
+    // New actions for 0.5 (3/9/13)
+    QWidgetAction* boldAction = new QWidgetAction(this);
+    boldAction->setDefaultWidget(ui->bold);
 
-    // populate bar.
+    QWidgetAction* emAction = new QWidgetAction(this);
+    emAction->setDefaultWidget(ui->Italic);
+
+    QWidgetAction* uAction = new QWidgetAction(this);
+    uAction->setDefaultWidget(ui->Underline);
+
+    QWidgetAction* lpAction = new QWidgetAction(this);
+    lpAction->setDefaultWidget(ui->ParaLeft);
+
+    QWidgetAction* cpAction = new QWidgetAction(this);
+    cpAction->setDefaultWidget(ui->ParaCenter);
+
+    QWidgetAction* rpAction = new QWidgetAction(this);
+    rpAction->setDefaultWidget(ui->ParaRight);
+
+    QWidgetAction* tagAction = new QWidgetAction(this);
+    tagAction->setDefaultWidget(ui->TagButton);
+
+    QWidgetAction* bqAction = new QWidgetAction(this);
+    bqAction->setDefaultWidget(ui->Blockquote);
+
+    QWidgetAction* tcAction = new QWidgetAction(this);
+    tcAction->setDefaultWidget(ui->ShowCode);
+
+
+    /* ###############################################################################
+    Update 7/4/13: Postpone these rich text formatting actions to 0.6 because the rich text
+    display/editing system has been delayed. Hide these actions for now.
+
+    bar->addAction(boldAction);
+    bar->addAction(emAction);
+    bar->addAction(uAction);
+
+    bar->addSeparator();
+
+    bar->addAction(lpAction);
+    bar->addAction(cpAction);
+    bar->addAction(rpAction);
+    bar->addAction(bqAction);
+
+    bar->addSeparator();
+    */
+
+    ui->bold->setVisible(false);
+    ui->Italic->setVisible(false);
+    ui->Underline->setVisible(false);
+    ui->ParaLeft->setVisible(false);
+    ui->ParaCenter->setVisible(false);
+    ui->ParaRight->setVisible(false);
+    ui->ShowCode->setVisible(false);
+    //###############################################################################
+
+    // populate primary toolbar.
     bar->addAction(postAction);
     bar->addAction(cancelAction);
-
     bar->addSeparator();
 
     bar->addAction(cutAction);
@@ -120,9 +204,9 @@ void Editor::PrimaryConfig(){
 
     bar->addSeparator();
 
+    //bar->addAction(tcAction);
     bar->addAction(spellAction);
-
-
+    bar->addAction(tagAction);
 
     // Set up spacers for the Title/Date bar (masterbar). These are used to keep the title/date fields from being squished together.
 
@@ -159,11 +243,11 @@ void Editor::PrimaryConfig(){
     ui->EntryTitle->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 
 
+    // Set up the upper (master) toolbar.
     QToolBar *masterbar= new QToolBar(this);
     masterbar->setLayoutDirection(Qt::LeftToRight);
     masterbar->setContextMenuPolicy(Qt::PreventContextMenu);
     masterbar->setIconSize(s);
-
 
     masterbar->addWidget(spacer1);
     masterbar->addWidget(ui->label);
@@ -179,6 +263,12 @@ void Editor::PrimaryConfig(){
     layout->setContentsMargins(0,0,0,0);
     layout->setSpacing(1);
 
+    QVBoxLayout *left_half=new QVBoxLayout(this);
+    left_half->setContentsMargins(0,0,0,0);
+    left_half->setSpacing(1);
+
+    // New for 0.5: Create the widget that contains the editor toolbar and textarea (7/25/13).
+    QWidget *editor_panel=new QWidget(this);
 
     // create status bar and populate it
     QStatusBar *sbar=new QStatusBar(this);
@@ -195,47 +285,75 @@ void Editor::PrimaryConfig(){
 
     layout->addWidget(masterbar);
     layout->addWidget(ui->line);
+    left_half->addWidget(bar);
 
+    // (added for 0.5 -- 6/10/13) Set up vertical splitter for text area and tag area.
+    divide=new QSplitter(this);
+    divide->setOrientation(Qt::Horizontal);
 
-#ifdef _WIN32
-    // Delete the toolbar dividing line on Windows. On most Linux window managers it helps to have a divider, but
-    // on Windows it just looks bad.
-    delete ui->line;
-#endif
+    // Add tagging interface as QWidget Object (6/10/13)
+    et=new EditorTagManager(this);
+    et->setMinimumWidth(275);
+    et->setMaximumWidth(275);
 
-
-    layout->addWidget(bar,1);
-
+    EditorTagManager::standalone_tagger=false; // false b/c this EditorTagManager is not contained in the standalone Tagger interface
+    //layout->addWidget(bar,1);
 
     // Decide which TextEdit to use depending on whether user enabled spellcheck in preferences:
 
     // Option 1: Use Jan Sundermeyer's spellcheck-enabled editor thingy.
     if(Buffer::use_spellcheck){
 
-        spell=new SpellTextEdit(this,Buffer::current_dictionary);
-        high=new Highlighter(spell->document(),Buffer::current_dictionary,true);
-
-        spell->setDict(Buffer::current_dictionary);
-        high->setDict(Buffer::current_dictionary);
+        spell=new CTextCheckerEdit();
 
         // allow the app to detect when the SpellTextEdit adds a word or has its text changed in any way.
         // The second function is essential for the word count feature to work.
-        connect(spell,SIGNAL(addWord(QString)),high,SLOT(slot_addWord(QString)));
+        //connect(spell,SIGNAL(addWord(QString)), this,SLOT(slot_addWord(QString)));
         connect(spell, SIGNAL(textChanged()), this, SLOT(on_spell_textChanged()));
 
-        layout->addWidget(spell,true);
+        left_half->addWidget(spell,true);
 
+        editor_panel->setLayout(left_half);
+
+        divide->insertWidget(0,editor_panel);
+        divide->insertWidget(1,et);
+
+#ifdef _WIN32
+        spell->setFrameStyle(QFrame::WinPanel | QFrame::Sunken);
+#endif
+
+        // Hide the editor widget we're not using. If we don't hide it, the user can see it
+        // behind the splitter. Hiding it is safer than deleting it (11/30/13).
+        ui->EntryPost->setVisible(false);
     }
 
     // Option 2: If we're not using spellcheck, just use a regular QTextEdit. This is unchanged from =< 0.3.
     else{
-        layout->addWidget(ui->EntryPost,true);
 
+        left_half->addWidget(ui->EntryPost,true);
+        editor_panel->setLayout(left_half);
+
+        divide->insertWidget(0,editor_panel);
+        divide->insertWidget(1,et);
+
+#ifdef _WIN32
+        ui->EntryPost->setFrameStyle(QFrame::WinPanel | QFrame::Sunken);
+#endif
     }
 
+    layout->addWidget(divide,1);
 
     layout->addWidget(sbar);
     this->setLayout(layout);
+
+    //Set up splitter sizes
+    toggle_off.append(100);
+    toggle_off.append(0);
+
+    toggle_on.append(100);
+    toggle_on.append(this->height()/4);
+
+    divide->setSizes(toggle_off);
 
 
     // restore window size from previous session
@@ -259,7 +377,7 @@ void Editor::PrimaryConfig(){
         }
         else{
             ui->ShowErrors->setChecked(false);
-            high->enableSpellChecking(false);
+            //high->enableSpellChecking(false);
         }
 
     }
@@ -270,6 +388,9 @@ void Editor::PrimaryConfig(){
     if(Buffer::editmode){
         ui->Cancel->setText("Discard Changes");
         ui->Cancel->setToolTip("Discard Changes");
+
+        // 7/12/13: Get current list of tags
+        et->LoadTags(Buffer::editentry);
     }
     else{
         ui->Cancel->setText("Discard Entry");
@@ -278,219 +399,39 @@ void Editor::PrimaryConfig(){
 
     // clear startup mode.
     startup=false;
+
+    // -- Will Kraft, 6/12/13: New for version 0.5.
+    // This signal/slot pair connects the divider to the Manage Tags toolbar button. If the user drags the
+    // slider up or down, emit a signal to toggle the toolbar button on or off.
+    connect(divide, SIGNAL(splitterMoved(int,int)), this, SLOT(splitterMoved()));
+
+    doc=new QTextDocument();
+
+    // 6/16/13: Make the splitter easier to see. Windows 7 renders these things as flat by default so the idea
+    // is to emulate the old-school raised splitter bar appearance so the user will know something is there.
+    QSplitterHandle *handle=divide->handle(1);
+    QVBoxLayout *h_layout = new QVBoxLayout(handle);
+    h_layout->setSpacing(0);
+    h_layout->setMargin(0);
+    h_layout->setContentsMargins(0,0,0,0); // make sure the splitter goes all the way to the edge of the frame
+
+    //    QFrame *line = new QFrame(handle);
+    //    line->setFrameStyle(QFrame::WinPanel | QFrame::Raised);
+    //    line->setLineWidth(3);
+    //    h_layout->addWidget(line);
+
+    // Make the toolbars flat because the raised borders look really ugly on Windows. --Will Kraft (11/30/13).
+    // 12-21/13: Use this appearance for all operating systems-- remode #ifdef blocks.
+    bar->setStyleSheet("QToolBar { border: 0px }");
+    masterbar->setStyleSheet("QToolBar { border: 0px }");
+
+
+    //tighten up toolbar spacing for 0.5 (7/15/13)
+    QSize barSize(16,16);
+    masterbar->setIconSize(barSize);
+    bar->setIconSize(barSize);
 }
 
-//#############################################################################################################
-// This function applies Post-processing features to the body text; new for 0.4.
-QString Editor::Do_Post_Processing(QString rawtext, int wordcount){
-    using namespace std;
-
-    body=rawtext;
-
-
-    // REMINDER: Escape all regexp character classes (\\w) because Qt uses backslash-style regexp;
-    // the compiler always eats the first backslash so stuff like "\w" won't work.
-
-    // replace -- with &mdash;
-
-    if(Buffer::use_html_hyphens){
-
-        // replace 2 >= adjacent dashes with a clean mdash
-        body=body.replace(QRegExp("\\s*-{2,}\\s*"),"&mdash;");
-
-
-
-        //use En Dash for digits
-        QRegExp shortdash("((\\d+)-(\\d+)(-+)(\\d+))|((\\d+)-(\\d+))");
-        QStringList digits;
-
-        int d_count = 0;
-        int d_pos = 0;
-        while ((d_pos = shortdash.indexIn(body, d_pos)) != -1) {
-            ++d_count;
-            d_pos += shortdash.matchedLength();
-            digits << shortdash.cap(0);
-        }
-
-        for(int d=0; d < digits.size(); d++){
-            QString orig=digits.at(d);
-            //cout << "Match: " << open_match.at(i).toStdString() << endl;
-            QString digit=orig.replace("-","&ndash;");
-            //cout << fixedquote.toStdString() << endl;
-            body=body.replace(digits.at(d),digit);
-        }
-    }
-
-    // replace straight quotes with curvy quotes...this just looks better.
-    // This works by using Regular Expressions to extract quotes from the body text and replace them with
-    // HTML-friendly quotes.
-
-    if(Buffer::use_smart_quotes){
-
-        QRegExp openquotes("\"\\w", Qt::CaseInsensitive);
-        QStringList open_match;
-
-        int o_count = 0;
-        int o_pos = 0;
-        while ((o_pos = openquotes.indexIn(body, o_pos)) != -1) {
-            ++o_count;
-            o_pos += openquotes.matchedLength();
-            open_match << openquotes.cap(0);
-
-        }
-
-        for(int i=0; i < open_match.size(); i++){
-            QString orig=open_match.at(i);
-            //cout << "Match: " << open_match.at(i).toStdString() << endl;
-            QString fixedquote=orig.replace("\"","&ldquo;");
-            //cout << fixedquote.toStdString() << endl;
-            body=body.replace(open_match.at(i),fixedquote);
-        }
-
-        QRegExp closequotes("\\w[?!.:,;]?\"", Qt::CaseInsensitive);
-        QStringList close_match;
-
-        int c_count = 0;
-        int c_pos = 0;
-        while ((c_pos = closequotes.indexIn(body, c_pos)) != -1) {
-            ++c_count;
-            c_pos += closequotes.matchedLength();
-            close_match << closequotes.cap(0);
-        }
-
-        for(int j=0; j < close_match.size(); j++){
-            QString orig=close_match.at(j);
-            //cout << "Match: " << close_match.at(j).toStdString() << endl;
-            QString fixedquote=orig.replace("\"","&rdquo;");
-            //cout << fixedquote.toStdString() << endl;
-            body=body.replace(close_match.at(j),fixedquote);
-        }
-
-
-        //Do apostrophes and single quotes in the middle of words.
-        QRegExp apos("(\\w+'\\w+'?\\w*)|(\\w+')",Qt::CaseInsensitive);
-        QStringList apos_match;
-
-        int a_count = 0;
-        int a_pos = 0;
-        while ((a_pos = apos.indexIn(body, a_pos)) != -1) {
-            ++a_count;
-            a_pos += apos.matchedLength();
-            apos_match << apos.cap(0);
-        }
-
-        for(int b=0; b < apos_match.size(); b++){
-            QString orig=apos_match.at(b);
-            //cout << "Match: " << apos_match.at(b).toStdString() << endl;
-            QString fixedquote=orig.replace("\'","&rsquo;");
-            //cout << fixedquote.toStdString() << endl;
-            body=body.replace(apos_match.at(b),fixedquote);
-        }
-    }
-
-
-
-    // clean up extra whitespace if the feature is enabled in config AND wordcount is less than 1000. It's a totally arbitrary
-    //  amount that may be too low but the program hangs if the entry is too long.
-    if((Buffer::trim_whitespace) && (wordcount < 1000)){
-
-        // clean up extra linebreaks between paragraphs. QTextEdit usually uses \n (even on windows) but look for \r\n too
-        // just to be safe.
-        QRegExp linebreak("[\\r\\n]+|[\\n]+", Qt::CaseInsensitive);
-        QStringList break_match;
-        int w_count = 0;
-        int w_pos = 0;
-        while ((w_pos = linebreak.indexIn(body, w_pos)) != -1) {
-            ++w_count;
-            w_pos += linebreak.matchedLength();
-            break_match << linebreak.cap(0);
-        }
-
-        for(int b=0; b < break_match.size(); b++){
-
-            body=body.replace(break_match.at(b),"\n\n");
-        }
-
-        // Remove redundant spaces between words. This isn't noticible in HTML mode but it does interfere
-        // with the editor and plain-text exporting. We're using a Regex and not QString::simplified b/c
-        // in addition to spaces QString::simplified() also eats the line breaks we want to keep.
-        QRegExp spaces("[ ]+[ ]+");
-        QStringList space_match;
-
-        int s_count = 0;
-        int s_pos = 0;
-        while ((s_pos = spaces.indexIn(body, s_pos)) != -1) {
-            ++s_count;
-            s_pos += spaces.matchedLength();
-            space_match << spaces.cap(0);
-        }
-
-        for(int c=0; c < space_match.size(); c++){
-            body=body.replace(space_match.at(c)," "); // replace the regexp matches with a single space
-        }
-
-
-        // Remove trailing whitespace from the end of the body text.
-        while(body.endsWith("\n")){
-            body=body.remove(body.length()-2,2);
-        }
-    }
-
-
-    // Apply miscellaneous formatting options if config specifies it. Mostly this is cleaning up after sloppy writers.
-    if(Buffer::use_misc_processing){
-
-        // get rid of extra periods (.. or . .) but NOT those intended to be ellipsis. DO NOT USE--- BROKEN!
-        //body=body.replace(QRegExp("(( )?(\\.)( )*(\\.))|(( )(\\.))"),". ");
-
-        // replace 3 >= adjacent dots with ellipsis char.
-        body=body.replace(QRegExp("(\\.)(\\.+)(\\s*)"),"&hellip;");
-
-        // apply superscript to the "st" in 1st, etc.
-        QRegExp notation("\\d+(st|nd|rd|th)",Qt::CaseInsensitive);
-        QStringList notation_match;
-
-        int n_count = 0;
-        int n_pos = 0;
-        while ((n_pos = notation.indexIn(body, n_pos)) != -1) {
-            ++n_count;
-            n_pos += notation.matchedLength();
-            notation_match << notation.cap(0);
-            //cout << "Found match: " << notation.cap(0).toStdString() << endl;
-        }
-
-        for(int n=0; n < notation_match.size(); n++){
-            QString next=notation_match.at(n);
-            next=next.toLower();
-            //cout << "Next: " << next.toStdString() << endl;
-            QString fixed;
-
-            if((next.contains("st")) || (next.contains("ST"))){
-                fixed=next.section("",0,next.length()-2);
-                fixed=fixed + "<sup>st</sup>";
-            }
-
-            if((next.contains("nd")) || (next.contains("ND"))){
-                fixed=next.section("",0,next.length()-2);
-                fixed=fixed + "<sup>nd</sup>";
-            }
-
-            if((next.contains("rd")) || (next.contains("RD"))){
-                fixed=next.section("",0,next.length()-2);
-                fixed=fixed + "<sup>rd</sup>";
-            }
-
-            if((next.contains("th")) || (next.contains("TH"))){
-                fixed=next.section("",0,next.length()-2);
-                fixed=fixed + "<sup>th</sup>";
-            }
-
-            body=body.replace(next,fixed);
-        }
-    }
-
-    return body;
-}
 
 //#############################################################################################################
 // Set fonts in editor
@@ -517,9 +458,6 @@ void Editor::Set_Editor_Fonts(){
         else{
             ui->EntryPost->setFont(font);
         }
-
-
-
     }
     else{
 
@@ -609,8 +547,6 @@ Editor::Editor(QWidget *parent) :
         SetDate();
     }
 
-
-
     // Only zero everything out if we are creating a new entry. Otherwise, DocumentStats()
     // gets called when the editor starts up in edit mode and the proper values are pre-loaded.
 
@@ -669,6 +605,9 @@ void Editor::LoadEntry(QString entry){
         body=body.replace("&rsquo;","\'");
         body=body.replace(QRegExp("</?sup>"),"");
 
+        //0.5 bugfix (9/8/13) Convert nbsp back to tab stops.
+        body=body.replace(QRegExp("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"), "\t");
+
         ui->EntryTitle->setText(list.at(0));
 
         if(Buffer::use_spellcheck){
@@ -680,12 +619,10 @@ void Editor::LoadEntry(QString entry){
             ui->EntryPost->setPlainText(body);
         }
 
-
         QDate postdate;
         postdate.setDate(list.at(3).toInt(),list.at(1).toInt(),list.at(2).toInt());
 
         ui->EntryDate->setDate(postdate);
-
 
         // Do document statistics
         DocumentStats();
@@ -714,11 +651,13 @@ bool Editor::UpdateEntry(){
     //cout << "word count: " + count.toStdString() << endl;
     int wordcount=count.toInt();
 
+    HTMLCore h;
+
     if(Buffer::use_spellcheck){
-        body=Do_Post_Processing(spell->toPlainText(), wordcount);
+        body=h.Do_Post_Processing(spell->toPlainText(), wordcount);
     }
     else{
-        body=Do_Post_Processing(ui->EntryPost->toPlainText(), wordcount);
+        body=h.Do_Post_Processing(ui->EntryPost->toPlainText(), wordcount);
     }
 
     QDate post_date=ui->EntryDate->date();
@@ -727,8 +666,12 @@ bool Editor::UpdateEntry(){
     int month=post_date.month();
     int year=post_date.year();
 
+    // Get the tags from the EditorTagManager. New for 0.5, 6/29/13.
+    et->disable_filtering(); //disable tag filtering first (10/16/13).
+    QString taglist=et->HarvestTags();
+
     MySQLCore m;
-    bool success=m.Update(title,month,day,year,body,Buffer::editentry);
+    bool success=m.Update(title,month,day,year,body,Buffer::editentry,taglist);
     return success;
 
 }
@@ -752,11 +695,19 @@ bool Editor::NewEntry(){
     //cout << "word count: " + count.toStdString() << endl;
     int wordcount=count.toInt();
 
+    HTMLCore h;
+
     if(Buffer::use_spellcheck){
-        Editor::body=Do_Post_Processing(spell->toPlainText(),wordcount);
+        Editor::body=h.Do_Post_Processing(spell->toPlainText(),wordcount);
     }
     else{
-        Editor::body=Do_Post_Processing(ui->EntryPost->toPlainText(),wordcount);
+
+        QString body_text=ui->EntryPost->toPlainText();
+
+        //body_text=h.ProcessEntryFromEditor(body_text);
+
+        Editor::body=h.Do_Post_Processing(body_text,wordcount);
+
     }
 
 
@@ -768,15 +719,47 @@ bool Editor::NewEntry(){
     QRegExp badchars("[,]+|[\"]+|[\']+");
     title=title.remove(badchars);
 
-
     Editor::title=title;
     QDate post_date=ui->EntryDate->date();
-
 
     Editor::day=post_date.day();
     Editor::month=post_date.month();
     Editor::year=post_date.year();
 
+    // Get the tags from the EditorTagManager. New for 0.5, 6/29/13.
+
+    QString tags=et->HarvestTags();
+
+    if(!tags.isEmpty()){
+        Editor::tags=tags;
+    }
+    else{
+
+        // warn if there are no tags when a new entry is saved --Will Kraft (3/9/14).
+
+        if((Buffer::showwarnings) &&(tags.isEmpty())){
+            QMessageBox m;
+            int choice=m.question(this,"RoboJournal","You are about to add a new entry without any tag data. Do you really want to do this?",
+                                  QMessageBox::Yes|QMessageBox::No,QMessageBox::No);
+            switch(choice){
+
+                case QMessageBox::No:
+
+                    // Show tag pane.
+                    divide->setSizes(toggle_on);
+                    ui->TagButton->setChecked(true);
+                    return false;
+                    break;
+
+                case QMessageBox::Yes:
+                    Editor::tags="Null";
+                    break;
+            }
+        }
+        else{
+            Editor::tags="Null";
+        }
+    }
 
     bool success=false;
     cout << "OUTPUT: Adding new entry \"" + Editor::title.toStdString() + "\" to database " << Buffer::database_name.toStdString() << "...";
@@ -788,8 +771,6 @@ bool Editor::NewEntry(){
 
     if(success){
         cout << "SUCCESS!" << endl;
-
-
     }
     else{
         cout << "FAILED" << endl;
@@ -800,19 +781,24 @@ bool Editor::NewEntry(){
 
 //#############################################################################################################
 Editor::~Editor()
-{
-
-
+{   
     delete ui;
 }
 
 //#############################################################################################################
 //get current date
 void Editor::SetDate(){
-    ui->EntryDate->setDate(QDate::currentDate());
 
+    // Set custom date if date override command line args are enabled.
+    if(Buffer::use_date_override){
+        ui->EntryDate->setDate(Buffer::override_date);
+    }
+    else{
+        ui->EntryDate->setDate(QDate::currentDate());
+    }
 }
 
+//#############################################################################################################
 // Automatically update window title with post title
 void Editor::setTitle(QString title){
     this->setWindowTitle(title + " - RoboJournal");
@@ -911,6 +897,8 @@ QString Editor::WordCount(QString data){
 void Editor::on_EntryPost_textChanged()
 {
     DocumentStats();
+
+    doc->setHtml(ui->EntryPost->toHtml());
 }
 
 //#############################################################################################################
@@ -1036,7 +1024,6 @@ void Editor::on_PostEntry_clicked()
                 }
             }
         }
-
     }
 
     // Non-Spellcheck Mode
@@ -1084,11 +1071,71 @@ void Editor::on_PostEntry_clicked()
 void Editor::on_ShowErrors_toggled(bool checked)
 {
     if(checked){
-        high->enableSpellChecking(true);
+
 
     }
     else{
-        high->enableSpellChecking(false);
+        //high->enableSpellChecking(false);
 
+    }
+}
+
+void Editor::on_TagButton_toggled(bool checked)
+{
+    if(checked){
+        divide->setSizes(toggle_on);
+    }
+    else{
+        divide->setSizes(toggle_off);
+    }
+}
+
+void Editor::splitterMoved(){
+    if(divide->sizes().at(1)==0) {
+        ui->TagButton->setChecked(false);
+    }
+    else{
+        ui->TagButton->setChecked(true);
+    }
+}
+
+void Editor::on_ShowCode_toggled(bool checked)
+{
+    ToggleHTML(checked);
+
+}
+
+void Editor::on_Italic_toggled(bool checked)
+{
+    if(Buffer::use_spellcheck){
+
+    }
+    else{
+        ui->EntryPost->setFontItalic(checked);
+    }
+}
+
+void Editor::on_Underline_toggled(bool checked)
+{
+    if(Buffer::use_spellcheck){
+
+    }
+    else{
+        ui->EntryPost->setFontUnderline(checked);
+    }
+}
+
+void Editor::on_bold_toggled(bool checked)
+{
+    if(Buffer::use_spellcheck){
+
+    }
+    else{
+        if(checked){
+            ui->EntryPost->setFontWeight(87); // bold text
+        }
+        else{
+            ui->EntryPost->setFontWeight(50); // normal text
+        }
     }
 }

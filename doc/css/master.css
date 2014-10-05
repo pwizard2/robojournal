@@ -3,6 +3,9 @@ body{
 	margin-left: 0px;
 	margin-top: 2px;
 	margin-right: 0px;
+	font-family: Constantia, Georgia, Freeserif, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif",  serif;
+	font-size: 17px;
+	overflow-x:hidden;
 }
 	
 .content{
@@ -10,6 +13,14 @@ body{
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 10px;
+}
+	
+a{
+	color: blue;
+}
+
+a:hover{
+	color: red;
 }
 	
 .main_text{
@@ -52,6 +63,10 @@ body{
 	text-decoration: none;
 }
 
+.menuitem img{
+	vertical-align: middle;
+	 margin-bottom: 8px;
+}
 
 .backbutton{
 	color: #ffffff;
@@ -137,6 +152,8 @@ p{
 	margin-bottom: 20px;
 }
 
+
+
 .list{
 	width: 95%;
 	border-left: solid 10px #e2e2e2;
@@ -216,16 +233,16 @@ p{
 }
 
 .FYI{
-        border-top: solid 2px #A0A69E;
-	border-bottom: solid 2px #A0A69E;
-        padding: 10px;
-        margin-left: auto;
-        margin-right: auto;
-        width: 80%;
-        font-size: 17px;
-        font-family: "Segoe UI", Candara, Freesans, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
-        margin-top: 40px;
-        margin-bottom: 40px;
+	  border-top: solid 2px #A0A69E;
+	  border-bottom: solid 2px #A0A69E;
+	  padding: 10px;
+	  margin-left: auto;
+	  margin-right: auto;
+	  width: 80%;
+	  font-size: 17px;
+	  font-family: "Segoe UI", Candara, Freesans, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+	  margin-top: 40px;
+	  margin-bottom: 40px;
         
 }
 
@@ -389,8 +406,8 @@ p.footnote{
 	font-family: inherit;
 	font-size: 90%;
 	font-weight: normal;
-	width: 85%;
 	display: block;
+	margin-left: 20px;
 }
 
 #footer_container {
@@ -431,6 +448,10 @@ p.footnote{
   
 }
 
+#footer_right img{
+	padding-top: 4px;
+}
+
 p.copyright{
 	font-family: inherit;
 	font-size: 15px;
@@ -439,7 +460,36 @@ p.copyright{
 }
 
 .masthead{
-	margin-left: 20px;
+	position: relative;
+	left: 20px;
+}
+
+.doc_version{
+	font-family: "Segoe UI", Candara, Freesans, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+	text-align: left;
+	margin-top: -30px;
+	margin-bottom: 0px;
+	position: absolute;
+	float: left;
+	left: 0px;
+	z-index: 999;
+}
+
+.bullets{
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: normal;
+	text-align: left;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	list-style-type: square;
+}
+
+.bullets li{
+	margin-bottom: 10px;
+	margin-top: 10px;
 }
 
 .doc_version{

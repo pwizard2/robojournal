@@ -1,7 +1,7 @@
 /*
     This file is part of RoboJournal.
     Copyright (c) 2012 by Will Kraft <pwizard@gmail.com>.
-    MADE IN USA
+    
 
     RoboJournal is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -32,18 +32,56 @@
 #include <QDir>
 #include <QFile>
 #include "ui/newconfig.h"
+#include "core/favoritecore.h"
+
+
 
 /* This class is meant to be a full *replacement* of the ConfigManager class from RoboJournal 0.1-0.3.
  * Once SettingManager has been fully implemented, ConfigManager is to be deprecated and removed
  * from the source package. (deprecation completed by 2/26/13)
  */
 
-SettingsManager::SettingsManager(){}
+SettingsManager::SettingsManager(){
+    ok_param="[OK]";
+    fail_param="[FAILED]";
+}
+
+//###################################################################################################
+// Remember the page most recently viewed in the documentation window so the user can pick up where
+// he/she left off on the previous session.  New for 0.5.  --Will Kraft (7/20/14).
+void SettingsManager::Save_HelpDoc(QString path){
+
+    QString config_path=QDir::homePath()+ QDir::separator() + ".robojournal"+ QDir::separator() + "robojournal.ini";
+    QSettings settings(config_path,QSettings::IniFormat);
+
+    settings.beginGroup("Behavior");
+    settings.setValue("help_page", path);
+    settings.endGroup();
+}
+
+
+//###################################################################################################
+// Save the current path ($path) to MySQLDump. This is used exclusively on Windows so RoboJournal can
+// remember where MySQLdump is. Unnecessary on linux b/c mysqldump is always stored in /usr/bin. --Will Kraft, (9/2/13).
+void SettingsManager::Save_Mysqldump_Path(QString path){
+
+    QString config_path=QDir::homePath()+ QDir::separator() + ".robojournal"+ QDir::separator() + "robojournal.ini";
+    QSettings settings(config_path,QSettings::IniFormat);
+
+    settings.beginGroup("Behavior");
+    settings.setValue("mysqldump_path_win",path);
+    settings.endGroup();
+
+    // Save and reload config after making changes because this function is called during app runtime.
+    settings.sync();
+    LoadConfig(false);
+}
+
 
 //###################################################################################################
 // Saves the current splitter position from the MainWindow. This allows someone to customize it once
 // and have it stay that way. This should only be called when the mainwindow closes.
-// New feature for 0.5-- Will Kraft,  6/21/13. Backported to 0.4.2 (9/13/13).
+// New feature for 0.5. -- Will Kraft,  6/21/13
 
 void SettingsManager::SaveSplitterPos(QByteArray value){
 
@@ -56,6 +94,7 @@ void SettingsManager::SaveSplitterPos(QByteArray value){
 }
 
 //###################################################################################################
+
 // Save the behavior if the user opts to disable the tagging nag screen. This function should NOT
 // be called from the preferences window!  New for 0.4.1; 2/26/13
 void SettingsManager::SaveNagPreferences(){
@@ -64,12 +103,12 @@ void SettingsManager::SaveNagPreferences(){
     QSettings settings(config_path,QSettings::IniFormat);
 
     settings.beginGroup("Behavior");
-      settings.setValue("show_untagged_reminder", Buffer::show_reminder_next_time);
+    settings.setValue("show_untagged_reminder", Buffer::show_reminder_next_time);
     settings.endGroup();
 
-    // Save and Reload Config after making changes
+    // Save and reload config after making changes because this function is called during app runtime.
     settings.sync();
-    LoadConfig();
+    LoadConfig(false);
 
 }
 
@@ -83,7 +122,6 @@ void SettingsManager::SavePreviewSize(QSize geo){
     settings.beginGroup("Appearance");
     settings.setValue("preview_size", geo);
     settings.endGroup();
-
 }
 
 
@@ -98,8 +136,6 @@ void SettingsManager::SaveConfigSize(QSize geo){
     settings.beginGroup("Appearance");
     settings.setValue("config_size", geo);
     settings.endGroup();
-
-
 }
 
 
@@ -117,7 +153,7 @@ void SettingsManager::SaveEditorSize(QSize geo){
 
     //settings.sync();
 
-   // LoadConfig();
+    // LoadConfig();
 }
 
 //###################################################################################################
@@ -140,49 +176,44 @@ void SettingsManager::SaveMainWindowSize(QByteArray geo){
 // install dictionaries to ~/.robojournal folder if necessary. This function makes sure the dictionaries
 // are available and reinstalls them if necessary. New for 0.4.
 void SettingsManager::InstallDictionaries(){
+
     using namespace std;
 
     QString path= QDir::homePath() + QDir::separator() + ".robojournal" + QDir::separator();
+    path=QDir::toNativeSeparators(path);
 
     QFile EN_dict(path + "en_US.dic");
     QFile EN_dict_aff(path +  "en_US.aff");
 
-
+    cout << "OUTPUT: Searching for default (US English) dictionary.........";
 
     if((!EN_dict.exists()) || (!EN_dict_aff.exists())){
 
-        //qt_ntfs_permission_lookup++;
+        cout << fail_param << endl;
 
         QFile d1(":/en_US.dic");
         d1.copy(":/en_US.dic", path + "en_US.dic");
 
-
-
         QFile d2(":/en_US.aff");
         d2.copy(":/en_US.aff", path + "en_US.aff");
 
-
-        cout << "OUTPUT: Reinstalled (English US) dictionaries to" << path.toStdString() << endl;
-
-        //qt_ntfs_permission_lookup--;
-
+        cout << "OUTPUT: Reinstalled (English US) dictionaries to " << path.toStdString() << endl;
     }
-    else{
-        cout << "OUTPUT: Found default (English US) dictionary at" << path.toStdString() << endl;
 
-        if((!EN_dict.isWritable()) || (!EN_dict_aff.isWritable())){
-            cout << "OUTPUT: Making sure the dictionary is writable........";
+    else{
+        cout << ok_param << endl;
+
+        if((!EN_dict.isWritable()) && (!EN_dict_aff.isWritable())){
+            cout << "OUTPUT: Making sure the dictionary is writable................";
             EN_dict.setPermissions(QFile::ReadOwner | QFile::WriteOwner | QFile::ReadGroup | QFile::ReadOther);
             EN_dict_aff.setPermissions(QFile::ReadOwner | QFile::WriteOwner | QFile::ReadGroup | QFile::ReadOther);
-            cout << "DONE!" << endl;
+            cout << ok_param << endl;
         }
         else{
             cout << "OUTPUT: Dictionary is properly writable. Proceeding with startup." << endl;
         }
     }
-
 }
-
 
 //###################################################################################################
 // Get the user's full name
@@ -265,6 +296,13 @@ void SettingsManager::NewConfig(QString host, QString db_name, QString port, QSt
     settings.setValue("entry_range", 4);
     settings.endGroup();
 
+    // New SQLite options for RoboJournal 0.5
+    settings.beginGroup("SQLite");
+    settings.setValue("use_my_journals", true);
+    settings.setValue("sqlite_favorites","");
+    settings.setValue("sqlite_default","");
+    settings.endGroup();
+
     settings.beginGroup("Behavior");
     settings.setValue("toolbar_location", 1);
     settings.setValue("allow_root_login", false);
@@ -279,13 +317,15 @@ void SettingsManager::NewConfig(QString host, QString db_name, QString port, QSt
     settings.setValue("set_date_format", 1);
     settings.setValue("enable_rich_text", false);
     settings.setValue("use_dow", true);
+    settings.setValue("open_editor", true);
 
-
+    // Update for 0.5: never enable tooblar button text by default. This feature is actually
+    // deprecated as of 6/21/13 because it wastes too much space. Undeprecated b/c the font issue has been solved now.
     if((!Buffer::show_icon_labels) && (!Buffer::firstrun)){
-       settings.setValue("enable_toolbar_button_text", false);
+        settings.setValue("enable_toolbar_button_text", false);
     }
     else{
-       settings.setValue("enable_toolbar_button_text", true);
+        settings.setValue("enable_toolbar_button_text", false);
     }
 
     settings.setValue("autoload_recent_entry", true);
@@ -301,7 +341,7 @@ void SettingsManager::NewConfig(QString host, QString db_name, QString port, QSt
     // Bugfix: Keep dictionary and AFF blank in new configurations.
     settings.setValue("spellcheck_dictionary", "");
     settings.setValue("spellcheck_dictionary_aff", "");
-
+    settings.setValue("system_dictionaries",false);
     settings.setValue("misc_processing",true);
     settings.setValue("name_in_titlebar", true);
     settings.setValue("show_untagged_reminder", true);
@@ -344,7 +384,7 @@ void SettingsManager::NewConfig(QString host, QString db_name, QString port, QSt
         settings.setValue("use_full_name", false);
     }
     else{
-       settings.setValue("use_full_name", true);
+        settings.setValue("use_full_name", true);
     }
 
     settings.endGroup();
@@ -360,12 +400,19 @@ void SettingsManager::NewConfig(QString host, QString db_name, QString port, QSt
     // Install dictionaries now so they are available immediately after firstrun is finished.
     InstallDictionaries();
 
+    //Create new favorites database. Meant to be a 5.0 bugfix to fix a problem that kept this
+    // from happening during firstrun --Will Kraft (5/31/14).
+    FavoriteCore f;
+    f.Setup_Favorites_Database();
+
     // Firstrun is now finished, allow the program to load normally by reading new config.
-    LoadConfig();
+    LoadConfig(true);
 }
 
+
 //##################################################################################
-void SettingsManager::LoadConfig(){
+// Load the current raw config data from the robojournal.ini file and buffer it.
+void SettingsManager::LoadConfig(bool startup){
     using namespace std;
 
     bool reload=false;
@@ -374,19 +421,25 @@ void SettingsManager::LoadConfig(){
 
     // construct a file object where the config file is supposed to be.
     QFile config(config_path);
-    cout << "OUTPUT: Searching for config file..." << endl;
+
+    if(startup)
+        cout << "OUTPUT: Searching for config file.............................";
 
     // if config file exists, read its contents
     if(config.exists()){
 
+            if(startup)
+        cout << ok_param << endl;
+
 #ifdef _WIN32
         // Use backslashes to separate dirs on Windows.
-        config_path=config_path.replace("/","\\");
+        config_path=QDir::toNativeSeparators(config_path);
 #endif
 
-        cout << "OUTPUT: Config file found: "<< config_path.toStdString()  << endl;
+        //cout << "OUTPUT: Config file found: "<< config_path.toStdString()  << endl;
         QSettings settings(config_path,QSettings::IniFormat);
-        cout << "OUTPUT: Buffering data from config file...";
+        if(startup)
+            cout << "OUTPUT: Buffering data from config file.......................";
 
         Buffer::toolbar_pos = settings.value("Behavior/toolbar_location").toInt();
         Buffer::allowroot = settings.value("Behavior/allow_root_login").toBool();
@@ -444,6 +497,7 @@ void SettingsManager::LoadConfig(){
         Buffer::use_spellcheck = settings.value("Behavior/use_spellcheck").toBool();
         Buffer::current_dictionary= settings.value("Behavior/spellcheck_dictionary").toString();
         Buffer::current_dictionary_aff = settings.value("Behavior/spellcheck_dictionary_aff").toString();
+        Buffer::system_dic=settings.value("Behavior/system_dictionaries").toBool();
 
         int font_value=settings.value("Appearance/font_size").toInt();
 
@@ -542,17 +596,24 @@ void SettingsManager::LoadConfig(){
         // 0.4.2 ( backported to 0.4.2 on 9/13/13)
         Buffer::mw_splitter_size=settings.value("Behavior/mw_splitter_position").toByteArray(); // added 6/21/13
 
+
         if(reload){
-            LoadConfig();
+            LoadConfig(false);
         }
 
-        cout << "Done!" << endl;
-        cout << "OUTPUT: Stage 1 completed, proceeding to Stage 2..." << endl;
+        if(startup){
+            cout << ok_param << endl;
+
+            cout << "OUTPUT: Stage 1 completed, proceeding to Stage 2." << endl;
+        }
     }
 
     // if config doesn't exist, rebuild it.
     else{
-        cout << "WARNING: Config file does not exist! Starting first run mode..." << endl;
+        if(startup){
+            cout << fail_param << endl;
+            cout << "OUTPUT: Starting first run mode to replace missing configuration." << endl;
+        }
 
         // give the journal creator a way to know its the first run
         Buffer::firstrun=true;
@@ -581,6 +642,14 @@ void SettingsManager::UpdateConfig(){
     settings.setValue("port", Newconfig::new_default_port.trimmed());
     settings.setValue("entry_range", Newconfig::new_entry_range);
     settings.endGroup();
+
+    // New SQLite options for RoboJournal 0.5
+    settings.beginGroup("SQLite");
+    settings.setValue("use_my_journals", Newconfig::new_use_my_journals);
+    settings.setValue("sqlite_favorites", Newconfig::new_sqlite_favorites);
+    settings.setValue("sqlite_default", Newconfig::new_sqlite_default);
+    settings.endGroup();
+
 
     settings.beginGroup("Behavior");
     settings.setValue("toolbar_location", Newconfig::new_toolbar_pos);
@@ -611,6 +680,8 @@ void SettingsManager::UpdateConfig(){
     settings.setValue("misc_processing",Newconfig::new_use_misc_processing);
     settings.setValue("name_in_titlebar", Newconfig::new_name_in_titlebar);
     settings.setValue("show_untagged_reminder", Newconfig::new_show_untagged_reminder);
+    settings.setValue("system_dictionaries", Newconfig::new_system_dic);
+    settings.setValue("open_editor", Newconfig::new_open_editor);
     settings.endGroup();
 
     settings.beginGroup("Appearance");

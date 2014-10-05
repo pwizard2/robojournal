@@ -1,7 +1,7 @@
 /*
     This file is part of RoboJournal.
     Copyright (c) 2012 by Will Kraft <pwizard@gmail.com>.
-    MADE IN USA
+    
 
     RoboJournal is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -45,6 +45,7 @@ ExportPreview::ExportPreview(QWidget *parent) :
     // hide question mark button in title bar when running on Windows
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
+    ui->buttonBox->setContentsMargins(9,9,9,9);
 
     QString output=PrepareHTML();
 
@@ -53,7 +54,6 @@ ExportPreview::ExportPreview(QWidget *parent) :
     if(!Buffer::preview_geometry.isEmpty()){
         resize(Buffer::preview_geometry);
     }
-
 }
 
 //###########################################################################################################

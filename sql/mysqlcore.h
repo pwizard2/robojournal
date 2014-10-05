@@ -1,7 +1,7 @@
 /*
     This file is part of RoboJournal.
     Copyright (c) 2012 by Will Kraft <pwizard@gmail.com>.
-    MADE IN USA
+    
 
     RoboJournal is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,6 +15,12 @@
 
     You should have received a copy of the GNU General Public License
     along with RoboJournal.  If not, see <http://www.gnu.org/licenses/>.
+
+    UPDATE 8/18/13: Use "@mysql" as the global connection name for all regular
+    database transactions. Functions that require root access should use something
+    different (e.g. @create, @MASTER , etc.) to avoid breaking the current journal
+    connection.
+
   */
 
 #ifndef MYSQLCORE_H
@@ -44,14 +50,14 @@ public:
     QList<QString> getMonth(QString nextyear);
     QList<QString> getDay(QString itemmonth, QString nextyear);
     QList<QString> getEntries(QString itemday, QString itemmonth);
-    QList<QString> Create_ID_List(int year_range);
+    QList<QString> Create_ID_List();
 
     QList<QString> getEntriesMonth(QString month, QString year);
     QList<QString> TagSearch();
 
-    bool CreateDatabase(QString host,QString root_pass, QString db_name, QString port, QString newuser, QString newuser_pass);
+    bool CreateDatabase(QString host,QString root_pass, QString db_name, QString port, QString newuser, QString newuser_pass, bool on_remote_host);
 
-    bool Update(QString title, int month, int day, int year,  QString body, QString id);
+    bool Update(QString title, int month, int day, int year,  QString body, QString id, QString tags);
 
     bool UpgradeJournal(QString root_pass);
 
@@ -60,7 +66,7 @@ public:
     QString GetTags(QString id);
     bool UpdateTags(QString tag_data, QString id);
 
-    QStringList GetDatabaseList(QString hostname, QString port, QString username, QString password);
+    QStringList GetDatabaseList(QString hostname, QString port, QString username, QString password, bool silentMode);
 
     QList<QStringList> DumpDatabase(bool asc);
 
@@ -69,9 +75,9 @@ public:
     QList<QStringList> SearchDatabase(QString searchterm, int index, QString tag, bool wholewords);
 
 
-    // Nerw for 0.4: Reduce overhead by getting all the entry data with one query and returning it as a StringList.
+    // New for 0.4: Reduce overhead by getting all the entry data with one query and returning it as a StringList.
     QStringList Get_Entry_New(QString id);
-    QStringList Get_Latest_New(QString id);
+    //QStringList Get_Latest_New(QString id);
 
     static int ID;
 
@@ -83,12 +89,19 @@ public:
 
     static QString error_code;
 
+    // New for 0.5, 6/23/13
+    bool GrantPermissions(bool create_account, QString database, QString user_host, QString username,
+                          QString user_port, QString root_host, QString user_password, QString root_password);
+
 
 
 private:
 
     QString old_username;
     QString old_password;
+
+    QString old_username2;
+    QString old_password2;
 };
 
 #endif // MYSQLCORE_H

@@ -21,8 +21,17 @@
    <bool>false</bool>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="margin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QTreeWidget" name="Categories">
+     <property name="minimumSize">
+      <size>
+       <width>140</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="maximumSize">
       <size>
        <width>180</width>
@@ -69,8 +78,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>408</width>
-          <height>405</height>
+          <width>426</width>
+          <height>427</height>
          </rect>
         </property>
        </widget>
@@ -113,6 +122,11 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>Categories</tabstop>
+  <tabstop>PageArea</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
  <resources>
   <include location="../images.qrc"/>
  </resources>

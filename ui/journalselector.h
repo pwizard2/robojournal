@@ -1,7 +1,7 @@
 /*
     This file is part of RoboJournal.
     Copyright (c) 2012 by Will Kraft <pwizard@gmail.com>.
-    MADE IN USA
+    
 
     RoboJournal is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 
 #include <QDialog>
 #include <QTreeWidgetItem>
+#include <QAbstractButton>
 
 namespace Ui {
 class JournalSelector;
@@ -49,6 +50,12 @@ private slots:
 
     void on_JournalList_itemDoubleClicked(QTreeWidgetItem *item, int column);
 
+    void on_ManagePermissions_clicked();
+
+    void on_DBType_currentIndexChanged(int index);
+
+    void on_buttonBox_clicked(QAbstractButton *button);
+
 private:
     Ui::JournalSelector *ui;
 
@@ -56,6 +63,7 @@ private:
     void CreateTree(QStringList journals);
     void SetPreferences();
     bool Validate();
+    void ResetForm();
 
 };
 

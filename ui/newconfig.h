@@ -1,7 +1,7 @@
 /*
     This file is part of RoboJournal.
     Copyright (c) 2012 by Will Kraft <pwizard@gmail.com>.
-    MADE IN USA
+    
 
 
     RoboJournal is free software: you can redistribute it and/or modify
@@ -36,6 +36,8 @@
 #include "ui_configurationeditor.h"
 #include "ui/configurationexport.h"
 #include "ui_configurationexport.h"
+#include "ui/configurationsqlite.h"
+#include "ui_configurationsqlite.h"
 #include <QStackedWidget>
 #include <QSize>
 
@@ -123,16 +125,19 @@ public:
     static bool new_name_in_titlebar;
     static bool new_show_untagged_reminder;
 
+    // new for 0.5 (6/5/13)
+    static bool new_use_my_journals;
+    static QString new_sqlite_default;
+    static QStringList new_sqlite_favorites;
+    static bool new_system_dic;
+    static bool new_open_editor;
+
 private slots:
 
 
     void on_Categories_currentItemChanged(QTreeWidgetItem *current);
     void on_buttonBox_accepted();
     void resizeEvent(QResizeEvent *);
-
-
-
-
 
 private:
     Ui::Newconfig *ui;
@@ -151,6 +156,7 @@ private:
     ConfigurationAppearance *a;
     ConfigurationEditor *e;
     ConfigurationExport *x;
+    ConfigurationSQLite *s; // New SQLite page for 0.5
 
     QStackedWidget *stack;
 

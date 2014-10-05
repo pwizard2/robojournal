@@ -18,12 +18,20 @@
     <normaloff>:/icons/robojournal.ico</normaloff>:/icons/robojournal.ico</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
-    <widget class="QWebView" name="webView">
-     <property name="renderHints">
-      <set>QPainter::Antialiasing|QPainter::HighQualityAntialiasing|QPainter::SmoothPixmapTransform|QPainter::TextAntialiasing</set>
-     </property>
-    </widget>
+    <widget class="QWebView" name="webView" native="true"/>
    </item>
    <item>
     <spacer name="verticalSpacer">

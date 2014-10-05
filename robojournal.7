@@ -1,0 +1,79 @@
+.TH robojournal 7 "7/4/2013" "version 0.5"
+.SH 
+  RoboJournal - Free Journal Software for Everyone
+  
+  
+.SH SYNOPSIS
+
+.P
+Keep a journal/diary of day-to-day events in your life.
+.P
+robojournal [options]
+
+.SH DESCRIPTION
+.P
+RoboJournal is a cross-platform journal/diary tool written in Qt/C++.
+Right now, RoboJournal only supports MySQL but support for SQLite 
+(and possibly Postgres) will be added in future releases. RoboJournal 
+runs on Windows and Linux.
+.P
+For more detailed coverage of all 
+program functionality, please install and/or consult the HTML-based 
+.I RoboJournal Documentation
+contained in the 
+.B  robojournal-doc 
+package. This documentation consists of loose HTML + image files that are installed in 
+/usr/share/doc/robojournal. RoboJournal contains a dedicated interface for displaying documentation, accessed by pressing the
+.B F1 
+key at any time while the main RoboJournal window is active. You can also open these documentation files directly by displaying /usr/share/doc/robojournal/toc.html 
+ in any browser (like Firefox, Chrome, et. al).
+
+.P
+Review the 
+.B known_bugs.txt
+file in the most recent RoboJournal source tarball for a list of currently-known
+bugs and their possible workarounds. 
+
+.P
+If you need help compiling RoboJournal from source (or preparing a suitable Qt 
+environment), please refer to the
+.B compile_instructions.xhtml 
+file in the most recent RoboJournal source tarball.
+
+.P
+Consult 
+.B changelog.xhtml 
+in the most recent RoboJournal source tarball for a list of changes 
+in this version of RoboJournal.
+
+
+.SH OPTIONS
+.P
+RoboJournal versions 0.5 and later accept the following options:
+
+.TP
+.B
+--date-override
+
+.RS 4
+The date override argument forces RoboJournal to use the provided
+.B
+[mm-dd-yyyy]
+date for all new entries created during the current session (modified entries keep their original dates). This feature is 
+ideal for rectifying situations where you forgot to add an entry to a journal that is meant to be written in on a daily basis. 
+Using the override feature, you can set the date for the current session to a previous day to prevent gaps in the entry list. 
+.P
+.B 
+WARNING:
+RoboJournal depends on entries being stored in a specific order. The date override argument should only be used if an entry you are about to insert will be the 
+.I most recent 
+item in the timeline once it has been saved! Using the override to insert an entry elsewhere in the existing timeline 
+breaks the database and causes the Chronological Entry List to be rendered incorrectly. For the same reason, the override should 
+.I never 
+be used to insert entries at a future date!
+.P
+Usage: robojournal --date-override=mm-dd-yyyy
+
+.SH AUTHORS
+Will Kraft 
+.BI "<pwizard@gmail.com>"

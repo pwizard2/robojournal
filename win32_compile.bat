@@ -2,10 +2,10 @@
 :: Enter the full path to the Qt libraries you wish to compile against. 
 :: You must specifically point to the "bin" folder in which qmake.exe resides, e.g. C:\qt-4.7.4\bin
 :: The Qt directory by itself (C:\qt-4.7.4\) will not work.
-@set qt=C:\qt-4.8.4\bin
+@set qt=C:\Qt\qt-everywhere-opensource-src-4.8.5\bin
 
 :: Enter the full path to MinGW toolkit. It usually installs to C:\MinGW\bin
-@set mingw=C:\MinGW\bin
+@set mingw=C:\MinGW\mingw32\bin
 
 
 :: DO *NOT* EDIT BELOW THIS LINE!!!!!!!
@@ -13,7 +13,7 @@
 
 @TITLE ROBOJOURNAL BUILD HELPER SCRIPT FOR WINDOWS 2000/XP/VISTA/7
 @ECHO.
-@ECHO Version 1.4 -- 4/2/2013
+@ECHO Version 1.5 -- 6/22/2014
 @ECHO.
 @ECHO #############################################################
 @ECHO.
@@ -45,12 +45,10 @@ mingw32-make
 
 strip -s release/robojournal.exe
 
-@path %qt%
-::@qhelpgenerator.exe doc/robojournal.qhp -o release/robojournal.qch
-::qcollectiongenerator.exe doc/robojournal.qhcp -o release/robojournal.qhc
-@qcollectiongenerator.exe doc/robojournal.qhcp -o doc/robojournal.qhc
-@move doc\robojournal.qch release
-@move doc\robojournal.qhc release
+@path C:\Windows\System32
+@xcopy /si doc\* release\doc
+@copy changelog.xhtml release\changelog.xhtml
+
 @ECHO.
 
 :: Comment out the next three lines if you want to keep object code (*.o) and MOC-generated code

@@ -1,7 +1,7 @@
 /*
     This file is part of RoboJournal.
     Copyright (c) 2012 by Will Kraft <pwizard@gmail.com>.
-    MADE IN USA
+    
 
 
     RoboJournal is free software: you can redistribute it and/or modify
@@ -26,7 +26,9 @@
 #include <iostream>
 #include <QDir>
 #include <QMessageBox>
+#include "ui/customwords.h"
 
+//#############################################################################################################
 ConfigurationEditor::ConfigurationEditor(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ConfigurationEditor)
@@ -36,37 +38,87 @@ ConfigurationEditor::ConfigurationEditor(QWidget *parent) :
     // hide spellcheck group box until version 0.5
     //ui->groupBox_3->setVisible(false);
 
+
     PopulateForm();
 
+    /*
     // Will Kraft -- Bugfix 5/6/13: Temporarily disable spellcheck on Linux-based systems due to
     // the overwhelming problems I've had with it. I hope to have this fixed for good by 0.5 once
     // I've stripped out the entire spellchecker and replaced it with something better.
 
-#ifdef __gnu_linux__
-    ui->UseSpellCheck->setChecked(false);
-    ui->ShowSpellingErrors->setChecked(false);
-    ui->Dictionary->clear();
+    #ifdef __gnu_linux__
+        ui->UseSpellCheck->setChecked(false);
+        ui->ShowSpellingErrors->setChecked(false);
+        ui->Dictionary->clear();
 
-    ui->UseSpellCheck->setEnabled(false);
-    ui->BrowseButton->setEnabled(false);
-    ui->ShowSpellingErrors->setEnabled(false);
-    ui->Dictionary->setEnabled(false);
+        ui->UseSpellCheck->setEnabled(false);
+        ui->BrowseButton->setEnabled(false);
+        ui->ShowSpellingErrors->setEnabled(false);
+        ui->Dictionary->setEnabled(false);
 
-    ui->UseSpellCheck->setToolTip("<p>This feature is temporarily unavailable on Linux-based operating systems.</p>");
-    ui->ShowSpellingErrors->setToolTip("<p>This feature is temporarily unavailable on Linux-based operating systems.</p>");
-    ui->Dictionary->setToolTip("<p>This feature is temporarily unavailable on Linux-based operating systems.</p>");
-    ui->BrowseButton->setToolTip("<p>This feature is temporarily unavailable on Linux-based operating systems.</p>");
+        ui->UseSpellCheck->setToolTip("<p>This feature is temporarily unavailable on Linux-based operating systems.</p>");
+        ui->ShowSpellingErrors->setToolTip("<p>This feature is temporarily unavailable on Linux-based operating systems.</p>");
+        ui->Dictionary->setToolTip("<p>This feature is temporarily unavailable on Linux-based operating systems.</p>");
+        ui->BrowseButton->setToolTip("<p>This feature is temporarily unavailable on Linux-based operating systems.</p>");
 
-#endif
+    #endif
+    */
+
+    // Bugfix 7/4/14: hide auto-highlight spelling errors button (for now) b/c that code isn't in use anymore (Will Kraft).
+    ui->ShowSpellingErrors->setVisible(false);
 
 }
 
+//#############################################################################################################
 ConfigurationEditor::~ConfigurationEditor()
 {
     delete ui;
 }
-//#############################################################################################################
 
+//#############################################################################################################
+// Linux-specific function that scans the computer for system-level dictionaries. It looks in the usual places
+// like /usr/share/hunspell et. al. and adds each dictionary it finds in there to a Stringlist.
+// This function is meant ot address an issue Ritesh told me about, where RoboJournal should depend
+// on system-level resources instead of using its own --Will Kraft (11/1/13).
+
+QStringList ConfigurationEditor::Scan_For_System_Dictionaries(){
+
+    QStringList dictionaries;
+    QStringList locations;
+
+    QStringList filters;
+    filters << "*.dic";
+
+    // Add most likely install locations for dictionaries to the list.
+    locations << "/usr/share/hunspell";
+    locations << "/usr/share/myspell";
+    locations << "/usr/share/dict";
+    locations << "/usr/share/myspell/dicts";
+
+    for(int i=0; i < locations.size(); i++){
+        QString path=locations.at(i);
+        QDir dir(path);
+        dir.setNameFilters(filters);
+
+        if(dir.exists()){
+            QStringList batch=dir.entryList(QDir::Files | QDir::NoDotAndDotDot).replaceInStrings(QRegExp("^"),
+                                                                                                 dir.absolutePath()+QDir::separator());
+
+            dictionaries.append(batch);
+        }
+    }
+
+    if(dictionaries.isEmpty()){
+        QMessageBox m;
+        m.critical(this,"RoboJournal","RoboJournal could not find any system-level dictionaries on your computer. To solve this problem,"
+                   " you should install some Hunspell dictionaries with your distro's package management software.");
+    }
+
+    return dictionaries;
+}
+
+
+//#############################################################################################################
 void ConfigurationEditor::PopulateForm(){
     ui->TrimWhiteSpace->setChecked(Buffer::trim_whitespace);
     ui->ForceHyphens->setChecked(Buffer::use_html_hyphens);
@@ -87,9 +139,26 @@ void ConfigurationEditor::PopulateForm(){
         ui->UseSpellCheck->setChecked(true);
         ui->BrowseButton->setDisabled(false);
         ui->ShowSpellingErrors->setDisabled(false);
+        ui->ManageUDWords->setDisabled(false);
         ui->Dictionary->setDisabled(false);
         ui->ShowSpellingErrors->setChecked(Buffer::show_spell_errors_by_default);
-        ui->Dictionary->setText(Buffer::current_dictionary);
+        ui->SystemLevelDic->setDisabled(false);
+
+
+
+        if(Buffer::system_dic){
+            ui->SystemLevelDic->setChecked(true);
+
+            for(int i=0; i<ui->Dictionary->count(); i++){
+                if(ui->Dictionary->itemText(i)==Buffer::current_dictionary){
+                    ui->Dictionary->setCurrentIndex(i);
+                    break;
+                }
+            }
+        }
+        else{
+            ui->Dictionary->addItem(Buffer::current_dictionary);
+        }
     }
     else{
         ui->UseSpellCheck->setChecked(false);
@@ -97,8 +166,17 @@ void ConfigurationEditor::PopulateForm(){
         ui->ShowSpellingErrors->setChecked(false);
         ui->BrowseButton->setDisabled(true);
         ui->Dictionary->setDisabled(true);
+        ui->SystemLevelDic->setChecked(false);
+        ui->SystemLevelDic->setDisabled(true);
+        ui->ManageUDWords->setDisabled(true);
         ui->Dictionary->clear();
     }
+
+#ifdef _WIN32
+    // Disable system-level dictionaries on Windows because Windows doesn't have any system-level hunspell dictionaries by default.
+    ui->SystemLevelDic->setDisabled(true);
+    ui->SystemLevelDic->setChecked(false);
+#endif
 }
 
 //#############################################################################################################
@@ -109,8 +187,12 @@ void ConfigurationEditor::GetChanges(){
     Newconfig::new_use_custom_theme_editor=ui->CustomThemeEditor->isChecked();
     Newconfig::new_use_spellcheck=ui->UseSpellCheck->isChecked();
     Newconfig::new_show_spell_errors_by_default=ui->ShowSpellingErrors->isChecked();
-    Newconfig::new_current_dictionary=ui->Dictionary->text();
+    Newconfig::new_current_dictionary=ui->Dictionary->currentText();
     Newconfig::new_use_misc_processing=ui->MiscFormatting->isChecked();
+    Newconfig::new_system_dic=ui->SystemLevelDic->isChecked();
+
+    if((Buffer::use_spellcheck) && (showAFFWarning))
+        aff_file=Find_AFF_File(ui->Dictionary->currentText());
 
     // Preserve current AFF value if the user didn't make changes this session
     if(!aff_file.isEmpty()){
@@ -131,21 +213,23 @@ void ConfigurationEditor::on_BrowseButton_clicked()
 
     QString new_Dict=fileName;
 
-
-    //Find AFF file and save it.
     if(!new_Dict.isEmpty()){
+
         aff_file=Find_AFF_File(new_Dict);
-    }
+        bool itemAlreadyExists=false;
 
-    if(!new_Dict.isEmpty()){
-        ui->Dictionary->setText(new_Dict);
-    }
-    else{
-        ui->UseSpellCheck->setChecked(false);
-        ui->ShowSpellingErrors->setChecked(false);
-        ui->BrowseButton->setEnabled(false);
-        ui->ShowSpellingErrors->setEnabled(false);
-        ui->Dictionary->setEnabled(false);
+        for(int i=0; i < ui->Dictionary->count(); i++){
+
+            QString row=ui->Dictionary->itemText(i);
+
+            if(row==new_Dict){
+                itemAlreadyExists=true;
+                break;
+            }
+        }
+
+        if(!itemAlreadyExists)
+            ui->Dictionary->addItem(new_Dict);
     }
 }
 
@@ -173,13 +257,13 @@ QString  ConfigurationEditor::Find_AFF_File(QString dict){
     if(Aff.exists()){
         cout << "OUTPUT: Found AFF File for selected dictionary (" << Aff.fileName().toStdString() << ")" << endl;
         aff_file=Aff.fileName();
-
     }
 
     else{
         QMessageBox m;
         int h=m.critical(this,"RoboJournal","RoboJournal couldn't find the AFF file for "
-                         "<b>" + dict + "</b> in the expected location. Do you want to find this file manually?",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+                         "<b>" + dict + "</b> in the expected location. Do you want to find this file manually?",
+                         QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
 
         switch(h){
         case QMessageBox::Yes:
@@ -203,20 +287,85 @@ void ConfigurationEditor::on_UseSpellCheck_clicked(bool checked)
         ui->Dictionary->setDisabled(false);
         ui->ShowSpellingErrors->setDisabled(false);
         ui->ShowSpellingErrors->setChecked(true);
+        ui->SystemLevelDic->setDisabled(false);
+        ui->ManageUDWords->setDisabled(false);
 
-        if(Buffer::current_dictionary.isEmpty()){
-            ui->BrowseButton->click();
+#ifdef __gnu_linux__
+        // Have RoboJournal use system-level dictionaries by default if we are running on Linux --Will Kraft (11/1/13).
+        ui->Dictionary->clear();
+        ui->SystemLevelDic->click();
+#endif
+
+#ifdef _WIN32
+        // Disable system-level dictionaries on Windows because Windows doesn't have any system-level Hunspell dictionaries by default.
+        ui->SystemLevelDic->setDisabled(true);
+        ui->SystemLevelDic->setChecked(false);
+
+        // Add the default en_US dictionary to the list by default so users won't have to browse for it --Will Kraft (11/3/13).
+        // Bugfix for Linux (11/17/13): don't add this dic if we're using system-level dictionaries. Move this code into the
+        // Win32 block because Linux was still hitting it and adding the built-in dictionary even when Buffer::system_level was true.
+        QFile default_en(QDir::homePath()+ QDir::separator() + ".robojournal"+ QDir::separator() + "en_US.dic");
+
+        if(default_en.exists()){
+            ui->Dictionary->addItem(default_en.fileName());
         }
-        else{
-            ui->Dictionary->setText(Buffer::current_dictionary);
-        }
+
+#endif
+
+
     }
     else{
         ui->BrowseButton->setDisabled(true);
         ui->Dictionary->setDisabled(true);
         ui->ShowSpellingErrors->setDisabled(true);
         ui->ShowSpellingErrors->setChecked(false);
+        ui->SystemLevelDic->setChecked(false);
+        ui->SystemLevelDic->setDisabled(true);
         ui->Dictionary->clear();
+        ui->ManageUDWords->setDisabled(true);
     }
 }
 
+//#############################################################################################################
+void ConfigurationEditor::on_SystemLevelDic_toggled(bool checked){
+    if(checked){
+        ui->Dictionary->clear();
+        QStringList dic=Scan_For_System_Dictionaries();
+        ui->Dictionary->addItems(dic);
+        ui->BrowseButton->setDisabled(true);
+    }
+    else{
+        ui->BrowseButton->setDisabled(false);
+        ui->Dictionary->clear();
+
+        // Add the default en_US dictionary to the list by default so users won't have to browse for it --Will Kraft (11/3/13).
+        QFile default_en(QDir::homePath()+ QDir::separator() + ".robojournal"+ QDir::separator() + "en_US.dic");
+
+        if(default_en.exists()){
+            ui->Dictionary->addItem(default_en.fileName());
+        }
+    }
+}
+
+//#############################################################################################################
+// Launch custom words window (11/3/13).
+void ConfigurationEditor::on_ManageUDWords_clicked()
+{
+    CustomWords w(this);
+    w.exec();
+}
+
+//#############################################################################################################
+// Find AFF file based on current dictionary list option (12/21/13).
+void ConfigurationEditor::on_Dictionary_currentIndexChanged(const QString &arg1){
+    if((Buffer::use_spellcheck) && (showAFFWarning))
+        Find_AFF_File(arg1);
+}
+
+//#############################################################################################################
+// Keep track of whether we should show AFF warning. This fixes the bug that causes the AFF messagebox to appear when
+// the user unchecks the Use Spellcheck box. --Will Kraft (1/19/14).
+void ConfigurationEditor::on_UseSpellCheck_toggled(bool checked)
+{
+    showAFFWarning=checked;
+}

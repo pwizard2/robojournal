@@ -1,16 +1,27 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html>
 <head>
-  <title>Frequently Asked Questions - RoboJournal Documentation</title>
-  <meta name="author" content="Will Kraft">
-  <meta name="date" content="2012-11-16T14:36:58-0600">
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="generator" content=
+  "HTML Tidy for Windows (vers 25 March 2009), see www.w3.org">
+  <meta name="generator" content="Bluefish 2.2.6" >
+  <meta name="generator" content="Bluefish 2.2.6" >
+  <meta name="generator" content="Bluefish 2.2.6" >
+
+  <title>Frequently Asked Questions - RoboJournal
+  Documentation</title>
+  <meta name="author" content="Will Kraft" >
+  <meta name="date" content="2014-06-29T13:03:50-0600" >
+  <meta http-equiv="content-type" content=
+  "text/html; charset=us-ascii">
   <meta http-equiv="content-style-type" content="text/css">
   <link rel="stylesheet" type="text/css" href="css/master.css">
   <link rel="icon" type="image/png" href="img/rj_icon.png">
 </head>
 
 <body>
+<<<<<<< HEAD
 
 <div class="content">
 <img src="img/rj_doc_header.png" width="606" height="72"
@@ -153,5 +164,164 @@ href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation License</a>.
 </p>
 </div>
 </div>
+=======
+  <div class="content">
+    <img src="img/rj_doc_header.png" width="606" height="72" alt=
+    "RoboJournal Documentation" class="masthead">
+
+    <p class="doc_version">for version 0.5</p>
+
+    <div class="menu">
+      <ul>
+        <li onclick="javascript:history.go(-1)" class="backbutton">
+        <img src="img/prev.png" width="16" height="16" alt=
+        "Previous" longdesc=
+        "Previous%20Documentation">&nbsp;Back</li>
+
+        <li class="menuitem"><img src="img/toc.png" width="16"
+        height="16" alt="TOC" longdesc=
+        "Table%20of%20Contents">&nbsp;<a href="toc.html">Table of
+        Contents</a></li>
+
+        <li class="menuitem"><img src="img/question.png" width="16"
+        height="16" alt="FAQ" longdesc=
+        "Frequently%20Asked%20Questions">&nbsp;<a href=
+        "faq.html">FAQ</a></li>
+      </ul>
+    </div>
+
+    <div class="main_text">
+      <h1>Frequently Asked Questions</h1>
+
+      <p>This page is meant to address certain questions or
+      problems that various users have had so far. You should
+      expect this list to grow as more questions are asked with
+      each new version of RoboJournal.</p>
+
+      <h2>Question: Why doesn't RoboJournal offer higher
+      security?<br></h2>
+
+      <p><em>Will Kraft's answer:</em><br>
+      <br>
+      As the "<a href="index.html#limitations">Current
+      Limitations</a>" section explains, RoboJournal was not
+      originally designed to be a high-security program.
+      RoboJournal's purpose is to allow users to create and
+      maintain an electronic diary or journal on a remote server.
+      By its very design, RoboJournal is already more secure than a
+      traditional handwritten diary (which offers no security at
+      all since anyone can pick it up and read it) since the MySQL
+      server requires a username and password for each login. Even
+      so, you need to ask yourself how much protection your journal
+      really requires. A basic login requirement is probably enough
+      to thwart casual unauthorized access attempts unless the
+      attacker has root-level access to your MySQL installation (in
+      which case you have far greater problems than having your
+      secrets exposed).</p>
+
+      <p>That said, there are plans in the works to harden
+      RoboJournal against unauthorized access attempts even from
+      the MySQL root account. Starting in a future version
+      (possibly 0.6), RoboJournal will support RSA (and possibly
+      AES) on-the-fly encryption for all journal content.</p>
+
+      <h2 id="spellcheck">Question: Why does spellcheck flag some
+      words incorrectly?<br></h2>
+
+      <p><em>Will Kraft's answer</em> (updated on 6/8/14):<br>
+      <br>
+      The new spellcheck in RoboJournal 0.5 is still a work in
+      progress. It's much better than the old one but it still has
+      some bugs to work out. I hope to make more progress by the
+      time RoboJournal 0.6 comes out (no idea when that will
+      be).</p>
+
+      <h2>Question: Why does the whitespace removal feature
+      sometimes add lots of empty lines to a new entry?</h2>
+
+      <p><em>Will Kraft's answer:</em><br>
+      <br>
+      This was originally on my list of things to fix in
+      RoboJournal 0.5. Unfortunately, I had to delay it again due
+      to my busy schedule's tendency to cut into my free
+      development time. I hope to include a fix in RoboJournal 0.6,
+      along with some other low-level architectural
+      changes/improvements for old bugs I haven't been able to
+      address until now.</p>
+
+      <p>The bug is most often triggered whenever you paste content
+      from an external source (like a website) into a new entry and
+      then save it. Once saved, the new entry shows lots of
+      unnecessary whitespace in the Entry Output Pane. Whenever
+      this problem occurs, it can be easily remedied by editing the
+      affected entry (consult "<a href=
+      "fundamentals.html#modify_entry">Modifying an Existing
+      Entry</a>" if necessary) and then saving it again without
+      making any changes (you may need to do this several times).
+      The whitespace removal function should work correctly after
+      one or more subsequent attempts.</p>
+
+      <h2>Question: Why isn't there a version of RoboJournal for
+      Mac OS X?</h2>
+
+      <p><em>Will Kraft's answer:</em><br>
+      <br>
+      I have actually been planning to release RoboJournal 0.5 on
+      Mac OS X as soon as I can. The reason why I haven't done it
+      for earlier versions is because I don't have a Mac of my own;
+      under the circumstances there has been no way for me to build
+      or actively maintain a Mac version.</p>
+
+      <p>Update (4/23/13): Unfortunately, my last plan for porting
+      RoboJournal to OS X has recently failed; I'm now forced to
+      wait for another volunteer to come along.</p>
+
+      <h2>Question: RoboJournal has been useful to me. Is there
+      anything I can do to help out?</h2>
+
+      <p><em>Will Kraft's answer:</em><br>
+      <br>
+      What I need the most right now are more beta testers and
+      translators who are able to volunteer some of their time. As
+      of 4/23/13, I'm also looking for someone who can help me port
+      RoboJournal to Mac OS X.</p>
+
+      <p>Supporting RoboJournal on Mac OS X requires a volunteer
+      who can be relied on to download the current <em>stable</em>
+      source code (from Github or SourceForge), compile it to run
+      natively on Mac OS X 10.8 "Mountain Lion" (or later), and
+      package it as a .dmg archive. This must be done for each
+      release cycle.</p>
+
+      <p>Beta testers help me test new experimental versions of
+      RoboJournal prior to release (usually the current
+      "experimental" branch on GitHub) on a wide variety of
+      operating systems and notify me of any new bugs they find.
+      Beta testers also suggest new features and other ways to
+      improve RoboJournal. As a beta tester, you must have enough
+      development experience and skill to compile the experimental
+      code yourself because I simply don't have the time to package
+      and distribute custom builds on a regular basis.</p>
+
+      <p>Translators would help me make RoboJournal available in
+      other languages besides English. I'm only fluent in English
+      so my ability to do this myself is extremely limited. I would
+      definitely appreciate having several people who are willing
+      to gradually translate all text in the program (and perhaps
+      in this documentation as well) into Spanish, French, German,
+      Chinese, or any other world language in which they have
+      proficiency.</p>
+
+      <p>If you are interested in any of these roles, please
+      contact me at pwizard[<em>at</em>]gmail[<em>dot</em>]com.</p>
+
+      <p class="copyright">Copyright &copy; 2014 by Will Kraft. All
+      parts of the RoboJournal Documentation are subject to the
+      terms of the <a href=
+      "http://www.gnu.org/licenses/fdl.html">GNU Free Documentation
+      License</a>.</p>
+    </div>
+  </div>
+>>>>>>> experimental
 </body>
 </html>

@@ -1,7 +1,7 @@
 /*
     This file is part of RoboJournal.
     Copyright (c) 2012 by Will Kraft <pwizard@gmail.com>.
-    MADE IN USA
+    
 
     RoboJournal is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -23,12 +23,13 @@
 #include <QtGui/QApplication>
 #include <QList>
 #include <QStringList>
+#include <QDate>
 
 class Buffer
 {
 public:
     Buffer();
-    void OutputBuffer();
+    //void OutputBuffer();
 
     static QString host;
     static QString database_name;
@@ -44,7 +45,7 @@ public:
     static QString backend; // database backend var
     static int databaseport; // database port to use for connections
     static int entryrange; // number of years to show, only used if allentries==false
-    static QString full_name; // ful lname of the user. (new for 0.4)
+    static QString full_name; // full name of the user. (new for 0.4)
     static int toolbar_pos; // Toolbar position... 0=left; 1=top; 2=right
 
     static bool alwaysusedefaults; // always use default values if true
@@ -165,9 +166,23 @@ public:
 
     static bool show_reminder_next_time; // save value of the checkbox on the Tag Reminder Window.
 
-    // new for 0.4.2
-    static QByteArray mw_splitter_size;
+    // new for 0.5 (6/5/13)
+    static bool use_my_journals;
+    static QString sqlite_default;
+    static QStringList sqlite_favorites;
+    static QByteArray mw_splitter_size; // added 6/21/13
 
+    static bool use_date_override;
+    static QDate override_date;
+    static QString mysqldump_path_win; // added 9/2/13.
+    static bool no_safety;
+    static bool system_dic; // 11/1/13.
+
+    static bool remember_last; // 12/28/13.
+    static int last_db;
+    static int last_host;
+    static bool open_editor; // last minute addition to 0.5.
+    static QString helpdoc; // another last-minute addition, remembers the last page viewed in the help.
 };
 
 #endif // BUFFER_H

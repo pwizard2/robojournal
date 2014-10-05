@@ -1,7 +1,7 @@
 /*
     This file is part of RoboJournal.
     Copyright (c) 2012 by Will Kraft <pwizard@gmail.com>.
-    MADE IN USA
+    
 
     RoboJournal is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,11 +22,14 @@
 
 #include <QDialog>
 #include <QTextEdit>
-#include "ui/SpellTextEdit.h"
-#include "ui/highlighter.h"
+#include "core/hunspell/ctextcheckeredit.h"
+#include <QSplitter>
+#include "ui/editortagmanager.h"
+#include "ui_editortagmanager.h"
+#include <QTextDocument>
 
 namespace Ui {
-    class Editor;
+class Editor;
 }
 
 class Editor : public QDialog
@@ -45,25 +48,30 @@ public:
 
     bool UpdateEntry();
 
-
     static QString title;
     static QString body;
     static int month;
     static int day;
     static int year;
+    static QString tags; // new for 0.5, added 6/29/13
 
-    SpellTextEdit *spell;
-    Highlighter *high;
+    CTextCheckerEdit *spell;
     QTextEdit *regular;
 
+    QSplitter *divide;
 
+    QList<int> toggle_on;
+    QList<int> toggle_off;
 
+    EditorTagManager *et;
 
+public slots:
 
+    void splitterMoved();
 
 private slots:
-    void DocumentStats();
 
+    void DocumentStats();
 
     void on_EntryTitle_textChanged(const QString &arg1);
 
@@ -91,6 +99,18 @@ private slots:
 
     void on_ShowErrors_toggled(bool checked);
 
+    void on_TagButton_toggled(bool checked);
+
+
+
+    void on_ShowCode_toggled(bool checked);
+
+    void on_Italic_toggled(bool checked);
+
+    void on_Underline_toggled(bool checked);
+
+    void on_bold_toggled(bool checked);
+
 private:
     Ui::Editor *ui;
 
@@ -102,8 +122,13 @@ private:
     void Set_Editor_Fonts();
     QString WordCount(QString data);
     void ConfirmExit();
-    QString Do_Post_Processing(QString rawtext, int wordcount);
     void reject();
+
+    void ToggleHTML(bool checked);
+
+    QTextDocument *doc;
+
+
 
 };
 

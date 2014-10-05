@@ -1,7 +1,7 @@
 /*
     This file is part of RoboJournal.
     Copyright (c) 2012 by Will Kraft <pwizard@gmail.com>.
-    MADE IN USA
+    
 
     RoboJournal is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,32 +22,34 @@
 #include "core/buffer.h"
 #include <iostream>
 #include <QtSql/QSqlDatabase>
-
+#include <QSqlQuery>
+#include <QFile>
+#include <QMessageBox>
+#include "ui/mainwindow.h"
 
 SQLiteCore::SQLiteCore(){}
 
 QSqlDatabase SQLiteCore::db;
 
-bool SQLiteCore::Connect(){
+//################################################################################################
+// Check to see if the SQLite database exists. If it does, create a new connection to it. --Will Kraft (2/16/14).
+bool SQLiteCore::Connect(QString dbname){
     using namespace std;
     cout << "OUTPUT: Attempting SQLite (failsafe) database connection on \"" << Buffer::host.toStdString()
          << "\" as user \"" << Buffer::username.toStdString() << "\"...";
 
-    db=QSqlDatabase::addDatabase("QSQLITE");
+    QFile database(dbname);
 
-    QString host=Buffer::host;
-    QString database=Buffer::database_name;
-    QString user=Buffer::username;
-    QString password=Buffer::password;
-    //int port=Buffer::databaseport.toInt();
+    if(!database.exists()){
+        QMessageBox m;
+        m.critical(MainWindow::mw,"RoboJournal","The database file <b>" + dbname + "</b> does not exist.");
+        return false;
+    }
 
-    db.setHostName(host);
-    //db.setPort(port);
-    //db.setUserName(user);
-     db.setDatabaseName(database);
-    //db.setPassword(password);
+    QSqlDatabase db2=QSqlDatabase::addDatabase("QSQLITE","@lite");
+    db2.setDatabaseName(dbname);
 
-    bool success=db.open();
+    bool success=db2.open();
 
 
     if(success){
@@ -81,11 +83,27 @@ bool SQLiteCore::RemoveEntry(){
 
 }
 
+//################################################################################################
+// Create a new database file. Unlike MySQL, simply attempting to open a null file causes it to be created.
+bool SQLiteCore::CreateDB(QString dbname){
+    using namespace std;
+    cout << "OUTPUT: Attempting to create database " << dbname.toStdString() << endl;
 
-bool SQLiteCore::CreateDB(){
-    bool success=false;
-    return success;
+    QSqlDatabase db2= QSqlDatabase::addDatabase("QSQLITE","@lite");
+    db2.setDatabaseName(dbname);
+    db2.open();
 
+    QSqlQuery create_entries("CREATE TABLE entries(id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                             "title TEXT, month TEXT, day TEXT, year TEXT, tags TEXT, "
+                             "body TEXT, time TEXT)", db2);
+
+    create_entries.exec();
+
+    db2.close();
+
+    // if the process worked, the file should exist.
+    QFile database(dbname);
+    return database.exists();
 }
 
 

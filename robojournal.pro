@@ -8,7 +8,7 @@
 ######################################################
 
 # Declaration of all Qt modules that should be built into the binary.
-QT += core gui sql webkit
+QT += core gui sql webkit network
 
 TARGET = robojournal
 TEMPLATE = app
@@ -24,7 +24,6 @@ SOURCES += main.cpp\
 	sql/sqlitecore.cpp \
 	ui/aboutrj.cpp \
 	ui/firstrun.cpp \
-	ui/journalcreator.cpp \
 	ui/tagger.cpp \
 	ui/journalselector.cpp \
 	ui/entryexporter.cpp \
@@ -37,21 +36,41 @@ SOURCES += main.cpp\
 	ui/configurationeditor.cpp \
 	ui/configurationexport.cpp \
 	ui/exportpreview.cpp \
-	ui/hunspell/affentry.cxx \
-	ui/hunspell/affixmgr.cxx \
-	ui/hunspell/csutil.cxx \
-	ui/hunspell/dictmgr.cxx \
-	ui/hunspell/filemgr.cxx \
-	ui/hunspell/hashmgr.cxx \
-	ui/hunspell/hunspell.cxx \
-	ui/hunspell/hunzip.cxx \
-	ui/hunspell/phonet.cxx \
-	ui/hunspell/suggestmgr.cxx \
-	ui/hunspell/utf_info.cxx \
-	ui/SpellTextEdit.cpp \
-	ui/highlighter.cpp \
 	sql/sqlshield.cpp \
-	ui/tagreminder.cpp
+	ui/tagreminder.cpp \
+        ui/newjournalcreator.cpp \
+        ui/mysqljournalpage.cpp \
+        ui/sqlitejournalpage.cpp \
+        ui/journalcreatorcoverpage.cpp \
+        ui/configurationsqlite.cpp \
+        ui/editortagmanager.cpp \
+        core/taggingshared.cpp \
+        core/htmlcore.cpp \
+        ui/permissionmanager.cpp \
+        ui/outputpane.cpp \
+        core/favoritecore.cpp \
+        ui/exportsingle.cpp \
+        ui/exportmulti.cpp \
+        ui/exportcreatedump.cpp \
+        ui/customwords.cpp \
+        core/hunspell/spellchecker.cpp \
+        core/hunspell/utf_info.cxx \
+        core/hunspell/suggestmgr.cxx \
+        core/hunspell/replist.cxx \
+        core/hunspell/phonet.cxx \
+        core/hunspell/hunzip.cxx \
+        core/hunspell/hunspell.cxx \
+        core/hunspell/hashmgr.cxx \
+        core/hunspell/filemgr.cxx \
+        core/hunspell/dictmgr.cxx \
+        core/hunspell/csutil.cxx \
+        core/hunspell/affixmgr.cxx \
+        core/hunspell/affentry.cxx \
+        core/hunspell/ctextcheckeredit.cpp \
+        core/hunspell/ctextsyntaxhighlighter.cpp \
+        core/helpcore.cpp \
+        ui/helpviewer.cpp
+
 
 HEADERS  += ui/mainwindow.h \
 	core/buffer.h \
@@ -62,7 +81,6 @@ HEADERS  += ui/mainwindow.h \
 	sql/sqlitecore.h \
 	ui/aboutrj.h \
 	ui/firstrun.h \
-	ui/journalcreator.h \
 	ui/tagger.h \
 	ui/journalselector.h \
 	ui/entryexporter.h \
@@ -75,25 +93,46 @@ HEADERS  += ui/mainwindow.h \
 	ui/configurationeditor.h \
 	ui/configurationexport.h \
 	ui/exportpreview.h \
-	ui/hunspell/affixmgr.hxx \
-	ui/hunspell/atypes.hxx \
-	ui/hunspell/baseaffix.hxx \
-	ui/hunspell/csutil.hxx \
-	ui/hunspell/dictmgr.hxx \
-	ui/hunspell/filemgr.hxx \
-	ui/hunspell/hashmgr.hxx \
-	ui/hunspell/htypes.hxx \
-	ui/hunspell/hunspell.h \
-	ui/hunspell/hunspell.hxx \
-	ui/hunspell/hunzip.hxx \
-	ui/hunspell/langnum.hxx \
-	ui/hunspell/phonet.hxx \
-	ui/hunspell/suggestmgr.hxx \
-	ui/hunspell/w_char.hxx \
-	ui/SpellTextEdit.h \
-	ui/highlighter.h \
 	sql/sqlshield.h \
-	ui/tagreminder.h
+	ui/tagreminder.h \
+        ui/newjournalcreator.h \
+        ui/mysqljournalpage.h \
+        ui/sqlitejournalpage.h \
+        ui/journalcreatorcoverpage.h \
+        ui/configurationsqlite.h \
+        ui/editortagmanager.h \
+        core/taggingshared.h \
+        core/htmlcore.h \
+	ui/permissionmanager.h \
+	ui/outputpane.h \
+	core/favoritecore.h \
+	ui/exportsingle.h \
+	ui/exportmulti.h \
+	ui/exportcreatedump.h \
+        ui/customwords.h \
+        core/hunspell/spellchecker.h \
+        core/hunspell/w_char.hxx \
+        core/hunspell/suggestmgr.hxx \
+        core/hunspell/replist.hxx \
+        core/hunspell/phonet.hxx \
+        core/hunspell/langnum.hxx \
+        core/hunspell/hunzip.hxx \
+        core/hunspell/hunvisapi.h \
+        core/hunspell/hunspell.hxx \
+        core/hunspell/hunspell.h \
+        core/hunspell/htypes.hxx \
+        core/hunspell/hashmgr.hxx \
+        core/hunspell/filemgr.hxx \
+        core/hunspell/dictmgr.hxx \
+        core/hunspell/csutil.hxx \
+        core/hunspell/baseaffix.hxx \
+        core/hunspell/atypes.hxx \
+        core/hunspell/affixmgr.hxx \
+        core/hunspell/affentry.hxx \
+        core/hunspell/ctextcheckeredit.h \
+        core/hunspell/ctextsyntaxhighlighter.h \
+        core/helpcore.h \
+        ui/helpviewer.h
 
 
 FORMS    += ui/mainwindow.ui \
@@ -101,7 +140,6 @@ FORMS    += ui/mainwindow.ui \
 	ui/dblogin.ui \
 	ui/aboutrj.ui \
 	ui/firstrun.ui \
-	ui/journalcreator.ui \
 	ui/tagger.ui \
 	ui/journalselector.ui \
 	ui/entryexporter.ui \
@@ -113,7 +151,21 @@ FORMS    += ui/mainwindow.ui \
 	ui/configurationeditor.ui \
 	ui/configurationexport.ui \
 	ui/exportpreview.ui \
-	ui/tagreminder.ui
+	ui/tagreminder.ui \
+        ui/newjournalcreator.ui \
+        ui/mysqljournalpage.ui \
+        ui/sqlitejournalpage.ui \
+        ui/journalcreatorcoverpage.ui \
+        ui/configurationsqlite.ui \
+        ui/editortagmanager.ui \
+	ui/permissionmanager.ui \
+	ui/outputpane.ui \
+	ui/exportsingle.ui \
+	ui/exportmulti.ui \
+	ui/exportcreatedump.ui \
+        ui/customwords.ui \
+        ui/helpviewer.ui
+
 
 # Declaration of images and other to-be-embedded resources.
 RESOURCES  = images.qrc
@@ -123,11 +175,10 @@ RC_FILE = icon.rc
 
 # This block contains all Linux/Unix-specific build instructions.
 unix {
-    CONFIG += qt release
 
     # The package block sets a different install path for package builds.
     package {
-	message(Creating a package-friendly build for Debian and other Linux distros...)
+        message(Creating a package-friendly build...)
 	target.path = /usr/bin
 	
     }
@@ -140,15 +191,19 @@ unix {
     # Tweak for development/debugging: (3/31/13)
     # It is sometimes necessary to temporarily comment out the QMAKE_POST_LINK (ln 146) while compiling
     # in Qt Creator b/c it may complain about doc/compile_doc.pl being missing during each build.
-    QMAKE_POST_LINK += perl doc/compile_doc.pl
+
+    # No longer needed in version 0.5 since documentation is just raw HTML now (6/22/14).
+
+    #QMAKE_POST_LINK += perl doc/compile_doc.pl
+
 
     # set the final destinations of all install files
     
-    man.files = robojournal.7.gz
+    man.files = robojournal.7
     man.path = /usr/share/man/man7
     
-    doc.path = /usr/share/doc/robojournal
-    doc.files = doc/robojournal.qhc doc/robojournal.qch
+    documentation.path = /usr/share/doc/robojournal
+    documentation.files = doc/* changelog.xhtml
     
     shortcut.path = /usr/share/applications
     shortcut.files = menus/robojournal.desktop
@@ -162,8 +217,7 @@ unix {
     icon-deb.path = /usr/share/pixmaps
     icon-deb.files = menus/robojournal.xpm
 
-    INSTALLS += target shortcut icon shortcut-deb icon-deb doc man
-
+    INSTALLS += target shortcut icon shortcut-deb icon-deb documentation man
 }
 
 # This one controls Windows instructions for building with MinGW.

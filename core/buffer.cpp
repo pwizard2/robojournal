@@ -1,7 +1,7 @@
 /*
     This file is part of RoboJournal.
     Copyright (c) 2012 by Will Kraft <pwizard@gmail.com>.
-    MADE IN USA
+    
 
     RoboJournal is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -70,7 +70,8 @@ bool Buffer::editmode; //if true, start the Editor in revision mode. If False, c
 QString Buffer::editentry; // the entry id that needs to be edited
 
 // Current RoboJournal Version used globally in Program.
-QString Buffer::version="0.4.2";
+QString Buffer::version="0.5";
+
 
 // new for 0.4
 bool Buffer::use_full_name;
@@ -142,12 +143,42 @@ bool Buffer::show_reminder_next_time;
 // new for 0.4.2
 QByteArray Buffer::mw_splitter_size; // former 0.5 code but backported on 9/13/13.
 
+// new for 0.5 (6/5/13)
+QStringList Buffer::sqlite_favorites;
+QString Buffer::sqlite_default;
+bool Buffer::use_my_journals;
+bool Buffer::open_editor;
+
+// date override flag (8/23/13).
+bool Buffer::use_date_override;
+QDate Buffer::override_date;
+
+//safety protocol override (9/13/13).
+bool Buffer::no_safety;
+
+// keep track of whether we're using system-level dictionaries (11/1/13).
+bool Buffer::system_dic;
+
+// Hold stored mysqldump location for Windows builds only. Linux/Unix always uses /usr/bin/mysqldump so this is not necessary (9/2/13).
+QString Buffer::mysqldump_path_win;
+
+// Remember if there was a failed login attempt this session and what the most recent database index was (12/28/13).
+bool Buffer::remember_last;
+int Buffer::last_host;
+int Buffer::last_db;
+
+// another last-minute addition, remembers the last page viewed in the help (7/20/14).
+QString Buffer::helpdoc;
+
+
 Buffer::Buffer()
 {
 
 
 }
 
+/* deprecated
 void Buffer::OutputBuffer(){
 
 }
+*/

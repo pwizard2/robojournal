@@ -1,7 +1,7 @@
 /*
     This file is part of RoboJournal.
     Copyright (c) 2012 by Will Kraft <pwizard@gmail.com>.
-    MADE IN USA
+    
 
 
     RoboJournal is free software: you can redistribute it and/or modify
@@ -17,7 +17,6 @@
     You should have received a copy of the GNU General Public License
     along with RoboJournal.  If not, see <http://www.gnu.org/licenses/>.
   */
-
 
 #include "ui/mainwindow.h"
 #include "ui_mainwindow.h"
@@ -49,8 +48,6 @@
 #include <QAbstractButton>
 #include "ui/tagger.h"
 #include "ui_tagger.h"
-#include "ui/journalcreator.h"
-#include "ui_journalcreator.h"
 #include "ui/journalselector.h"
 #include "ui_journalselector.h"
 #include "ui/entryexporter.h"
@@ -67,6 +64,13 @@
 #include "ui_tagreminder.h"
 #include <QProcess>
 #include <QDir>
+#include "ui/newjournalcreator.h"
+#include "ui_newjournalcreator.h"
+#include "core/taggingshared.h"
+#include "core/helpcore.h"
+
+
+QWidget* MainWindow::mw;
 
 // 0.4.1: Consolidate the clear search results code into its own function since it needs to be called
 // more than once.
@@ -375,7 +379,6 @@ void MainWindow::SearchDatabase(){
                     break;
                 }
 
-
                 while(a.hasNext()){
 
                     QTreeWidgetItem *item = new QTreeWidgetItem(ui->SearchList);
@@ -393,7 +396,8 @@ void MainWindow::SearchDatabase(){
                     }
 
                     // entry title + a small bit of space to pad it out.
-                    item->setText(0,nextitem.at(1) + "  ");
+                    // 0.5 Bugfix (8/4/13): Add trimmed to remove any hidden line breaks or other text debris that can affect presentation.
+                    item->setText(0,nextitem.at(1).trimmed() + "  ");
 
                     // Convert QString date to QDate to make it sort correctly/
                     // QDate automatically inherits system date settings so we should let it do the work
@@ -403,7 +407,7 @@ void MainWindow::SearchDatabase(){
 
                     QStringList date=id.split("/");
 
-                    int month, day, year;
+                    int month=0, day=0, year=0;
 
                     switch(Buffer::date_format){
                         case 0: // European
@@ -457,15 +461,17 @@ void MainWindow::SearchDatabase(){
                 }
 
                 if(count==1){
-                    ui->SearchCount->setText("Search complete: " + QString::number(count) + " result");
-                    has_search_results=true;
+                    ui->SearchCount->setText("<img src=\":/icons/information.png\">&nbsp;Search complete: " +
+                                             QString::number(count) + " result.");
 
+                    has_search_results=true;
                     this->setCursor(Qt::ArrowCursor);
                 }
                 else{
-                    ui->SearchCount->setText("Search complete: " + QString::number(count) + " results");
-                    has_search_results=true;
+                    ui->SearchCount->setText("<img src=\":/icons/information.png\">&nbsp;Search complete: " +
+                                             QString::number(count) + " results.");
 
+                    has_search_results=true;
                     this->setCursor(Qt::ArrowCursor);
 
                     // Show notification if search returns null. That way, people won't be scratching their heads wondering
@@ -526,45 +532,23 @@ void MainWindow::SearchDatabase(){
     }
 }
 
-// function that gets current tag list for search pane. New for 0.4
+// function that gets current tag list for search pane.
+// * 6/11/13: Use the new TaggingShared class for version 0.5.
 //################################################################################################
 void MainWindow::GetTagList(){
 
-    if(Buffer::backend=="MySQL"){
-        MySQLCore b;
+    TaggingShared ts;
+    QStringList tag_list=ts.TagAggregator();
 
-        QStringList tag_list; // list that holds all existing tags. Each tag should only be listed ONCE.
+    QIcon tagicon(":/icons/tag_red.png");
+    for(int z=0; z < tag_list.size(); z++){
+        QString text=tag_list[z];
 
-        QList<QString> tags=b.TagSearch();
-        QListIterator<QString> i(tags);
+        if(!text.isEmpty()){
 
-        while(i.hasNext()){
-            QString line=i.next();
-            QStringList tag_array=line.split(";");
-
-            for(int x=0; x<tag_array.size(); x++){
-
-                // only append to tag_list if it doesn't already contain tag_array[x]
-                if(!tag_list.contains(tag_array.at(x))){
-                    tag_list.append(tag_array.at(x));
-
-                }
-            }
-        }
-
-        tag_list.sort();
-
-        QIcon tagicon(":/icons/tag_red.png");
-
-
-        for(int z=0; z < tag_list.size(); z++){
-            QString text=tag_list[z];
             ui->TagList->addItem(tagicon,text);
-
         }
-
     }
-
 }
 
 // Launch Entry Exporter
@@ -572,8 +556,11 @@ void MainWindow::GetTagList(){
 void MainWindow::ExportEntry(){
     if(CurrentID!="-1"){
         QTreeWidgetItem *selected=ui->EntryList->currentItem();
+
         EntryExporter e(this);
         EntryExporter::title=selected->text(0);
+        EntryExporter::id=selected->text(1); // capture current id number (new for 0.5, 7/30/13).
+
         e.setWindowTitle("Export Content");
         e.exec();
     }
@@ -584,6 +571,10 @@ void MainWindow::ExportEntry(){
 QString MainWindow::FormatTags(QString tags, QString color1, QString color2){
 
     QStringList tags_array=tags.split(";");
+
+    // group tags by alphabetical order. Bugfix for 0.5 (7/31/13).
+    tags_array.sort();
+
     QString output_tags;
     bool has_tags=true;
 
@@ -609,15 +600,16 @@ QString MainWindow::FormatTags(QString tags, QString color1, QString color2){
             color2 + "; width=100%;\"><small>&nbsp;&nbsp;Tags</small></div><br>";
 
     if(has_tags){
-        // add HR
         output_tags= div + "&nbsp;&nbsp;" + output_tags;
     }
     else{
-        output_tags= div + "&nbsp;&nbsp;<small>This entry has not been tagged yet.</small>";
+        // Use full sentences for the no-tag-data messages --Will Kraft (12/30/13).
+        output_tags= div + "&nbsp;&nbsp;<small>You have not tagged this entry yet.</small>";
     }
 
     if(tags_array.at(0).isEmpty()){
-        output_tags= div + "&nbsp;&nbsp;<small>No tags for this post.</small>";
+        // Use full sentences for the no-tag-data messages --Will Kraft (12/30/13).
+        output_tags= div + "&nbsp;&nbsp;<small>There is no tag data for this post.</small>";
     }
 
 
@@ -647,15 +639,13 @@ void MainWindow::Tag(){
         }
 
         // pass title and id to Tagger class
-        Tagger::title=title;
         Tagger::id_num=selected->text(1);
 
         // prevent Tagger from opening when we are positioned on a non-entry or DB title
         // after all, we don't want to tag those things.
         if((CurrentID != "-1") && (title != Buffer::database_name)){
 
-            // pass title and id to Tagger class
-            Tagger::title=title;
+            // pass id to Tagger class
             Tagger::id_num=selected->text(1);
 
             Tagger t(this);
@@ -699,7 +689,7 @@ void MainWindow::closeEvent(QCloseEvent *event){
             q.exec();
 
             if(q.clickedButton() == quit){
-                cout << "OUTPUT: User quit the program" << endl;
+                cout << "OUTPUT: User quit the program." << endl;
                 event->accept();
             }
             else{
@@ -711,14 +701,14 @@ void MainWindow::closeEvent(QCloseEvent *event){
         // dialog that gets shown if user is NOT connected to a journal
         // update: Don't show dialog if there is no journal active b/c it can get annoying after awhile
         else{
-            cout << "OUTPUT: User quit the program" << endl;
+            cout << "OUTPUT: User quit the program." << endl;
             event->accept();
         }
     }
 
     // just quit silently if user has turned off confirm dialogs
     else{
-        cout << "OUTPUT: User quit the program" << endl;
+        cout << "OUTPUT: User quit the program." << endl;
         event->accept();
     }
 }
@@ -959,17 +949,37 @@ void MainWindow::Decorate_GUI(){
         ui->ExportEntry->setToolButtonStyle(Qt::ToolButtonIconOnly);
     }
     else{ // restore values in case user wishes to enable them at runime
-        ui->ConnectButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->DisconnectButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->LastEntry->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->WriteButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->EditEntryButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->DeleteEntry->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->NextEntry->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->TodayButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->ConfigButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->Tag->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-        ui->ExportEntry->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+
+        if(Buffer::toolbar_pos==1){
+            ui->ConnectButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+            ui->DisconnectButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+            ui->LastEntry->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+            ui->WriteButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+            ui->EditEntryButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+            ui->DeleteEntry->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+            ui->NextEntry->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+            ui->TodayButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+            ui->ConfigButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+            ui->Tag->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+            ui->ExportEntry->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        }
+        else{
+            ui->ConnectButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+            ui->DisconnectButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+            ui->LastEntry->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+            ui->WriteButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+            ui->EditEntryButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+            ui->DeleteEntry->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+            ui->NextEntry->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+            ui->TodayButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+            ui->ConfigButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+            ui->Tag->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+            ui->ExportEntry->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        }
+
+
+        QFont toolbarFont("Sans",7);
+        ui->mainToolBar->setFont(toolbarFont);
     }
 
     if(Buffer::use_custom_theme){
@@ -1005,8 +1015,8 @@ void MainWindow::Decorate_GUI(){
 }
 
 //################################################################################################
-// New for 0.4.1 (3/26/13): This displays the help file by launching Qt Assistant as a QProcess. Qt Assistant
-// is stored in different places depending on operating system; thiscode looks for it in the most
+// New for 0.4.1 (3/26/13): This displays the documentation by launching Qt Assistant as a QProcess. Qt Assistant
+// is stored in different places depending on operating system; this code looks for it in the most
 // likely places. Invoking robojournal.qhc causes Qt Assistant to override its default settings by showing ONLY
 // the RoboJournal documentation.
 void MainWindow::ShowHelp(){
@@ -1014,138 +1024,12 @@ void MainWindow::ShowHelp(){
 
     this->setCursor(Qt::WaitCursor);
 
-    QString assistant, compiled_help_path, collection_path;
+    // Use new Helpcore instead of embedding code directly. --Will Kraft (6/21/14).
+    Helpcore h;
+    //h.Show_Documentation();
+    h.Show_Documentation_New();
 
-
-    /* Use separate #ifdef blocks to set the paths for Windows and Unix-like operating systems like
-        * Linux b/c the file structure is completely different on the two OSes. RoboJournal on Windows
-        * requires Qt Assistantto be installed locally (in the same directory) while Linux is able to
-        * make use of global system resources.
-        *
-        * -- Will Kraft, 3/31/13.
-        */
-#ifdef _WIN32
-    // Qt Assistant should be installed in the same folder as robojournal.exe on Win32.
-    assistant=QDir::currentPath() + QDir::separator() + "assistant.exe";
-    compiled_help_path=QDir::currentPath() + QDir::separator() + "robojournal.qch";
-    collection_path=QDir::currentPath() + QDir::separator() + "robojournal.qhc";
-#endif
-
-#ifdef unix
-
-    // post-release bugfix for Fedora users (4/26/13)
-    // have RoboJournal use the Fedora path to Assistant if applicable.
-    QFile fedoracheck("/usr/bin/assistant-qt4");
-
-    if(fedoracheck.exists()){
-        assistant="/usr/bin/assistant-qt4";
-    }
-    else{
-        assistant="/usr/bin/assistant";
-    }
-
-    compiled_help_path="/usr/share/doc/robojournal/robojournal.qch";
-    collection_path="/usr/share/doc/robojournal/robojournal.qhc";
-#endif
-
-    QFile assistant_exec(assistant);
-
-    if(assistant_exec.exists()){
-        QFile collection_file(collection_path);
-        QFile documentation_file(compiled_help_path);
-
-        cout << "OUTPUT: Attempting to find help collection file located at "
-             << collection_file.fileName().toStdString() << endl;
-        cout << "OUTPUT: Attempting to find compiled documentation file located at "
-             << documentation_file.fileName().toStdString() << endl;
-
-        if((collection_file.exists()) && (documentation_file.exists())){
-
-
-            QProcess *p=new QProcess();
-            QStringList args;
-#ifdef _WIN32
-            args << "-collectionFile" << "robojournal.qhc"
-                 << "-enableRemoteControl";
-#endif
-
-#ifdef unix
-            args << "-collectionFile" << collection_path
-                 << "-enableRemoteControl";
-#endif
-
-            // Spawn the Assistant process with the OS-specific path-to-binary and args.
-            p->start(assistant, args);
-
-            // Instruct Qt Assistant to completely expand the TOC immediately after launch. This saves
-            // the user lots of pointless clicking but the expand instruction doesn't always work properly.
-            // Addendum 3/31/13: Hide the Index tab b/c that part isn't finished yet (and probably
-            // won't be for some time).
-            QByteArray input;
-            input.append("expandToc -1;");
-            input.append("hide index\n");
-
-            p->write(input);
-
-            if (!p->waitForStarted()){
-                return;
-            }
-
-            this->setCursor(Qt::ArrowCursor);
-        }
-        else{
-
-            // Share this messagebox object between several conditionals... it's just more efficient.
-            // In all cases, show appropriate errors if one or more files is missing.
-            QMessageBox b;
-
-
-
-            if((!collection_file.exists()) && (!documentation_file.exists())){
-
-                QString location;
-#ifdef _WIN32
-                location=QDir::current().path();
-#endif
-
-#ifdef unix
-                location="/usr/share/doc/robojournal";
-#endif
-
-                b.critical(this,"RoboJournal","RoboJournal could not locate the collection file"
-                           " (robojournal.qhc) or the compiled help file (robojournal.qch). Please"
-                           " locate these two files and copy them into <b>" + location + "</b>.");
-                this->setCursor(Qt::ArrowCursor);
-
-            }
-            else{
-
-                if(!collection_file.exists()){
-                    b.critical(this,"RoboJournal","RoboJournal cannot display the documentation because the Collection File "
-                               "needed by Qt Assistant is missing. Please copy the Collection File to <b>" +
-                               collection_path + "</b> and try again.");
-                    this->setCursor(Qt::ArrowCursor);
-                }
-
-                if(!documentation_file.exists()){
-                    b.critical(this,"RoboJournal","RoboJournal cannot display the documentation because the Compiled Help File "
-                               "needed by Qt Assistant is missing. Please copy the Compiled Help File to <b>" +
-                               compiled_help_path + "</b> and try again.");
-                    this->setCursor(Qt::ArrowCursor);
-                }
-            }
-        }
-    }
-
-    // Show error if Qt assistant is not installed
-    else{
-        QMessageBox c;
-        c.critical(this,"RoboJournal","RoboJournal cannot display the documentation because Qt Assistant"
-                   " is not installed correctly. Please install (or move) the Qt Assistant executable to <b>" +
-                   assistant + "</b> and try again.");
-        this->setCursor(Qt::ArrowCursor);
-
-    }
+    this->setCursor(Qt::ArrowCursor);
 }
 
 //################################################################################################
@@ -1371,8 +1255,6 @@ void MainWindow::GetEntry(QString id, bool fromSearch){
 
             EntryExporter e;
             e.UpdateValues(entrytitle,datestamp,entry,timestamp);
-
-
         }
     }
 }
@@ -1381,14 +1263,19 @@ void MainWindow::GetEntry(QString id, bool fromSearch){
 // Function that sets up main window GUI when mainwindow is called at startup
 void MainWindow::PrimaryConfig(){
 
+    // New for 0.5 (8/27/13): create a static pointer to the current main window object. This is used elsewhere as a parent
+    // to center QMessageBoxes and other elements that don't have a GUI of their own relative to the main window.
+    mw=this->window();
+
+    // New for 0.5 (9/12/13): Remember if we have set the most recent entry date already if date override is enabled.
+    date_override_trigger_tripped=false;
 
 
-    // Use a nice big png icon for linux/unix.. that little Windows ico file just doesn't cut it.
-    // This is really only noticable on KDE4/Unity environments. (and probably Mac if someone builds for that)
+    // 6/5/13: Will Kraft. (new for version 0.5): Use the big icon on Windows too. That little 16x16 icon looks like hell when
+    // stretched to fit the Win 7 taskbar and alt+tab list. The shortcut icon usually compensates for that but not always; this
+    // way works for sure no matter what.
     QIcon unixicon(":/icons/robojournal-icon-big.png");
     this->setWindowIcon(unixicon);
-
-
 
     // declare magic sizing algorithm for MainWindow splitter. For some unknown reason the TabWidget throws this off
     // so it is necessary to compensate.
@@ -1420,6 +1307,7 @@ void MainWindow::PrimaryConfig(){
 
 
     // Setup Statusbar
+    ui->statusBar->setContentsMargins(0,0,0,0);
     ui->TotalCount->clear();
     ui->statusBar->addWidget(ui->StatusMessage,1);
 
@@ -1427,7 +1315,6 @@ void MainWindow::PrimaryConfig(){
     // New in 0.3: User notification is a separate statusbar object.
     ui->statusBar->addPermanentWidget(ui->Status_User,0);
     ui->Status_User->clear();
-
     ui->statusBar->addPermanentWidget(ui->TotalCount,0);
 
 
@@ -1542,6 +1429,22 @@ void MainWindow::PrimaryConfig(){
     f.exec();
     */
 
+    // 6/17/13: Eliminate all padding around UI elements.
+    ui->tabWidget->setContentsMargins(0,0,0,0);
+    ui->splitter->setContentsMargins(0,0,0,0);
+    ui->centralWidget->setContentsMargins(0,0,0,0);
+    ui->EntryList->setContentsMargins(0,0,0,0);
+    ui->gridLayout_2->setContentsMargins(0,0,0,0);
+    ui->gridLayout_2->setSpacing(0);
+
+    // 6/16/13: Make the splitter easier to see. Windows 7 renders these things as flat by default so the idea
+    // is to emulate the old-school raised splitter bar appearance so the user will know something is there.
+    QSplitterHandle *handle=ui->splitter->handle(1);
+    QVBoxLayout *h_layout = new QVBoxLayout(handle);
+    h_layout->setSpacing(0);
+    h_layout->setMargin(0);
+    h_layout->setContentsMargins(0,0,0,0); // make sure the splitter goes all the way to the edge of the frame
+
     //#############################################################################
     // New for RoboJournal 0.4
     // force initial 50/50 ratio on splitter. This involves a weird hack that requires the right side to be set to a huge number
@@ -1569,11 +1472,15 @@ void MainWindow::PrimaryConfig(){
         this->restoreGeometry(Buffer::mainwindow_geometry);
     }
 
+    // Hide user status indicatir and entry count until we need them. --Will Kraft (1/12/14).
+    ui->Status_User->setVisible(false);
+    ui->TotalCount->setVisible(false);
+
     //#############################################################################
     //new for RoboJournal 0.4.1:
 
     //set tooltips for mainwindow tabs. This way is less messy than doing it in the ui files.
-    ui->tabWidget->setTabToolTip(0,"Display the Chronological Entry List.");
+    ui->tabWidget->setTabToolTip(0,"Display the Timeline.");
     ui->tabWidget->setTabToolTip(1,"Search for entries containing specific patterns or tags. "
                                  "<span style=\"color: red\">(requires active connection)</span>");
 
@@ -1586,77 +1493,105 @@ void MainWindow::PrimaryConfig(){
     // Update for 0.4.1: Set titlebar text w/o version number (1/8/13)
     this->setWindowTitle("RoboJournal");
 
+    //#############################################################################
+    // new for RoboJournal 0.5:
+
+    // Use the backend value to set a more user-friendly backend label because MySQL is now MySQL/MariaDB (12/1/13).
+    if(Buffer::backend=="MySQL")
+        backend_type="MySQL/MariaDB";
+    if(Buffer::backend=="SQLite")
+        backend_type=Buffer::backend;
+
+    // New for 0.5: Fix text alignment issue for labels with pictures (12/1/13).
+    ui->SearchCount->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    ui->StatusMessage->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+
+    // Flatten main toolbar and set frame style for UI elements on both sides of the splitter so they are easier to see. (12/1/13).
+    // Update 12/21/13: This should be used for all operating systems, not just Windows.
+    ui->mainToolBar->setStyleSheet("QToolBar { border: 0px }");
+    ui->Output->setFrameStyle(QFrame::WinPanel | QFrame::Sunken);
+    ui->EntryList->setFrameStyle(QFrame::WinPanel | QFrame::Sunken);
+    ui->SearchList->setFrameStyle(QFrame::WinPanel | QFrame::Sunken);
+
+    //Set up login memory. This holds the row index for the most recent host and database. Set it to nothing by default since
+    //the program should initially rely on default values (12/28/13).
+    Buffer::remember_last=false;
+    Buffer::last_db=-1;
+    Buffer::last_host=-1;
 }
 
 //################################################################################################
 // Connect to database function
 void MainWindow::Connect(){
     using namespace std;
+
+    this->setCursor(Qt::WaitCursor);
+    ui->ConnectButton->setEnabled(false);
+    ui->StatusMessage->setText("Connection in progress, please wait...");
+
+
+    // Add progress bar for connections. --Will Kraft (1/12/14).
+    QProgressBar *progress = new QProgressBar(this);
+    //progress->setMinimum(0);
+    //progress->setMaximum(0);
+    progress->setMaximumHeight(15);
+    progress->setMaximumHeight(15);
+    ui->statusBar->addWidget(progress,1);
+    progress->setValue(25);
+
+
+
     DBLogin l(this);
-    l.setWindowTitle("New Connection [" + Buffer::backend + "]");
+    //l.setWindowTitle("New Connection [" + backend_type + "]");
 
     bool is_connected=false; // check to see if connection is true
 
 
     l.Refresh();
-    l.exec();
+    int choice=l.exec();
+
+    // Reset the form if the user rejects the login dialog --Will Kraft (1/12/14).
+    if(choice==0){
+        ui->ConnectButton->setEnabled(true);
+        this->setCursor(Qt::ArrowCursor);
+        ui->StatusMessage->setText("Click the <b>Connect</b> button (or press <b>F2</b>) to work with a journal database.");
+        delete progress;
+        return;
+    }
+
+    progress->setValue(35);
 
     // if user provided login data
     if(Buffer::login_succeeded){
 
-        this->setCursor(Qt::WaitCursor);
+        progress->setValue(50);
+
 
         if(Buffer::backend=="MySQL"){
-            this->setCursor(Qt::WaitCursor);
+
             MySQLCore my;
-
-
-            MySQLCore::dialogX=l.x();
-            MySQLCore::dialogY=l.y();
 
             bool success=my.Connect();
             bool is_sane=my.SanityCheck();
 
             if(!success){
+                // allow user to try again
+                l.ResetPassword();
+                ui->ConnectButton->setEnabled(true);
+                ui->StatusMessage->setText("Click the <b>Connect</b> button (or press <b>F2</b>) to work with a journal database.");
+                this->setCursor(Qt::ArrowCursor);
+                delete progress;
+                Connect();
 
-                // check to make sure the MYSQL driver is installed, return error if false
-                // If you're using a static build of QT you're probably never going to see this error
-                if(!my.db.isDriverAvailable("QMYSQL")){
-                    this->setCursor(Qt::ArrowCursor);
-                    QMessageBox j;
-                    j.critical(this,"RoboJournal","The Qt MySQL driver is not available! The most likely cause "
-                               " for this problem is that Qt was not built correctly or is incomplete. RoboJournal"
-                               " will not be able to use MySQL databases until this problem is fixed.");
-                }
-
-                // if the user got this far, the driver is good but there was a different problem encountered
-                //logging in. (permission error, bad passwd, etc.)
-                if(my.db.isOpenError()){
-                    this->setCursor(Qt::ArrowCursor);
-                    QMessageBox m;
-
-                    QString reason;
-
-                    if((Buffer::host=="localhost") || (Buffer::host=="127.0.0.1")){
-                        reason="Make sure you entered the correct username/password and try again.";
-                    }
-                    else{
-                        reason="Are you allowed to access <b>" + Buffer::database_name +
-                                "</b> from this computer? If so, make sure you entered the correct username/password and try again.";
-                    }
-
-                    m.critical(this,"RoboJournal","RoboJournal could not connect to  <b>" +
-                               Buffer::database_name + "</b>@<b>" +
-                               Buffer::host + "</b>.<br><br>" + reason );
-
-                    // allow user to try again
-                    l.ResetPassword();
-                    Connect();
-
-                }
-
+                return;
             }
             else{
+
+                // Clear saved DBLogin values from Buffer because we don't need to remember them anymore (12/28/13).
+                Buffer::last_db = -1;
+                Buffer::last_host = -1;
+                Buffer::remember_last=false;
+                progress->setValue(60);
 
                 if(!is_sane){
 
@@ -1699,11 +1634,16 @@ void MainWindow::Connect(){
                         cout << "ERROR: Database " << Buffer::database_name.toStdString() <<
                                 " FAILED sanity check, aborting load sequence!" << endl;
 
+                        delete progress;
+                        ui->ConnectButton->setEnabled(true);
+                        ui->StatusMessage->setText("Click the <b>Connect</b> button (or press <b>F2</b>) to work with a journal database.");
+                        this->setCursor(Qt::ArrowCursor);
+                        return;
+
                     }
                 }
                 else{
-
-
+                    progress->setValue(75);
                     ui->WriteButton->setEnabled(true);
 
 
@@ -1740,11 +1680,15 @@ void MainWindow::Connect(){
 
                     // Get ID list
                     //int year_range=Buffer::entryrange.toInt();
-                    IDList=my.Create_ID_List(Buffer::entryrange);
-
+                    IDList=my.Create_ID_List();
+                    progress->setValue(80);
                     CreateTree();
-                    ui->StatusMessage->setText("Connected to " + Buffer::backend  + " database <b>" +
+                    progress->setValue(99);
+                    ui->StatusMessage->setText("<img src=\":/icons/mariadb.png\">&nbsp;Connected to " + backend_type  + " database <b>" +
                                                Buffer::database_name + "</b> on <b>" +  Buffer::host);
+
+                    ui->Status_User->setVisible(true);
+                    ui->TotalCount->setVisible(true);
 
                     // provide user notification on statusbar (new for 0.3)
                     ui->Status_User->setTextFormat(Qt::RichText);
@@ -1768,10 +1712,13 @@ void MainWindow::Connect(){
 
                 // Add journal name to title bar if config allows it
                 if(Buffer::name_in_titlebar){
-                    this->setWindowTitle(Buffer::database_name +" - RoboJournal");
+                    this->setWindowTitle(Buffer::database_name +"@" + Buffer::host + " - RoboJournal");
                 }
 
                 this->setCursor(Qt::ArrowCursor);
+                ui->statusBar->removeWidget(progress);
+                progress->setValue(100);
+
             }
         }
 
@@ -1802,18 +1749,22 @@ void MainWindow::Connect(){
             }
         }
     }
+
+
+
+
     if(Buffer::backend=="SQLite"){
 
         SQLiteCore sl;
-        bool success=sl.Connect();
+        bool success=sl.Connect(Buffer::database_name);
 
         if(!success){
             QMessageBox m;
             m.critical(this,"Error", Buffer::backend + " connection attempt with <b>" +
-                       Buffer::database_name + "</b> on <b>" +
-                       Buffer::host + "</b> failed.");
+                       Buffer::database_name + "</b> failed.");
         }
         else{
+            progress->setValue(75);
             ui->WriteButton->setEnabled(true);
 
 
@@ -1905,16 +1856,12 @@ void MainWindow::Connect(){
             // was originally done fro mthe TagReminder class but that produced a bug that sometimes required
             // the user to click the close button twice. This method is a bit less elegant but it fixes that problem.
 
-
-
-
-
             SettingsManager sm;
             sm.SaveNagPreferences();
 
             // reload the config b/c we made changes. This prevents the preferences window from
             // relying on old data and getting out of sync with the real app configuration.
-            sm.LoadConfig();
+            sm.LoadConfig(false);
 
 
             // Bugfix 3/5/13: Refresh most recent entry (if autoload=true) just in case user added new tags to it
@@ -1924,6 +1871,45 @@ void MainWindow::Connect(){
             }
         }
     }
+
+    // new for 0.5: show notification if the date override feature is enabled (8/24/13) and enact safety protocols if the feature is
+    // being misused and could result in database corruption (9/12/13).
+    if((Buffer::use_date_override) && (is_connected)){
+        QString msg="Date override is enabled; all new entries created during this session will artificially use " +
+                Buffer::override_date.toString("MM-dd-yyyy") + " as their date of origin.";
+
+        if(Buffer::no_safety)
+            msg=msg + "<br><br><b>Warning:</b> Normal safety protocols are disabled. To prevent database corruption, <span style=\"text-decoration: "
+                    "underline\">never</span> use the date override to insert a new entry at a future date or prior to the most recent item in the timeline.";
+
+
+        // Bugfix 9/12/13: Disable New Entries as safety protocol if adding them would corrupt the database.
+        if((Buffer::override_date < lastdate) && (!Buffer::no_safety)){
+            msg="RoboJournal's safety protocols prevent you from adding new entries "
+                    "during this session because the date override value you specified (" + Buffer::override_date.toString("MM-dd-yyyy") +
+                    ") predates the most recent entry in the Timeline.<br><br>This restriction is necessary because adding new entries in the "
+                    "wrong chronological order causes database corruption.";
+
+            ui->WriteButton->setDisabled(true);
+            ui->actionWrite->setDisabled(true);
+        }
+
+        // Bugfix 9/12/13: Prevent date override misuse (future dates) from corrupting the database.
+        if((Buffer::override_date > QDate::currentDate()) && (!Buffer::no_safety)){
+            msg="RoboJournal's safety protocols prevent you from adding new entries "
+                    "during this session because the date override value you specified (" + Buffer::override_date.toString("MM-dd-yyyy") +
+                    ") is in the future.<br><br>This restriction is necessary because adding new entries in the "
+                    "wrong chronological order causes database corruption.";
+
+            ui->WriteButton->setDisabled(true);
+            ui->actionWrite->setDisabled(true);
+        }
+
+        QMessageBox m;
+        m.information(this,"RoboJournal",msg);
+    }
+
+    delete progress;
 }
 
 //################################################################################################
@@ -1946,28 +1932,20 @@ void MainWindow::Modify(){
         e.exec();
         launched_editor=true;
 
-
         // Update Tree
         CreateTree();
-
 
         // refresh entry in Output Pane
         GetEntry(CurrentID,false);
 
-
-
-        ui->StatusMessage->setText("Connected to " + Buffer::backend  + " database <b>" +
+        ui->StatusMessage->setText("<img src=\":/icons/mariadb.png\">&nbsp;Connected to " + backend_type  + " database <b>" +
                                    Buffer::database_name + "</b> on <b>" +  Buffer::host);
 
         // keep current entry selected
         HighlightCurrentSelection(CurrentID);
 
-
-
         this->setCursor(Qt::ArrowCursor);
         ui->statusBar->clearMessage();
-
-
     }
     else{ // show error if no  valid entries are selected
         QMessageBox a;
@@ -1988,23 +1966,27 @@ void MainWindow::DeleteSelectedEntry(){
 
         if(Buffer::showwarnings){
             QMessageBox b;
+
             int choice=b.question(this,"RoboJournal","Do you really want to delete the selected journal entry?"
                                   " This action cannot be undone.",QMessageBox::Cancel,QMessageBox::Ok);
 
+
             switch(choice){
-                case QMessageBox::Ok:
-                    if(Buffer::backend=="MySQL"){
-                        my.DeleteEntry(CurrentID);
-                        CreateTree();
 
-                        ui->StatusMessage->setText("Connected to " + Buffer::backend  + " database <b>" +
-                                                   Buffer::database_name + "</b> on <b>" +  Buffer::host);
-                        ui->Output->setPlainText(NULL);
+            case QMessageBox::Ok:
+                if(Buffer::backend=="MySQL"){
+                    my.DeleteEntry(CurrentID);
+                    CreateTree();
 
-                        // Bugfix (8/15/12) prevent the deleter from being used again until a different node is clicked
-                        CurrentID = -1;
-                        ui->EntryList->clearSelection();
-                    }
+                    ui->StatusMessage->setText("<img src=\":/icons/mariadb.png\">&nbsp;Connected to " + backend_type  + " database <b>" +
+                                               Buffer::database_name + "</b> on <b>" +  Buffer::host);
+                    ui->Output->setPlainText(NULL);
+
+                    // Bugfix (8/15/12) prevent the deleter from being used again until a different node is clicked
+                    CurrentID = -1;
+                    ui->EntryList->clearSelection();
+                }
+
                 break;
 
                 case QMessageBox::Cancel:
@@ -2018,7 +2000,7 @@ void MainWindow::DeleteSelectedEntry(){
             if(Buffer::backend=="MySQL"){
                 my.DeleteEntry(CurrentID);
                 CreateTree();
-                ui->StatusMessage->setText("Connected to " + Buffer::backend  + " database <b>" +
+                ui->StatusMessage->setText("<img src=\":/icons/mariadb.png\">&nbsp;Connected to " + backend_type  + " database <b>" +
                                            Buffer::database_name + "</b> on <b>" +  Buffer::host);
                 ui->Output->setPlainText(NULL);
 
@@ -2129,23 +2111,39 @@ void MainWindow::Disconnect(){
     // multiple sessions.
     Buffer::records.clear();
 
+    if(Buffer::backend=="MySQL"){
+        MySQLCore m;
+        m.Disconnect();
+    }
+
+    // Reset the date override trigger thingy that is used to get the date of the most recent entry
+    // for comparison to the date override value (9/12/13).
+    if(Buffer::datebox_override)
+        date_override_trigger_tripped=false;
+
+    // Hide user and Total count items again.
+    ui->Status_User->setVisible(false);
+    ui->TotalCount->setVisible(false);
+
 }
 
 //################################################################################################
 // show preferences window
-void MainWindow::Preferences(){
+void MainWindow::Preferences(){   
+
     Newconfig c(this);
-    //c.setWindowTitle("RoboJournal Preferences");
     c.exec();
     launched_config=true;
 
+    setCursor(Qt::WaitCursor);
+
     if(c.MadeChanges){
         SettingsManager s;
-        s.LoadConfig();
+        s.LoadConfig(false);
 
         if((!ConnectionActive) && (ui->DisconnectButton->isEnabled())){
             CreateTree();
-            ui->StatusMessage->setText("Connected to " + Buffer::backend  + " database <b>" +
+            ui->StatusMessage->setText("<img src=\":/icons/mariadb.png\">&nbsp;Connected to " + backend_type  + " database <b>" +
                                        Buffer::database_name + "</b> on <b>" +  Buffer::host);
         }
 
@@ -2176,6 +2174,10 @@ void MainWindow::Preferences(){
     ui->ExportEntry->setDisabled(true);
     ui->actionManage_Tags_2->setDisabled(true);
     ui->actionExport_Entry->setDisabled(true);
+
+
+
+    setCursor(Qt::ArrowCursor);
 }
 
 //################################################################################################
@@ -2219,10 +2221,16 @@ void MainWindow::Write(){
     MySQLCore my;
 
     IDList.clear();
-    IDList=my.Create_ID_List(Buffer::entryrange);
+    IDList=my.Create_ID_List();
+
+    // Use the backend value to set a more user-friendly backend label because MySQL is now MySQL/SQLite (12/1/13).
+    if(Buffer::backend=="MySQL")
+        backend_type="MySQL/MariaDB";
+    if(Buffer::backend=="SQLite")
+        backend_type=Buffer::backend;
 
     // Reset Status bar message
-    ui->StatusMessage->setText("Connected to " + Buffer::backend  + " database <b>" +
+    ui->StatusMessage->setText("<img src=\":/icons/mariadb.png\">&nbsp;Connected to " + backend_type  + " database <b>" +
                                Buffer::database_name + "</b> on <b>" +  Buffer::host);
 
     // bugfix (8/15/12) Prevent crash by disabling the tagger and entryexporter after posting an entry.
@@ -2235,8 +2243,6 @@ void MainWindow::Write(){
 
     this->setCursor(Qt::ArrowCursor);
     ui->statusBar->clearMessage();
-
-
 }
 
 //################################################################################################
@@ -2248,7 +2254,6 @@ void MainWindow::HighlightCurrentSelection(QString CurrentID){
 
     while (*it) {
         if ((*it)->text(1) == CurrentID)
-
             (*it)->setSelected(true);
 
         ++it;
@@ -2285,6 +2290,9 @@ void MainWindow::HighlightCurrentSelection(QString CurrentID){
             }
         }
         e.UpdateValues(title,current_entry_date,current_entry_body,current_entry_time);
+    }
+    else{
+        return;
     }
 
     ui->Tag->setEnabled(true);
@@ -2444,7 +2452,6 @@ void MainWindow::CreateTree(){
             QString db=Buffer::database_name;
 
 
-
             QTreeWidgetItem *root = new QTreeWidgetItem(ui->EntryList);
             root->setText(0, db);
             root->setIcon(0,rooticon);
@@ -2486,29 +2493,34 @@ void MainWindow::CreateTree(){
                         QString itemday=IteratorDay.next();
                         QTreeWidgetItem *day = new QTreeWidgetItem(month);
 
+                        itemday=itemday.trimmed();
+
+                        // BUGFIX for version 0.5 (6/11/13):
+                        // Ensure all strings are trimmed to get rid of any unwanted spaces or linebreaks.
+                        // This debris sometimes gets introduced when the database is restored from a dump file
+                        // and it throws the entire tree off.
+
                         // Organize Date depending on Buffer data
-
-
                         switch(Buffer::date_format){
 
-                            case 0: // international
-                                day->setText(0, itemday + " " + longmonth  );
+
+                        case 0: // international
+                            day->setText(0, itemday.trimmed() + " " + longmonth.trimmed()  );
                             break;
 
-                            case 1:  // usa
-                                day->setText(0,longmonth + " " + itemday);
+                        case 1:  // usa
+                            day->setText(0,longmonth.trimmed() + " " + itemday.trimmed());
                             break;
 
-                            case 2: // japan
-                                day->setText(0,longmonth + " " + itemday);
+                        case 2: // japan
+                            day->setText(0,longmonth.trimmed() + " " + itemday.trimmed());
+
                             break;
                         }
 
                         EntryList=my.getEntries(itemday,itemmonth);
 
                         QListIterator<QString> IteratorEntry(EntryList);
-
-
 
                         for(int e=0; e<EntryList.length(); e++){
                             QString entry=IteratorEntry.next();
@@ -2517,10 +2529,60 @@ void MainWindow::CreateTree(){
                             QString tooltip=longmonth + " " + itemday + ", " +
                                     nextyear + " : " + item[0];
 
+
                             EntryItem->setText(0, item[0]);
                             EntryItem->setToolTip(0, tooltip);
                             EntryItem->setText(1, item[1]);
                             EntryItem->setIcon(0,entryicon);
+
+                            // New for 0.5: Check to see if this is the most recent entry.
+                            if((e==0) && (Buffer::datebox_override) && (!date_override_trigger_tripped)){
+                                int month=0, day=0, year=0;
+
+                                year=EntryItem->parent()->parent()->text(0).toInt();
+                                day=itemday.toInt();
+
+                                if(longmonth=="January")
+                                    month=1;
+
+                                if(longmonth=="February")
+                                    month=2;
+
+                                if(longmonth=="March")
+                                    month=3;
+
+                                if(longmonth=="April")
+                                    month=4;
+
+                                if(longmonth=="May")
+                                    month=5;
+
+                                if(longmonth=="June")
+                                    month=6;
+
+                                if(longmonth=="July")
+                                    month=7;
+
+                                if(longmonth=="August")
+                                    month=8;
+
+                                if(longmonth=="September")
+                                    month=9;
+
+                                if(longmonth=="October")
+                                    month=10;
+
+                                if(longmonth=="November")
+                                    month=11;
+
+                                if(longmonth=="December")
+                                    month=12;
+
+                                QDate mostrecent;
+                                mostrecent.setDate(year,month,day);
+                                cout << mostrecent.toString("Recent date: mm/dd/yyyy").toStdString() << endl;
+                                date_override_trigger_tripped=true;
+                            }
 
                             // since we know there are entries at this point, NewJournal should be set to false.
                             NewJournal=false;
@@ -2529,7 +2591,6 @@ void MainWindow::CreateTree(){
                             EntryCount++; // auto-increment entry count
 
                             totalcount++; // update totalcount
-
                         }
 
                         //if EntryCount==0, we have a new journal. Show a message if this happens.
@@ -2601,6 +2662,7 @@ void MainWindow::CreateTree(){
 
             QString db=Buffer::database_name;
 
+
             QTreeWidgetItem *root = new QTreeWidgetItem(ui->EntryList);
 
 
@@ -2655,30 +2717,83 @@ void MainWindow::CreateTree(){
 
 
                         QString entry;
+
                         switch(Buffer::date_format){
 
-                            case 0: // international
-                                entry=item[2] + " " + longmonth + ": " + item [1];
+
+                        // BUGFIX for version 0.5 (6/11/13):
+                        // Ensure all strings are trimmed to get rid of any unwanted spaces or linebreaks.
+                        // This debris sometimes gets introduced when the database is restored from a dump file
+                        // and it throws the entire tree off.
+
+                        case 0: // international
+                            entry=item[2].trimmed() + " " + longmonth.trimmed() + ": " + item[1].trimmed();
                             break;
 
-                            case 1:  // usa
-                                entry=longmonth + " " + item[2] + ": " + item [1];
+                        case 1:  // usa
+                            entry=longmonth.trimmed() + " " + item[2].trimmed() + ": " + item[1].trimmed();
                             break;
 
-                            case 2: // japan
-                                entry=longmonth + " " + item[2] + ": " + item [1];
+                        case 2: // japan
+                            entry=longmonth.trimmed() + " " + item[2].trimmed() + ": " + item[1].trimmed();
+
                             break;
                         }
-
-
-
-
 
                         EntryItem->setText(0,entry);
                         EntryItem->setToolTip(0,entry);
 
                         EntryItem->setText(1,item[0]);
                         EntryItem->setIcon(0, entryicon);
+
+                        // New for 0.5: Check to see if this is the most recent entry (9/12/13).
+                        // If so, set the lastdate value with the value if date override is enabled.
+                        if((e==0) && (Buffer::datebox_override) && (!date_override_trigger_tripped)){
+                            int month=0, day=0, year=0;
+
+                            year=EntryItem->parent()->parent()->text(0).toInt();
+                            day=item[2].toInt();
+
+                            if(longmonth=="January")
+                                month=1;
+
+                            if(longmonth=="February")
+                                month=2;
+
+                            if(longmonth=="March")
+                                month=3;
+
+                            if(longmonth=="April")
+                                month=4;
+
+                            if(longmonth=="May")
+                                month=5;
+
+                            if(longmonth=="June")
+                                month=6;
+
+                            if(longmonth=="July")
+                                month=7;
+
+                            if(longmonth=="August")
+                                month=8;
+
+                            if(longmonth=="September")
+                                month=9;
+
+                            if(longmonth=="October")
+                                month=10;
+
+                            if(longmonth=="November")
+                                month=11;
+
+                            if(longmonth=="December")
+                                month=12;
+
+                            lastdate.setDate(year,month,day);
+                            //cout << " Recent date: " << lastdate.toString("M/dd/yyyy").toStdString() << endl;
+                            date_override_trigger_tripped=true;
+                        }
 
                         // since we know there are entries at this point, NewJournal should be set to false.
                         NewJournal=false;
@@ -2688,11 +2803,7 @@ void MainWindow::CreateTree(){
                         totalcount++; // update totalcount
                     }
 
-
-
                     EntryList.clear();
-
-
 
                     QString monthcount=QString::number(EntryCount);
 
@@ -2772,10 +2883,10 @@ void MainWindow::TotalEntryCount(int totalcount){
 
     // Note: Use space characters here instead of HTML nonbreaking space. For some reason, "&nbsp" shows up.
     if(totalcount==1){
-        ui->TotalCount->setText("<img src=\":/icons/page_white_database.png\">&nbsp;&nbsp;" + count  + " entry&nbsp;");
+        ui->TotalCount->setText("<img src=\":/icons/page_white_database.png\">&nbsp;&nbsp;" + count  + " entry");
     }
     else{
-        ui->TotalCount->setText("<img src=\":/icons/page_white_database.png\">&nbsp;&nbsp;" + count  + " entries&nbsp;");
+        ui->TotalCount->setText("<img src=\":/icons/page_white_database.png\">&nbsp;&nbsp;" + count  + " entries");
     }
 
     QString indicator;
@@ -2784,23 +2895,17 @@ void MainWindow::TotalEntryCount(int totalcount){
     if(Buffer::allentries){
         indicator="<nobr>Total number of entries to date in <b>" + Buffer::database_name + "</b></nobr>";
         ui->TotalCount->setToolTip(indicator);
-        //ui->statusBar->showMessage("Displaying all entries in the database...",1500);
     }
     else{
         if(Buffer::entryrange==1){
 
-            //QFrame *div = new QFrame(this);
-            //div->setFrameStyle();
-
             indicator="<nobr>Total number of entries for current range (" +
                     QString::number(Buffer::entryrange) + " year) in <b>" + Buffer::database_name + "</b></nobr>";
             ui->TotalCount->setToolTip(indicator);
-            //ui->statusBar->showMessage("Displaying all entries from this year...",1500);
+
 
 
             // Add year indicator if user decides to use it
-
-
             if(Buffer::use_indicator){
 
                 ui->TotalCount->setText(ui->TotalCount->text() +  "<b>:</b>" +
@@ -2811,16 +2916,13 @@ void MainWindow::TotalEntryCount(int totalcount){
             indicator="<nobr>Total number of entries for current range (" +
                     QString::number(Buffer::entryrange) + " years) in <b>" + Buffer::database_name + "</b></nobr>";
             ui->TotalCount->setToolTip(indicator);
-            //ui->statusBar->showMessage("Displaying all entries from the last " + Buffer::entryrange
-            //+ " years...",1500);
-
 
             // Add year indicator if user decides to use it
             if(Buffer::use_indicator){
 
                 QString range=QString::number(Buffer::entryrange);
                 ui->TotalCount->setText(ui->TotalCount->text() +  "<b>:</b>" + "&nbsp;<img src=\":/icons/arrow-repeat.png\">&nbsp;"
-                                        + range + " years&nbsp;");
+                                        + range + " years");
             }
         }
     }
@@ -2916,8 +3018,6 @@ void MainWindow::MostRecent(){
         QTreeWidgetItem *selected=ui->EntryList->currentItem();
         //EntryExporter e(this);
         EntryExporter::title=selected->text(0);
-
-
     }
 }
 //################################################################################################
@@ -3039,16 +3139,58 @@ void MainWindow::on_actionMain_toolbar_triggered(bool checked)
 void MainWindow::on_actionLeft_default_triggered()
 {
     this->addToolBar(Qt::LeftToolBarArea,ui->mainToolBar);
+
+    if(Buffer::show_icon_labels){
+        ui->ConnectButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        ui->DisconnectButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        ui->LastEntry->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        ui->WriteButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        ui->EditEntryButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        ui->DeleteEntry->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        ui->NextEntry->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        ui->TodayButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        ui->ConfigButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        ui->Tag->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        ui->ExportEntry->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    }
 }
 //################################################################################################
 void MainWindow::on_actionTop_triggered()
 {
     this->addToolBar(Qt::TopToolBarArea,ui->mainToolBar);
+
+    if(Buffer::show_icon_labels){
+        ui->ConnectButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->DisconnectButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->LastEntry->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->WriteButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->EditEntryButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->DeleteEntry->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->NextEntry->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->TodayButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->ConfigButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->Tag->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        ui->ExportEntry->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    }
 }
 //################################################################################################
 void MainWindow::on_actionRight_triggered()
 {
     this->addToolBar(Qt::RightToolBarArea,ui->mainToolBar);
+
+    if(Buffer::show_icon_labels){
+        ui->ConnectButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        ui->DisconnectButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        ui->LastEntry->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        ui->WriteButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        ui->EditEntryButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        ui->DeleteEntry->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        ui->NextEntry->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        ui->TodayButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        ui->ConfigButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        ui->Tag->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        ui->ExportEntry->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    }
 }
 //################################################################################################
 void MainWindow::on_actionQuit_triggered()
@@ -3178,8 +3320,6 @@ void MainWindow::GetAdjacent(int direction){
                     ui->actionPrevious_Entry->setEnabled(true);
                 }
 
-
-
                 int position=IDList.indexOf(Record);
                 position++;
 
@@ -3209,8 +3349,6 @@ void MainWindow::GetAdjacent(int direction){
     if(CurrentID != "-1"){
         HighlightCurrentSelection(Record);
     }
-
-
 }
 
 //################################################################################################
@@ -3322,9 +3460,7 @@ void MainWindow::on_actionManage_Tags_2_triggered()
 {
     Tag();
 }
-
-
-
+//################################################################################################
 void MainWindow::on_actionSelect_Default_Journal_triggered()
 {
     if((ui->DisconnectButton->isEnabled()) || (Buffer::On_Search)){
@@ -3338,7 +3474,6 @@ void MainWindow::on_actionSelect_Default_Journal_triggered()
         else{
             Disconnect();
         }
-
     }
 
     // launch JournalSelector
@@ -3348,7 +3483,6 @@ void MainWindow::on_actionSelect_Default_Journal_triggered()
 
 void MainWindow::on_ExportEntry_clicked()
 {
-
     ExportEntry();
 }
 
@@ -3364,13 +3498,16 @@ void MainWindow::on_actionEntry_List_toggled(bool arg1)
     minimized.append(100);
 
 
-
-    QList<int> evensplit;
-    evensplit.append(1);
-    evensplit.append(splittersize); // was 225
-
     if(arg1){
-        ui->splitter->setSizes(evensplit);
+        if(!Buffer::mw_splitter_size.isEmpty()){
+            ui->splitter->restoreState(Buffer::mw_splitter_size);
+        }
+        else{
+            QList<int> size;
+            size.append(1);
+            size.append(splittersize); // was originally 225 but fixed values dont work very well
+            ui->splitter->setSizes(size);
+        }
     }
     else{
         ui->splitter->setSizes(minimized);
@@ -3404,16 +3541,17 @@ void MainWindow::on_SearchFilter_currentIndexChanged(const QString &arg1)
     }
 }
 
+//################################################################################################
 void MainWindow::on_ClearButton_clicked()
 {
     ClearSearchResults();
 }
 
+//################################################################################################
 void MainWindow::on_actionJournal_Creator_triggered()
 {
     //Disconnect first
     if((ui->DisconnectButton->isEnabled()) || (Buffer::On_Search)){
-
 
         // Switch back to Entry mode before disconnecting so we don't mess up which buttons should be enabled
         if(Buffer::On_Search){
@@ -3425,13 +3563,9 @@ void MainWindow::on_actionJournal_Creator_triggered()
         }
     }
 
-    JournalCreator jc(this);
+    NewJournalCreator jc(this);
     jc.exec();
 }
-
-
-
-
 
 void MainWindow::on_tabWidget_currentChanged(int index)
 {
@@ -3449,11 +3583,9 @@ void MainWindow::on_tabWidget_currentChanged(int index)
     }
 
     SwitchTab(index);
-
 }
 
-
-
+//################################################################################################
 void MainWindow::on_WholeWords_clicked()
 {
     // Every time this box gets checked, clean the last word searched so we can search again. This is important so
@@ -3487,10 +3619,63 @@ void MainWindow::on_actionJournal_Selector_triggered()
         else{
             Disconnect();
         }
-
     }
 
     // launch JournalSelector
     JournalSelector j(this);
     j.exec();
+}
+
+// New for 0.5: Restore splitter to default position. --Will Kraft, 6/21/13
+void MainWindow::on_actionRestore_Splitter_Position_triggered()
+{
+    QList<int> size;
+    size.append(1);
+    size.append(splittersize); // was originally 225 but fixed values dont work very well
+
+    if (Buffer::showwarnings){
+        QMessageBox m;
+
+        int choice=m.question(this,"RoboJournal","Do you really want to move the splitter bar back to its default position?",
+                              QMessageBox::No | QMessageBox::Yes, QMessageBox::No);
+
+        switch(choice){
+        case QMessageBox::Yes:
+            ui->splitter->setSizes(size);
+            Buffer::mw_splitter_size.clear();
+
+            break;
+
+        case QMessageBox::No:
+            // do nothing
+            break;
+        }
+    }
+    else{
+        ui->splitter->setSizes(size);
+        Buffer::mw_splitter_size.clear();
+    }
+}
+
+//################################################################################################
+// New for 0.5: Give people the option to edit when they double-click on an entry item. Requested by Ritesh Raj Saraff. (Will Kraft 7/4/14).
+void MainWindow::on_EntryList_itemDoubleClicked(QTreeWidgetItem *item, int column)
+{
+
+    if((CurrentID != "-1") && (Buffer::open_editor)){
+        QMessageBox m;
+        int choice=m.question(this,"RoboJournal","Do you want to open \"" + item->text(0) + "\" in the editor?",
+                              QMessageBox::No | QMessageBox::Yes, QMessageBox::No);
+
+        switch(choice){
+        case QMessageBox::Yes:
+            Modify();
+            break;
+
+        case QMessageBox::No:
+            // do nothing
+            break;
+        }
+
+    }
 }

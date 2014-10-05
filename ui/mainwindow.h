@@ -1,7 +1,7 @@
 /*
     This file is part of RoboJournal.
     Copyright (c) 2012 by Will Kraft <pwizard@gmail.com>.
-    MADE IN USA
+    
 
     RoboJournal is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 #include <QMainWindow>
 #include <QTreeWidgetItem>
 #include <QCloseEvent>
-
+#include <QDate>
 
 namespace Ui {
     class MainWindow;
@@ -47,6 +47,8 @@ public:
 
 
     QList<QString> IDList;
+
+    static QWidget* mw;
 
 
 private slots:
@@ -116,6 +118,10 @@ private slots:
     void on_SearchList_currentItemChanged(QTreeWidgetItem *current);
 
     void on_actionJournal_Selector_triggered();
+
+    void on_actionRestore_Splitter_Position_triggered();
+
+    void on_EntryList_itemDoubleClicked(QTreeWidgetItem *item, int column);
 
 private:
     Ui::MainWindow *ui;
@@ -189,6 +195,11 @@ private:
     //bool keep track of whether we used the editor or not.
     bool launched_editor;
     bool launched_config;
+
+    QDate lastdate;
+    bool date_override_trigger_tripped;
+
+    QString backend_type;
 
 };
 

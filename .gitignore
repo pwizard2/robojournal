@@ -1,0 +1,20 @@
+# Files that should be ignored by the git "add" process #
+###################
+robojournal.pro.user
+robojournal.qhc
+robojournal.qch
+*.cpp~
+*.h~
+*.o
+ui_*
+moc_*
+*.html~
+Makefile
+*.css~
+release/*
+release
+debug
+object_script.robojournal.Debug 
+object_script.robojournal.Release		
+Makefile.*
+object_script.*

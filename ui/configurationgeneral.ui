@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>357</width>
-    <height>525</height>
+    <height>529</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
       <item>
        <widget class="QCheckBox" name="AlwaysUseDefaults">
         <property name="toolTip">
-         <string>&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;(Recommended)&lt;/span&gt; This option requires RoboJournal to suggest (but not force) default settings wherever applicable.&lt;/p&gt;</string>
+         <string>&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;(Recommended)&lt;/span&gt; This option requires RoboJournal to suggest&amp;ndash;but not force&amp;ndash;default settings wherever applicable.&lt;/p&gt;</string>
         </property>
         <property name="text">
          <string>Always suggest &amp;default settings</string>
@@ -33,7 +33,7 @@
       <item>
        <widget class="QCheckBox" name="UseConfirmation">
         <property name="toolTip">
-         <string>&lt;p&gt;&lt;b&gt;(Recommended)&lt;/b&gt; This safety protocol requires RoboJournal to require user confirmation before executing commands that delete data. &lt;/p&gt;</string>
+         <string>&lt;p&gt;&lt;b&gt;(Highly Recommended)&lt;/b&gt; This safety protocol forces RoboJournal to request user confirmation before executing potentially dangerous commands. You are strongly encouraged to leave this option enabled at all times!&lt;/p&gt;</string>
         </property>
         <property name="text">
          <string>Always show &amp;confirmation dialogs</string>
@@ -47,6 +47,9 @@
         </property>
         <property name="text">
          <string>Show &amp;labels on toolbar buttons</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -145,11 +148,7 @@ p, li { white-space: pre-wrap; }
       <item>
        <widget class="QCheckBox" name="DOW">
         <property name="toolTip">
-         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans'; font-size:10pt;&quot;&gt;If checked, this setting displays the day of week when an entry was written in addition to the regular date and time. (i.e. Saturday, 1/1/2000).&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;p&gt;If checked, this setting displays the day of week when an entry was written in addition to the regular date and time. (i.e. Saturday, 1/1/2000).&lt;/p&gt;</string>
         </property>
         <property name="text">
          <string>Display day of &amp;week when entries were made</string>
@@ -289,13 +288,27 @@ p, li { white-space: pre-wrap; }
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>40</height>
+       <height>1</height>
       </size>
      </property>
     </spacer>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>AlwaysUseDefaults</tabstop>
+  <tabstop>UseConfirmation</tabstop>
+  <tabstop>UseToolbarLabels</tabstop>
+  <tabstop>NameTitlebar</tabstop>
+  <tabstop>Usealternating</tabstop>
+  <tabstop>TagReminder</tabstop>
+  <tabstop>ToolbarPosition</tabstop>
+  <tabstop>Backend</tabstop>
+  <tabstop>DOW</tabstop>
+  <tabstop>RecordTime</tabstop>
+  <tabstop>UseMilitary</tabstop>
+  <tabstop>DateFormat</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

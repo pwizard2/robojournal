@@ -1,9 +1,7 @@
 /*
     This file is part of RoboJournal.
     Copyright (c) 2012 by Will Kraft <pwizard@gmail.com>.
-    MADE IN USA
-
-
+    
     RoboJournal is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
@@ -41,11 +39,16 @@ private:
     void PopulateForm();
     QString aff_file;
     QString Find_AFF_File(QString dict);
+    QStringList Scan_For_System_Dictionaries();
+    bool showAFFWarning;
 
 private slots:
-        void on_BrowseButton_clicked();
-        void on_UseSpellCheck_clicked(bool checked);
-
+    void on_BrowseButton_clicked();
+    void on_UseSpellCheck_clicked(bool checked);
+    void on_SystemLevelDic_toggled(bool checked);
+    void on_ManageUDWords_clicked();
+    void on_Dictionary_currentIndexChanged(const QString &arg1);
+    void on_UseSpellCheck_toggled(bool checked);
 };
 
 #endif // CONFIGURATIONEDITOR_H
