@@ -52,7 +52,7 @@ HelpViewer::~HelpViewer()
 //###########################################################################################################
 // New for 0.5: Load documentation as raw HTML instead of using the convoluted Qt Assistant thingy.
 // This was necessary because Qt Assistant was just too unreliable --Will Kraft (6/22/14).
-void HelpViewer::LoadDoc(){
+bool HelpViewer::LoadDoc(bool force_toc){
     using namespace std;
 
     QString path;
@@ -77,13 +77,14 @@ void HelpViewer::LoadDoc(){
         ui->forwardButton->setDisabled(true);
         ui->HomeButton->setDisabled(true);
         ui->ChangelogButton->setDisabled(false);
-        return;
+        return false;
+
     }
 
     else{
 
         // Load the last page stored in the buffer.
-        if((!Buffer::helpdoc.isEmpty()) && (Buffer::helpdoc != "about:blank")){
+        if((!Buffer::helpdoc.isEmpty()) && (Buffer::helpdoc != "about:blank") && (!force_toc)){
             ui->webView->setUrl(QUrl::fromLocalFile(Buffer::helpdoc));
         }
         else{ // otherwise, load the default.
@@ -95,7 +96,7 @@ void HelpViewer::LoadDoc(){
         ui->HomeButton->setDisabled(false);
         ui->ChangelogButton->setDisabled(false);
     }
-
+    return true;
 }
 
 //###########################################################################################################
@@ -109,7 +110,8 @@ void HelpViewer::on_BackButton_clicked()
 
 void HelpViewer::on_HomeButton_clicked()
 {
-    LoadDoc();
+    // Bugfix: Force the TOC to be shown by passing the force_toc variable as true --Will Kraft (8/10/14).
+    LoadDoc(true);
 }
 
 //###########################################################################################################
@@ -167,7 +169,12 @@ void HelpViewer::PrimaryConfig(){
     layout->addWidget(ui->buttonBox);
     setLayout(layout);
 
-    LoadDoc();
+    bool doc_exists=LoadDoc(false);
+
+    if(!doc_exists){
+        close();
+    }
+
     showMaximized();
 }
 

@@ -50,7 +50,7 @@ private slots:
 
 private:
     Ui::HelpViewer *ui;
-    void LoadDoc();
+    bool LoadDoc(bool force_toc);
     void PrimaryConfig();
 
     void closeEvent(QCloseEvent *);
