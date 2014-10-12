@@ -596,6 +596,9 @@ void SettingsManager::LoadConfig(bool startup){
         // 0.4.2 ( backported to 0.4.2 on 9/13/13)
         Buffer::mw_splitter_size=settings.value("Behavior/mw_splitter_position").toByteArray(); // added 6/21/13
 
+        // 0.5 Specific
+        Buffer::open_editor=settings.value("Behavior/open_editor").toBool(); // Re-added 10/10/14 because this got lost in the merge..
+
 
         if(reload){
             LoadConfig(false);
