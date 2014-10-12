@@ -74,6 +74,6 @@ rm -f ${RPM_BUILD_ROOT}%{_datadir}/pixmaps/robojournal.xpm
 
 %changelog
 
-* Sun Oct 5 2014 Will Kraft <pwizard@gmail.com> 0.5-1
+* Sun Oct 12 2014 Will Kraft <pwizard@gmail.com> 0.5-1
 - Initial release.
 
