@@ -69,7 +69,7 @@ rm -f ${RPM_BUILD_ROOT}%{_datadir}/pixmaps/robojournal.xpm
 %{_bindir}/robojournal
 %{_datadir}/applications/robojournal.desktop
 %{_datadir}/icons/robojournal64.png
-%{_mandir}/man7/robojournal.7
+%{_mandir}/man7/robojournal.7*
 
 
 %changelog
