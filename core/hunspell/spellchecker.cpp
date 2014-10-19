@@ -29,7 +29,7 @@
 #include <QTextStream>
 #include <QStringList>
 #include <QDebug>
-#include "hunspell.hxx"
+#include <hunspell/hunspell.hxx>
 
 #include "core/buffer.h"
 

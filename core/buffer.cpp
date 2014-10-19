@@ -70,7 +70,7 @@ bool Buffer::editmode; //if true, start the Editor in revision mode. If False, c
 QString Buffer::editentry; // the entry id that needs to be edited
 
 // Current RoboJournal Version used globally in Program.
-QString Buffer::version="0.5";
+QString Buffer::version="0.5.1";
 
 
 // new for 0.4

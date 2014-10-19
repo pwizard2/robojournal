@@ -54,18 +54,6 @@ SOURCES += main.cpp\
         ui/exportcreatedump.cpp \
         ui/customwords.cpp \
         core/hunspell/spellchecker.cpp \
-        core/hunspell/utf_info.cxx \
-        core/hunspell/suggestmgr.cxx \
-        core/hunspell/replist.cxx \
-        core/hunspell/phonet.cxx \
-        core/hunspell/hunzip.cxx \
-        core/hunspell/hunspell.cxx \
-        core/hunspell/hashmgr.cxx \
-        core/hunspell/filemgr.cxx \
-        core/hunspell/dictmgr.cxx \
-        core/hunspell/csutil.cxx \
-        core/hunspell/affixmgr.cxx \
-        core/hunspell/affentry.cxx \
         core/hunspell/ctextcheckeredit.cpp \
         core/hunspell/ctextsyntaxhighlighter.cpp \
         core/helpcore.cpp \
@@ -111,24 +99,6 @@ HEADERS  += ui/mainwindow.h \
 	ui/exportcreatedump.h \
         ui/customwords.h \
         core/hunspell/spellchecker.h \
-        core/hunspell/w_char.hxx \
-        core/hunspell/suggestmgr.hxx \
-        core/hunspell/replist.hxx \
-        core/hunspell/phonet.hxx \
-        core/hunspell/langnum.hxx \
-        core/hunspell/hunzip.hxx \
-        core/hunspell/hunvisapi.h \
-        core/hunspell/hunspell.hxx \
-        core/hunspell/hunspell.h \
-        core/hunspell/htypes.hxx \
-        core/hunspell/hashmgr.hxx \
-        core/hunspell/filemgr.hxx \
-        core/hunspell/dictmgr.hxx \
-        core/hunspell/csutil.hxx \
-        core/hunspell/baseaffix.hxx \
-        core/hunspell/atypes.hxx \
-        core/hunspell/affixmgr.hxx \
-        core/hunspell/affentry.hxx \
         core/hunspell/ctextcheckeredit.h \
         core/hunspell/ctextsyntaxhighlighter.h \
         core/helpcore.h \
@@ -225,3 +195,10 @@ win32{
     CONFIG += qt release
     message(Creating 32-bit Windows release build...)
 }
+
+
+# Hunspell library linking (new for 0.5.1):
+unix:!macx: LIBS += -L$$PWD/../../../usr/lib/i386-linux-gnu/ -lhunspell
+
+INCLUDEPATH += $$PWD/../../../usr/include/hunspell
+DEPENDPATH += $$PWD/../../../usr/include/hunspell
