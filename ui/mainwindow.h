@@ -121,7 +121,7 @@ private slots:
 
     void on_actionRestore_Splitter_Position_triggered();
 
-    void on_EntryList_itemDoubleClicked(QTreeWidgetItem *item, int column);
+    void on_EntryList_itemDoubleClicked(QTreeWidgetItem *item);
 
 private:
     Ui::MainWindow *ui;

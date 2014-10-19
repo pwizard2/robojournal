@@ -3659,7 +3659,7 @@ void MainWindow::on_actionRestore_Splitter_Position_triggered()
 
 //################################################################################################
 // New for 0.5: Give people the option to edit when they double-click on an entry item. Requested by Ritesh Raj Saraff. (Will Kraft 7/4/14).
-void MainWindow::on_EntryList_itemDoubleClicked(QTreeWidgetItem *item, int column)
+void MainWindow::on_EntryList_itemDoubleClicked(QTreeWidgetItem *item)
 {
 
     if((CurrentID != "-1") && (Buffer::open_editor)){
