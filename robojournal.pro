@@ -158,6 +158,38 @@ unix {
 
     }
 
+    # Hunspell library linking (new for 0.5.1):
+
+
+    unix:!macx: LIBS += -L$$PWD/../../../usr/lib/i386-linux-gnu/ -lhunspell
+    unix:!macx: LIBS += -L$$PWD/../../../usr/lib/x86_64-linux-gnu/ -lhunspell
+    unix:!macx: LIBS += -L$$PWD/../../../usr/lib/alpha-linux-gnu/ -lhunspell
+    unix:!macx: LIBS += -L$$PWD/../../../usr/lib/aarch_64-linux-gnu/ -lhunspell
+    unix:!macx: LIBS += -L$$PWD/../../../usr/lib/arm-linux-gnueabi/ -lhunspell
+    unix:!macx: LIBS += -L$$PWD/../../../usr/lib/arm-linux-gnueabihf/ -lhunspell
+    unix:!macx: LIBS += -L$$PWD/../../../usr/lib/hppa-linux-gnu/ -lhunspell
+    unix:!macx: LIBS += -L$$PWD/../../../usr/lib/i386-gnu/ -lhunspell #HURD
+    unix:!macx: LIBS += -L$$PWD/../../../usr/lib/x86_64-kfreebsd-gnu/ -lhunspell
+    unix:!macx: LIBS += -L$$PWD/../../../usr/lib/i386-kfreebsd-gnu/ -lhunspell
+    unix:!macx: LIBS += -L$$PWD/../../../usr/lib/m68k-linux-gnu/ -lhunspell
+    unix:!macx: LIBS += -L$$PWD/../../../usr/lib/mips-linux-gnu/ -lhunspell
+    unix:!macx: LIBS += -L$$PWD/../../../usr/lib/mipsel-linux-gnu/ -lhunspell
+    unix:!macx: LIBS += -L$$PWD/../../../usr/lib/powerpc-linux-gnu/ -lhunspell
+    unix:!macx: LIBS += -L$$PWD/../../../usr/lib/powerpc-linux-gnuspe/ -lhunspell
+    unix:!macx: LIBS += -L$$PWD/../../../usr/lib/powerpc64-linux-gnu/ -lhunspell
+    unix:!macx: LIBS += -L$$PWD/../../../usr/lib/powerpc64le-linux-gnu/ -lhunspell
+    unix:!macx: LIBS += -L$$PWD/../../../usr/lib/s390x-linux-gnu/ -lhunspell
+    unix:!macx: LIBS += -L$$PWD/../../../usr/lib/sh4-linux-gnu/ -lhunspell
+    unix:!macx: LIBS += -L$$PWD/../../../usr/lib/sparc-linux-gnu/ -lhunspell
+    unix:!macx: LIBS += -L$$PWD/../../../usr/lib/sparc64-linux-gnu/ -lhunspell
+    unix:!macx: LIBS += -L$$PWD/../../../usr/lib/x86_64-linux-gnux32/ -lhunspell
+
+
+
+    INCLUDEPATH += $$PWD/../../../usr/include/hunspell
+    DEPENDPATH += $$PWD/../../../usr/include/hunspell
+
+
     # Tweak for development/debugging: (3/31/13)
     # It is sometimes necessary to temporarily comment out the QMAKE_POST_LINK (ln 146) while compiling
     # in Qt Creator b/c it may complain about doc/compile_doc.pl being missing during each build.
@@ -197,8 +229,3 @@ win32{
 }
 
 
-# Hunspell library linking (new for 0.5.1):
-unix:!macx: LIBS += -L$$PWD/../../../usr/lib/i386-linux-gnu/ -lhunspell
-
-INCLUDEPATH += $$PWD/../../../usr/include/hunspell
-DEPENDPATH += $$PWD/../../../usr/include/hunspell
