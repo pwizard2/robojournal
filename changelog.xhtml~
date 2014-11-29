@@ -114,8 +114,8 @@
         now dynamically links to the Hunspell library on
         Debian-based systems instead of embedding the code directly
         (as it was in previous versions). However, this fix
-        complicates things on other distros&#8212;RoboJournal 0.5.1
-        currently does <span style=
+        complicates things on other distros&mdash;RoboJournal
+        0.5.1 currently does <span style=
         "text-decoration: underline; font-weight: bold;">not</span>
         work on Fedora or Windows operating systems. Those users
         should continue to run version 0.5. I hope to have this
