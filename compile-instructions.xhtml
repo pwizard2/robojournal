@@ -1,119 +1,127 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- Copyright © 2012, 2013 by Will Kraft. This documentation is part of RoboJournal and is available under the GNU Free Documentation License (GFDL). RoboJournal's source code and binaries are available under the GNU General Public License 3 (GPL3). -->
+  <meta name="generator" content=
+  "HTML Tidy for Windows (vers 25 March 2009), see www.w3.org" />
+  <!-- Copyright © 2012, 2014 by Will Kraft. This documentation is part of RoboJournal and is 
+  available under the GNU Free Documentation License (GFDL). RoboJournal's source code and binaries are available
+   under the GNU General Public License 3 (GPL3). -->
+
   <title>RoboJournal Compile/Installation Guide</title>
   <meta content="Will Kraft" name="author" />
   <meta content="2012-08-22T22:15:27-0500" name="date" />
-  <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+  <meta content="text/html; charset=us-ascii" http-equiv=
+  "content-type" />
   <meta content="text/css" http-equiv="content-style-type" />
   <style type="text/css">
 /*<![CDATA[*/
 
         body{
-	  background-color: #1d1d1d;
+          background-color: #1d1d1d;
         }
         
         .main{
-	  width: 95%;
-	  border: solid 1px black;
-	  margin-left: auto;
-	  margin-right: auto;
-	  background-color: #ffffff;
-	  border-radius: 20px;
+          width: 95%;
+          border: solid 1px black;
+          margin-left: auto;
+          margin-right: auto;
+          background-color: #ffffff;
+          border-radius: 20px;
         }
         
         h1 {
-	  font-family: "Liberation Sans","Freesans","Calibri",verdana,sans-serif;
-	  font-weight: bold;
-	  font-size: 30pt;
-	  text-align: center;
+          font-family: "Liberation Sans","Freesans","Calibri",verdana,sans-serif;
+          font-weight: bold;
+          font-size: 30pt;
+          text-align: center;
         }       
         
         h2{
-	  font-family: "Liberation Sans","Freesans","Calibri",verdana,sans-serif;
-	  font-weight: bold;
-	  font-size: 18pt;
-	  background-color: #828282;
-	  color: #FFFFFF;
-	  width: 100%;
-	  border-top: solid 1px #1d1d1d;
-	  border-bottom: solid 1px #1d1d1d;
-	  margin-top: 0.4em;
-	  margin-bottom: 0.4em;   
-	  margin-right: -1em;
-	  padding-top: 0.1em;
-	  padding-bottom: 0.1em;
+          font-family: "Liberation Sans","Freesans","Calibri",verdana,sans-serif;
+          font-weight: bold;
+          font-size: 18pt;
+          background-color: #828282;
+          color: #FFFFFF;
+          width: 100%;
+          border-top: solid 1px #1d1d1d;
+          border-bottom: solid 1px #1d1d1d;
+          margin-top: 0.4em;
+          margin-bottom: 0.4em;   
+          margin-right: -1em;
+          padding-top: 0.1em;
+          padding-bottom: 0.1em;
         }
         
         h3{
-	  font-family: "Liberation Sans","Freesans","Calibri",verdana,sans-serif;
-	  font-weight: bold;
-	  font-size: 16pt;
-	  margin-left: 1.3em;
-	  color: #000000;
+          font-family: "Liberation Sans","Freesans","Calibri",verdana,sans-serif;
+          font-weight: bold;
+          font-size: 16pt;
+          margin-left: 1.3em;
+          color: #000000;
         }
         
         p{
-	  font-family: "Liberation Serif","Freeserif",cambria,times new roman,serif;
-	  color: #000000;
-	  font-size: 14pt;
-	  margin-bottom: 1.5em;
-	  margin-top: 1.5em;
-	  margin-left: 1.3em;
-	  margin-right: 1.3em;
+          font-family: "Liberation Serif","Freeserif",cambria,times new roman,serif;
+          color: #000000;
+          font-size: 14pt;
+          margin-bottom: 1.5em;
+          margin-top: 1.5em;
+          margin-left: 1.3em;
+          margin-right: 1.3em;
         }
         
         li{
-	  font-family: "Liberation Serif","Freeserif",cambria,times new roman,serif;
-	  color: #000000;
-	  font-size: 14pt;
-	  margin-bottom: 0.5em;
-	  padding-top: 0.4em;
-	  margin-left: 1em;
-	  margin-right: 1em;
+          font-family: "Liberation Serif","Freeserif",cambria,times new roman,serif;
+          color: #000000;
+          font-size: 14pt;
+          margin-bottom: 0.5em;
+          padding-top: 0.4em;
+          margin-left: 1em;
+          margin-right: 1em;
         }
         
         .FYI{
-	  border: solid 1px gray;
-	  padding: 1em;
-	  margin-left: auto;
-	  margin-right: auto;
-	  width: 80%;
-	  font-size: 14pt;
-	  font-family: "Liberation Sans","Freesans","Calibri",verdana,sans-serif;
-	  margin-top: 1em;
-	  margin-bottom: 1em;
-	  background-color: #e4e4e4;
-	  border-radius: 20px;
+          border: solid 1px gray;
+          padding: 1em;
+          margin-left: auto;
+          margin-right: auto;
+          width: 80%;
+          font-size: 14pt;
+          font-family: "Liberation Sans","Freesans","Calibri",verdana,sans-serif;
+          margin-top: 1em;
+          margin-bottom: 1em;
+          background-color: #e4e4e4;
+          border-radius: 20px;
         }
         
         .FYI li{
-	  font-family: "Liberation Sans","Freesans","Calibri",verdana,sans-serif;
-	  color: #000000;
-	  margin-bottom: 0.5em;
-	  margin-left: 1em;
-	  margin-right: 1em;
-	  font-size: inherit;
+          font-family: "Liberation Sans","Freesans","Calibri",verdana,sans-serif;
+          color: #000000;
+          margin-bottom: 0.5em;
+          margin-left: 1em;
+          margin-right: 1em;
+          font-size: inherit;
         }
         
         .FYI p{
-	  font-family: "Liberation Sans","Freesans","Calibri",verdana,sans-serif;
-	  color: #000000;
-	  margin-bottom: 0.5em;
-	  margin-left: 1em;
-	  margin-right: 1em;
-	  font-size: inherit;
+          font-family: "Liberation Sans","Freesans","Calibri",verdana,sans-serif;
+          color: #000000;
+          margin-bottom: 0.5em;
+          margin-left: 1em;
+          margin-right: 1em;
+          font-size: inherit;
         }
         
         .FYI_console{
-	  font-family: monospace;
-	  font-weight: bold;
-	  font-size: inherit;
+          font-family: monospace;
+          font-weight: bold;
+          font-size: inherit;
         }       
         
         .console{
-	  font-family: courier new, liberation mono,monospace;
+          font-family: courier new, liberation mono,monospace;
           font-size: 10pt;
           font-weight: bold;
           background-color: #1d1d1d;
@@ -131,8 +139,8 @@
           color: #1d1d1d;
           background-color: #1d1d1d;
           border: 0px;
-	  margin-top: 1.5em;
-	  margin-bottom: 1.5em;
+          margin-top: 1.5em;
+          margin-bottom: 1.5em;
         }
         
         .arg{
@@ -148,608 +156,763 @@
   /*]]>*/
   </style>
 </head>
+
 <body>
-<div class="main">
-<h1>RoboJournal Compile and Installation Guide</h1>
+  <div class="main">
+    <h1>RoboJournal Compile and Installation Guide</h1>
 
-<p>Thank you for downloading RoboJournal. The purpose of this documentation is
-to assist users in the process of compiling RoboJournal from its source code.
-Since building RoboJournal requires a Qt environment with full MySQL support,
-this documentation also explains how to properly prepare and compile Qt from
-its base source code. If you need to compile Qt, please consult the "How to
-Build Qt with MySQL Support" section. You may require Internet access to fetch
-one or more required components.</p>
+    <p>Thank you for downloading RoboJournal. The purpose of this
+    documentation is to assist users in the process of compiling
+    RoboJournal from its source code. Since building RoboJournal
+    requires a Qt environment with full MySQL support, this
+    documentation also explains how to properly prepare and compile
+    Qt from its base source code. If you need to compile Qt, please
+    consult the "How to Build Qt with MySQL Support" section. You
+    may require Internet access to fetch one or more required
+    components.</p>
 
-<p>This documentation uses various styles to clearly differentiate portions of
-the text. Sections with a <span class="console">black background</span> are
-literal commands meant to be entered at a command prompt (xterm or cmd.exe). In
-practical usage, the entire command inside a black section is meant to be one
-line with <em>absolutely no line breaks</em>, even if the section wraps to the
-next line in the documentation. Sections with a <span class="arg">green
-background</span> are used to reference specific portions of a command but are
-not complete commands themselves.</p>
+    <p>This documentation uses various styles to clearly
+    differentiate portions of the text. Sections with a
+    <span class="console">black background</span> are literal
+    commands meant to be entered at a command prompt (xterm or
+    cmd.exe). In practical usage, the entire command inside a black
+    section is meant to be one line with <em>absolutely no line
+    breaks</em>, even if the section wraps to the next line in the
+    documentation. Sections with a <span class="arg">green
+    background</span> are used to reference specific portions of a
+    command but are not complete commands themselves.</p>
 
-<h2 id="L7606">  Table of Contents</h2>
+    <h2 id="L7606">&Acirc;&nbsp;&Acirc;&nbsp;Table of Contents</h2>
 
-<div class="toc">
-<ul>
-  <li><a href="#prereq">Prerequisites</a></li>
-  <li><a href="#prepare">Preparing Qt</a> 
+    <div class="toc">
+      <ul>
+        <li><a href="#prereq">Prerequisites</a></li>
+
+        <li>
+          <a href="#prepare">Preparing Qt</a>
+
+          <ul>
+            <li><a href="#config">How to Build Qt with MySQL
+            Support</a></li>
+
+            <li><a href="#L7776">Qt Assistant and
+            QCollectionGenerator on Linux</a></li>
+
+            <li><a href="#reprocess">Preparing the MySQL Libraries
+            for Windows</a></li>
+          </ul>
+        </li>
+
+        <li>
+          <a href="#build">Building RoboJournal From Source</a>
+
+          <ul>
+            <li><a href="#windows">Manual Windows
+            Procedure</a></li>
+
+            <li><a href="#depends">Resolving Windows
+            Dependencies</a></li>
+
+            <li><a href="#debian_requirements">Debian, Ubuntu, and
+            Linux Mint Requirements</a></li>
+
+            <li><a href="#fedora_requirements">Fedora
+            Requirements</a></li>
+
+            <li><a href="#linux">Manual Linux Procedure</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <h2 id="prereq">&Acirc;&nbsp;&Acirc;&nbsp;Prerequisites</h2>
+
+    <p>Before you can compile RoboJournal, you must have
+    <em>all</em> of the following components:</p>
+
+    <ol>
+      <li>RoboJournal source tarball (and any extra software
+      required to unpack the tar.gz archive). The current stable
+      version at the time of this writing is 0.5.1.<br />
+      <br />
+      Alternatively, you can acquire RoboJournal's source code by
+      cloning the contents of the <a href=
+      "https://github.com/pwizard2/robojournal">RoboJournal GitHub
+      repository</a> directly into a folder. Be advised that the
+      RoboJournal "experimental" branch on GitHub frequently
+      contains components that are incomplete and/or buggy because
+      they are in an active state of development. Because of this,
+      those who wish to get RoboJournal from GitHub should clone
+      from the "master" branch that is kept synchronized with the
+      current stable version.</li>
+
+      <li>A Qt 4.7,or 4.8 environment to compile against
+      (RoboJournal has <em>not</em> been ported to Qt 5 yet).
+      Consult the "<a href="#prepare">Preparing Qt</a>" section in
+      this documentation for details on what is required.</li>
+
+      <li>GNU Compiler Toolkit. On Linux, the package containing
+      the full kit is called "build-essential" on several distros,
+      including Ubuntu and Debian. In addition to compilers,
+      build-essential contains other utilities that will help you
+      create a software package; you should only package your
+      custom build if you plan to eventually redistribute it.<br />
+      <br />
+      Windows users should use the <a href=
+      "http://sourceforge.net/projects/mingwbuilds/">MinGW
+      toolkit</a> (Minimalist GNU for Windows) instead of other
+      compiler toolchains. This guide only provides instructions
+      for MinGW. Alternative toolkits may also work but you should
+      still consider them to be experimental/unsupported for the
+      purpose of building RoboJournal.</li>
+
+      <li>A text editor (<a href=
+      "http://notepad-plus-plus.org/">Notepad++</a> is ideal) if
+      you wish to use the Build Helper Script to compile for
+      Windows. You <em>must</em> edit the script before using it
+      for the first time. The Linux Build Helper Script
+      (linux_compile.pl) rarely requires any modification prior to
+      use.</li>
+
+      <li>A reasonable amount of experience with command line
+      interfaces.</li>
+    </ol>
+
+    <p>RoboJournal has been tested extensively on Linux and Windows
+    XP (and newer). RoboJournal should operate reliably and
+    correctly on the aforementioned operating systems but others
+    should be considered experimental at this point. If you build
+    and deploy RoboJournal on an experimental operating system, you
+    should be ready for unexpected bugs even if everything appears
+    to compile correctly.</p>
+
+    <p>If you wish to use standard RoboJournal, you should use
+    pre-compiled binaries for best results. There is an installer
+    available for Microsoft Windows and you can obtain packages
+    compatible with Debian-based Linux from the Debian
+    repositories. These packages work with Ubuntu, Linux Mint, or
+    any other Debian-based Linux. You should try these options
+    first to see if they work. Your only option is to build from
+    source if you are using an operating system for which no
+    RoboJournal installer package exists. Debian users need to
+    build from source if the unstable or experimental repositories
+    do not contain the current version of RoboJournal.</p>
+
+    <h2 id="prepare">&Acirc;&nbsp;&Acirc;&nbsp;Preparing Qt</h2>
+
+    <p>You should compile Qt <em>only</em> if you don't have a set
+    of suitable Qt libraries available for use with
+    RoboJournal.&Acirc;&nbsp;&Acirc;&nbsp;Suitable Qt libraries are
+    defined as being compiled for your correct operating
+    system/system architecture and contain complete driver support
+    for both MySQL and SQLite. Linux and Windows Qt environments
+    are not interchangeable; you <em>cannot</em> use a set of
+    Windows libraries on Linux and vice versa.&Acirc;&nbsp;A
+    complete Qt environment is much harder to find ready-made for
+    Microsoft Windows, so Windows users will probably have to
+    compile their own from scratch. <strong>The official Qt
+    Software Development Kit (SDK) offered by Digia is unsuitable
+    for building RoboJournal because the SDK lacks adequate
+    database support.</strong></p>
+
+    <p>Linux users should check their distro repositories first to
+    see if there is a <em>complete</em> set of Qt libraries
+    available (containing the core SQL module and separate packages
+    for MySQL and SQLite drivers).&Acirc;&nbsp;&Acirc;&nbsp;If so,
+    they can be used to compile RoboJournal and building from
+    source is unnecessary.</p>
+    <hr />
+
+    <h3 id="config">How to Build Qt with MySQL Support</h3>
+
+    <p>Since Qt is modular, the capabilities of a Qt environment
+    are limited by what you decide to include during its
+    configuration process. In other words, if you omit support for
+    a SQL driver, that driver will not be available in the finished
+    build. SQLite support is built-in and requires no
+    headers/libraries (although you still have to instruct the
+    configure command to build it). However, you must specify the
+    path to the headers/libraries for all other SQL drivers you
+    wish to include.</p>
+
+    <p>For best results, you should use <a href=
+    "http://sourceforge.net/projects/mingwbuilds/">MinGW-Builds</a>
+    as your compiler toolkit since other variants of MinGW may not
+    compile Qt properly. Building a custom Qt environment from
+    source requires all of the following:</p>
+
+    <ol>
+      <li>Basic (or better) proficiency with command line
+      interfaces.</li>
+
+      <li>MySQL or MariaDB headers and libraries. Headers consist
+      of the *.h files found in the MySQL or MariaDB include
+      directory; libraries are stored as the file "libmysql.lib".
+      The location of these objects on your system (assuming they
+      are available) will vary depending on your situation.
+
+        <div class="FYI">
+          FYI: If you are using a 32-bit compiler, (MinGW)
+          MySQL/MariaDB libraries <em>must</em> be 32-bit even on
+          64-bit Windows systems. Compiling against 64-bit
+          libraries will cause the build attempt to fail because
+          MinGW can only produce 32-bit binaries. However, if you
+          can obtain 64-bit compilers (64-bit GNU toolkit or
+          MinGW-w64) you could then produce a fully 64-bit
+          RoboJournal binary based on 64-bit Qt and MySQL/MariaDB
+          libraries.
+        </div>
+      </li>
+
+      <li>Qt 4.7 or 4.8 source code from the Qt Project's <a href=
+      "http://qt-project.org/downloads">website</a> or the <a href=
+      "https://qt.gitorious.org/">Qt Git repository</a>. Since the
+      source code comes packaged in a zip or tar.gz file (unless
+      you downloaded it with Git), you also need the appropriate
+      software to extract these archives.</li>
+
+      <li>A Perl interpreter (like <a href=
+      "http://www.activestate.com/activeperl/downloads">ActivePerl</a>)
+      is required in order to configure Qt on Windows. The built-in
+      Perl interpreter included in most Linux distributions is
+      adequate for the task when compiling on Linux.</li>
+
+      <li><a href=
+      "http://sourceware.org/binutils/docs-2.16/binutils/dlltool.html">
+      dlltool</a> and <a href=
+      "http://olex.openlogic.com/packages/mingw-utils">reimp</a>
+      (if building on Windows). Sometimes you must acquire one or
+      both of these tools separately from the MinGW bundle. It is
+      often difficult to find a working copy of Reimp these days,
+      so you may need to build it from <a href=
+      "http://wyw.dcweb.cn/download.asp?path=&amp;file=reimp_new.zip">
+      source</a> (you can use MinGW for this) in advance. You must
+      <a href="#reprocess">convert your MySQL/MariaDB library file
+      to a useful format</a> <em>before</em> starting the Qt
+      compile process on Windows.</li>
+    </ol>
+
+    <p>Open a command prompt (xterm or similar on Linux, cmd.exe on
+    Windows). The entire compile process takes place in this
+    command line environment. Even though there is no graphical
+    user interface to assist you, the process is not difficult
+    (assuming everything is configured correctly prior to building)
+    because the build process is mostly automated.</p>
+
+    <p>First, the Qt configuration process on Windows requires you
+    to set the cmd.exe PATH to the location of your Perl and MinGW
+    installations <em>before</em> you start the compile process
+    (the cmd.exe from the recommended version of MinGW does this
+    automatically). Both MinGW and Perl store their executables in
+    their "bin" folders, so be sure to explicitly reference that in
+    the PATH. Each directory you want the build process to have
+    access to in the PATH should be separated by a semicolon. For
+    instance, assume Perl is installed at C:\Perl64 and MinGW is
+    installed at C:\MinGW; you would run <span class="console">path
+    C:\MinGW\bin;C:\Perl64\bin</span> at the cmd.exe command prompt
+    because the compiler needs to access programs from both
+    directories at once (change these directory locations as needed
+    to fit your actual system configuration). Linux users do
+    <strong><em>not</em></strong> need to set a custom path because
+    all the necessary programs are stored in the same place
+    (/usr/bin). You do <em><strong>not</strong></em> need to set
+    the path if cmd.exe is able to locate and run perl.exe and
+    mingw32-make.exe.</p>
+
+    <p>Next, you must configure Qt before you can compile it.
+    Navigate to the directory where you extracted the Qt source
+    code, and run one of the following commands:</p>
+
     <ul>
-      <li><a href="#config">How to Build Qt with MySQL Support</a></li>
-      <li><a href="#L7776">Qt Assistant and QCollectionGenerator on
-      Linux</a></li>
-      <li><a href="#reprocess">Preparing the MySQL Libraries for
-      Windows</a></li>
+      <li>On Linux: <span class="console">./configure -opensource
+      -platform linux-g++ -release -qt-sql-mysql -plugin-sql-sqlite
+      -I /usr/include/mysql -L /usr/lib/mysql</span></li>
+
+      <li>On Windows: <span class="console">configure.exe
+      -opensource -platform win32-g++ -release -qt-sql-mysql
+      -plugin-sql-sqlite -l mysql -I C:\MySQL\include -L
+      C:\MySQL\lib</span></li>
     </ul>
-  </li>
-  <li><a href="#build">Building RoboJournal From Source</a> 
-    <ul>
-      <li><a href="#windows">Manual Windows Procedure</a></li>
-      <li><a href="#depends">Resolving Windows Dependencies</a></li>
-      <li><a href="#debian_requirements">Debian, Ubuntu, and Linux Mint
-Requirements</a></li>
-      <li><a href="#fedora_requirements">Fedora Requirements</a></li>
-      <li><a href="#linux">Manual Linux Procedure</a></li>
-    </ul>
-  </li>
-</ul>
-</div>
 
-<h2 id="prereq">  Prerequisites</h2>
-
-<p>Before you can compile RoboJournal, you must have <em>all</em> of the
-following components:</p>
-<ol>
-  <li>RoboJournal source tarball (and any extra software required to unpack the
-    tar.gz archive). The current stable version at the time of this writing is
-    0.5.<br />
-    <br />
-    Alternatively, you can acquire RoboJournal's source code by cloning the
-    contents of the <a
-    href="https://github.com/pwizard2/robojournal">RoboJournal GitHub
-    repository</a> directly into a folder. Be advised that the RoboJournal
-    "experimental" branch on GitHub frequently contains components that are
-    incomplete and/or buggy because they are in an active state of development.
-    Because of this, those who wish to get RoboJournal from GitHub should clone
-    from the "master" branch that is kept synchronized with the current stable
-    version. </li>
-  <li>A Qt 4.7,or 4.8 environment to compile against (RoboJournal has
-    <em>not</em> been ported to Qt 5 yet). Consult the "<a
-    href="#prepare">Preparing Qt</a>" section in this documentation for details
-    on what is required.</li>
-  <li>GNU Compiler Toolkit. On Linux, the package containing the full kit is
-    called "build-essential" on several distros, including Ubuntu and Debian.
-    In addition to compilers, build-essential contains other utilities that
-    will help you create a software package; you should only package your
-    custom build if you plan to eventually redistribute it.<br />
-    <br />
-    Windows users should use the <a
-    href="http://sourceforge.net/projects/mingwbuilds/">MinGW toolkit</a>
-    (Minimalist GNU for Windows) instead of other compiler toolchains. This
-    guide only provides instructions for MinGW. Alternative toolkits may also
-    work but you should still consider them to be experimental/unsupported for
-    the purpose of building RoboJournal. </li>
-  <li>A text editor (<a href="http://notepad-plus-plus.org/">Notepad++</a> is
-    ideal) if you wish to use the Build Helper Script to compile for Windows.
-    You <em>must</em> edit the script before using it for the first time. The
-    Linux Build Helper Script (linux_compile.pl) rarely requires any
-    modification prior to use.</li>
-  <li>A reasonable amount of experience with command line interfaces.</li>
-</ol>
-<p>RoboJournal has been tested extensively on Linux and Windows XP (and
-newer).
-RoboJournal should operate reliably and correctly on the aforementioned
-operating systems but others should be considered experimental at this point.
-If you build and deploy RoboJournal on an experimental operating system, you
-should be ready for unexpected bugs even if everything appears to compile
-correctly.</p>
-<p>If you wish to use standard RoboJournal, you should use pre-compiled
-binaries for best results. There is an installer available for Microsoft
-Windows and you can obtain packages compatible with Debian-based Linux from the
-Debian repositories. These packages work with Ubuntu, Linux Mint, or any other
-Debian-based Linux. You should try these options first to see if they work.
-Your only option is to build from source if you are using an operating system
-for which no RoboJournal installer package exists. Debian users need to build
-from source if the unstable or experimental repositories do not contain the
-current version of RoboJournal.</p>
-
-<h2 id="prepare">  Preparing Qt</h2>
-
-<p>You should compile Qt <em>only</em> if you don't have a set of suitable Qt
-libraries available for use with RoboJournal.  Suitable Qt libraries are
-defined as being compiled for your correct operating system/system architecture
-and contain complete driver support for both MySQL and SQLite. Linux and
-Windows Qt environments are not interchangeable; you <em>cannot</em> use a set
-of Windows libraries on Linux and vice versa. A complete Qt environment is
-much harder to find ready-made for Microsoft Windows, so Windows users will
-probably have to compile their own from scratch. <strong>The official Qt
-Software Development Kit (SDK) offered by Digia is unsuitable for building
-RoboJournal because the SDK lacks adequate database support.</strong> </p>
-
-<p>Linux users should check their distro repositories first to see if there is
-a <em>complete</em> set of Qt libraries available (containing the core SQL
-module and separate packages for MySQL and SQLite drivers).  If so, they can
-be used to compile RoboJournal and building from source is unnecessary. </p>
-<hr />
-<h3 id="config">How to Build Qt with MySQL Support</h3>
-
-<p>Since Qt is modular, the capabilities of a Qt environment are limited by
-what you decide to include during its configuration process. In other words, if
-you omit support for a SQL driver, that driver will not be available in the
-finished build. SQLite support is built-in and requires no headers/libraries
-(although you still have to instruct the configure command to build it).
-However, you must specify the path to the headers/libraries for all other SQL
-drivers you wish to include.</p>
-
-<p>For best results, you should use <a
-href="http://sourceforge.net/projects/mingwbuilds/">MinGW-Builds</a> as your
-compiler toolkit since other variants of MinGW may not compile Qt properly.
-Building a custom Qt environment from source requires all of the following:</p>
-<ol>
-  <li>Basic (or better) proficiency with command line interfaces.</li>
-  <li>MySQL or MariaDB headers and libraries. Headers consist of the *.h files
-    found in the MySQL or MariaDB include directory; libraries are stored as
-    the file "libmysql.lib". The location of these objects on your system
-    (assuming they are available) will vary depending on your situation. 
+    <p>In the above commands, <span class="arg">-I</span> refers to
+    location of the MySQL includes ( *.h header files) while
+    <span class="arg">-L</span> refers to the location of the MySQL
+    libraries. You <em>must</em> change the values assigned to the
+    <span class="arg">-I</span> and <span class="arg">-L</span>
+    arguments (if necessary) to reflect the actual paths to these
+    objects on your system.</p>
 
     <div class="FYI">
-    FYI: If you are using a 32-bit compiler, (MinGW) MySQL/MariaDB libraries
-    <em>must</em> be 32-bit even on 64-bit Windows systems. Compiling against
-    64-bit libraries will cause the build attempt to fail because MinGW can
-    only produce 32-bit binaries. However, if you can obtain 64-bit compilers
-    (64-bit GNU toolkit or MinGW-w64) you could then produce a fully 64-bit
-    RoboJournal binary based on 64-bit Qt and MySQL/MariaDB libraries. </div>
-  </li>
-  <li>Qt 4.7 or 4.8 source code from the Qt Project's <a
-    href="http://qt-project.org/downloads">website</a> or the <a
-    href="https://qt.gitorious.org/">Qt Git repository</a>. Since the source
-    code comes packaged in a zip or tar.gz file (unless you downloaded it with
-    Git), you also need the appropriate software to extract these archives.
-  </li>
-  <li>A Perl interpreter (like <a
-    href="http://www.activestate.com/activeperl/downloads">ActivePerl</a>) is
-    required in order to configure Qt on Windows. The built-in Perl interpreter
-    included in most Linux distributions is adequate for the task when
-    compiling on Linux. </li>
-  <li><a
-    href="http://sourceware.org/binutils/docs-2.16/binutils/dlltool.html">dlltool</a>
-    and <a href="http://olex.openlogic.com/packages/mingw-utils">reimp</a> (if
-    building on Windows). Sometimes you must acquire one or both of these tools
-    separately from the MinGW bundle. It is often difficult to find a working
-    copy of Reimp these days, so you may need to build it from <a
-    href="http://wyw.dcweb.cn/download.asp?path=&amp;file=reimp_new.zip">source</a>
-    (you can use MinGW for this) in advance. You must <a
-    href="#reprocess">convert your MySQL/MariaDB library file to a useful
-    format</a> <em>before</em> starting the Qt compile process on Windows.</li>
-</ol>
+      <strong>FYI:</strong> You <em>must</em> compile SQLite as a
+      plugin on Windows (as <span class=
+      "arg">-plugin-sql-sqlite</span>) instead of embedding it
+      directly into Qt with <span class=
+      "arg">-qt-sql-sqlite</span>.
+    </div>
 
-<p>Open a command prompt (xterm or similar on Linux, cmd.exe on Windows). The
-entire compile process takes place in this command line environment. Even
-though there is no graphical user interface to assist you, the process is not
-difficult (assuming everything is configured correctly prior to building)
-because the build process is mostly automated.</p>
+    <p>Once configuration is finished, the configure script
+    instructs you to begin the compile procedure. This is done by
+    running <span class="console">make</span> (or <span class=
+    "console">mingw32-make</span> on Windows). You should expect
+    the build process to take several hours depending on your
+    processor speed and the number of cores devoted to the process.
+    If you have a multi-core CPU, you can put all of your cores to
+    work on the build by adding a <span class="arg">-j
+    <em>x</em></span> argument to the make command, where
+    <em>x</em> is the number of cores your CPU has. For instance,
+    you would enter <span class="console">make -j 4</span> or
+    <span class="console">mingw32-make -j 4</span> if you have a
+    quad-core CPU and want to process four jobs at once.</p>
 
-<p>First, the Qt configuration process on Windows requires you to set the
-cmd.exe PATH to the location of your Perl and MinGW installations
-<em>before</em> you start the compile process (the cmd.exe from the recommended
-version of MinGW does this automatically). Both MinGW and Perl store their
-executables in their "bin" folders, so be sure to explicitly reference that in
-the PATH. Each directory you want the build process to have access to in the
-PATH should be separated by a semicolon. For instance, assume Perl is installed
-at C:\Perl64 and MinGW is installed at C:\MinGW; you would run <span
-class="console">path C:\MinGW\bin;C:\Perl64\bin</span> at the cmd.exe command
-prompt because the compiler needs to access programs from both directories at
-once (change these directory locations as needed to fit your actual system
-configuration). Linux users do <strong><em>not</em></strong> need to set a
-custom path because all the necessary programs are stored in the same place
-(/usr/bin). You do <em><strong>not</strong></em> need to set the path if
-cmd.exe is able to locate and run perl.exe and mingw32-make.exe. </p>
+    <p>Finally, you must install Qt once the complile process is
+    finished by running <span class="console">make install</span>
+    or <span class="console">mingw32-make install</span>. The new
+    Qt environment is ready for use once the installation process
+    is finished.</p>
+    <hr />
 
-<p>Next, you must configure Qt before you can compile it. Navigate to the
-directory where you extracted the Qt source code, and run one of the following
-commands:</p>
-<ul>
-  <li>On Linux: <span class="console">./configure -opensource -platform
-    linux-g++ -release -qt-sql-mysql -plugin-sql-sqlite -I /usr/include/mysql
-    -L /usr/lib/mysql</span></li>
-  <li>On Windows: <span class="console">configure.exe -opensource -platform
-    win32-g++ -release -qt-sql-mysql -plugin-sql-sqlite -l mysql -I
-    C:\MySQL\include -L C:\MySQL\lib</span></li>
-</ul>
-<p>In the above commands, <span class="arg">-I</span> refers to
-location of the
-MySQL includes ( *.h header files) while <span class="arg">-L</span>
-refers to
-the location of the MySQL libraries. You <em>must</em> change the
-values
-assigned to the <span class="arg">-I</span> and <span class="arg">-L</span>
-arguments (if necessary) to reflect the actual paths to these objects
-on your
-system.</p>
+    <h3 id="L7776">Qt Assistant and QCollectionGenerator on
+    Linux</h3>
 
-<div class="FYI">
-<strong>FYI:</strong> You <em>must</em> compile SQLite as a plugin on Windows
-(as <span class="arg">-plugin-sql-sqlite</span>) instead of embedding it
-directly into Qt with <span class="arg">-qt-sql-sqlite</span>.</div>
+    <p>RoboJournal 0.5.1 and later no longer require
+    QCollectionGenerator or Qt Assistant to be installed during the
+    build process.<br />
+    <br />
+    External Resource: <a href=
+    "http://www.rag.com.au/linux/qt4howto.html">Qt Build
+    Tutorial</a>.</p>
+    <hr />
 
-<p>Once configuration is finished, the configure script instructs you to begin
-the compile procedure. This is done by running <span
-class="console">make</span> (or <span class="console">mingw32-make</span> on
-Windows). You should expect the build process to take several hours depending
-on your processor speed and the number of cores devoted to the process. If you
-have a multi-core CPU, you can put all of your cores to work on the build by
-adding a <span class="arg">-j <em>x</em></span> argument to the make command,
-where <em>x</em> is the number of cores your CPU has. For instance, you would
-enter <span class="console">make -j 4</span> or <span
-class="console">mingw32-make -j 4</span> if you have a quad-core CPU and want
-to process four jobs at once.</p>
+    <h3 id="reprocess">Preparing the MySQL/MariaDB Libraries for
+    Windows</h3>
 
-<p>Finally, you must install Qt once the complile process is finished by
-running <span class="console">make install</span> or <span
-class="console">mingw32-make install</span>. The new Qt environment is ready
-for use once the installation process is finished.</p>
-<hr />
+    <p>MySQL/MariaDB header files are compatible with any operating
+    system and require no changes. While the "raw" Windows
+    MySQL/MariaDB development library file (libmysql.lib) can be
+    used as-is by the Linux compiler, it is unusable on Windows
+    unless you alter it with the dlltool and reimp utilities prior
+    to the compile process:</p>
 
-<h3 id="L7776">Qt Assistant and QCollectionGenerator on Linux</h3>
+    <ol>
+      <li>Open a cmd.exe terminal and set its PATH to the directory
+      that contains reimp and dlltool.</li>
 
-<p>RoboJournal 0.5 and later no longer require QCollectionGenerator or Qt
-Assistant to be installed during the build process.<br />
-<br />
-External Resource: <a href="http://www.rag.com.au/linux/qt4howto.html">Qt
-Build
-Tutorial</a>.</p>
-<hr />
+      <li>Navigate to the directory that contains libmysql.lib. For
+      this example, assume that file is located in the path given
+      in the <span class="arg">-L</span> argument of the configure
+      statement (i.e. C:\MySQL\lib).</li>
 
-<h3 id="reprocess">Preparing the MySQL/MariaDB Libraries for Windows</h3>
+      <li>Run reimp on the library: <span class="console">reimp -d
+      libmysql.lib</span>. This step produces a file called
+      libmysql.def.</li>
 
-<p>MySQL/MariaDB header files are compatible with any operating system and
-require no changes. While the "raw" Windows MySQL/MariaDB development library
-file (libmysql.lib) can be used as-is by the Linux compiler, it is unusable on
-Windows unless you alter it with the dlltool and reimp utilities prior to the
-compile process:</p>
-<ol>
-  <li>Open a cmd.exe terminal and set its PATH to the directory that
-contains reimp and dlltool.</li>
-  <li>Navigate to the directory that contains libmysql.lib. For this
-example, assume that file is located in the path given in the <span
- class="arg">-L</span> argument of the configure statement (i.e.
-C:\MySQL\lib).</li>
-  <li>Run reimp on the library: <span class="console">reimp -d
-    libmysql.lib</span>. This step produces a file called libmysql.def.</li>
-  <li>Use dlltool on libmysql.def: <span class="console">dlltool --input-def
-    libmysql.def --dllname libmysql.dll --output-lib libmysql.a -k</span>.</li>
-  <li>Dlltool produces a file called libmysql.a, which is essentially the
-    "fixed" version of the MySQL/MariaDB development library. Once you have
-    this file, you are ready to build Qt.</li>
-</ol>
-<h2 id="build">&nbsp;&nbsp;Building RoboJournal From Source</h2>
-<p>The procedure for building RoboJournal varies widely depending on
-operating
-system. The process consists of generating a Makefile, compiling the
-source
-against the Qt libraries according to the Makefile instructions, and
-(optionally) installing the resulting executable file.</p>
-<p>A Makefile consists of the necessary instructions required to build
-a
-program for a given operating system. Makefiles are operating system
-specific;
-a Makefile generated on a Linux system will not build a valid Windows
-executable or vice versa. &nbsp;RoboJournal’s Makefiles are generated
-by a
-program called QMake, which is part of the Qt development environment
-you
-should have at this point.<br />
-</p>
-<div class="FYI">
-<p><strong>FYI:</strong> The RoboJournal source package (version 0.3
-and newer)
-includes a build helper script that automates the compile procedure on
-Windows
-(2000, XP, Vista, and 7) machines. Open win32_compile.bat in a text
-editor and
-make all necessary path changes (specify the locations of Qt and MinGW
-on your
-system but do not change anything else). After that, run
-win32_compile.bat to
-compile RoboJournal in one easy step.</p>
+      <li>Use dlltool on libmysql.def: <span class=
+      "console">dlltool --input-def libmysql.def --dllname
+      libmysql.dll --output-lib libmysql.a -k</span>.</li>
 
-<p>The build helper script builds robojournal.exe inside a separate "release"
-folder in the robojournal-0.5 directory. After the helper script is finished,
-you must locate the required <a href="#depends">dependency</a> files if
-necessary.</p>
-<p>You can run the win32_cleanup.bat file to completely clean the
-robojournal-0.5 folder between builds.</p>
-</div>
-<div class="FYI">
+      <li>Dlltool produces a file called libmysql.a, which is
+      essentially the "fixed" version of the MySQL/MariaDB
+      development library. Once you have this file, you are ready
+      to build Qt.</li>
+    </ol>
 
-<p><strong>FYI:</strong> RoboJournal 0.4.1 introduces a similar build script
-for Unix/Linux, stored as a Perl-based script in the RoboJournal source
-directory. Since practically every Linux system includes Perl support out of
-the box, the script works without requiring anything extra (beyond the base
-RoboJournal build requirements for your specific distribution). This script
-greatly simplifies the process of compiling and installing RoboJournal on any
-type of Linux. </p>
-<p>To run this script, open a terminal, navigate to the RoboJournal
-source
-directory, and run <span class="console">./linux_compile.pl</span>.</p>
-</div>
-<hr />
-<h3 id="windows">Manual Windows Procedure</h3>
+    <h2 id="build">&nbsp;&nbsp;Building RoboJournal From
+    Source</h2>
 
-<p>If you wish to compile RoboJournal manually instead of using the build
-helper script, follow the procedure below. For the sake of simplicity in this
-procedure, assume Qt is located in C:\Qt, MinGW is located in C:\MinGW, and
-RoboJournal's source code is located in C:\robojournal-0.5. In a real-world
-situation, these locations vary depending on where you installed everything.
-You will receive errors if you fail to revise the paths to match your actual
-configuration.</p>
-<ol>
-  <li>Click the Start Menu » All Programs » Accessories » Command Prompt. A
-    cmd.exe window is displayed. From this point on, all input should be
-    directed to the cmd.exe window unless otherwise indicated.</li>
-  <li>Navigate to the RoboJournal source folder.  Type <span
-    class="console">cd C:\robojournal-0.5</span> and press Enter.</li>
-  <li>Type <span class="console">path C:\Qt\bin</span> and press Enter. This
-    changes the current path for cmd.exe and allows you to run any program from
-    C:\Qt\bin even though you should still be in the C:\robojournal-0.5
-    directory.</li>
-  <li>Type <span class="console">qmake –config release robojournal.pro</span>
-    and press Enter. QMake will create a Makefile in the C:\robojournal-0.5
-    directory.</li>
-  <li>When QMake is finished, type <span class="console">dir</span> (and press
-    Enter) to display the file list.</li>
-  <li>If there is a Makefile in the file list (look for a file called
-"Makefile"), type <span class="console">path C:\MinGW\bin</span> and
-press Enter.</li>
-  <li>Type <span class="console">mingw32-make</span> at the command
-prompt and press Enter. You can accelerate the compile process by
-running <span class="console">mingw32-make -j 2</span> instead. This
-instructs the compiler to process two jobs at once, thereby cutting the
-build time in half. However, running more than three jobs
-simultaneously rarely yields additional speed benefits and may cause
-problems.</li>
-  <li>Wait for mingw32-make to finish (the build is done when text
-stops auto-scrolling and the terminal accepts input again).</li>
-  <li>At this point, you should have a robojournal.exe file in the
-    C:\robojournal-0.5 (or C:\robojournal-0.5\release) directory.</li>
-  <li>Resolve dependencies if necessary (refer to the <a
-    href="#depends">section</a> below). </li>
-  <li>Type <span class="console">robojournal.exe</span> and press Enter to
-    start the program for the first time. You can also start the program by
-    opening Windows Explorer, navigating to the C:\robojournal-0.5 (or
-    C:\robojournal-0.5\release) folder, and double-clicking the robojournal.exe
-    program icon.</li>
-</ol>
-<hr />
-<h3 id="depends">Resolving Windows Dependencies</h3>
-<p>The robojournal.exe produced by the compile procedure works by
-itself if the
-Qt you compiled against is static-built. A static-built Qt environment
-embeds
-all required dependencies into the output executable file itself, the
-only
-drawback being a much larger file size for the executable. Static-built
-binaries have the advantage of being highly portable but their large
-size can
-occasionally be a problem.</p>
+    <p>The procedure for building RoboJournal varies widely
+    depending on operating system. The process consists of
+    generating a Makefile, compiling the source against the Qt
+    libraries according to the Makefile instructions, and
+    (optionally) installing the resulting executable file.</p>
 
-<p>If your Qt is <em>not</em> static, locate the following files on your hard
-drive (they <em>must</em> be from the same Qt and MinGW libraries you compiled
-against) and copy them to the C:\robojournal-0.5 (or
-C:\robojournal-0.5\release) folder. The following list displays the required
-files and where they are most likely to be located on your hard drive:</p>
-
-<ul>
-  <li>libgcc_s_dw2-1.dll (MinGW bin folder)</li>
-  <li>libmysql.dll (MySQL lib folder)</li>
-  <li>libstdc++-6.dll (MinGW bin folder)</li>
-  <li>QtCore4.dll (Qt 4.x lib folder)</li>
-  <li>QtGui4.dll (Qt 4.x lib folder)</li>
-  <li>QtSql4.dll (Qt 4.x lib folder)</li>
-  <li>QtNetwork4.dll (Qt 4.x lib folder)</li>
-  <li>QtWebKit4.dll (Qt 4.x lib folder)</li>
-  <li>qsqllite4.dll (Qt 4.x plugins/sqldrivers folder)</li>
-</ul>
-
-<hr />
-<h3 id="debian_requirements">Debian, Ubuntu, and Linux Mint Requirements</h3>
-
-<p>Users of Debian-family distros (including Debian itself, Ubuntu, Linux Mint,
-<i>et al.</i>) must install the the following packages through apt-get: </p>
-
-<ul>
-  <li>libqt4-core</li>
-  <li>libqt4-gui</li>
-  <li>libqt4-network</li>
-  <li>libqt4-webkit</li>
-  <li>libqt4-sql</li>
-  <li>libqt4-sql-mysql</li>
-  <li>libqt4-sql-sqlite</li>
-  <li>libqt4-help</li>
-  <li>qt4-dev-tools</li>
-  <li>qt4-qmake</li>
-  <li>libx11-dev</li>
-  <li>build-essential (if it is not already installed)</li>
-  <li>perl *<br />
-  </li>
-</ul>
-<p>You can install all of these packages simultaneously by running <span
- class="console">sudo apt-get install libqt4-core libqt4-gui
-libqt4-network
-libqt4-webkit libqt4-sql libqt4-sql-mysql libqt4-sql-sqlite libqt4-help
-qt4-dev-tools qt4-qmake libx11-dev build-essential</span>. Ensure that
-the
-entire command consists of one unbroken line before you copy and paste
-it into
-the terminal.</p>
-
-<p>Newer versions of Ubuntu, Debian, and Linux Mint allow you to install Qt
-4.x.x and Qt 5.x in parallel. Since RoboJournal has not been ported to Qt 5.x
-yet, you <em>must</em> use the Qt 4.x.x version of QMake for all RoboJournal
-builds. On systems that have multiple versions of Qt installed, the correct
-version of QMake is called "qmake-qt4". It is usually installed at
-/usr/bin/qmake-qt4.</p>
-<hr />
-
-<h3 id="fedora_requirements">Fedora Requirements</h3>
-
-<p>The Qt environment on Fedora is unusual because certain utilities have
-slightly different names: QMake is called "qmake-qt4" while Qt Assistant is
-called "assistant-qt4". Be sure to take these name changes into consideration
-in order to prevent problems during the build process. </p>
-
-<hr />
-<h3 id="fedora_requirements">Fedora Requirements</h3>
-<p>Recent versions of Fedora often have both Qt 4 and Qt 5 libraries
-available but RoboJournal
-should always be built with Qt 4. The version of QMake you should use
-is called
-"qmake-qt4" while Qt Assistant is called "assistant-qt4". Be sure to
-take these
-name changes into consideration in order to prevent problems during the
-build
-process. </p>
-<p>All requirements are applicable to Fedora 18 and later (older
-versions are
-unsupported). Building RoboJournal from source requires you to install
-the
-following packages through the yum package management system:</p>
-<ul>
-  <li>qt</li>
-  <li>qt-assistant</li>
-  <li>qt-mysql</li>
-  <li>qt-devel</li>
-  <li>qt-webkit-devel</li>
-  <li>gcc-c++ *</li>
-  <li>perl †</li>
-</ul>
-
-<p>You can install all these packages at once by running <span
- class="console">sudo yum install qt qt-assistant qt-mysql qt-devel
-qt-webkit-devel gcc-c++</span>. Make sure the entire command
-consists of one
-unbroken line before you copy and paste it into the terminal.</p>
-
-<p><small>* Due to a common dependency conflict, you may need to
-manually
-update the <em>audit</em> package (audit-2.2.1-2 on Fedora 18) before
-you can
-install the <em>gcc-c++</em> package. This is achieved by running <span
- class="console">sudo yum upgrade audit</span> prior to installing the
-RoboJournal dependencies.</small></p>
-<p><small>† Most systems include
-Perl support out of the box so you rarely have to install it manually.</small></p>
-
-<p>You can install all these packages at once by running <span
-class="console">sudo yum install qt qt-assistant qt-mysql qt-devel qt-webkit
-qt-webkit-devel gcc-c++</span>. Ensure that the entire command consists of one
-unbroken line before you copy and paste it into the terminal.</p>
-
-<hr />
-<h3 id="linux">Manual Linux Procedure</h3>
-
-<p>The build process for Linux is much more straightforward. Unlike most source
-packages, there is no configure script that must be used prior to the compile
-process (QMake handles this role instead). For the purpose of this example,
-assume that the RoboJournal source code is located in your home directory
-(~/robojournal-0.5) and all utilities are stored in /usr/bin. </p>
-<ol>
-  <li>Open a terminal application (xterm or similar). There is no specific
-    shell requirement; most systems use Bash by default. From this point on,
-    all input should be directed to the terminal unless otherwise
-  indicated.</li>
-  <li>Type <span class="console">cd ~/robojoural-0.5</span> and press
-  Enter.</li>
-  <li>Type <span class="console">qmake robojournal.pro</span> and press Enter
-    (substitute "qmake" with "qmake-qt4" on Fedora and on systems where Qt 5 is
-    also installed). 
+    <p>A Makefile consists of the necessary instructions required
+    to build a program for a given operating system. Makefiles are
+    operating system specific; a Makefile generated on a Linux
+    system will not build a valid Windows executable or vice versa.
+    &nbsp;RoboJournal&acirc;&euro;&trade;s Makefiles are generated
+    by a program called QMake, which is part of the Qt development
+    environment you should have at this point.<br /></p>
 
     <div class="FYI">
-    <strong>FYI:</strong> If you need to create a package build for Debian, you
-    should substitute the regular Qmake command with <span
-    class="console">qmake CONFIG+=package robojournal.pro</span> (change the
-    path to Qmake if necessary). You should not create a package build
-    <em>unless</em> you are a Debian maintainer and you need to package
-    RoboJournal for inclusion in the repositories. </div>
-  </li>
-  <li>Wait for the QMake process to finish.</li>
-  <li>Type <span class="console">make</span> and press Enter. You can
-    accelerate the compile process by running <span class="console">make -j
-    2</span> instead. This instructs the compiler to process two jobs at once,
-    thereby cutting the build time in half. However, running more than three
-    jobs simultaneously rarely yields additional speed benefits and may cause
-    problems.</li>
-  <li>Wait for the compiler to finish (the build is done when text stops
-    auto-scrolling and the terminal accepts input again).</li>
-  <li>Type <span class="console">./robojournal</span> and press Enter to start
-    the program for the first time. You can also start the program by opening a
-    graphical file manager like Nautilus or Dolphin, navigating to the
-    ~/robojournal-0.5 folder, and clicking the "robojournal" file. 
-    <p>The build process is complete after Step 7. The next three steps are
-    completely optional and deal with system-wide installation. Properly
-    installing RoboJournal makes it available to all users whereas running it
-    out of the build directory limits its availability to your own user
-    account. /usr/local/bin is the default install location for all software
-    programs that have been compiled from source, including RoboJournal. Under
-    no circumstances should the RoboJournal executable be placed in /usr/bin
-    (unless you are creating a package build for Debian). The following steps
-    require root or superuser permissions to complete:</p>
-  </li>
-  <li>Type <span class="console">su</span> and press Enter to switch
-to root. If the root account is not configured (as is typical on Ubuntu
-and its derivitives), you can temporarily gain root-level permissions
-by preceding commands with "sudo".</li>
-  <li>Type <span class="console">make install</span> (or <span
- class="console">sudo make install</span>) and press Enter.</li>
-  <li>Debian (and related systems) only: Type <span class="console">update-menus</span>
-and press Enter to add RoboJournal to the Debian Applications menu. A
-menu entry is added automatically during the "make install" step if you
-are using KDE or Gnome, but other window managers often require a
-manual refresh before new menu items are displayed.</li>
-</ol>
+      <p><strong>FYI:</strong> The RoboJournal source package
+      (version 0.3 and newer) includes a build helper script that
+      automates the compile procedure on Windows (2000, XP, Vista,
+      and 7) machines. Open win32_compile.bat in a text editor and
+      make all necessary path changes (specify the locations of Qt
+      and MinGW on your system but do not change anything else).
+      After that, run win32_compile.bat to compile RoboJournal in
+      one easy step.</p>
 
-<p>RoboJournal is now installed for all users. For convenience, the install
-process places a launcher for RoboJournal in the Office sub-group of your
-Applications list. This launcher is available to all users and points to the
-installed copy of RoboJournal (not the one in the ~/robojournal-0.5 build
-folder). The installed copy is henceforth referred to as the "global copy" in
-this documentation. You can also launch the global copy of RoboJournal by
-entering <span class="console">robojournal</span> at any command prompt (do not
-precede the command with ./).</p>
+      <p>The build helper script builds robojournal.exe inside a
+      separate "release" folder in the robojournal-0.5.1 directory.
+      After the helper script is finished, you must locate the
+      required <a href="#depends">dependency</a> files if
+      necessary.</p>
 
-<p>To uninstall, navigate to the ~/robojournal-0.5 directory, switch to root
-(or use sudo), type <span class="console">make uninstall</span>, and press
-Enter. This completely removes the global copy and any shortcuts that point to
-it. You should always uninstall prior to upgrading to a newer version of
-RoboJournal; do not install a new global copy over an existing one. If you wish
-to clean up the object code (*.o files) left behind by the compiler, type <span
-class="console">make clean</span> (and press Enter) in the build folder. This
-action cleans the ~/robojournal-0.5 folder but spares the Makefile and the
-executable made during the most recent build.</p>
-<p>Type <span class="console">make distclean</span> (and press Enter)
-if you
-wish to <em>completely</em> purge the build folder of all compiled
-objects,
-including the Makefile and executable. You <em>must</em> run a
-distclean
-between every build.</p>
-<hr />
+      <p>You can run the win32_cleanup.bat file to completely clean
+      the robojournal-0.5.1 folder between builds.</p>
+    </div>
 
-<p>Last updated: June 22, 2014</p>
+    <div class="FYI">
+      <p><strong>FYI:</strong> RoboJournal 0.4.1 introduces a
+      similar build script for Unix/Linux, stored as a Perl-based
+      script in the RoboJournal source directory. Since practically
+      every Linux system includes Perl support out of the box, the
+      script works without requiring anything extra (beyond the
+      base RoboJournal build requirements for your specific
+      distribution). This script greatly simplifies the process of
+      compiling and installing RoboJournal on any type of
+      Linux.</p>
 
-<p>Copyright © 2012, 2013, 2014 by Will Kraft. This documentation is part of
-RoboJournal and is available under the <a
- href="http://www.gnu.org/licenses/fdl-1.3-standalone.html">GNU Free
-Documentation License (GFDL)</a>. RoboJournal's source code and
-binaries are
-available under the GNU General Public License 3 (GPL3).</p>
-<p><a href="http://validator.w3.org/check?uri=referer"><img
- alt="Valid XHTML 1.0 Strict"
- src="http://www.w3.org/Icons/valid-xhtml10" height="31" width="88" /></a>
-<a href="http://jigsaw.w3.org/css-validator/check/referer"><img
- alt="Valid CSS!" src="http://jigsaw.w3.org/css-validator/images/vcss"
- style="border: 0pt none ; width: 88px; height: 31px;" /></a></p>
-</div>
+      <p>To run this script, open a terminal, navigate to the
+      RoboJournal source directory, and run <span class=
+      "console">./linux_compile.pl</span>.</p>
+    </div>
+    <hr />
+
+    <h3 id="windows">Manual Windows Procedure</h3>
+
+    <p>If you wish to compile RoboJournal manually instead of using
+    the build helper script, follow the procedure below. For the
+    sake of simplicity in this procedure, assume Qt is located in
+    C:\Qt, MinGW is located in C:\MinGW, and RoboJournal's source
+    code is located in C:\robojournal-0.5.1. In a real-world
+    situation, these locations vary depending on where you
+    installed everything. You will receive errors if you fail to
+    revise the paths to match your actual configuration.</p>
+
+    <ol>
+      <li>Click the Start Menu &Acirc;&raquo; All Programs
+      &Acirc;&raquo; Accessories &Acirc;&raquo; Command Prompt. A
+      cmd.exe window is displayed. From this point on, all input
+      should be directed to the cmd.exe window unless otherwise
+      indicated.</li>
+
+      <li>Navigate to the RoboJournal source folder.
+      &Acirc;&nbsp;Type <span class="console">cd
+      C:\robojournal-0.5.1</span> and press Enter.</li>
+
+      <li>Type <span class="console">path C:\Qt\bin</span> and
+      press Enter. This changes the current path for cmd.exe and
+      allows you to run any program from C:\Qt\bin even though you
+      should still be in the C:\robojournal-0.5.1 directory.</li>
+
+      <li>Type <span class="console">qmake
+      &acirc;&euro;&ldquo;config release robojournal.pro</span> and
+      press Enter. QMake will create a Makefile in the
+      C:\robojournal-0.5.1 directory.</li>
+
+      <li>When QMake is finished, type <span class=
+      "console">dir</span> (and press Enter) to display the file
+      list.</li>
+
+      <li>If there is a Makefile in the file list (look for a file
+      called "Makefile"), type <span class="console">path
+      C:\MinGW\bin</span> and press Enter.</li>
+
+      <li>Type <span class="console">mingw32-make</span> at the
+      command prompt and press Enter. You can accelerate the
+      compile process by running <span class="console">mingw32-make
+      -j 2</span> instead. This instructs the compiler to process
+      two jobs at once, thereby cutting the build time in half.
+      However, running more than three jobs simultaneously rarely
+      yields additional speed benefits and may cause problems.</li>
+
+      <li>Wait for mingw32-make to finish (the build is done when
+      text stops auto-scrolling and the terminal accepts input
+      again).</li>
+
+      <li>At this point, you should have a robojournal.exe file in
+      the C:\robojournal-0.5.1 (or C:\robojournal-0.5.1\release)
+      directory.</li>
+
+      <li>Resolve dependencies if necessary (refer to the <a href=
+      "#depends">section</a> below).</li>
+
+      <li>Type <span class="console">robojournal.exe</span> and
+      press Enter to start the program for the first time. You can
+      also start the program by opening Windows Explorer,
+      navigating to the C:\robojournal-0.5.1 (or
+      C:\robojournal-0.5.1\release) folder, and double-clicking the
+      robojournal.exe program icon.</li>
+    </ol>
+    <hr />
+
+    <h3 id="depends">Resolving Windows Dependencies</h3>
+
+    <p>The robojournal.exe produced by the compile procedure works
+    by itself if the Qt you compiled against is static-built. A
+    static-built Qt environment embeds all required dependencies
+    into the output executable file itself, the only drawback being
+    a much larger file size for the executable. Static-built
+    binaries have the advantage of being highly portable but their
+    large size can occasionally be a problem.</p>
+
+    <p>If your Qt is <em>not</em> static, locate the following
+    files on your hard drive (they <em>must</em> be from the same
+    Qt and MinGW libraries you compiled against) and copy them to
+    the C:\robojournal-0.5.1 (or C:\robojournal-0.5.1\release) folder.
+    The following list displays the required files and where they
+    are most likely to be located on your hard drive:</p>
+
+    <ul>
+      <li>libgcc_s_dw2-1.dll (MinGW bin folder)</li>
+
+      <li>libmysql.dll (MySQL lib folder)</li>
+
+      <li>libstdc++-6.dll (MinGW bin folder)</li>
+
+      <li>QtCore4.dll (Qt 4.x lib folder)</li>
+
+      <li>QtGui4.dll (Qt 4.x lib folder)</li>
+
+      <li>QtSql4.dll (Qt 4.x lib folder)</li>
+
+      <li>QtNetwork4.dll (Qt 4.x lib folder)</li>
+
+      <li>QtWebKit4.dll (Qt 4.x lib folder)</li>
+
+      <li>qsqllite4.dll (Qt 4.x plugins/sqldrivers folder)</li>
+    </ul>
+    <hr />
+
+    <h3 id="debian_requirements">Debian, Ubuntu, and Linux Mint
+    Requirements</h3>
+
+    <p>Users of Debian-family distros (including Debian itself,
+    Ubuntu, Linux Mint, <i>et al.</i>) must install the the
+    following packages through apt-get:</p>
+
+    <ul>
+      <li>libqt4-core</li>
+
+      <li>libqt4-gui</li>
+
+      <li>libqt4-network</li>
+
+      <li>libqt4-webkit</li>
+
+      <li>libqt4-sql</li>
+
+      <li>libqt4-sql-mysql</li>
+
+      <li>libqt4-sql-sqlite</li>
+
+      <li>libqt4-help</li>
+
+      <li>qt4-dev-tools</li>
+
+      <li>qt4-qmake</li>
+
+      <li>libx11-dev</li>
+      
+      <li>hunspell-dev</li>
+
+      <li>build-essential (if it is not already installed)</li>
+
+      <li>perl *<br /></li>
+    </ul>
+
+    <p>You can install all of these packages simultaneously by
+    running <span class="console">sudo apt-get install libqt4-core
+    libqt4-gui libqt4-network libqt4-webkit libqt4-sql
+    libqt4-sql-mysql libqt4-sql-sqlite libqt4-help qt4-dev-tools
+    qt4-qmake libx11-dev build-essential hunspell-dev</span>. Ensure that the
+    entire command consists of one unbroken line before you copy
+    and paste it into the terminal.</p>
+
+    <p>Newer versions of Ubuntu, Debian, and Linux Mint allow you
+    to install Qt 4.x.x and Qt 5.x in parallel. Since RoboJournal
+    has not been ported to Qt 5.x yet, you <em>must</em> use the Qt
+    4.x.x version of QMake for all RoboJournal builds. On systems
+    that have multiple versions of Qt installed, the correct
+    version of QMake is called "qmake-qt4". It is usually installed
+    at /usr/bin/qmake-qt4.</p>
+    <hr />
+
+    <h3 id="fedora_requirements">Fedora Requirements</h3>
+
+    <p>Recent versions of Fedora often have both Qt 4 and Qt 5
+    libraries available but RoboJournal should always be built with
+    Qt 4. The version of QMake you should use is called "qmake-qt4"
+    while Qt Assistant is called "assistant-qt4". Be sure to take
+    these name changes into consideration in order to prevent
+    problems during the build process.</p>
+
+    <p>All requirements are applicable to Fedora 18 and later
+    (older versions are unsupported). Building RoboJournal from
+    source requires you to install the following packages through
+    the yum package management system:</p>
+
+    <ul>
+      <li>qt</li>
+
+      <li>qt-mysql</li>
+
+      <li>qt-devel</li>
+
+      <li>qt-webkit-devel</li>
+      
+      <li>hunspell-devel</li>
+
+      <li>gcc-c++ *</li>
+
+      <li>perl &dagger;</li>
+    </ul>
+
+   
+    <p><small>* Due to a common dependency conflict, you may need
+    to manually update the <em>audit</em> package (audit-2.2.1-2 on
+    Fedora 18) before you can install the <em>gcc-c++</em> package.
+    This is achieved by running <span class="console">sudo yum
+    upgrade audit</span> prior to installing the RoboJournal
+    dependencies.</small></p>
+
+    <p><small>&dagger; Most systems include Perl support
+    out of the box so you rarely have to install it
+    manually.</small></p>
+
+    <p>You can install all these packages at once by running
+    <span class="console">sudo yum install qt qt-mysql
+    qt-devel qt-webkit qt-webkit-devel gcc-c++ hunspell-devel</span>. Ensure that
+    the entire command consists of one unbroken line before you
+    copy and paste it into the terminal.</p>
+    <hr />
+
+    <h3 id="linux">Manual Linux Procedure</h3>
+
+    <p>The build process for Linux is much more straightforward.
+    Unlike most source packages, there is no configure script that
+    must be used prior to the compile process (QMake handles this
+    role instead). For the purpose of this example, assume that the
+    RoboJournal source code is located in your home directory
+    (~/robojournal-0.5.1) and all utilities are stored in
+    /usr/bin.</p>
+
+    <ol>
+      <li>Open a terminal application (xterm or similar). There is
+      no specific shell requirement; most systems use Bash by
+      default. From this point on, all input should be directed to
+      the terminal unless otherwise indicated.</li>
+
+      <li>Type <span class="console">cd ~/robojoural-0.5.1</span> and
+      press Enter.</li>
+
+      <li>Type <span class="console">qmake robojournal.pro</span>
+      and press Enter (substitute "qmake" with "qmake-qt4" on
+      Fedora and on systems where Qt 5 is also installed).
+
+        <div class="FYI">
+          <strong>FYI:</strong> If you need to create a package
+          build for Debian, you should substitute the regular Qmake
+          command with <span class="console">qmake CONFIG+=package
+          robojournal.pro</span> (change the path to Qmake if
+          necessary). You should not create a package build
+          <em>unless</em> you are a Debian maintainer and you need
+          to package RoboJournal for inclusion in the repositories.
+        </div>
+      </li>
+
+      <li>Wait for the QMake process to finish.</li>
+
+      <li>Type <span class="console">make</span> and press Enter.
+      You can accelerate the compile process by running
+      <span class="console">make -j 2</span> instead. This
+      instructs the compiler to process two jobs at once, thereby
+      cutting the build time in half. However, running more than
+      three jobs simultaneously rarely yields additional speed
+      benefits and may cause problems.</li>
+
+      <li>Wait for the compiler to finish (the build is done when
+      text stops auto-scrolling and the terminal accepts input
+      again).</li>
+
+      <li>Type <span class="console">./robojournal</span> and press
+      Enter to start the program for the first time. You can also
+      start the program by opening a graphical file manager like
+      Nautilus or Dolphin, navigating to the ~/robojournal-0.5.1
+      folder, and clicking the "robojournal" file.
+
+        <p>The build process is complete after Step 7. The next
+        three steps are completely optional and deal with
+        system-wide installation. Properly installing RoboJournal
+        makes it available to all users whereas running it out of
+        the build directory limits its availability to your own
+        user account. /usr/local/bin is the default install
+        location for all software programs that have been compiled
+        from source, including RoboJournal. Under no circumstances
+        should the RoboJournal executable be placed in /usr/bin
+        (unless you are creating a package build for Debian). The
+        following steps require root or superuser permissions to
+        complete:</p>
+      </li>
+
+      <li>Type <span class="console">su</span> and press Enter to
+      switch to root. If the root account is not configured (as is
+      typical on Ubuntu and its derivitives), you can temporarily
+      gain root-level permissions by preceding commands with
+      "sudo".</li>
+
+      <li>Type <span class="console">make install</span> (or
+      <span class="console">sudo make install</span>) and press
+      Enter.</li>
+
+      <li>Debian (and related systems) only: Type <span class=
+      "console">update-menus</span> and press Enter to add
+      RoboJournal to the Debian Applications menu. A menu entry is
+      added automatically during the "make install" step if you are
+      using KDE or Gnome, but other window managers often require a
+      manual refresh before new menu items are displayed.</li>
+    </ol>
+
+    <p>RoboJournal is now installed for all users. For convenience,
+    the install process places a launcher for RoboJournal in the
+    Office sub-group of your Applications list. This launcher is
+    available to all users and points to the installed copy of
+    RoboJournal (not the one in the ~/robojournal-0.5.1 build
+    folder). The installed copy is henceforth referred to as the
+    "global copy" in this documentation. You can also launch the
+    global copy of RoboJournal by entering <span class=
+    "console">robojournal</span> at any command prompt (do not
+    precede the command with ./).</p>
+
+    <p>To uninstall, navigate to the ~/robojournal-0.5.1 directory,
+    switch to root (or use sudo), type <span class="console">make
+    uninstall</span>, and press Enter. This completely removes the
+    global copy and any shortcuts that point to it. You should
+    always uninstall prior to upgrading to a newer version of
+    RoboJournal; do not install a new global copy over an existing
+    one. If you wish to clean up the object code (*.o files) left
+    behind by the compiler, type <span class="console">make
+    clean</span> (and press Enter) in the build folder. This action
+    cleans the ~/robojournal-0.5.1 folder but spares the Makefile and
+    the executable made during the most recent build.</p>
+
+    <p>Type <span class="console">make distclean</span> (and press
+    Enter) if you wish to <em>completely</em> purge the build
+    folder of all compiled objects, including the Makefile and
+    executable. You <em>must</em> run a distclean between every
+    build.</p>
+    <hr />
+
+    <p>Last updated: November 29, 2014</p>
+
+    <p>Copyright &copy; 2012-2015 by Will Kraft. This
+    documentation is part of RoboJournal and is available under the
+    <a href=
+    "http://www.gnu.org/licenses/fdl-1.3-standalone.html">GNU Free
+    Documentation License (GFDL)</a>. RoboJournal's source code and
+    binaries are available under the GNU General Public License 3
+    (GPL3).</p>
+
+    <p><a href=
+    "http://validator.w3.org/check?uri=referer"><img alt="Valid XHTML 1.0 Strict"
+    src="http://www.w3.org/Icons/valid-xhtml10" height="31" width=
+    "88" /></a> <a href=
+    "http://jigsaw.w3.org/css-validator/check/referer"><img alt=
+    "Valid CSS!" src=
+    "http://jigsaw.w3.org/css-validator/images/vcss" style=
+    "border: 0pt none ; width: 88px; height: 31px;" /></a></p>
+  </div>
 </body>
 </html>
